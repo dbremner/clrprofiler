@@ -205,15 +205,18 @@ namespace CLRProfiler
 			//###TreeNode node = (TreeNode)root;
 			DiffDataNode node = (DiffDataNode)root;
 			int idx = (int)node.nodetype + (positive ? 0 : 3);
-			return new Color[]
-			{
-				Color.Black,
-				Color.Green,
-				Color.BlueViolet,
-				Color.White,
-				Color.Yellow,
-				Color.Beige
-			}[idx];
+            //FIXME
+		    Color[] colors = new Color[]
+		    {
+		        Color.Black,
+		        Color.Green,
+		        Color.BlueViolet,
+		        Color.White,
+		        Color.Yellow,
+		        Color.Beige
+		    };
+
+            return colors[idx];
 		}
 
 		
