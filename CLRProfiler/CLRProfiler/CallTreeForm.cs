@@ -1938,7 +1938,8 @@ namespace CLRProfiler
         {
             TreeNode node = (TreeNode)root;
             int idx = (int)node.nodetype + (positive ? 0 : 3);
-            return new Color[]
+            //FIXME
+            Color[] colors = new Color[]
             {
                 Color.Black,
                 Color.Green,
@@ -1946,7 +1947,8 @@ namespace CLRProfiler
                 Color.White,
                 Color.Yellow,
                 Color.Beige
-            }[idx];
+            };
+            return colors[idx];
         }
 
         /* returns data about the item for a given counter.
