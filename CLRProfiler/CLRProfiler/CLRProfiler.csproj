@@ -471,6 +471,15 @@
     <Compile Include="HistogramViewForm.Designer.cs">
       <DependentUpon>HistogramViewForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="FindRoutineForm.Designer.cs">
+      <DependentUpon>FindRoutineForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FunctionFilter.Designer.cs">
+      <DependentUpon>FunctionFilter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FunctionFind.Designer.cs">
+      <DependentUpon>FunctionFind.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{967B4E0D-AD0C-4609-AB67-0FA40C0206D8}" />
