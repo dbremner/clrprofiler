@@ -447,6 +447,24 @@
     <Compile Include="SetParameterForm.Designer.cs">
       <DependentUpon>SetParameterForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="KillProcessForm.Designer.cs">
+      <DependentUpon>KillProcessForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ListViewer.Designer.cs">
+      <DependentUpon>ListViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProfileServiceForm.Designer.cs">
+      <DependentUpon>ProfileServiceForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReportForm.Designer.cs">
+      <DependentUpon>ReportForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SaveFileForm.Designer.cs">
+      <DependentUpon>SaveFileForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SelectColumns.Designer.cs">
+      <DependentUpon>SelectColumns.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{967B4E0D-AD0C-4609-AB67-0FA40C0206D8}" />
