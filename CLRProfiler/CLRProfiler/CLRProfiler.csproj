@@ -417,6 +417,18 @@
     <Compile Include="CommentRangeForm.Designer.cs">
       <DependentUpon>CommentRangeForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ViewByAddressForm.Designer.cs">
+      <DependentUpon>ViewByAddressForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ViewCommentsForm.Designer.cs">
+      <DependentUpon>ViewCommentsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ViewFilter.Designer.cs">
+      <DependentUpon>ViewFilter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WaitingForConnectionForm.Designer.cs">
+      <DependentUpon>WaitingForConnectionForm.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{967B4E0D-AD0C-4609-AB67-0FA40C0206D8}" />
