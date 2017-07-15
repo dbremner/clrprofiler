@@ -29,55 +29,11 @@ using Microsoft.Win32.SafeHandles;
 
 namespace CLRProfiler
 {
-
-    // IMPORTANT: ProfConfig structure has a counterpart native structure defined
-    // in ProfilerCallback.h.  Both must always be in sync.
-    [Flags]
-    public enum OmvUsage : int
-    {
-        OmvUsageNone = 0,
-        OmvUsageObjects = 1,
-        OmvUsageTrace = 2,
-        OmvUsageBoth = 3
-    }
-
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-    public struct ProfConfig
-    {
-        public OmvUsage usage;
-        public int bOldFormat;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
-        public string szPath;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
-        public string szFileName;
-        public int bDynamic;
-        public int bStack;
-        public uint dwFramesToPrint;
-        public uint dwSkipObjects;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
-        public string szClassToMonitor;
-        public uint dwInitialSetting;
-        public uint dwDefaultTimeoutMs;
-        public bool bWindowsStoreApp;
-    }
-
     /// <summary>
     /// Summary description for Form1.
     /// </summary>
     public class MainForm : System.Windows.Forms.Form
     {
-        private class WindowsStoreAppProfileeInfo
-        {
-            public WindowsStoreAppProfileeInfo(string packageFullNameParam, string acSidString)
-            {
-                packageFullName = packageFullNameParam;
-                windowsStoreAppEventPrefix = string.Format("AppContainerNamedObjects\\{0}\\", acSidString);
-            }
-
-            public string windowsStoreAppEventPrefix;
-            public string packageFullName;
-        }
-
         private System.Windows.Forms.MenuItem menuItem1;
         private System.Windows.Forms.MenuItem menuItem3;
         private System.Windows.Forms.MainMenu mainMenu;
@@ -154,13 +110,6 @@ namespace CLRProfiler
         private bool saveNever;
         private bool gcOnLogFileComments;
 
-        private enum CLRSKU
-        {
-            V4DesktopCLR,
-            V4CoreCLR,
-            V2DesktopCLR,
-        };
-
         internal bool noUI = true;
         private string nameToUse;
         private bool profileAllocations, profileCalls, profilingActive;
@@ -178,20 +127,6 @@ namespace CLRProfiler
         private System.Windows.Forms.MenuItem viewComparisonMenuItem;
         internal bool viewdiff = false;
         internal bool exitProgram = false;
-
-        private enum ReportKind
-        {
-            NoReport,
-            AllocationReport,
-            RelocationReport,
-            SurvivorReport,
-            SurvivorDifferenceReport,
-            HeapDumpReport,
-            LeakReport,
-            FinalizerReport,
-            CriticalFinalizerReport,
-            CommentReport,
-        };
 
         private ReportKind reportKind;
         private string startMarker = null;
@@ -1391,7 +1326,7 @@ namespace CLRProfiler
             if (f.exitProgram)
                 return;
 
-            if (!f.viewdiff && f.reportKind == MainForm.ReportKind.NoReport && f.processFileName == null)
+            if (!f.viewdiff && f.reportKind == ReportKind.NoReport && f.processFileName == null)
             {
                 Application.Run(f);
             }
@@ -1420,41 +1355,6 @@ namespace CLRProfiler
             if (instance == null || (instance.CheckProcessTerminate() && instance.CheckFileSave()))
                 Application.Exit();
             return true;
-        }
-
-        class ConsoleCtrl
-        {
-            internal enum ConsoleEvent
-            {
-                CTRL_C = 0,           // From wincom.h
-                CTRL_BREAK = 1,
-                CTRL_CLOSE = 2,
-                CTRL_LOGOFF = 5,
-                CTRL_SHUTDOWN = 6
-            }
-
-            internal delegate bool ControlEventHandler(ConsoleEvent consoleEvent);
-
-            internal event ControlEventHandler ControlEvent;
-
-            ControlEventHandler eventHandler;
-
-            internal ConsoleCtrl()
-            {
-                // save this to a private var so the GC doesn't collect it...
-                eventHandler = new ControlEventHandler(Handler);
-                SetConsoleCtrlHandler(eventHandler, true);
-            }
-
-            private bool Handler(ConsoleEvent consoleEvent)
-            {
-                if (ControlEvent != null)
-                    return ControlEvent(consoleEvent);
-                return false;
-            }
-
-            [DllImport("kernel32.dll")]
-            static extern bool SetConsoleCtrlHandler(ControlEventHandler e, bool add);
         }
 
         private void ViewGraph(ReadLogResult logResult, string exeName, Graph.GraphType graphType)
@@ -2264,17 +2164,6 @@ namespace CLRProfiler
 
             serviceName = null;
         }
-
-        struct SECURITY_ATTRIBUTES
-        {
-#pragma warning disable 414
-            public uint nLength;
-#pragma warning restore 414
-            public IntPtr lpSecurityDescriptor;
-#pragma warning disable 414
-            public int bInheritHandle;
-#pragma warning restore 414
-        };
 
         [DllImport("Kernel32.dll", CharSet = CharSet.Auto)]
         private static extern SafeFileHandle CreateNamedPipe(
@@ -3394,27 +3283,6 @@ namespace CLRProfiler
         private void startURLMenuItem_Click(object sender, EventArgs e)
         {
             startURLButton_Click(null, null);
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
-        public struct PROCESS_INFORMATION
-        {
-            [SuppressMessage("Microsoft.Security","CA2111:PointersShouldNotBeVisible", Justification="CLRProfiler.exe is a stand-alone tool, not a library.")]
-            public IntPtr hProcess;
-
-            [SuppressMessage("Microsoft.Security","CA2111:PointersShouldNotBeVisible", Justification="CLRProfiler.exe is a stand-alone tool, not a library.")]
-            public IntPtr hThread;
-
-            public int dwProcessId;
-            public int dwThreadId;
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
-        public struct IELAUNCHURLINFO
-        {
-            public int cbSize;
-            public int dwCreationFlags;
-            public int dwLaunchOptionFlags;
         }
 
         [DllImport("ieframe.dll", SetLastError = true)]

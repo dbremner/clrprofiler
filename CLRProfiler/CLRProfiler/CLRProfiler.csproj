@@ -146,9 +146,11 @@
     <Compile Include="CallTreeForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="CLRSKU.cs" />
     <Compile Include="CommentRangeForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="ConsoleCtrl.cs" />
     <Compile Include="DevLicenseWarning.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -161,6 +163,7 @@
     <Compile Include="DiffDataNode.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DiffStatistics.cs" />
     <Compile Include="DiffTreeListView.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -176,9 +179,19 @@
     <Compile Include="HelpForm.Designer.cs">
       <DependentUpon>HelpForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="IELAUNCHURLINFO.cs" />
+    <Compile Include="InterestLevel.cs" />
+    <Compile Include="ListViewItemComparer.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="OmvUsage.cs" />
+    <Compile Include="PROCESS_INFORMATION.cs" />
+    <Compile Include="ProfConfig.cs" />
+    <Compile Include="ReportKind.cs" />
+    <Compile Include="SECURITY_ATTRIBUTES.cs" />
+    <Compile Include="Statistics.cs" />
+    <Compile Include="TreeNode.cs" />
     <Compile Include="WindowsStoreAppHelperWrapper.cs" />
     <Compile Include="WindowsStoreAppChooserForm.cs">
       <SubType>Form</SubType>
@@ -285,6 +298,7 @@
     <Compile Include="WaitingForConnectionForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="WindowsStoreAppProfileeInfo.cs" />
     <EmbeddedResource Include="AgeHistogram.resx">
       <DependentUpon>AgeHistogram.cs</DependentUpon>
       <SubType>Designer</SubType>
