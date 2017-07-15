@@ -53,21 +53,12 @@ namespace CLRProfiler
 			incurr = 0;
 		}
 
-		internal long Length
-		{
-			get
-			{
-				return fp.BaseStream.Length * 8;
-			}
-		}
+		internal long Length => fp.BaseStream.Length * 8;
 
-		internal long Position
+	    internal long Position
 		{
-			get
-			{
-				return fp.BaseStream.Position * 8 + incurr;
-			}
-			set
+			get => fp.BaseStream.Position * 8 + incurr;
+	        set
 			{
 				fp.BaseStream.Position = 8 * (value / 64);
 				current = (ulong)fp.ReadInt64();

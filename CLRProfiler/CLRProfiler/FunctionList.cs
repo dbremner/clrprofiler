@@ -38,13 +38,7 @@ namespace CLRProfiler
             functionList.Add(new FunctionDescriptor(functionId, funcCallStack, funcSize, funcModule));
         }
 
-        internal bool Empty
-        {
-            get
-            {
-                return functionList.Count == 0;
-            }
-        }
+        internal bool Empty => functionList.Count == 0;
 
         void BuildFuncVertices(Graph graph, ref Vertex[] funcVertex, FilterForm filterForm)
         {

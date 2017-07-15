@@ -54,25 +54,13 @@ namespace CLRProfiler
 		#endregion
 
 		#region ListBox
-		internal ListBox.ObjectCollection Items
-		{
-			get
-			{
-				return treeListBox.Items;
-			}
-		}
+		internal ListBox.ObjectCollection Items => treeListBox.Items;
 
-		internal object SelectedItem
+	    internal object SelectedItem
 		{
-			get
-			{
-				return treeListBox.SelectedItem;
-			}
-			set
-			{
-				treeListBox.SelectedItem = value;
-			}
-		}
+			get => treeListBox.SelectedItem;
+	        set => treeListBox.SelectedItem = value;
+	    }
 
 		private void Resort(int depth, TreeNodeBase root)
 		{

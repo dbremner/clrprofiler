@@ -13,29 +13,13 @@ namespace CLRProfiler
     /// </summary>
     internal class Edge : IComparable
     {
-        Vertex fromVertex;
-        Vertex toVertex;
         internal bool selected;
         internal Brush brush;
         internal Pen pen;
-        internal Vertex ToVertex 
-        {
-            get
-            {
-                return toVertex;
-            }
-        }
-        internal Vertex FromVertex 
-        {
-            get
-            {
-                return fromVertex;
-            }
-            set
-            {
-                fromVertex = value;
-            }
-        }
+        internal Vertex ToVertex { get; }
+
+        internal Vertex FromVertex { get; set; }
+
         internal ulong weight;
         internal int width;
         internal Point fromPoint, toPoint;
@@ -57,16 +41,16 @@ namespace CLRProfiler
         }
         internal Edge(Vertex fromVertex, Vertex toVertex)
         {
-            this.fromVertex = fromVertex;
-            this.toVertex = toVertex;
+            this.FromVertex = fromVertex;
+            this.ToVertex = toVertex;
             this.weight = 0;
         }
 
         internal void AddWeight(ulong weight)
         {
             this.weight += weight;
-            this.fromVertex.outgoingWeight += weight;
-            this.toVertex.incomingWeight += weight;
+            this.FromVertex.outgoingWeight += weight;
+            this.ToVertex.incomingWeight += weight;
         }
     }
 }

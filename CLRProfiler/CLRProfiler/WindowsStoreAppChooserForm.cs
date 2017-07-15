@@ -25,36 +25,16 @@ namespace CLRProfiler
     public partial class WindowsStoreAppChooserForm : Form
     {
         private List<PackageInfo> packageInfos;
-        private string selectedAppUserModelId;
-        private string selectedPackageFullName;
-        private string selectedPackageTempDir;
-        private string selectedAcSidString;
-        private string selectedProcessFileName;
 
-        public string SelectedAppUserModelId
-        {
-            get { return selectedAppUserModelId; }
-        }
+        public string SelectedAppUserModelId { get; private set; }
 
-        public string SelectedPackageFullName
-        {
-            get { return selectedPackageFullName; }
-        }
+        public string SelectedPackageFullName { get; private set; }
 
-        public string SelectedPackageTempDir
-        {
-            get { return selectedPackageTempDir; }
-        }
+        public string SelectedPackageTempDir { get; private set; }
 
-        public string SelectedAcSidString
-        {
-            get { return selectedAcSidString; }
-        }
+        public string SelectedAcSidString { get; private set; }
 
-        public string SelectedProcessFileName
-        {
-            get { return selectedProcessFileName; }
-        }
+        public string SelectedProcessFileName { get; private set; }
 
         public WindowsStoreAppChooserForm()
         {
@@ -98,15 +78,15 @@ namespace CLRProfiler
             }
             listBoxApps.EndUpdate();
             listBoxApps.SelectedIndex = 0;
-            selectedPackageFullName = packageInfos[iPackage].fullName;
-            selectedPackageTempDir = packageInfos[iPackage].tempDir;
-            selectedAcSidString = packageInfos[iPackage].acSid;
+            SelectedPackageFullName = packageInfos[iPackage].fullName;
+            SelectedPackageTempDir = packageInfos[iPackage].tempDir;
+            SelectedAcSidString = packageInfos[iPackage].acSid;
         }
 
         private void listboxApps_SelectedIndexChanged(object sender, EventArgs e)
         {
-            selectedAppUserModelId = packageInfos[listBoxPackages.SelectedIndex].appInfoList[listBoxApps.SelectedIndex].userModelId;
-            selectedProcessFileName = Path.Combine(
+            SelectedAppUserModelId = packageInfos[listBoxPackages.SelectedIndex].appInfoList[listBoxApps.SelectedIndex].userModelId;
+            SelectedProcessFileName = Path.Combine(
                 packageInfos[listBoxPackages.SelectedIndex].installedLocation,
                 packageInfos[listBoxPackages.SelectedIndex].appInfoList[listBoxApps.SelectedIndex].exeName);
         }

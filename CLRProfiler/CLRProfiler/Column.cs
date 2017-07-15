@@ -10,20 +10,19 @@ namespace CLRProfiler
     {
         private bool pressed;
         private ArrayList columnsRef;
-        private ColumnInformation ci;
         private ResizeBarCapture resizeBar;
 
-        internal ColumnInformation ColumnInformation {get {return ci;}}
+        internal ColumnInformation ColumnInformation { get; }
 
         internal Column(ColumnInformation in_ci, ResizeBarCapture in_resizeBar,  ArrayList in_columnsRef) : base()
         {
             pressed = false;
 
-            ci = in_ci;
+            ColumnInformation = in_ci;
             resizeBar = in_resizeBar;
             columnsRef = in_columnsRef;
 
-            Text = ci.Text;
+            Text = ColumnInformation.Text;
 
             SetStyle(ControlStyles.Selectable, false);
         }

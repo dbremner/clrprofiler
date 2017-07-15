@@ -43,104 +43,35 @@ namespace CLRProfiler
 	
 	struct datanode
 	{
-		int _id;
-		int _level;
-#if(V_EXEC)
-			double _incl;
-			double _excl;
-			
+	    public int level { get; set; }
 
+	    public int id { get; set; }
+
+	    public string name { get; set; }
+
+#if (V_EXEC)
+			public double incl { get; set; }
+			public double excl { get; set; }
+			
 #else
-		int _incl;
-		int _excl;
-		
-#endif
-			
-		int _timesBeenCalled;
-		int _timesMakeCalls;
-		int _category;
-		string _name;
-		Dictionary<Vertex, Edge> _caller;
-        Dictionary<Vertex, Edge> _callee;
-		Hashtable _callerAlloc;
-		Hashtable _calleeAlloc;
+        public int incl { get; set; }
 
-		public int level
-		{
-			get {return _level;}
-			set {_level = value;}
-		}
-		public int id
-		{
-			get {return _id;}
-			set {_id = value;}
-		}
-		public string name
-		{
-			get{return _name;}
-			set{_name = value;}
-		}
-#if(V_EXEC)
-			public double incl
-			{
-				get{return _incl;}
-				set{_incl = value;}
-			}
-			public double excl
-			{
-				get{return _excl;}
-				set{_excl = value;}
-			}
-			
-#else		
-		public int incl
-		{
-			get{return _incl;}
-			set{_incl = value;}
-		}
-		public int excl
-		{
-			get{return _excl;}
-			set{_excl = value;}
-		}
-		
-#endif
-		public int timesBeenCalled
-		{
-			get{return _timesBeenCalled;}
-			set{_timesBeenCalled = value;}
-		}
-		public int timesMakeCalls
-		{
-			get{return _timesMakeCalls;}
-			set{_timesMakeCalls = value;}
-		}
-		public int category
-		{
-			get{return _category;}
-			set{_category = value;}
-		}
-        public Dictionary<Vertex, Edge> caller
-		{
-			get { return _caller;}
-			set { _caller = value;}
-		}
-        public Dictionary<Vertex, Edge> callee
-		{
-			get { return _callee;}
-			set { _callee = value;}
-		}
-		public Hashtable callerAlloc
-		{
-			get { return _callerAlloc;}
-			set { _callerAlloc = value;}
-		}
-		public Hashtable calleeAlloc
-		{
-			get { return _calleeAlloc;}
-			set { _calleeAlloc = value;}
-		}
+	    public int excl { get; set; }
 
+#endif
+		public int timesBeenCalled { get; set; }
+
+	    public int timesMakeCalls { get; set; }
+
+	    public int category { get; set; }
+
+	    public Dictionary<Vertex, Edge> caller { get; set; }
+
+	    public Dictionary<Vertex, Edge> callee { get; set; }
+
+	    public Hashtable callerAlloc { get; set; }
+
+	    public Hashtable calleeAlloc { get; set; }
 	}
 	public class AllocationDiff 
 	{
@@ -170,9 +101,8 @@ namespace CLRProfiler
 		// log file names
 		private string _prevFile = null;
 		private string _currFile = null;
-		private string _diffFile = null;
-	
-		// holds all useful data from base
+
+	    // holds all useful data from base
 		// for build all diff, call relations, and type allocation tables
 		internal Hashtable _prevbasedata = null;
 		internal Hashtable _currbasedata = null;
@@ -250,191 +180,66 @@ namespace CLRProfiler
 		public DetailFilter currTypedeFilter = new DetailFilter();
 		
 		// dataset and tables
-		private DataSet _ds = null;
-		private DataTable _callertbl = null;
-		private DataTable _calleetbl = null;
-		private DataTable _basedatatable = null;
-		//private DataTable _typeAlloctable = null;
-		private DataTable _ContriTocallertbl = null;
-		private DataTable _ContriTocalleetbl = null;
-		
-		#endregion
+
+	    //private DataTable _typeAlloctable = null;
+	    #endregion
 		
 		#region struct data methods
 		
 		// caller and callee tables node
 		struct callnode
 		{
-			int _id;
-			int _callerid;
-			int _calleeid;
-			public int id
-			{
-				get {return _id;}
-				set { _id = value;}
-			}
-			
-			public int callerid
-			{
-				get{return _callerid;}
-				set{_callerid = value;}
-			}
-			public int calleeid
-			{
-				get{return _calleeid;}
-				set{_calleeid = value;}
-			}
-			
+		    public int id { get; set; }
+
+		    public int callerid { get; set; }
+
+		    public int calleeid { get; set; }
 		}
 		// typeAllocation table node
 		struct typeAllocnode
 		{
-			int _typeid;
-			int _funcid;
-#if(V_EXEC)
-			double _allocmem;
-#else
-			int _allocmem;
-#endif
-			public int typeid
-			{
-				get {return _typeid;}
-				set { _typeid = value;}
-			}
-			
-			public int funcid
-			{
-				get{return _funcid;}
-				set{_funcid= value;}
-			}
-#if(V_EXEC)
-			public double allocmem
-			{
-				get{return _allocmem;}
-				set{_allocmem = value;}
-			}
-#else
-			public int allocmem
-			{
-				get{return _allocmem;}
-				set{_allocmem = value;}
-			}
-#endif
-			
-		}
-		public DataTable basedatatable
-		{
-			get {return _basedatatable;}
-			set { _basedatatable = value;}
-		}
-		public DataTable ContriTocallertbl
-		{
-			get {return _ContriTocallertbl;}
-			set { _ContriTocallertbl = value;}
-		}
-		public DataTable ContriTocalleetbl
-		{
-			get {return _ContriTocalleetbl;}
-			set { _ContriTocalleetbl = value;}
-		}
+			public int typeid { get; set; }
 
-		// detailds for reportform details RadioButton
+		    public int funcid { get; set; }
+
+#if (V_EXEC)
+			public double allocmem { get; set; }
+#else
+            public int allocmem { get; set; }
+
+#endif
+			
+		}
+		public DataTable basedatatable { get; set; } = null;
+
+	    public DataTable ContriTocallertbl { get; set; } = null;
+
+	    public DataTable ContriTocalleetbl { get; set; } = null;
+
+	    // detailds for reportform details RadioButton
 		public struct DetailFilter
 		{
-			ulong _max;
-#if(V_EXEC)
-			double _detail01;
-			double _detail02;
-			double _detail05;
-			double _detail1;
-			double _detail2;
-			double _detail5;
-			double _detail10;
-			public double detail01
-			{
-				get{return _detail01;}
-				set{_detail01 = value;}
-			}
-			public double detail02
-			{
-				get{return _detail02;}
-				set{_detail02 = value;}
-			}
-			public double detail05
-			{
-				get{return _detail05;}
-				set{_detail05 = value;}
-			}
-			public double detail1
-			{
-				get{return _detail1;}
-				set{_detail1 = value;}
-			}
-			public double detail2
-			{
-				get{return _detail2;}
-				set{_detail2 = value;}
-			}
-			public double detail5
-			{
-				get{return _detail5;}
-				set{_detail5 = value;}
-			}
-			public double detail10
-			{
-				get{return _detail10;}
-				set{_detail10 = value;}
-			}
+#if (V_EXEC)
+			public double detail01 { get; set; }
+			public double detail02 { get; set; }
+			public double detail05 { get; set; }
+			public double detail1 { get; set; }
+			public double detail2 { get; set; }
+			public double detail5 { get; set; }
+			public double detail10 { get; set; }
 #else
-            ulong _detail01;
-            ulong _detail02;
-            ulong _detail05;
-            ulong _detail1;
-            ulong _detail2;
-            ulong _detail5;
-            ulong _detail10;
-            internal ulong detail01
-			{
-				get{return _detail01;}
-				set{_detail01 = value;}
-			}
-            internal ulong detail02
-			{
-				get{return _detail02;}
-				set{_detail02 = value;}
-			}
-            internal ulong detail05
-			{
-				get{return _detail05;}
-				set{_detail05 = value;}
-			}
-            internal ulong detail1
-			{
-				get{return _detail1;}
-				set{_detail1 = value;}
-			}
-            internal ulong detail2
-			{
-				get{return _detail2;}
-				set{_detail2 = value;}
-			}
-            internal ulong detail5
-			{
-				get{return _detail5;}
-				set{_detail5 = value;}
-			}
-            internal ulong detail10
-			{
-				get{return _detail10;}
-				set{_detail10 = value;}
-			}
+            internal ulong detail01 { get; set; }
+
+		    internal ulong detail02 { get; set; }
+
+		    internal ulong detail05 { get; set; }
+            internal ulong detail1 { get; set; }
+            internal ulong detail2 { get; set; }
+            internal ulong detail5 { get; set; }
+            internal ulong detail10 { get; set; }
 #endif
-			internal ulong max
-			{
-				get{return _max;}
-				set{_max = value;}
-			}
-		}
+            internal ulong max { get; set; }
+        }
 		
 		#endregion
 
@@ -475,28 +280,16 @@ namespace CLRProfiler
 		// DataSet used to collect tables and 
 		// build relations between table in the near future
 		// also it usded by DataViewManager in ReportForm
-		public DataSet ds
-		{
-			get{ return _ds;}
-			set{ _ds = value;}
-		}
-		
-		public DataTable callertbl
-		{
-			get {return _callertbl;}
-			set { _callertbl = value;}
-		}
-		
-		public DataTable calleetbl
-		{
-			get {return _calleetbl;}
-			set { _calleetbl = value;}
-		}
+		public DataSet ds { get; set; } = null;
 
-		public string PrevLogFileName
+	    public DataTable callertbl { get; set; } = null;
+
+	    public DataTable calleetbl { get; set; } = null;
+
+	    public string PrevLogFileName
 		{
-			get {return _prevFile;}
-			set
+			get => _prevFile;
+	        set
 			{
 				_prevFile = value;
 				_prevLog.LogFileName = value;
@@ -505,23 +298,16 @@ namespace CLRProfiler
 
 		public string CurrLogFileName
 		{
-			get {return _currFile;}
-			set
+			get => _currFile;
+		    set
 			{
 				_currFile = value;
 				_currLog.LogFileName = value;
 			}
 		}
 
-		public string diffLogFileName
-		{
-			get {return _diffFile;}
-			set
-			{
-				_diffFile = value;
-			}
-		}
-		#endregion
+		public string diffLogFileName { get; set; } = null;
+	    #endregion
 
 		#region public methods
 		public void BuildAllocationDiffTable()

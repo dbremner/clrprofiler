@@ -11,8 +11,7 @@ namespace CLRProfiler
 		#region private data member
 		private long logFileStartOffset;
 		private long logFileEndOffset;
-		private string logFileName;
-		private ReadNewLog log = null;
+	    private ReadNewLog log = null;
 		#endregion
 
 		#region public member
@@ -25,22 +24,12 @@ namespace CLRProfiler
 			logFileEndOffset = long.MaxValue;
 		}
 		#region public property methods
-		public string LogFileName
-		{
-			get 
-			{
-				return logFileName;
-			}
-			set
-			{
-				logFileName = value;
-			}
-		}
-		#endregion
+		public string LogFileName { get; set; }
+	    #endregion
 		#region public methods
 		public void readLogFile()
 		{
-			log = new ReadNewLog(logFileName);
+			log = new ReadNewLog(LogFileName);
 			logResult = GetLogResult();
 			log.ReadFile(logFileStartOffset, logFileEndOffset, logResult);
 			

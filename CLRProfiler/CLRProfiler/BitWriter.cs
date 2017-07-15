@@ -10,6 +10,7 @@
  */
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 
 namespace CLRProfiler
@@ -71,12 +72,7 @@ namespace CLRProfiler
 			position = incurr = 0;
 		}
 
-		internal long Position
-		{
-			get
-			{
-				return bitsRecorded;
-			}
-		}
+		[SuppressMessage("ReSharper", "ConvertToAutoPropertyWhenPossible")]
+		internal long Position => bitsRecorded;
 	}
 }

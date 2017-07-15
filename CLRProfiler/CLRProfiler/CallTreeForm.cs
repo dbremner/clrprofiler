@@ -29,7 +29,7 @@ namespace CLRProfiler
     {
         /* info given from the outside */
         private string logFileName;
-        private ReadLogResult logResult;
+
         internal string[] names, types, signatures;
 
         /* everything about the backing store */
@@ -126,10 +126,6 @@ namespace CLRProfiler
         private int previousSplitterLocation;
         private int firstNewStack;
 
-        /* global stats */
-        private GlobalCallStats[] globalCallStats;
-        private GlobalAllocStats[] globalAllocStats;
-
         /* some lookup info about the assemblies */
         private ArrayList assemblyNames;
         private Hashtable assemblyNameToIdMap;
@@ -138,21 +134,13 @@ namespace CLRProfiler
         private FnViewFilter[] filterInclude;
         private FnViewFilter[] filterExclude;
         private bool fShowSubtree;
-        
                 
-        internal ReadLogResult LogResult
-        {
-            get {return logResult;}
-        }
-        internal GlobalCallStats[] CallStats
-        {
-            get {return globalCallStats;}
-        }
+        internal ReadLogResult LogResult { get; }
 
-        internal GlobalAllocStats[] AllocStats
-        {
-            get {return globalAllocStats;}
-        }
+        /* global stats */
+        internal GlobalCallStats[] CallStats { get; private set; }
+
+        internal GlobalAllocStats[] AllocStats { get; private set; }
 
         /* for dumping debugging information */
         // StreamWriter log;
@@ -278,7 +266,7 @@ namespace CLRProfiler
             }
             else
             {
-                int[] stackTrace = logResult.callstackHistogram.readNewLog.stacktraceTable.IndexToStacktrace(stackid);
+                int[] stackTrace = LogResult.callstackHistogram.readNewLog.stacktraceTable.IndexToStacktrace(stackid);
                 if (stackTrace == null)
                 {
                     stackTrace = new int[2];
@@ -298,10 +286,10 @@ namespace CLRProfiler
             this.forCompare = forCompare;
             
             logFileName = in_logFileName;
-            logResult = in_result;
-            names = logResult.callstackHistogram.readNewLog.funcName;
-            types = logResult.callstackHistogram.readNewLog.typeName;
-            signatures = logResult.callstackHistogram.readNewLog.funcSignature;
+            LogResult = in_result;
+            names = LogResult.callstackHistogram.readNewLog.funcName;
+            types = LogResult.callstackHistogram.readNewLog.typeName;
+            signatures = LogResult.callstackHistogram.readNewLog.funcSignature;
 
             filterInclude = new FnViewFilter[] { new FnViewFilter(TreeNode.NodeType.Call, -1), new FnViewFilter(TreeNode.NodeType.Call, -1) };
             filterExclude = new FnViewFilter[] { new FnViewFilter(TreeNode.NodeType.Call, -1), new FnViewFilter(TreeNode.NodeType.Call, -1) };
@@ -324,10 +312,10 @@ namespace CLRProfiler
             // log = new StreamWriter("test.blog");
 
             logFileName = in_logFileName;
-            logResult = in_result;
-            names = logResult.callstackHistogram.readNewLog.funcName;
-            types = logResult.callstackHistogram.readNewLog.typeName;
-            signatures = logResult.callstackHistogram.readNewLog.funcSignature;
+            LogResult = in_result;
+            names = LogResult.callstackHistogram.readNewLog.funcName;
+            types = LogResult.callstackHistogram.readNewLog.typeName;
+            signatures = LogResult.callstackHistogram.readNewLog.funcSignature;
 
             filterInclude = new FnViewFilter[] { new FnViewFilter(TreeNode.NodeType.Call, -1), new FnViewFilter(TreeNode.NodeType.Call, -1) };
             filterExclude = new FnViewFilter[] { new FnViewFilter(TreeNode.NodeType.Call, -1), new FnViewFilter(TreeNode.NodeType.Call, -1) };
@@ -367,8 +355,8 @@ namespace CLRProfiler
             pos = 0;
 
             threads = new Dictionary<int, ThreadState>();
-            globalCallStats = new GlobalCallStats[1 + names.Length];
-            globalAllocStats = new GlobalAllocStats[1 + types.Length];
+            CallStats = new GlobalCallStats[1 + names.Length];
+            AllocStats = new GlobalAllocStats[1 + types.Length];
 
             assemblyNames = new ArrayList();
             assemblyNameToIdMap = new Hashtable();
@@ -548,7 +536,7 @@ namespace CLRProfiler
             for(int i = (node.nodetype == TreeNode.NodeType.Allocation ? 2 : 0); i < stacktrace.Length; i++)
             {
                 int functionId = stacktrace[i];
-                GlobalCallStats s = globalCallStats[functionId];
+                GlobalCallStats s = CallStats[functionId];
 
                 string[] subitems = new string[]
                 {
@@ -615,7 +603,7 @@ namespace CLRProfiler
             if(node.nodetype == TreeNode.NodeType.Allocation)
             {
                 int typeId = stacktrace[0];
-                GlobalAllocStats s = globalAllocStats[typeId];
+                GlobalAllocStats s = AllocStats[typeId];
                 string[] subitems = new string[]
                 {
                     types[typeId],  // "Name"
@@ -1013,7 +1001,7 @@ namespace CLRProfiler
             int prevStackMaxSize = prevStackInitialSize;
             int[] prevStackTrace = new int[prevStackInitialSize]; 
             int prevStackLen = 0;
-            StacktraceTable stacktraceTable = logResult.callstackHistogram.readNewLog.stacktraceTable;
+            StacktraceTable stacktraceTable = LogResult.callstackHistogram.readNewLog.stacktraceTable;
 
             //  Preprocessing for function filters
             int nIncludeCallFilters = 0;
@@ -1480,15 +1468,15 @@ namespace CLRProfiler
                         if(nodetype == TreeNode.NodeType.Call)
                         {
                             functionId = stacktrace[stacktrace.Length - 1];
-                            globalCallStats[functionId].timesCalled++;
+                            CallStats[functionId].timesCalled++;
                             foreach(int fid in functions.Keys)
                             {
-                                globalCallStats[fid].totalFunctionsCalled++;
+                                CallStats[fid].totalFunctionsCalled++;
                             }
 
-                            if(!globalCallStats[functionId].calledAlready)
+                            if(!CallStats[functionId].calledAlready)
                             {
-                                globalCallStats[functionId].calledAlready = true;
+                                CallStats[functionId].calledAlready = true;
                                 node.data.firstTimeBroughtIn = true;
                                 foreach(TreeNode n in stack)
                                 {
@@ -1500,7 +1488,7 @@ namespace CLRProfiler
 
                                 foreach(int fid in functions.Keys)
                                 {
-                                    globalCallStats[fid].totalNewFunctionsBroughtIn++;
+                                    CallStats[fid].totalNewFunctionsBroughtIn++;
                                 }
                             }
 
@@ -1511,10 +1499,10 @@ namespace CLRProfiler
                         {
                             foreach(int fid in functions.Keys)
                             {
-                                globalCallStats[fid].totalBytesAllocated += stacktrace[1];
+                                CallStats[fid].totalBytesAllocated += stacktrace[1];
                             }
-                            globalAllocStats[stacktrace[0]].timesAllocated++;
-                            globalAllocStats[stacktrace[0]].totalBytesAllocated += stacktrace[1];
+                            AllocStats[stacktrace[0]].timesAllocated++;
+                            AllocStats[stacktrace[0]].totalBytesAllocated += stacktrace[1];
                         }
 
                         prevDepth = depth;
@@ -2019,7 +2007,7 @@ namespace CLRProfiler
 
             for(int i = 1; i < names.Length; i++)
             {
-                GlobalCallStats s = globalCallStats[i];
+                GlobalCallStats s = CallStats[i];
                 if(names[i] == null || names[i].Length == 0)
                 {
                     break;
@@ -2054,7 +2042,7 @@ namespace CLRProfiler
 
             for(int i = 1; i < types.Length; i++)
             {
-                GlobalAllocStats s = globalAllocStats[i];
+                GlobalAllocStats s = AllocStats[i];
                 if(types[i] == null || types[i].Length == 0)
                 {
                     break;

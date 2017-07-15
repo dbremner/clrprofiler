@@ -17,8 +17,7 @@ namespace CLRProfiler
         private ulong totalWeight;
 		private int totalHeight = 100;
 		private float scale = 1.0f;
-		private Graph graph = null;
-		//private Graph callGraph = null;
+	    //private Graph callGraph = null;
 		#endregion
 		#region public data member
 		public ArrayList levelList;
@@ -30,7 +29,7 @@ namespace CLRProfiler
 		#region public methods
 		internal void GetAllocationGraph(ReadLogResult readLogResult)
 		{
-			graph = readLogResult.allocatedHistogram.BuildAllocationGraph(new FilterForm());
+			basegraph = readLogResult.allocatedHistogram.BuildAllocationGraph(new FilterForm());
 			PlaceVertices();
 		}
 
@@ -50,7 +49,7 @@ namespace CLRProfiler
 		{
 			int selectedCount = 0;
 			selectedVertex = null;
-			foreach (Vertex v in graph.vertices.Values)
+			foreach (Vertex v in basegraph.vertices.Values)
 			{
 				if (v.selected)
 				{
@@ -90,14 +89,14 @@ namespace CLRProfiler
 
         internal string formatWeight(ulong weight)
 		{
-			if (graph.graphType == Graph.GraphType.CallGraph)
+			if (basegraph.graphType == Graph.GraphType.CallGraph)
 			{
 				if (weight == 1)
 					return "1 call";
 				else
 					return string.Format("{0} calls", weight);
 			}
-			if(graph.graphType == Graph.GraphType.AssemblyGraph)
+			if(basegraph.graphType == Graph.GraphType.AssemblyGraph)
 			{
 				if(weight == 1)
 				{
@@ -136,7 +135,7 @@ namespace CLRProfiler
 
 		private void PlaceEdges(float scale)
 		{
-			foreach (Vertex v in graph.vertices.Values)
+			foreach (Vertex v in basegraph.vertices.Values)
 			{
 				PlaceEdges(v.incomingEdges.Values, true, scale);
 				PlaceEdges(v.outgoingEdges.Values, false, scale);
@@ -154,38 +153,38 @@ namespace CLRProfiler
 
 		private void PlaceVertices()
 		{
-			graph.AssignLevelsToVertices();
+			basegraph.AssignLevelsToVertices();
 			totalWeight = 0;
-			foreach (Vertex v in graph.vertices.Values)
+			foreach (Vertex v in basegraph.vertices.Values)
 			{
 				v.weight = v.incomingWeight;
 				if (v.weight < v.outgoingWeight)
 					v.weight = v.outgoingWeight;
-				if (graph.graphType == Graph.GraphType.CallGraph)
+				if (basegraph.graphType == Graph.GraphType.CallGraph)
 				{
 					if (totalWeight < v.weight)
 						totalWeight = v.weight;
 				}
 			}
-			if (graph.graphType != Graph.GraphType.CallGraph)
-				totalWeight = graph.TopVertex.weight;
+			if (basegraph.graphType != Graph.GraphType.CallGraph)
+				totalWeight = basegraph.TopVertex.weight;
 			if (totalWeight == 0)
 			{
 				totalWeight = 1;
 			}
 
-			ArrayList al = levelList = BuildLevels(graph);
+			ArrayList al = levelList = BuildLevels(basegraph);
 			scale = (float)totalHeight/totalWeight;
 			if (placeVertices)
 			{
-				for (int level = graph.TopVertex.level;
-					level <= graph.BottomVertex.level;
+				for (int level = basegraph.TopVertex.level;
+					level <= basegraph.BottomVertex.level;
 					level++)
 				{
 					ArrayList all = (ArrayList)al[level];
 					foreach (Vertex v in all)
 					{
-						if (graph.graphType == Graph.GraphType.CallGraph)
+						if (basegraph.graphType == Graph.GraphType.CallGraph)
 						{
 							v.basicWeight = v.incomingWeight - v.outgoingWeight;
 							if (v.basicWeight < 0)
@@ -218,7 +217,7 @@ namespace CLRProfiler
 						// to shift them down a little to line them up with
 						// whatever is going into them. Unless of course
 						// we would need to shift too much...
-						if (v.level < graph.BottomVertex.level-1)
+						if (v.level < basegraph.BottomVertex.level-1)
 						{
                             ulong highestWeight = 0;
 							foreach (Edge e in v.incomingEdges.Values)
@@ -243,9 +242,6 @@ namespace CLRProfiler
 				PlaceEdges(scale);
 		}
 		#endregion
-		internal Graph basegraph
-		{
-			get { return graph;}
-		}
+		internal Graph basegraph { get; private set; } = null;
 	}
 }

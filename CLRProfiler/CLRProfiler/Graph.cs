@@ -18,8 +18,7 @@ namespace CLRProfiler
     {
         internal object graphSource;
         internal Dictionary<string, Vertex> vertices;
-        Vertex topVertex;
-        Vertex bottomVertex;
+
         internal enum GraphType
         {
             AllocationGraph,
@@ -40,28 +39,16 @@ namespace CLRProfiler
         internal int previousGraphTickIndex;
         internal int filterVersion;
 
-        internal Vertex TopVertex
-        {
-            get
-            {
-                return topVertex;
-            }
-        }
+        internal Vertex TopVertex { get; }
 
-        internal Vertex BottomVertex
-        {
-            get
-            {
-                return bottomVertex;
-            }
-        }
+        internal Vertex BottomVertex { get; }
 
         internal Graph(object graphSource)
         {
             this.graphSource = graphSource;
             vertices = new Dictionary<string, Vertex>();
-            topVertex = FindOrCreateVertex("<root>", null, null);
-            bottomVertex = FindOrCreateVertex("<bottom>", null, null);
+            TopVertex = FindOrCreateVertex("<root>", null, null);
+            BottomVertex = FindOrCreateVertex("<bottom>", null, null);
         }
 
         private string NameSignatureModule(string name, string signature, string module)
@@ -116,7 +103,7 @@ namespace CLRProfiler
 
         internal Edge FindOrCreateEdge(Vertex fromVertex, Vertex toVertex)
         {
-            Debug.Assert(fromVertex != topVertex || toVertex != bottomVertex);
+            Debug.Assert(fromVertex != TopVertex || toVertex != BottomVertex);
             return fromVertex.FindOrCreateOutgoingEdge(toVertex);
         }
 #if whatever
@@ -184,19 +171,19 @@ namespace CLRProfiler
             foreach (Vertex v in vertices.Values)
             {
                 v.level = UNASSIGNED_LEVEL;
-                if (   v != topVertex
-                    && v != bottomVertex)
+                if (   v != TopVertex
+                    && v != BottomVertex)
                 {
                     if (   v.incomingEdges.Count == 0
                         && v.outgoingEdges.Count != 0)
-                        topVertex.FindOrCreateOutgoingEdge(v);
+                        TopVertex.FindOrCreateOutgoingEdge(v);
                     else if (v.incomingEdges.Count != 0
                         && v.outgoingEdges.Count == 0)
-                        v.FindOrCreateOutgoingEdge(bottomVertex);
+                        v.FindOrCreateOutgoingEdge(BottomVertex);
                 }
             }
-            topVertex.level = 0;
-            bottomVertex.level = Int32.MaxValue;
+            TopVertex.level = 0;
+            BottomVertex.level = Int32.MaxValue;
 
             while (true)
             {
@@ -331,17 +318,17 @@ namespace CLRProfiler
             int maxLevel = 0;
             foreach (Vertex v in vertices.Values)
             {
-                if (v != bottomVertex)
+                if (v != BottomVertex)
                 {
                     if (maxLevel < v.level)
                         maxLevel = v.level;
                 }
             }
 
-            bottomVertex.level = maxLevel + 1;
+            BottomVertex.level = maxLevel + 1;
 
             // line up all the leaf nodes in one level
-            foreach (Edge e in bottomVertex.incomingEdges.Values)
+            foreach (Edge e in BottomVertex.incomingEdges.Values)
             {
                 Vertex v = e.FromVertex;
                 if (v.outgoingEdges.Count == 1)

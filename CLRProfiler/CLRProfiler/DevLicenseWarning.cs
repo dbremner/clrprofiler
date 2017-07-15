@@ -17,11 +17,7 @@ namespace CLRProfiler
 {
     public partial class DevLicenseWarningForm : Form
     {
-        private bool showThis = true;
-        public bool ShowThis
-        {
-            get { return showThis; }
-        }
+        public bool ShowThis { get; private set; } = true;
 
         public DevLicenseWarningForm()
         {
@@ -31,7 +27,7 @@ namespace CLRProfiler
 
         private void showThisCheckbox_CheckedChanged(object sender, EventArgs e)
         {
-            showThis = showThisCheckbox.Checked;
+            ShowThis = showThisCheckbox.Checked;
         }
     }
 }
