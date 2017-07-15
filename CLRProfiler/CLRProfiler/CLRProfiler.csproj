@@ -408,6 +408,15 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <Content Include="Readme.txt" />
+    <Compile Include="AgeHistogram.Designer.cs">
+      <DependentUpon>AgeHistogram.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AttachTargetPIDForm.Designer.cs">
+      <DependentUpon>AttachTargetPIDForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommentRangeForm.Designer.cs">
+      <DependentUpon>CommentRangeForm.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{967B4E0D-AD0C-4609-AB67-0FA40C0206D8}" />
