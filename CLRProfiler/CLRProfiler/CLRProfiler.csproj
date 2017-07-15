@@ -147,6 +147,10 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="CLRSKU.cs" />
+    <Compile Include="Column.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ColumnInformation.cs" />
     <Compile Include="CommentRangeForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -160,8 +164,14 @@
     <Compile Include="DiffCallTreeForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="DiffColumn.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="DiffDataNode.cs">
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DiffResizeBarCapture.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="DiffStatistics.cs" />
     <Compile Include="DiffTreeListView.cs">
@@ -173,25 +183,39 @@
     <Compile Include="FilterForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="FunctionList.cs" />
+    <Compile Include="HandleInfo.cs" />
     <Compile Include="HelpForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="HelpForm.Designer.cs">
       <DependentUpon>HelpForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Histogram.cs" />
+    <Compile Include="IDiffTreeOwner.cs" />
     <Compile Include="IELAUNCHURLINFO.cs" />
     <Compile Include="InterestLevel.cs" />
+    <Compile Include="ITreeOwner.cs" />
     <Compile Include="ListViewItemComparer.cs" />
+    <Compile Include="LiveObjectTable.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="OmvUsage.cs" />
     <Compile Include="PROCESS_INFORMATION.cs" />
     <Compile Include="ProfConfig.cs" />
+    <Compile Include="ReadLogResult.cs" />
     <Compile Include="ReportKind.cs" />
+    <Compile Include="ResizeBarCapture.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="SampleObjectTable.cs" />
     <Compile Include="SECURITY_ATTRIBUTES.cs" />
+    <Compile Include="StacktraceTable.cs" />
     <Compile Include="Statistics.cs" />
+    <Compile Include="TimePos.cs" />
     <Compile Include="TreeNode.cs" />
+    <Compile Include="TreeNodeBase.cs" />
     <Compile Include="WindowsStoreAppHelperWrapper.cs" />
     <Compile Include="WindowsStoreAppChooserForm.cs">
       <SubType>Form</SubType>
@@ -329,6 +353,9 @@
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TreeNodeBase.resx">
+      <DependentUpon>TreeNodeBase.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WindowsStoreAppChooserForm.resx">
       <DependentUpon>WindowsStoreAppChooserForm.cs</DependentUpon>
