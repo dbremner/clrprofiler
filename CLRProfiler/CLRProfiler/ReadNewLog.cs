@@ -621,6 +621,7 @@ namespace CLRProfiler
             Handle = 0x3,
         };
 
+        [Flags]
         enum GcRootFlags
         {
             Pinning = 0x1,
