@@ -155,13 +155,14 @@ namespace CLRProfiler
             }
         }
 
-        /// <summary>
-        /// Added by Sonal: 
-        /// Writes Difference between two heap dumps
-        /// </summary>
-        /// <param name="histogram"></param>
-        /// <param name="timeMarker"></param>
-        private static void WriteDiffReport(Histogram[] histogram, string[] timeMarker, ReadLogResult entireLogResult)
+	    /// <summary>
+	    /// Added by Sonal: 
+	    /// Writes Difference between two heap dumps
+	    /// </summary>
+	    /// <param name="histogram"></param>
+	    /// <param name="timeMarker"></param>
+	    /// <param name="entireLogResult"></param>
+	    private static void WriteDiffReport(Histogram[] histogram, string[] timeMarker, ReadLogResult entireLogResult)
         {
             TypeDescriptor[] typeIndexToTypeDescriptor = new TypeDescriptor[histogram[0].readNewLog.typeName.Length];
 
