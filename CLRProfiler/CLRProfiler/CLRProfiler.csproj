@@ -533,7 +533,7 @@
     <Compile Include="DiffCallTreeForm.Designer.cs">
       <DependentUpon>DiffCallTreeForm.cs</DependentUpon>
     </Compile>
-	<Compile Include="DiffTreeListView.Designer.cs">
+    <Compile Include="DiffTreeListView.Designer.cs">
       <DependentUpon>DiffTreeListView.cs</DependentUpon>
     </Compile>
   </ItemGroup>
