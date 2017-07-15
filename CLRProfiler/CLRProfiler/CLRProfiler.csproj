@@ -465,6 +465,12 @@
     <Compile Include="SelectColumns.Designer.cs">
       <DependentUpon>SelectColumns.cs</DependentUpon>
     </Compile>
+    <Compile Include="GraphViewForm.Designer.cs">
+      <DependentUpon>GraphViewForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HistogramViewForm.Designer.cs">
+      <DependentUpon>HistogramViewForm.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{967B4E0D-AD0C-4609-AB67-0FA40C0206D8}" />
