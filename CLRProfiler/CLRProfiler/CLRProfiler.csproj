@@ -494,6 +494,9 @@
     <Compile Include="FunctionFind.Designer.cs">
       <DependentUpon>FunctionFind.cs</DependentUpon>
     </Compile>
+    <Compile Include="FilterForm.Designer.cs">
+      <DependentUpon>FilterForm.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{967B4E0D-AD0C-4609-AB67-0FA40C0206D8}" />
