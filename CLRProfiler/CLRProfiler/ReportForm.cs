@@ -49,10 +49,10 @@ namespace CLRProfiler
 		private const int idx_diffIncl = 7;
 		private const int idx_depth = 14;
 
-	    private readonly DataGridTableStyle styleBase = new DataGridTableStyle();
-	    private readonly DataGridTableStyle styleCaller = new DataGridTableStyle();
-	    private readonly DataGridTableStyle styleCallee = new DataGridTableStyle();
-	    private readonly DataGridTableStyle styleSelected = new DataGridTableStyle();
+	    [NotNull] private readonly DataGridTableStyle styleBase = new DataGridTableStyle();
+	    [NotNull] private readonly DataGridTableStyle styleCaller = new DataGridTableStyle();
+	    [NotNull] private readonly DataGridTableStyle styleCallee = new DataGridTableStyle();
+	    [NotNull] private readonly DataGridTableStyle styleSelected = new DataGridTableStyle();
 
         private DiffCallTreeForm diffcallTreeForm;
 		private AllocationDiff	_allocDiff;
@@ -285,7 +285,7 @@ namespace CLRProfiler
 			Detail0Style(dgSelected, _allocDiff.basedatatable,styleSelected, 10);
 			Detail0Style(dgCallee, _allocDiff.ContriTocalleetbl, styleCallee, 7);
 		}
-		private void Detail0Style(DataGrid dg, DataTable dt, DataGridTableStyle style, int dghightf)
+		private void Detail0Style([NotNull] DataGrid dg, [NotNull] DataTable dt, [NotNull] DataGridTableStyle style, int dghightf)
 		{
 			if(!dg.TableStyles.Contains(style))
 			{
