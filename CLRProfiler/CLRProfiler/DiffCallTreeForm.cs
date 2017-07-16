@@ -107,13 +107,13 @@ namespace CLRProfiler
 		private void SortOn(object obj, EventArgs e)
 		{
 			ColumnInformation ci = ((DiffColumn)obj).ColumnInformation;
-			if(viewState.sort.counterId == (int)ci.Token)
+			if(viewState.sort.counterId == ci.Token)
 			{
 				viewState.sort.sortingOrder *= -1;
 			}
 			else
 			{
-				viewState.sort.counterId = (int)ci.Token;
+				viewState.sort.counterId = ci.Token;
 				viewState.sort.sortingOrder = (viewState.sort.counterId == -1 ? -1 : 1);
 			}
 			diffCallTreeView.Resort();
@@ -315,7 +315,7 @@ namespace CLRProfiler
 		 * object's ToString() is used to display that data */
 		public object GetInfo(object obj, TreeNodeBase node, ColumnInformation info)
 		{
-			return GetInfo(obj, node, info == null ? -1 : (int)info.Token);
+			return GetInfo(obj, node, info == null ? -1 : info.Token);
 		}
 
 		#region GUI function

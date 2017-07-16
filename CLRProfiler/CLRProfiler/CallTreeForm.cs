@@ -1690,13 +1690,13 @@ namespace CLRProfiler
         private void SortOn(object obj, EventArgs e)
         {
             ColumnInformation ci = ((Column)obj).ColumnInformation;
-            if(viewState.sort.counterId == (int)ci.Token)
+            if(viewState.sort.counterId == ci.Token)
             {
                 viewState.sort.sortingOrder *= -1;
             }
             else
             {
-                viewState.sort.counterId = (int)ci.Token;
+                viewState.sort.counterId = ci.Token;
                 viewState.sort.sortingOrder = (viewState.sort.counterId == -1 ? -1 : 1);
             }
             Debug.Assert(callTreeView != null, "callTreeView != null");
@@ -1790,7 +1790,7 @@ namespace CLRProfiler
          * object's ToString() is used to display that data */
         public object GetInfo(object obj, TreeNodeBase node, ColumnInformation info)
         {
-            return GetInfo(obj, node, info == null ? -1 : (int)info.Token);
+            return GetInfo(obj, node, info == null ? -1 : info.Token);
         }
 
         /* sort nodes at the branch level */
@@ -1984,7 +1984,7 @@ namespace CLRProfiler
             var l = callTreeView.GetColumns();
             for(int i = 1; i < l.Count; i++)
             {
-                f.Set((int)((Column)l[i]).ColumnInformation.Token);
+                f.Set(((Column)l[i]).ColumnInformation.Token);
             }
 
             DialogResult res = f.ShowDialog(this);

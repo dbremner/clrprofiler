@@ -9,16 +9,14 @@ namespace CLRProfiler
         internal enum ColumnTypes {Tree, String, OwnerDraw};
 
         internal readonly string Text;
-        internal readonly object Token;
+        internal readonly int Token;
         internal readonly ColumnTypes ColumnType;
 
-        internal ColumnInformation(object token, string name, ColumnTypes ct)
+        internal ColumnInformation(int token, string name, ColumnTypes ct)
         {
             Text = name;
             Token = token;
             ColumnType = ct;
         }
-
-        internal ColumnInformation(object token, string name) : this(token, name, ColumnTypes.String) {}
     }
 }
