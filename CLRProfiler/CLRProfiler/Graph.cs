@@ -90,7 +90,7 @@ namespace CLRProfiler
 
         internal Vertex CreateVertex(string name, string signature, string key)
         {
-            Vertex vertex = new Vertex(name, signature, null, this);
+            var vertex = new Vertex(name, signature, null, this);
             vertices[key] = vertex;
             return vertex;
         }

@@ -90,7 +90,7 @@ namespace CLRProfiler
         override protected void OnPaint(PaintEventArgs e)
         {
             Graphics g = e.Graphics;
-            Rectangle size = new Rectangle(new Point(0, 0), new Size(Size.Width - 1, Size.Height - 1));
+            var size = new Rectangle(new Point(0, 0), new Size(Size.Width - 1, Size.Height - 1));
             g.DrawRectangle(blackPen, size);
             g.DrawString(text, font, new SolidBrush(Color.Black), new Point(textX, textY));
         }

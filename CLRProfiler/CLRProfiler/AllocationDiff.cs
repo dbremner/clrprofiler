@@ -1051,7 +1051,7 @@ namespace CLRProfiler
 					}
 				
 					string name = _currcallTrace.MakeName(kidNode);
-					DiffDataNode node = new DiffDataNode(name);
+					var node = new DiffDataNode(name);
 					node.currIncl = kidNode.data.bytesAllocated;
 					node.currCalls = kidNode.data.numberOfFunctionsCalled;
 														
@@ -1091,7 +1091,7 @@ namespace CLRProfiler
 
 		    for( int i = 0; i < treeNode.Count; i++)
 			{
-				TreeNode kidNode = treeNode[i] as TreeNode;
+				var kidNode = treeNode[i] as TreeNode;
 				if(kidNode.data.bytesAllocated >0)
 				{
 					
@@ -1107,7 +1107,7 @@ namespace CLRProfiler
 					}
 				
 					string name = _prevcallTrace.MakeName(kidNode);
-					DiffDataNode node = new DiffDataNode(name);
+					var node = new DiffDataNode(name);
 					node.prevIncl = kidNode.data.bytesAllocated;
 					node.prevCalls = kidNode.data.numberOfFunctionsCalled;
 				
@@ -1152,7 +1152,7 @@ namespace CLRProfiler
 			{
 				if( !((DiffDataNode)currKids[i]).marked)
 				{
-					DiffDataNode node = new DiffDataNode( ((DiffDataNode)currKids[i]).name);
+					var node = new DiffDataNode( ((DiffDataNode)currKids[i]).name);
 					int idx = CurrExactMatchIndex(prevKids, (DiffDataNode) currKids[i]);
 					if(idx >=0)
 					{
@@ -1198,7 +1198,7 @@ namespace CLRProfiler
 			{
 				if( !((DiffDataNode)prevKids[i]).marked)
 				{
-					DiffDataNode node = new DiffDataNode( ((DiffDataNode)prevKids[i]).name);
+					var node = new DiffDataNode( ((DiffDataNode)prevKids[i]).name);
 					int idx = PrevExactMatchIndex(currKids, (DiffDataNode) prevKids[i]);
 					if(idx >=0)
 					{
@@ -1246,7 +1246,7 @@ namespace CLRProfiler
 				
 				if( !((DiffDataNode)curr[i]).marked)
 				{
-					DiffDataNode node = new DiffDataNode( ((DiffDataNode)curr[i]).name);
+					var node = new DiffDataNode( ((DiffDataNode)curr[i]).name);
 					int idx = FirstMatchIndex(prevKids, (DiffDataNode) curr[i]);
 					if(idx >=0)
 					{
@@ -1309,7 +1309,7 @@ namespace CLRProfiler
 			{
 				if(!((DiffDataNode)prev[i]).marked)
 				{
-					DiffDataNode node = new DiffDataNode( ((DiffDataNode)prev[i]).name);
+					var node = new DiffDataNode( ((DiffDataNode)prev[i]).name);
 					
 					// prev not exist in curr
 					node.prevFunId = ((DiffDataNode)prev[i]).prevFunId;
@@ -1453,7 +1453,7 @@ namespace CLRProfiler
 				string name = sumNode.mapname;
 				if(kidSum.ContainsKey(name))
 				{
-					DiffDataNode updateNode = kidSum[name] as DiffDataNode;
+					var updateNode = kidSum[name] as DiffDataNode;
 					updateNode.prevIncl += sumNode.prevIncl;
 					updateNode.currIncl += sumNode.currIncl;
 					updateNode.diffIncl = updateNode.currIncl - updateNode.prevIncl;
@@ -1510,7 +1510,7 @@ namespace CLRProfiler
 
 			foreach(string key in kidSum.Keys)
 			{
-				DiffDataNode sumNode = kidSum[key] as DiffDataNode;
+				var sumNode = kidSum[key] as DiffDataNode;
 				if(! (sumNode.diffIncl == 0))
 				{
 					parent.allkids.Add(sumNode);
@@ -1546,7 +1546,7 @@ namespace CLRProfiler
 		internal DiffDataNode Row2Node(DataRow r)
 		{
 			string name = r[idx_name].ToString();
-			DiffDataNode node = new DiffDataNode(name); 
+			var node = new DiffDataNode(name); 
 			
 			node.mapname = r[idx_mapname].ToString();
 				
@@ -1679,7 +1679,7 @@ namespace CLRProfiler
 				bufPos = 0;
 				bufLevel = 0;
 				line = 1;
-				StringBuilder sb = new StringBuilder();
+				var sb = new StringBuilder();
 				c = ReadChar();
 
 			    string assemblyName = null;

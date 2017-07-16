@@ -87,7 +87,7 @@ namespace CLRProfiler
                     py = checkBoxes[i - 2].Bottom;
                 }
 
-                CheckBox box = new CheckBox();
+                var box = new CheckBox();
                 box.Parent = this;
                 box.Visible = true;
                 box.Location = new Point(px, py);

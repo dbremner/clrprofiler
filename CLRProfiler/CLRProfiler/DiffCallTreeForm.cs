@@ -73,12 +73,12 @@ namespace CLRProfiler
 		    InitializeComponent();
 			defaultFont = new Font(new FontFamily("Tahoma"), 8);
 			
-			DiffTreeListView treeView = new DiffTreeListView(this);
+			var treeView = new DiffTreeListView(this);
 			treeView.Dock = DockStyle.Fill;
 			treeView.Font = defaultFont;
 
-			SortingBehaviour sort = new SortingBehaviour();
-			SortingBehaviour highlight = new SortingBehaviour();
+			var sort = new SortingBehaviour();
+			var highlight = new SortingBehaviour();
 			sort.sortingOrder = highlight.sortingOrder = -1;
 			sort.counterId = -1;
 			highlight.counterId = 2;
@@ -150,7 +150,7 @@ namespace CLRProfiler
 		public Color GetColor(object obj, TreeNodeBase root, bool positive)
 		{
 			//###TreeNode node = (TreeNode)root;
-			DiffDataNode node = (DiffDataNode)root;
+			var node = (DiffDataNode)root;
 			int idx = (int)node.nodetype + (positive ? 0 : 3);
             //FIXME
 		    Color[] colors = new Color[]
@@ -171,7 +171,7 @@ namespace CLRProfiler
 		public Font GetFont(object obj, TreeNodeBase in_node)
 		{
 			 //###TreeNode node = (TreeNode)in_node;
-			DiffDataNode node = (DiffDataNode)in_node;
+			var node = (DiffDataNode)in_node;
 			FontStyle fs = FontStyle.Regular;
 			if(node.data.firstTimeBroughtIn)
 			{
@@ -227,13 +227,13 @@ namespace CLRProfiler
 			/* this is needed to use the default Compare method */
 			viewState.sort = viewState.highlight;
 			var nodesToHighlight = new ArrayList();
-			DiffDataNode currentBest = (DiffDataNode)nodesAtOneLevel[0];
+			var currentBest = (DiffDataNode)nodesAtOneLevel[0];
 
 			currentBest.highlighted = false;
 			nodesToHighlight.Add(currentBest);
 			for(int i = 1; i < nodesAtOneLevel.Count; i++)
 			{
-				DiffDataNode n = (DiffDataNode)nodesAtOneLevel[i];
+				var n = (DiffDataNode)nodesAtOneLevel[i];
 				n.highlighted = false;
 
 				int res = Compare(currentBest, n) * viewState.highlight.sortingOrder;
@@ -266,8 +266,8 @@ namespace CLRProfiler
 		/* implements IComparer that compares the nodes according to the current sorting order */
 		public int Compare(object x, object y)
 		{
-			DiffDataNode a = (DiffDataNode)x;
-			DiffDataNode b = (DiffDataNode)y;
+			var a = (DiffDataNode)x;
+			var b = (DiffDataNode)y;
 
 			if(viewState.sort.counterId == -1)
 			{
@@ -276,8 +276,8 @@ namespace CLRProfiler
 				return a.nodeId.CompareTo(b.nodeId);
 			}
 
-			IComparable aa = (IComparable)GetInfo(null, a, viewState.sort.counterId);
-			IComparable bb = (IComparable)GetInfo(null, b, viewState.sort.counterId);
+			var aa = (IComparable)GetInfo(null, a, viewState.sort.counterId);
+			var bb = (IComparable)GetInfo(null, b, viewState.sort.counterId);
 			try
 			{
 				return aa.CompareTo(bb);
@@ -297,7 +297,7 @@ namespace CLRProfiler
 		{
 			long number;
 			//###TreeNode root = (TreeNode)node;
-			DiffDataNode root = (DiffDataNode)node;
+			var root = (DiffDataNode)node;
 			if(counterId < 0)
 			{
 				//return MakeName(root);

@@ -142,9 +142,9 @@ namespace CLRProfiler
                             File.Delete(_allocDiff.diffLogFileName);
                         }
 
-                        FileStream fs = new FileStream(_allocDiff.diffLogFileName,
+                        var fs = new FileStream(_allocDiff.diffLogFileName,
 							FileMode.CreateNew, FileAccess.Write, FileShare.None);
-						StreamWriter sw = new StreamWriter(fs);
+						var sw = new StreamWriter(fs);
 						sw.WriteLine("Report profiler Error message: \n{0}\n",  e.Message);
 						sw.Close();
 						
@@ -174,7 +174,7 @@ namespace CLRProfiler
 				{
 					if( _allocDiff.diffLogFileName != _allocDiff.PrevLogFileName &&  _allocDiff.diffLogFileName != _allocDiff.CurrLogFileName)
 					{
-						StringBuilder sb = new StringBuilder();
+						var sb = new StringBuilder();
 						sb.AppendFormat("{0}\t {1}\t {2}\t {3}\t {4}\t {4}\t {6}\r\n",  "Function/type Name", "Inclusive", "Diff_Inclusive(KB)", "timesBeenCalled", "Diff_timesBeenCalled", "timesCalls", "Diff_timesCalls");
 						for(int i = 0; i< topdiff.Length; i++)
 						{
@@ -186,9 +186,9 @@ namespace CLRProfiler
                             File.Delete(_allocDiff.diffLogFileName);
                         }
 
-                        FileStream fs = new FileStream(_allocDiff.diffLogFileName,
+                        var fs = new FileStream(_allocDiff.diffLogFileName,
 							FileMode.CreateNew, FileAccess.Write, FileShare.None);
-						StreamWriter sw = new StreamWriter(fs);
+						var sw = new StreamWriter(fs);
 						sw.Write(sb);
 						sw.Close();
 					}
@@ -288,68 +288,68 @@ namespace CLRProfiler
 				
 				style.MappingName = dt.TableName;
 				style.AlternatingBackColor = System.Drawing.Color.Beige;
-				DataGridTextBoxColumn name = new  DataGridTextBoxColumn();
+				var name = new  DataGridTextBoxColumn();
 				name.HeaderText = "Function names";
 				name.MappingName = "name";
 				name.Width = with * 55/100;
 
-				DataGridTextBoxColumn prev = new DataGridTextBoxColumn();
+				var prev = new DataGridTextBoxColumn();
 				prev.HeaderText = "Old Incl (KB)";
 				prev.MappingName = "prevIncl";
 			
-				DataGridTextBoxColumn curr = new DataGridTextBoxColumn();
+				var curr = new DataGridTextBoxColumn();
 				curr.HeaderText = " New Incl (KB)";
 				curr.MappingName = "currIncl";
 			
-				DataGridTextBoxColumn diff = new DataGridTextBoxColumn();
+				var diff = new DataGridTextBoxColumn();
 				diff.HeaderText = "Diff Incl (KB)";
 				diff.MappingName = "diffIncl";
 	
-				DataGridTextBoxColumn prevExcl = new DataGridTextBoxColumn();
+				var prevExcl = new DataGridTextBoxColumn();
 				prevExcl.HeaderText = "Old Excl (KB)";
 				prevExcl.MappingName = "prevExcl";
 			
-				DataGridTextBoxColumn currExcl= new DataGridTextBoxColumn();
+				var currExcl= new DataGridTextBoxColumn();
 				currExcl.HeaderText = "New Excl (KB)";
 				currExcl.MappingName = "currExcl";
 			
-				DataGridTextBoxColumn diffExcl = new DataGridTextBoxColumn();
+				var diffExcl = new DataGridTextBoxColumn();
 				diffExcl.HeaderText = "Diff Excl (KB)";
 				diffExcl.MappingName = "diffExcl";
 
-				DataGridTextBoxColumn prevChildIncl = new DataGridTextBoxColumn();
+				var prevChildIncl = new DataGridTextBoxColumn();
 				prevChildIncl.HeaderText = "Old ChildIncl (KB)";
 				prevChildIncl.MappingName = "prevChildIncl";
 
-				DataGridTextBoxColumn currChildIncl = new DataGridTextBoxColumn();
+				var currChildIncl = new DataGridTextBoxColumn();
 				currChildIncl.HeaderText = "New ChildIncl (KB)";
 				currChildIncl.MappingName = "currChildIncl";
 
-				DataGridTextBoxColumn diffChildIncl = new DataGridTextBoxColumn();
+				var diffChildIncl = new DataGridTextBoxColumn();
 				diffChildIncl.HeaderText = "Diff ChildIncl (KB)";
 				diffChildIncl.MappingName = "diffChildIncl";
 
-				DataGridTextBoxColumn prevTimesCalled = new DataGridTextBoxColumn();
+				var prevTimesCalled = new DataGridTextBoxColumn();
 				prevTimesCalled.HeaderText = "# Old Called";
 				prevTimesCalled.MappingName = "prevTimesCalled";
 
-				DataGridTextBoxColumn currTimesCalled = new DataGridTextBoxColumn();
+				var currTimesCalled = new DataGridTextBoxColumn();
 				currTimesCalled.HeaderText = "# New  Called";
 				currTimesCalled.MappingName = "currTimesCalled";
 
-				DataGridTextBoxColumn diffTimesCalled = new DataGridTextBoxColumn();
+				var diffTimesCalled = new DataGridTextBoxColumn();
 				diffTimesCalled.HeaderText = "# Diff Called";
 				diffTimesCalled.MappingName = "diffTimesCalled";
 
-				DataGridTextBoxColumn prevTimesMakecalls = new DataGridTextBoxColumn();
+				var prevTimesMakecalls = new DataGridTextBoxColumn();
 				prevTimesMakecalls.HeaderText = "# Old Calls";
 				prevTimesMakecalls.MappingName = "prevTimesMakecalls";
 
-				DataGridTextBoxColumn currTimesMakecalls = new DataGridTextBoxColumn();
+				var currTimesMakecalls = new DataGridTextBoxColumn();
 				currTimesMakecalls.HeaderText = "# New Calls";
 				currTimesMakecalls.MappingName = "currTimesMakecalls";
 
-				DataGridTextBoxColumn diffTimesMakecalls = new DataGridTextBoxColumn();
+				var diffTimesMakecalls = new DataGridTextBoxColumn();
 				diffTimesMakecalls.HeaderText = "# Diff Calls";
 				diffTimesMakecalls.MappingName = "diffTimesMakecalls";
 
@@ -620,8 +620,8 @@ namespace CLRProfiler
 				return;
 			}
 						
-			DiffDataNode root = new DiffDataNode(name);
-			DiffDataNode tmproot = new DiffDataNode(name);
+			var root = new DiffDataNode(name);
+			var tmproot = new DiffDataNode(name);
 			tmproot.mapname = name;
 			root.mapname = name;
 			root.prevIncl = prevIncl;
@@ -714,13 +714,13 @@ namespace CLRProfiler
 					{
 						if(depLst.ContainsKey(depth))
 						{
-							ArrayList lst = (ArrayList)depLst[depth];
+							var lst = (ArrayList)depLst[depth];
 							for(int i = 0; i < lst.Count; i++)
 							{
-								DataRow r = (DataRow)lst[i];
+								var r = (DataRow)lst[i];
 								tmproot = _allocDiff.Row2Node(r);
 								diffkey = tmproot.mapname + tmproot.prevIncl + tmproot.currIncl + tmproot.diffIncl + tmproot.prevFunId + tmproot.currFunId;
-								DiffDataNode subRoot =  _allocDiff.diffCallTreeNodes[diffkey] as DiffDataNode;
+								var subRoot =  _allocDiff.diffCallTreeNodes[diffkey] as DiffDataNode;
 								root.allkids.Add(subRoot);
 							}
 						}
@@ -734,7 +734,7 @@ namespace CLRProfiler
 							if(tmproot.depth > 0)
 							{
 								diffkey = tmproot.mapname + tmproot.prevIncl + tmproot.currIncl + tmproot.diffIncl + tmproot.prevFunId + tmproot.currFunId;
-								DiffDataNode subRoot =  _allocDiff.diffCallTreeNodes[diffkey] as DiffDataNode;
+								var subRoot =  _allocDiff.diffCallTreeNodes[diffkey] as DiffDataNode;
 								root.allkids.Add(subRoot);
 							}
 						}

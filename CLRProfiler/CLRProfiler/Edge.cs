@@ -25,7 +25,7 @@ namespace CLRProfiler
         internal Point fromPoint, toPoint;
         public int CompareTo(Object o)
         {
-            Edge e = (Edge)o;
+            var e = (Edge)o;
             int diff = this.ToVertex.rectangle.Top - e.ToVertex.rectangle.Top;
             if (diff != 0)
             {

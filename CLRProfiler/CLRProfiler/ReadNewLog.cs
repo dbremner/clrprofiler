@@ -757,7 +757,7 @@ namespace CLRProfiler
 
         internal void ReadFile(long startFileOffset, long endFileOffset, ReadLogResult readLogResult, int requestedIndex)
         {
-            ProgressForm progressForm = new ProgressForm();
+            var progressForm = new ProgressForm();
             progressForm.Text = string.Format("Progress loading {0}", fileName);
             progressForm.Visible = progressFormVisible;
             progressForm.setProgress(0);
@@ -808,7 +808,7 @@ namespace CLRProfiler
                 int maxProgress = (int)(r.BaseStream.Length/1024);
                 progressForm.setMaximum(maxProgress);
                 line = 1;
-                StringBuilder sb = new StringBuilder();
+                var sb = new StringBuilder();
                 ulong[] ulongStack = new ulong[1000];
                 int[] intStack = new int[1000];
                 int stackPtr = 0;
@@ -1058,8 +1058,8 @@ namespace CLRProfiler
                                 readLogResult.objectGraph = new ObjectGraph(this, lastTickIndex);
                             }
                             ulong objectID = ReadULong();
-                            GcRootKind rootKind = (GcRootKind)ReadInt();
-                            GcRootFlags rootFlags = (GcRootFlags)ReadInt();
+                            var rootKind = (GcRootKind)ReadInt();
+                            var rootFlags = (GcRootFlags)ReadInt();
                             ulong rootID = ReadULong();
                             ObjectGraph objectGraph = readLogResult.objectGraph;
                             if (c != -1 && objectID > 0 && objectGraph != null && (rootFlags & GcRootFlags.WeakRef) == 0)

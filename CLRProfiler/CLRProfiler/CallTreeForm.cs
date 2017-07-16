@@ -432,18 +432,18 @@ namespace CLRProfiler
 
             foreach(int e in threads.Keys)
             {
-                TabPage page = new TabPage(e.ToString());
+                var page = new TabPage(e.ToString());
                 page.BorderStyle = BorderStyle.None;
 
-                TreeListView treeView = new TreeListView(this);
+                var treeView = new TreeListView(this);
                 treeView.Dock = DockStyle.Fill;
                 treeView.Font = defaultFont;
 
                 /* initial sorting and highlighting behaviour:
                     * 1) sort in order of execution,
                     * 2) highlight the one that allocated the most */
-                SortingBehaviour sort = new SortingBehaviour();
-                SortingBehaviour highlight = new SortingBehaviour();
+                var sort = new SortingBehaviour();
+                var highlight = new SortingBehaviour();
                 sort.sortingOrder = highlight.sortingOrder = -1;
                 sort.counterId = -1;
                 highlight.counterId = 2;
@@ -503,7 +503,7 @@ namespace CLRProfiler
             
 
                 // Create a blank context menu for the stackview control.  We'll fill it in when the user right clicks
-                ContextMenu contextMenu = new ContextMenu();
+                var contextMenu = new ContextMenu();
                 stackView.ContextMenu = contextMenu;
             }
             
@@ -545,7 +545,7 @@ namespace CLRProfiler
             {
                 SetcallTreeView();
             }
-            TreeNode node = (TreeNode)callTreeView.SelectedItem;
+            var node = (TreeNode)callTreeView.SelectedItem;
             if(node == null)
             {
                 return;
@@ -583,7 +583,7 @@ namespace CLRProfiler
             /* build and show child subtree */
             if (node.nodetype == TreeNode.NodeType.Call && fShowSubtree)
             {
-                SortedList fns = new SortedList();
+                var fns = new SortedList();
                 GetChildren( node, fns );
 
                 if (fns.Count > 0 )
@@ -608,7 +608,7 @@ namespace CLRProfiler
 
                 while(enumFns.MoveNext())
                 {
-                    GlobalCallStats s = (GlobalCallStats)enumFns.Value;
+                    var s = (GlobalCallStats)enumFns.Value;
                     int fid = (int)enumFns.Key;
                     string[] subitems = new string[]
                     {
@@ -619,7 +619,7 @@ namespace CLRProfiler
                         s.totalNewFunctionsBroughtIn.ToString()
                     };
 
-                    ListViewItem item = new ListViewItem(subitems);
+                    var item = new ListViewItem(subitems);
                     if (fid < 0)
                     {
                         //  Allocation item
@@ -641,7 +641,7 @@ namespace CLRProfiler
                     s.timesAllocated.ToString(),
                     s.totalBytesAllocated.ToString()
                 };
-                ListViewItem item = new ListViewItem(subitems);
+                var item = new ListViewItem(subitems);
                 item.ForeColor = Color.Green;
                 stackView.Items.Add(item);
             }
@@ -892,7 +892,7 @@ namespace CLRProfiler
         /*  Get the id of the selected allocation or call node */
         public int GetNodeId( TreeNodeBase node )
         {
-            TreeNode n = (TreeNode)node;
+            var n = (TreeNode)node;
             int id = -1;
 
             if(n.nodetype == TreeNode.NodeType.AssemblyLoad)
@@ -968,8 +968,8 @@ namespace CLRProfiler
         /* incorporate the information computed about the kid (k) into its parent (r) */
         void UpdateStats(object r, object k)
         {
-            TreeNode root = (TreeNode)r;
-            TreeNode kid = (TreeNode)k;
+            var root = (TreeNode)r;
+            var kid = (TreeNode)k;
 
             root.data.bytesAllocated += kid.data.bytesAllocated;
             root.data.bytesAllocatedByKids += kid.data.bytesAllocated;
@@ -990,7 +990,7 @@ namespace CLRProfiler
         /* read kids of a node from the backing store */
         public ArrayList FetchKids(object tokenObject, TreeNodeBase nodebase)
         {
-            TreeNode node = (TreeNode)nodebase;
+            var node = (TreeNode)nodebase;
             var kids = new ArrayList();
 
             for(long offset = node.kidOffset; offset != -1; offset = node.prevOffset)
@@ -1079,7 +1079,7 @@ namespace CLRProfiler
                 bufPos = 0;
                 bufLevel = 0;
                 line = 1;
-                StringBuilder sb = new StringBuilder();
+                var sb = new StringBuilder();
                 c = ReadChar();
 
                 string assemblyName = null;
@@ -1332,7 +1332,7 @@ namespace CLRProfiler
                             state.functions = new SortedList();
                             state.queuedNodes = new ArrayList();
 
-                            TreeNode threadRoot = new TreeNode(TreeNode.NodeType.Call, 0);
+                            var threadRoot = new TreeNode(TreeNode.NodeType.Call, 0);
                             state.stack.Add(threadRoot);
 
                             threads[threadid] = state;
@@ -1379,7 +1379,7 @@ namespace CLRProfiler
                             // exist.   Searching for a match would be expensive, so for now just do a new allocation.
                             // If this becomes hugely expensive, it will be worth making the stack trace searchable.
                             stacktraceTable.Add( nextStackIndex, stacktrace, 2, i+1, false);
-                            TreeNode callnode = new TreeNode(TreeNode.NodeType.Call, nextStackIndex);
+                            var callnode = new TreeNode(TreeNode.NodeType.Call, nextStackIndex);
                             callnode.nodeOffset = lastLineStartPos;
                             queuedNodes.Add( callnode );
 
@@ -1422,7 +1422,7 @@ namespace CLRProfiler
                         stacktrace.CopyTo( prevStackTrace, 0 );
                     }
 
-                    TreeNode node = new TreeNode(nodetype, stackid);
+                    var node = new TreeNode(nodetype, stackid);
                     int functionId = (nodetype != TreeNode.NodeType.AssemblyLoad ? stacktrace[stacktrace.Length - 1] : 0);
                     
                     
@@ -1484,7 +1484,7 @@ namespace CLRProfiler
                             {
                                 for(int idx = 1; idx < depth; idx++)
                                 {
-                                    TreeNode n = new TreeNode(TreeNode.NodeType.Call, -idx);
+                                    var n = new TreeNode(TreeNode.NodeType.Call, -idx);
                                     n.nodeOffset = lastLineStartPos;
                                     stack.Add(n);
                                 }
@@ -1599,7 +1599,7 @@ namespace CLRProfiler
 
             /* remove spurious threads from the thread array. don't think
              * it's an issue anymore but the code doesn't do anybody no harm */
-            List<int> nulls = new List<int>();
+            var nulls = new List<int>();
             foreach(int key in threads.Keys)
             {
                 if (threads[key] == null)
@@ -1700,8 +1700,8 @@ namespace CLRProfiler
         /* implements IComparer that compares the nodes according to the current sorting order */
         public int Compare(object x, object y)
         {
-            TreeNode a = (TreeNode)x;
-            TreeNode b = (TreeNode)y;
+            var a = (TreeNode)x;
+            var b = (TreeNode)y;
 
             if(viewState.sort.counterId == -1)
             {
@@ -1709,8 +1709,8 @@ namespace CLRProfiler
                 return a.prevOffset.CompareTo(b.prevOffset);
             }
 
-            IComparable aa = (IComparable)GetInfo(null, a, viewState.sort.counterId);
-            IComparable bb = (IComparable)GetInfo(null, b, viewState.sort.counterId);
+            var aa = (IComparable)GetInfo(null, a, viewState.sort.counterId);
+            var bb = (IComparable)GetInfo(null, b, viewState.sort.counterId);
             try
             {
                 return aa.CompareTo(bb);
@@ -1727,7 +1727,7 @@ namespace CLRProfiler
         /* returns font used to display the item (part of the ITreeOwner interface) */
         public Font GetFont(object obj, TreeNodeBase in_node)
         {
-            TreeNode node = (TreeNode)in_node;
+            var node = (TreeNode)in_node;
             FontStyle fs = FontStyle.Regular;
             if(node.data.firstTimeBroughtIn)
             {
@@ -1743,7 +1743,7 @@ namespace CLRProfiler
         /* returns color used to display the item (part of the ITreeOwner interface) */
         public Color GetColor(object obj, TreeNodeBase root, bool positive)
         {
-            TreeNode node = (TreeNode)root;
+            var node = (TreeNode)root;
             int idx = (int)node.nodetype + (positive ? 0 : 3);
             //FIXME
             Color[] colors = new Color[]
@@ -1763,7 +1763,7 @@ namespace CLRProfiler
         private object GetInfo(object obj, TreeNodeBase node, int counterId)
         {
             long number = 0;
-            TreeNode root = (TreeNode)node;
+            var root = (TreeNode)node;
             if(counterId < 0)
             {
                 return MakeName(root);
@@ -1827,13 +1827,13 @@ namespace CLRProfiler
             /* this is needed to use the default Compare method */
             viewState.sort = viewState.highlight;
             var nodesToHighlight = new ArrayList();
-            TreeNode currentBest = (TreeNode)nodesAtOneLevel[0];
+            var currentBest = (TreeNode)nodesAtOneLevel[0];
 
             currentBest.highlighted = false;
             nodesToHighlight.Add(currentBest);
             for(int i = 1; i < nodesAtOneLevel.Count; i++)
             {
-                TreeNode n = (TreeNode)nodesAtOneLevel[i];
+                var n = (TreeNode)nodesAtOneLevel[i];
                 n.highlighted = false;
 
                 int res = Compare(currentBest, n) * viewState.highlight.sortingOrder;
@@ -1970,7 +1970,7 @@ namespace CLRProfiler
 
         private void selectColumns_Click(object sender, System.EventArgs e)
         {
-            SelectColumns f = new SelectColumns();
+            var f = new SelectColumns();
 
             /* 0 is "function name", it's irrelevant */
             var l = callTreeView.GetColumns();
@@ -1999,12 +1999,12 @@ namespace CLRProfiler
 
         private void menuItem2_Click(object sender, System.EventArgs e)
         {
-            SortAndHighlightSelector s = new SortAndHighlightSelector(viewState.sort, viewState.highlight);
+            var s = new SortAndHighlightSelector(viewState.sort, viewState.highlight);
             DialogResult res = s.ShowDialog(this);
             if(res == DialogResult.OK)
             {
-                SortingBehaviour ss = new SortingBehaviour();
-                SortingBehaviour hh = new SortingBehaviour();
+                var ss = new SortingBehaviour();
+                var hh = new SortingBehaviour();
                 s.GetSortResults(ss, hh);
 
                 if(ss.sortingOrder != viewState.sort.sortingOrder || ss.counterId != viewState.sort.counterId ||
@@ -2019,7 +2019,7 @@ namespace CLRProfiler
 
         private void menuItem3_Click(object sender, System.EventArgs e)
         {
-            ViewFilter vf = new ViewFilter(viewState.showCalls, viewState.showAllocs, viewState.showAssemblies);
+            var vf = new ViewFilter(viewState.showCalls, viewState.showAllocs, viewState.showAssemblies);
             DialogResult res = vf.ShowDialog(this);
             if(res == DialogResult.OK)
             {
@@ -2037,7 +2037,7 @@ namespace CLRProfiler
 
         private void menuItem5_Click(object sender, System.EventArgs e)
         {
-            ListViewer lv = new ListViewer();
+            var lv = new ListViewer();
             lv.Text = "Functions";
 
             lv.list.Columns.Clear();
@@ -2074,7 +2074,7 @@ namespace CLRProfiler
 
         private void menuItem6_Click(object sender, System.EventArgs e)
         {
-            ListViewer lv = new ListViewer();
+            var lv = new ListViewer();
             lv.Text = "Functions";
 
             lv.list.Columns.Clear();
@@ -2112,7 +2112,7 @@ namespace CLRProfiler
                 SetcallTreeView();
             }
             var columns = callTreeView.GetColumns();
-            Column callTreeColumn = (Column) columns[0];
+            var callTreeColumn = (Column) columns[0];
             int violations = 0, newWidth = callTreeColumn.Width + splitter.Location.X - previousSplitterLocation;
             if(newWidth < 20)
             {
@@ -2134,7 +2134,7 @@ namespace CLRProfiler
 
         private void menuItem7_Click(object sender, System.EventArgs e)
         {
-            DlgFunctionFilter dlgFunctionFilter = new DlgFunctionFilter( this );
+            var dlgFunctionFilter = new DlgFunctionFilter( this );
 
             if ( dlgFunctionFilter.ShowDialog()== DialogResult.OK)
             {
@@ -2154,7 +2154,7 @@ namespace CLRProfiler
         // copy the stack
         private void menuItem9_Click(object sender, System.EventArgs e)
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
 
             bool fFirstHeader = true;
 
@@ -2301,7 +2301,7 @@ namespace CLRProfiler
 
         private void stackView_ContextMenuSelection(object sender, System.EventArgs e) 
         {
-            MenuItem miClicked = (MenuItem)sender;
+            var miClicked = (MenuItem)sender;
 
             switch (miClicked.Index)
             {

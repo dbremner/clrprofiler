@@ -27,7 +27,7 @@ namespace CLRProfiler
         {
             if(track != -1)
             {
-                DiffColumn left = (DiffColumn)columns[track];
+                var left = (DiffColumn)columns[track];
 
                 int ll = left.Left;
                 if(e.X < ll + 15)

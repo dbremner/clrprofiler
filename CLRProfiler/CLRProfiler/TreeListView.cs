@@ -196,7 +196,7 @@ namespace CLRProfiler
 			// log = new StreamWriter("test.log");
 
 			// Create a blank context menu.  We'll fill it in when the user right clicks
-			ContextMenu contextMenu = new ContextMenu();
+			var contextMenu = new ContextMenu();
 			ContextMenu = contextMenu;
 		}
 
@@ -220,7 +220,7 @@ namespace CLRProfiler
 			int height = Font.Height + 5;
 			for(IEnumerator e = columns.GetEnumerator(); e.MoveNext();)
 			{
-				Column current = (Column)e.Current;
+				var current = (Column)e.Current;
 				current.SuspendLayout();
 				current.Location = new Point(position, 0);
 				if(height > 0)
@@ -262,17 +262,17 @@ namespace CLRProfiler
 				return;
 			}
 
-		    StringFormat sf = new StringFormat(StringFormatFlags.NoWrap)
+		    var sf = new StringFormat(StringFormatFlags.NoWrap)
 		    {
 		        Trimming = StringTrimming.EllipsisCharacter
 		    };
 
-		    TreeNodeBase node = (TreeNodeBase)Items[e.Index];
+		    var node = (TreeNodeBase)Items[e.Index];
 
 			int crossover = (treeListBox.ItemHeight - 1) * (1 + node.depth);
 			g.FillRectangle(new SolidBrush(Color.White), position, e.Bounds.Top, crossover, e.Bounds.Height);
 
-			Rectangle itemRect = new Rectangle(crossover, e.Bounds.Top, e.Bounds.Right - crossover, e.Bounds.Height);
+			var itemRect = new Rectangle(crossover, e.Bounds.Top, e.Bounds.Right - crossover, e.Bounds.Height);
 			g.FillRectangle(new SolidBrush(e.BackColor), itemRect);
 
 			if(e.State == DrawItemState.Focus)
@@ -280,7 +280,7 @@ namespace CLRProfiler
 				ControlPaint.DrawFocusRectangle(g, itemRect, e.ForeColor, e.BackColor);
 			}
 
-			Pen grayPen = new Pen(Color.LightGray);
+			var grayPen = new Pen(Color.LightGray);
 			g.DrawLine(grayPen, 0, e.Bounds.Bottom - 1, e.Bounds.Right, e.Bounds.Bottom - 1);
 
 			Font fontToUse = treeOwner.GetFont(TokenObject, node);
@@ -292,7 +292,7 @@ namespace CLRProfiler
 			foreach(Column c in columns)
 			{
 				ColumnInformation current = c.ColumnInformation;
-				Rectangle rect = new Rectangle(position, e.Bounds.Top, c.Width, e.Bounds.Height);
+				var rect = new Rectangle(position, e.Bounds.Top, c.Width, e.Bounds.Height);
 				g.Clip = new Region(rect);
 
 				string res = treeOwner.GetInfo(TokenObject, node, current).ToString();
@@ -304,7 +304,7 @@ namespace CLRProfiler
 
 					if(node.HasKids)
 					{
-						Pen p = new Pen(Color.Gray);
+						var p = new Pen(Color.Gray);
 						int y0 = e.Bounds.Top;
 						int x0 = position + node.depth * (treeListBox.ItemHeight - 1);
 						g.DrawRectangle(p, x0 + 3, y0 + 3, (treeListBox.ItemHeight - 9), (treeListBox.ItemHeight - 9));
@@ -320,7 +320,7 @@ namespace CLRProfiler
 				{
 					int characters;
 
-					SizeF layoutArea = new SizeF(rect.Width, rect.Height);
+					var layoutArea = new SizeF(rect.Width, rect.Height);
 					SizeF stringSize = g.MeasureString(res, fontToUse, layoutArea, sf, out characters, out _);
 
 					g.DrawString(res.Substring(0, characters) + (characters < res.Length ? "..." : ""), fontToUse, brush, rect.Location, sf);
@@ -340,7 +340,7 @@ namespace CLRProfiler
 				return;
 			}
 
-			TreeNodeBase node = (TreeNodeBase)Items[index];
+			var node = (TreeNodeBase)Items[index];
 			int crossover = (treeListBox.ItemHeight - 1) * (1 + node.depth) - leftEdge;
 			Rectangle rect = treeListBox.GetItemRectangle(index);
 
@@ -366,7 +366,7 @@ namespace CLRProfiler
 				return;
 			}
 
-			TreeNodeBase node = (TreeNodeBase)Items[index];
+			var node = (TreeNodeBase)Items[index];
 			if (e.Button == MouseButtons.Left)
 			{
 				int offset = node.depth * (treeListBox.ItemHeight - 1) - leftEdge;
@@ -439,14 +439,14 @@ namespace CLRProfiler
 
 		private void ContextMenu_Selection(object sender, System.EventArgs e) 
 		{
-			MenuItem miClicked = (MenuItem)sender;
+			var miClicked = (MenuItem)sender;
 
 			switch (miClicked.Index)
 			{
 
 				case 0:
 					// Find ...
-					FunctionFind dlgFnFind = new FunctionFind( treeOwner, "" );
+					var dlgFnFind = new FunctionFind( treeOwner, "" );
 					if (dlgFnFind.ShowDialog() == DialogResult.OK)
 					{
 					    // Find dlgFn
@@ -587,7 +587,7 @@ namespace CLRProfiler
 			}
 
 			Keys key = e.KeyCode;
-			TreeNodeBase node = (TreeNodeBase)Items[index];
+			var node = (TreeNodeBase)Items[index];
 			switch(key)
 			{
 				case Keys.Left:
@@ -627,7 +627,7 @@ namespace CLRProfiler
 
 		internal Column AddColumn(ColumnInformation ci, int defaultWidth)
 		{
-			Column c = new Column(ci, resizeBar, columns);
+			var c = new Column(ci, resizeBar, columns);
 
 			c.Width = defaultWidth;
 			c.Parent = this;
@@ -648,7 +648,7 @@ namespace CLRProfiler
 
 		void ToggleBranch(int index)
 		{
-			TreeNodeBase node = (TreeNodeBase)Items[index];
+			var node = (TreeNodeBase)Items[index];
 			if(!node.HasKids)
 			{
 				return;

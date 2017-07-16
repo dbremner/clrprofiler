@@ -82,7 +82,7 @@ namespace CLRProfiler
 
         private void menuItem2_Click(object sender, System.EventArgs e)
         {
-            SaveFileDialog sf = new SaveFileDialog();
+            var sf = new SaveFileDialog();
             sf.Filter = "Formatted text|*.txt|Comma-Separated Values|*.csv";
             DialogResult r = sf.ShowDialog();
             if(r == DialogResult.OK)
@@ -105,7 +105,7 @@ namespace CLRProfiler
                 int columns = list.Columns.Count;
                 try
                 {
-                    StreamWriter s = new StreamWriter(sf.FileName);
+                    var s = new StreamWriter(sf.FileName);
                     string[] formats = new string[columns];
                     int i;
                     int j;

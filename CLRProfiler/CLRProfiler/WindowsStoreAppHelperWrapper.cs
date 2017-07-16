@@ -58,7 +58,7 @@ namespace CLRProfiler
 
             // Dynamically load CLRProfilerWindowsStoreAppHelper.dll
             
-            Assembly windowsStoreAppHelperAsm = Assembly.LoadFrom(
+            var windowsStoreAppHelperAsm = Assembly.LoadFrom(
                 Path.GetDirectoryName(Assembly.GetCallingAssembly().Location) +
                     "\\" +
                     helperAsmName);
@@ -69,7 +69,7 @@ namespace CLRProfiler
             // version checking would be done for free (and would be much more accurate).  Since
             // we're doing this check to catch an innocent mistake, and not as a security guarantee,
             // we'll just do the version check manually.
-            AssemblyName asmName = new AssemblyName(windowsStoreAppHelperAsm.FullName);
+            var asmName = new AssemblyName(windowsStoreAppHelperAsm.FullName);
             if ((asmName.Version.Major != 1) || (asmName.Version.Minor != 0))
             {
                 MessageBox.Show(

@@ -118,7 +118,7 @@ namespace CLRProfiler
 
             public int CompareTo(Object o)
             {
-                TypeDesc t = (TypeDesc)o;
+                var t = (TypeDesc)o;
                 if (t.selectedSize != this.selectedSize)
                 {
                     if (t.selectedSize < this.selectedSize)
@@ -553,7 +553,7 @@ namespace CLRProfiler
 
         private void DrawLiveObjects(Graphics g, TypeDesc selectedType, ulong lowAddr, ulong highAddr)
         {
-            Pen freePen = new Pen(Color.White);
+            var freePen = new Pen(Color.White);
 
             RectangleF clipRect = g.VisibleClipBounds;
             for (AddressRange r = rangeList; r != null; r = r.next)
@@ -662,7 +662,7 @@ namespace CLRProfiler
         private void DrawHeapLegend(Graphics g)
         {
             Brush brush = new SolidBrush(Color.Black);
-            Pen pen = new Pen(brush);
+            var pen = new Pen(brush);
 
             for (AddressRange r = rangeList; r != null; r = r.next)
             {
@@ -849,7 +849,7 @@ namespace CLRProfiler
 
             DrawLiveObjects(g, null, 0, ulong.MaxValue);
 
-            Pen pen = new Pen(Color.Black);
+            var pen = new Pen(Color.Black);
             DrawSelectionHorizontalLine(g, pen, selectedHighAddr);
             DrawSelectionHorizontalLine(g, pen, selectedLowAddr);
             DrawSelectionVerticalLines(g, pen, selectedLowAddr, selectedHighAddr);
@@ -866,7 +866,7 @@ namespace CLRProfiler
 
         private void Refresh(object sender, System.EventArgs e)
         {
-            RadioButton rb = (RadioButton)sender;
+            var rb = (RadioButton)sender;
             if (rb.Checked)
             {
                 GraphPanel_Invalidate();
@@ -984,7 +984,7 @@ namespace CLRProfiler
         {
             if (addr != 0)
             {
-                Pen backGroundPen = new Pen(graphPanel.BackColor);
+                var backGroundPen = new Pen(graphPanel.BackColor);
                 AddressRange r = AddressRangeOf(addr);
                 if (r != null)
                 {
@@ -1067,8 +1067,8 @@ namespace CLRProfiler
                     DrawLiveObjectIntervals(selectedLowAddr, selectedHighAddr, oldLowAddr, oldHighAddr);
 */
                 Graphics g = graphPanel.CreateGraphics();
-                Pen blackPen = new Pen(Color.Black);
-                Pen backGroundPen = new Pen(graphPanel.BackColor);
+                var blackPen = new Pen(Color.Black);
+                var backGroundPen = new Pen(graphPanel.BackColor);
                 if (oldLowAddr != selectedLowAddr)
                 {
                     EraseSelectionHorizontalLine(g, oldLowAddr);
@@ -1135,7 +1135,7 @@ namespace CLRProfiler
             }
             else if ((e.Button & MouseButtons.Right) != MouseButtons.None)
             {
-                Point p = new Point(e.X, e.Y);
+                var p = new Point(e.X, e.Y);
                 contextMenu.Show(graphPanel, p);
             }
         }
@@ -1273,7 +1273,7 @@ namespace CLRProfiler
             DrawTypeDescription(typeLegendPanel.CreateGraphics(), t);
             Graphics g = graphPanel.CreateGraphics();
             DrawLiveObjects(g, t, 0, ulong.MaxValue);
-            Pen pen = new Pen(Color.Black);
+            var pen = new Pen(Color.Black);
             DrawSelectionHorizontalLine(g, pen, selectedHighAddr);
             DrawSelectionHorizontalLine(g, pen, selectedLowAddr);
         }
@@ -1294,7 +1294,7 @@ namespace CLRProfiler
             }
             else if ((e.Button & MouseButtons.Right) != MouseButtons.None)
             {
-                Point p = new Point(e.X, e.Y);
+                var p = new Point(e.X, e.Y);
                 contextMenu.Show(typeLegendPanel, p);
             }
         }
@@ -1362,7 +1362,7 @@ namespace CLRProfiler
             // whose type matches the selected type (if any).
 
             ReadNewLog log = liveObjectTable.readNewLog;
-            Histogram histogram = new Histogram(log);
+            var histogram = new Histogram(log);
             ulong low = selectedLowAddr;
             ulong high = low == 0 ? ulong.MaxValue : selectedHighAddr;
             LiveObjectTable.LiveObject o;
@@ -1381,7 +1381,7 @@ namespace CLRProfiler
             // And make another graph form for it - hardest part is to compute an appropriate title...
 
             string title = "Allocation Graph for live " + ComputeObjectsDescription(selectedType, selectedLowAddr, selectedHighAddr);
-            GraphViewForm graphViewForm = new GraphViewForm(graph, title);
+            var graphViewForm = new GraphViewForm(graph, title);
             graphViewForm.Visible = true;
         }
 
@@ -1393,7 +1393,7 @@ namespace CLRProfiler
             // whose type matches the selected type (if any).
 
             ReadNewLog log = liveObjectTable.readNewLog;
-            Histogram histogram = new Histogram(log);
+            var histogram = new Histogram(log);
             ulong low = selectedLowAddr;
             ulong high = low == 0 ? ulong.MaxValue : selectedHighAddr;
             LiveObjectTable.LiveObject o;
@@ -1406,7 +1406,7 @@ namespace CLRProfiler
             }
 
             string title = "Histogram by Size for live " + ComputeObjectsDescription(selectedType, selectedLowAddr, selectedHighAddr);
-            HistogramViewForm histogramViewForm = new HistogramViewForm(histogram, title);
+            var histogramViewForm = new HistogramViewForm(histogram, title);
             histogramViewForm.Show();
         }
 
@@ -1416,7 +1416,7 @@ namespace CLRProfiler
             exportSaveFileDialog.Filter = "Comma separated files | *.csv";
             if (exportSaveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                StreamWriter w = new StreamWriter(exportSaveFileDialog.FileName);
+                var w = new StreamWriter(exportSaveFileDialog.FileName);
 
                 TypeDesc selectedType = FindSelectedType();
 

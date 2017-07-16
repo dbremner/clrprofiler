@@ -17,7 +17,7 @@ namespace CLRProfiler
 
         private static ReadLogResult GetLogResult(ReadNewLog log)
         {
-            ReadLogResult readLogResult = new ReadLogResult();
+            var readLogResult = new ReadLogResult();
             readLogResult.liveObjectTable = new LiveObjectTable(log);
             readLogResult.sampleObjectTable = new SampleObjectTable(log);
 
@@ -88,7 +88,7 @@ namespace CLRProfiler
 
             public int CompareTo(Object o)
             {
-                TypeDescriptor that = (TypeDescriptor)o;
+                var that = (TypeDescriptor)o;
                 if (that.size[0] < this.size[0])
                 {
                     return -1;
@@ -309,7 +309,7 @@ namespace CLRProfiler
         private static void AllocationRelocationReport(string logFileName, string startMarker, string endMarker, bool relocationReport)
         {
             // first read the entire file
-            ReadNewLog log = new ReadNewLog(logFileName, false);
+            var log = new ReadNewLog(logFileName, false);
             ReadLogResult entireLogResult = GetLogResult(log);
             log.ReadFile(0, long.MaxValue, entireLogResult);
 
@@ -402,7 +402,7 @@ namespace CLRProfiler
                 log.ReadFile(0, endPos, logResult);
             }
 
-            Histogram histogram = new Histogram(log);
+            var histogram = new Histogram(log);
             LiveObjectTable.LiveObject o;
             for (logResult.liveObjectTable.GetNextObject(0, ulong.MaxValue, out o);
                 o.id < ulong.MaxValue;
@@ -420,7 +420,7 @@ namespace CLRProfiler
         internal static void SurvivorReport(string logFileName, string startMarker, string endMarker, string[] timeMarker)
         {
             // first read the entire file
-            ReadNewLog log = new ReadNewLog(logFileName, false);
+            var log = new ReadNewLog(logFileName, false);
             ReadLogResult entireLogResult = GetLogResult(log);
             log.ReadFile(0, long.MaxValue, entireLogResult);
 
@@ -486,7 +486,7 @@ namespace CLRProfiler
 
             public int CompareTo(Object o)
             {
-                DiffTypeDescriptor that = (DiffTypeDescriptor)o;
+                var that = (DiffTypeDescriptor)o;
                 if (that.diffSize < this.diffSize)
                 {
                     return -1;
@@ -549,7 +549,7 @@ namespace CLRProfiler
             FillHistogramIntoDiffTypeDescriptor(bHistogram, typeIndexToDiffTypeDescriptor);
 
             var al = new ArrayList();
-            DiffTypeDescriptor totalTd = new DiffTypeDescriptor(0);
+            var totalTd = new DiffTypeDescriptor(0);
             for (int i = 0; i < typeIndexToDiffTypeDescriptor.Length; i++)
             {
                 DiffTypeDescriptor td = typeIndexToDiffTypeDescriptor[i];
@@ -578,7 +578,7 @@ namespace CLRProfiler
         internal static void SurvivorDifferenceReport(string logFileName, string startMarker, string endMarker)
         {
             // first read the entire file
-            ReadNewLog log = new ReadNewLog(logFileName, false);
+            var log = new ReadNewLog(logFileName, false);
             ReadLogResult entireLogResult = GetLogResult(log);
             log.ReadFile(0, long.MaxValue, entireLogResult);
 
@@ -643,7 +643,7 @@ namespace CLRProfiler
             {
                 throw new ArgumentException("Markers can not be negative");
             }
-            ReadNewLog log = new ReadNewLog(logFileName, false);
+            var log = new ReadNewLog(logFileName, false);
             ReadLogResult entireLogResult = GetLogResult(log);
             log.ReadFile(0, long.MaxValue, entireLogResult, endIndex + 1);
             if (entireLogResult.requestedObjectGraph == null)
@@ -683,7 +683,7 @@ namespace CLRProfiler
 
         internal static void HeapDumpReport(string logFileName, string startMarker, string endMarker)
         {
-            ReadNewLog log = new ReadNewLog(logFileName, false);
+            var log = new ReadNewLog(logFileName, false);
             ReadLogResult entireLogResult = GetLogResult(log);
             log.ReadFile(0, long.MaxValue, entireLogResult);
 
@@ -771,7 +771,7 @@ namespace CLRProfiler
         internal static void FinalizerReport(bool criticalFinalizers, string logFileName, string startMarker, string endMarker)
         {
             // first read the entire file
-            ReadNewLog log = new ReadNewLog(logFileName, false);
+            var log = new ReadNewLog(logFileName, false);
             ReadLogResult entireLogResult = GetLogResult(log);
             log.ReadFile(0, long.MaxValue, entireLogResult);
 
@@ -835,7 +835,7 @@ namespace CLRProfiler
         internal static void CommentReport(string logFileName)
         {
             // first read the entire file
-            ReadNewLog log = new ReadNewLog(logFileName, false);
+            var log = new ReadNewLog(logFileName, false);
             ReadLogResult entireLogResult = GetLogResult(log);
             log.ReadFile(0, long.MaxValue, entireLogResult);
 

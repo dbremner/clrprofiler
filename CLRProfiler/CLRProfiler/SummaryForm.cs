@@ -51,7 +51,7 @@ namespace CLRProfiler
 
         private Histogram GetFinalHeapHistogram()
         {
-            Histogram histogram = new Histogram(log);
+            var histogram = new Histogram(log);
             LiveObjectTable.LiveObject o;
             for (logResult.liveObjectTable.GetNextObject(0, ulong.MaxValue, out o);
                 o.id < ulong.MaxValue && o.id + o.size >= o.id;
@@ -180,7 +180,7 @@ namespace CLRProfiler
         private void allocatedHistogramButton_Click(object sender, System.EventArgs e)
         {
             string title = "Histogram by Size for Allocated Objects for: " + scenario;
-            HistogramViewForm histogramViewForm = new HistogramViewForm(logResult.allocatedHistogram, title);
+            var histogramViewForm = new HistogramViewForm(logResult.allocatedHistogram, title);
             histogramViewForm.Show();
         }
 
@@ -188,54 +188,54 @@ namespace CLRProfiler
         {
             Graph graph = logResult.allocatedHistogram.BuildAllocationGraph(new FilterForm());
             string title = "Allocation Graph for: " + scenario;
-            GraphViewForm graphViewForm = new GraphViewForm(graph, title);
+            var graphViewForm = new GraphViewForm(graph, title);
             graphViewForm.Show();
         }
 
         private void relocatedHistogramButton_Click(object sender, System.EventArgs e)
         {
             string title = "Histogram by Size for Relocated Objects for " + scenario;
-            HistogramViewForm histogramViewForm = new HistogramViewForm(logResult.relocatedHistogram, title);
+            var histogramViewForm = new HistogramViewForm(logResult.relocatedHistogram, title);
             histogramViewForm.Show();        
         }
 
         private void finalHeapHistogramButton_Click(object sender, System.EventArgs e)
         {
             string title = "Histogram by Size for Surviving Objects for " + scenario;
-            HistogramViewForm histogramViewForm = new HistogramViewForm(GetFinalHeapHistogram(), title);
+            var histogramViewForm = new HistogramViewForm(GetFinalHeapHistogram(), title);
             histogramViewForm.Show();
         }
 
         private void finalHeapHistogramByAgeButton_Click(object sender, System.EventArgs e)
         {
             string title = "Histogram by Age for Live Objects for " + scenario;
-            AgeHistogram ageHistogram = new AgeHistogram(logResult.liveObjectTable, title);
+            var ageHistogram = new AgeHistogram(logResult.liveObjectTable, title);
             ageHistogram.Show();
         }
 
         private void finalHeapObjectsByAddressButton_Click(object sender, System.EventArgs e)
         {
-            ViewByAddressForm viewByAddressForm = new ViewByAddressForm();
+            var viewByAddressForm = new ViewByAddressForm();
             viewByAddressForm.Visible = true;
         }
 
         private void finalizedHistogramButton_Click(object sender, System.EventArgs e)
         {
             string title = "Histogram by Size for Finalized Objects for " + scenario;
-            HistogramViewForm histogramViewForm = new HistogramViewForm(logResult.finalizerHistogram, title);
+            var histogramViewForm = new HistogramViewForm(logResult.finalizerHistogram, title);
             histogramViewForm.Show();
         }
 
         private void criticalFinalizedHistogramButton_Click(object sender, System.EventArgs e)
         {
             string title = "Histogram by Size for Finalized Objects for " + scenario;
-            HistogramViewForm histogramViewForm = new HistogramViewForm(logResult.criticalFinalizerHistogram, title);
+            var histogramViewForm = new HistogramViewForm(logResult.criticalFinalizerHistogram, title);
             histogramViewForm.Show();        
         }
 
         private void timeLineButton_Click(object sender, System.EventArgs e)
         {
-            TimeLineViewForm timeLineViewForm = new TimeLineViewForm();
+            var timeLineViewForm = new TimeLineViewForm();
             timeLineViewForm.Visible = true;
         }
 
@@ -243,20 +243,20 @@ namespace CLRProfiler
         {
             Graph graph = logResult.objectGraph.BuildTypeGraph(new FilterForm());
             string title = "Heap Graph for " + scenario;
-            GraphViewForm graphViewForm = new GraphViewForm(graph, title);
+            var graphViewForm = new GraphViewForm(graph, title);
             graphViewForm.Show();
         }
 
         private void commentsButton_Click(object sender, System.EventArgs e)
         {
-            ViewCommentsForm viewCommentsForm = new ViewCommentsForm(log);
+            var viewCommentsForm = new ViewCommentsForm(log);
             viewCommentsForm.Visible = true;
         }
 
         private void CreateHandleAllocationGraph(Histogram histogram, string title)
         {
             Graph graph = histogram.BuildHandleAllocationGraph(new FilterForm());
-            GraphViewForm graphViewForm = new GraphViewForm(graph, title);
+            var graphViewForm = new GraphViewForm(graph, title);
             graphViewForm.Show();        
         }
 
@@ -268,7 +268,7 @@ namespace CLRProfiler
 
         private void survingHandlesAllocationGraphButton_Click(object sender, System.EventArgs e)
         {
-            Histogram histogram = new Histogram(log);
+            var histogram = new Histogram(log);
             foreach (HandleInfo handleInfo in logResult.handleHash.Values)
             {   
                 histogram.AddObject(handleInfo.allocStacktraceId, 1);
@@ -301,7 +301,7 @@ namespace CLRProfiler
                 commentsLabel,                 commentsValueLabel,
             };
 
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             sb.AppendFormat("Summary for {0}\r\n", scenario);
             for (int i = 0; i < copyLabel.Length; i += 2)
             {

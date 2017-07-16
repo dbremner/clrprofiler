@@ -103,7 +103,7 @@ namespace CLRProfiler
             Vertex[] funcVertex = new Vertex[1];
             Vertex[] vertexStack = new Vertex[1];
 
-            Graph graph = new Graph(this, Graph.GraphType.FunctionGraph);
+            var graph = new Graph(this, Graph.GraphType.FunctionGraph);
 
             BuildFuncVertices(graph, ref funcVertex, filterForm);
 
@@ -190,7 +190,7 @@ namespace CLRProfiler
             Vertex[] vertexStack = new Vertex[1];
             Vertex[] modVertex = new Vertex[1];
 
-            Graph graph = new Graph(this, Graph.GraphType.ModuleGraph);
+            var graph = new Graph(this, Graph.GraphType.ModuleGraph);
 
             BuildFuncVertices(graph, ref funcVertex, filterForm);
             BuildModVertices(graph, ref modVertex, filterForm);
@@ -283,7 +283,7 @@ namespace CLRProfiler
             Vertex[] funcVertex = new Vertex[1];
             Vertex[] vertexStack = new Vertex[1];
 
-            Graph graph = new Graph(this, Graph.GraphType.ClassGraph);
+            var graph = new Graph(this, Graph.GraphType.ClassGraph);
 
             BuildFuncVertices(graph, ref funcVertex, filterForm);
 

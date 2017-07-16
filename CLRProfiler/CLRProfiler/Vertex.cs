@@ -157,7 +157,7 @@ namespace CLRProfiler
 
         public int CompareTo(Object o)
         {
-            Vertex v = (Vertex)o;
+            var v = (Vertex)o;
             if (v.weight < this.weight)
             {
                 return -1;

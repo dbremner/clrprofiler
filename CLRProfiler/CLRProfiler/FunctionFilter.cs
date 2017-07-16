@@ -118,8 +118,8 @@ namespace CLRProfiler
 		{
 			int id = -2;
 			TreeNode.NodeType nodetype = TreeNode.NodeType.Call;
-			FunctionFind functionFind = new FunctionFind( m_treeOwner, tb.Text );
-			CallTreeForm.FnViewFilter viewFilter = new CallTreeForm.FnViewFilter();
+			var functionFind = new FunctionFind( m_treeOwner, tb.Text );
+			var viewFilter = new CallTreeForm.FnViewFilter();
 
 			if (functionFind.ShowDialog() == DialogResult.OK)
 			{

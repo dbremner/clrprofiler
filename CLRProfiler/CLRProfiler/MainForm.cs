@@ -753,7 +753,7 @@ namespace CLRProfiler
             }
             else
             {
-                HelpForm helpForm = new HelpForm();
+                var helpForm = new HelpForm();
                 helpForm.helpText.Text = s;
                 helpForm.ShowDialog();
             }
@@ -787,7 +787,7 @@ namespace CLRProfiler
         {
             consoleCtrl = new ConsoleCtrl();
             consoleCtrl.ControlEvent += new ConsoleCtrl.ControlEventHandler(ConsoleEventHandler);
-            MainForm f = new MainForm(arguments);
+            var f = new MainForm(arguments);
 
             if (f.exitProgram)
             {
@@ -802,7 +802,7 @@ namespace CLRProfiler
             {
                 try
                 {
-                    ReportForm _MgrForm = new ReportForm(f);
+                    var _MgrForm = new ReportForm(f);
                     if (!f.noUI)
                     {
                         Application.Run(_MgrForm);
@@ -880,7 +880,7 @@ namespace CLRProfiler
                     break;
             }
             title += fileName + " " + commandLine;
-            GraphViewForm graphViewForm = new GraphViewForm(graph, title);
+            var graphViewForm = new GraphViewForm(graph, title);
             graphViewForm.Visible = true;
         }
 
@@ -1068,7 +1068,7 @@ namespace CLRProfiler
                 }
                 else
                 {
-                    SaveFileForm saveFileForm = new SaveFileForm();
+                    var saveFileForm = new SaveFileForm();
                     saveFileForm.processFileNameLabel.Text = processFileName;
                     switch (saveFileForm.ShowDialog())
                     {
@@ -1104,7 +1104,7 @@ namespace CLRProfiler
         {
             if (killApplicationButton?.Enabled == true)
             {
-                KillProcessForm killProcessForm = new KillProcessForm();
+                var killProcessForm = new KillProcessForm();
                 killProcessForm.processFileNameLabel.Text = processFileName;
                 switch (killProcessForm.ShowDialog())
                 {
@@ -1169,7 +1169,7 @@ namespace CLRProfiler
         {
             // stop IIS
             Text = "Stopping IIS ";
-            ProcessStartInfo processStartInfo = new ProcessStartInfo("cmd.exe");
+            var processStartInfo = new ProcessStartInfo("cmd.exe");
             if (Environment.OSVersion.Version.Major >= 6/*Vista*/)
             {
                 processStartInfo.Arguments = "/c net stop was /y";
@@ -1179,7 +1179,7 @@ namespace CLRProfiler
                 processStartInfo.Arguments = "/c net stop iisadmin /y";
             }
 
-            Process process = Process.Start(processStartInfo);
+            var process = Process.Start(processStartInfo);
             while (!process.HasExited)
             {
                 Text += ".";
@@ -1200,9 +1200,9 @@ namespace CLRProfiler
         private bool StartIIS()
         {
             Text = "Starting IIS ";
-            ProcessStartInfo processStartInfo = new ProcessStartInfo("cmd.exe");
+            var processStartInfo = new ProcessStartInfo("cmd.exe");
             processStartInfo.Arguments = "/c net start w3svc";
-            Process process = Process.Start(processStartInfo);
+            var process = Process.Start(processStartInfo);
             while (!process.HasExited)
             {
                 Text += ".";
@@ -1223,9 +1223,9 @@ namespace CLRProfiler
         {
             // stop service
             Text = "Stopping " + serviceName + " ";
-            ProcessStartInfo processStartInfo = new ProcessStartInfo("cmd.exe");
+            var processStartInfo = new ProcessStartInfo("cmd.exe");
             processStartInfo.Arguments = "/c " + stopCommand;
-            Process process = Process.Start(processStartInfo);
+            var process = Process.Start(processStartInfo);
             while (!process.HasExited)
             {
                 Text += ".";
@@ -1245,9 +1245,9 @@ namespace CLRProfiler
         private Process StartService(string serviceName, string startCommand)
         {
             Text = "Starting " + serviceName + " ";
-            ProcessStartInfo processStartInfo = new ProcessStartInfo("cmd.exe");
+            var processStartInfo = new ProcessStartInfo("cmd.exe");
             processStartInfo.Arguments = "/c " + startCommand;
-            Process process = Process.Start(processStartInfo);
+            var process = Process.Start(processStartInfo);
             return process;
         }
 
@@ -1301,7 +1301,7 @@ namespace CLRProfiler
                 // and the second iteration fills in the strings
                 for (int i = 0; i < 2; i++)
                 {
-                    char* env = (char*)environmentPtr.ToPointer();
+                    var env = (char*)environmentPtr.ToPointer();
                     int count = 0;
                     while (true)
                     {
@@ -1475,7 +1475,7 @@ namespace CLRProfiler
             byte[] sid = new byte[sidLen];
             int domainNameLen = 0;
             int peUse;
-            StringBuilder domainName = new StringBuilder();
+            var domainName = new StringBuilder();
             LookupAccountName(Environment.MachineName, accountName, sid, ref sidLen, domainName, ref domainNameLen, out peUse);
 
             sid = new byte[sidLen];
@@ -1595,7 +1595,7 @@ namespace CLRProfiler
         {
             try
             {
-                XmlDocument machineConfig = new XmlDocument();
+                var machineConfig = new XmlDocument();
                 string runtimePath = RuntimeEnvironment.GetRuntimeDirectory();
                 string configPath = Path.Combine(runtimePath, @"CONFIG\machine.config");
                 machineConfig.Load(configPath);
@@ -2332,7 +2332,7 @@ namespace CLRProfiler
 
             // User picks the package
 
-            WindowsStoreAppChooserForm windowsStoreAppAppChooserForm = new WindowsStoreAppChooserForm();
+            var windowsStoreAppAppChooserForm = new WindowsStoreAppChooserForm();
             DialogResult result = windowsStoreAppAppChooserForm.ShowDialog();
             if (result == DialogResult.Cancel)
             {
@@ -2408,7 +2408,7 @@ namespace CLRProfiler
 
             if (profiledProcess == null || ProfiledProcessHasExited())
             {
-                ProcessStartInfo processStartInfo = new ProcessStartInfo(processFileName);
+                var processStartInfo = new ProcessStartInfo(processFileName);
                 if (targetv4CoreCLR())
                 {
                     processStartInfo.EnvironmentVariables["CoreCLR_Enable_Profiling"] = "0x1";
@@ -2660,7 +2660,7 @@ namespace CLRProfiler
 
         private void setCommandLineMenuItem_Click(object sender, System.EventArgs e)
         {
-            SetParameterForm setCommandLineForm = new SetParameterForm();
+            var setCommandLineForm = new SetParameterForm();
             setCommandLineForm.commandLineTextBox.Text = commandLine;
             setCommandLineForm.workingDirectoryTextBox.Text = workingDirectory;
             setCommandLineForm.logDirectoryTextBox.Text = GetLogDir();
@@ -2722,19 +2722,19 @@ namespace CLRProfiler
 
         private void viewByAddressMenuItem_Click(object sender, System.EventArgs e)
         {
-            ViewByAddressForm viewByAddressForm = new ViewByAddressForm();
+            var viewByAddressForm = new ViewByAddressForm();
             viewByAddressForm.Visible = true;
         }
 
         private void viewTimeLineMenuItem_Click(object sender, System.EventArgs e)
         {
-            TimeLineViewForm timeLineViewForm = new TimeLineViewForm();
+            var timeLineViewForm = new TimeLineViewForm();
             timeLineViewForm.Visible = true;
         }
 
         private void viewHistogram_Click(object sender, System.EventArgs e)
         {
-            HistogramViewForm histogramViewForm = new HistogramViewForm();
+            var histogramViewForm = new HistogramViewForm();
             histogramViewForm.Visible = true;
         }
 
@@ -2753,7 +2753,7 @@ namespace CLRProfiler
             if (lastLogResult != null)
             {
                 string title = "Histogram by Size for Relocated Objects";
-                HistogramViewForm histogramViewForm = new HistogramViewForm(lastLogResult.relocatedHistogram, title);
+                var histogramViewForm = new HistogramViewForm(lastLogResult.relocatedHistogram, title);
                 histogramViewForm.Show();
             }
         }
@@ -2763,7 +2763,7 @@ namespace CLRProfiler
             if (lastLogResult != null)
             {
                 string title = "Histogram by Size for Finalized Objects";
-                HistogramViewForm histogramViewForm = new HistogramViewForm(lastLogResult.finalizerHistogram, title);
+                var histogramViewForm = new HistogramViewForm(lastLogResult.finalizerHistogram, title);
                 histogramViewForm.Show();
             }
         }
@@ -2773,7 +2773,7 @@ namespace CLRProfiler
             if (lastLogResult != null)
             {
                 string title = "Histogram by Size for Critical Finalized Objects";
-                HistogramViewForm histogramViewForm = new HistogramViewForm(lastLogResult.criticalFinalizerHistogram, title);
+                var histogramViewForm = new HistogramViewForm(lastLogResult.criticalFinalizerHistogram, title);
                 histogramViewForm.Show();
             }
         }
@@ -2783,7 +2783,7 @@ namespace CLRProfiler
             if (lastLogResult != null)
             {
                 string title = "Histogram by Age for Live Objects";
-                AgeHistogram ageHistogram = new AgeHistogram(lastLogResult.liveObjectTable, title);
+                var ageHistogram = new AgeHistogram(lastLogResult.liveObjectTable, title);
                 ageHistogram.Show();
             }
         }
@@ -2830,7 +2830,7 @@ namespace CLRProfiler
 
         private void profileServiceMenuItem_Click(object sender, System.EventArgs e)
         {
-            ProfileServiceForm profileServiceForm = new ProfileServiceForm();
+            var profileServiceForm = new ProfileServiceForm();
             if (profileServiceForm.ShowDialog() == DialogResult.OK)
             {
                 serviceName = profileServiceForm.serviceNameTextBox.Text;
@@ -2869,7 +2869,7 @@ namespace CLRProfiler
         {
             if (log != null && log.commentEventList.count != 0)
             {
-                ViewCommentsForm viewCommentsForm = new ViewCommentsForm(log);
+                var viewCommentsForm = new ViewCommentsForm(log);
                 viewCommentsForm.Visible = true;
             }
         }
@@ -2878,7 +2878,7 @@ namespace CLRProfiler
         {
             if (lastLogResult != null && lastLogResult.hadCallInfo)
             {
-                CallTreeForm callTreeForm = new CallTreeForm(log.fileName, lastLogResult);
+                var callTreeForm = new CallTreeForm(log.fileName, lastLogResult);
             }
         }
 
@@ -2886,7 +2886,7 @@ namespace CLRProfiler
         {
             currlogFileName = this.logFileName;
 
-            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            var openFileDialog1 = new OpenFileDialog();
             openFileDialog1.FileName = "*.log";
             openFileDialog1.Filter = "Allocation Logs | *.log";
             if (openFileDialog1.ShowDialog() == DialogResult.OK && openFileDialog1.CheckFileExists)
@@ -2897,7 +2897,7 @@ namespace CLRProfiler
             graphtype = Graph.GraphType.AllocationGraph;
             try
             {
-                ReportForm _MgrForm = new ReportForm(this);
+                var _MgrForm = new ReportForm(this);
                 _MgrForm.Visible = true;
             }
             catch
@@ -2916,7 +2916,7 @@ namespace CLRProfiler
                     scenario = processFileName + " " + commandLine;
                 }
 
-                SummaryForm summaryForm = new SummaryForm(log, lastLogResult, scenario);
+                var summaryForm = new SummaryForm(log, lastLogResult, scenario);
                 summaryForm.Show();
             }
         }
@@ -2964,7 +2964,7 @@ namespace CLRProfiler
                     }
                 }
 
-                OpenURLForm openURLForm = new OpenURLForm();
+                var openURLForm = new OpenURLForm();
                 if (openURLForm.ShowDialog() == DialogResult.Cancel)
                 {
                     return;
@@ -3003,8 +3003,8 @@ namespace CLRProfiler
                 Environment.SetEnvironmentVariable("OMV_INITIAL_SETTING", CreateInitialString());
                 Environment.SetEnvironmentVariable("OMV_TargetCLRVersion", targetv2DesktopCLR() ? "v2" : "v4");
 
-                PROCESS_INFORMATION pi = new PROCESS_INFORMATION();
-                IELAUNCHURLINFO IEli = new IELAUNCHURLINFO();
+                var pi = new PROCESS_INFORMATION();
+                var IEli = new IELAUNCHURLINFO();
                 IEli.cbSize = Marshal.SizeOf(typeof(IELAUNCHURLINFO));
                 if (IELaunchURL(profilingURL, ref pi, ref IEli) == 0)
                 {
@@ -3064,7 +3064,7 @@ namespace CLRProfiler
                 return;
             }
 
-            AttachTargetPIDForm attachTargetPIDForm = new AttachTargetPIDForm();
+            var attachTargetPIDForm = new AttachTargetPIDForm();
             if (attachTargetPIDForm.ShowDialog() == DialogResult.Cancel)
             {
                 return;
@@ -3266,7 +3266,7 @@ namespace CLRProfiler
                 fileName = GetLogFullPath(pid);
             }
 
-            ProfConfig config = new ProfConfig();
+            var config = new ProfConfig();
             config.usage = OmvUsage.OmvUsageNone;
             config.bOldFormat = 0;
             config.szFileName = fileName;

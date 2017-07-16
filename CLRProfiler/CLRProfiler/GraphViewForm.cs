@@ -95,7 +95,7 @@ namespace CLRProfiler
             g.DrawRectangle(pen, r);
             if (v.selected)
             {
-                using (SolidBrush selectBrush = new SolidBrush(Color.Aqua))
+                using (var selectBrush = new SolidBrush(Color.Aqua))
                 {
                     g.FillRectangle(selectBrush, r);
                 }
@@ -133,7 +133,7 @@ namespace CLRProfiler
                     int height = (int)((float)r.Height/v.weight*weight);
                     if (height < previousHeight)
                     {
-                        Color color = Color.FromArgb(alpha, Color.Red);
+                        var color = Color.FromArgb(alpha, Color.Red);
                         using (Brush brush = new SolidBrush(color))
                         {
                             g.FillRectangle(brush, r.X, r.Y+height, r.Width, previousHeight - height);
@@ -141,7 +141,7 @@ namespace CLRProfiler
                     }
                     else
                     {
-                        Color color = Color.FromArgb(alpha, Color.Green);
+                        var color = Color.FromArgb(alpha, Color.Green);
                         using (Brush brush = new SolidBrush(color))
                         {
                             g.FillRectangle(brush, r.X, r.Y+previousHeight, r.Width, height - previousHeight);
@@ -201,7 +201,7 @@ namespace CLRProfiler
             foreach (Edge e in edgeList)
             {
                 float fwidth = e.weight*scale;
-                Point p = new Point(x, (int)(fy + fwidth/2));
+                var p = new Point(x, (int)(fy + fwidth/2));
                 if (isIncoming)
                 {
                     e.toPoint = p;
@@ -232,7 +232,7 @@ namespace CLRProfiler
 
         void DrawEdges(Graphics g, float scale)
         {
-            Random r = new Random(0);
+            var r = new Random(0);
             Point[] points = new Point[4];
             foreach (Vertex v in graph.vertices.Values)
             {
@@ -248,8 +248,8 @@ namespace CLRProfiler
                         Brush brush = null;
                         if (e.selected)
                         {
-                            Color foreColor = Color.FromArgb(150, 0, 255, 0);
-                            Color backColor = Color.FromArgb(150, 255, 0, 0);
+                            var foreColor = Color.FromArgb(150, 0, 255, 0);
+                            var backColor = Color.FromArgb(150, 255, 0, 0);
                             brush = new HatchBrush(HatchStyle.DiagonalCross, foreColor, backColor);
                         }
                         else if (e.brush != null)
@@ -271,7 +271,7 @@ namespace CLRProfiler
                                 blue = 0;
                             }
 
-                            Color color = Color.FromArgb(100, red, green, blue);
+                            var color = Color.FromArgb(100, red, green, blue);
                             Debug.Assert(!color.IsEmpty);
                             brush = new SolidBrush(color);
                             e.brush = brush;
@@ -614,9 +614,9 @@ namespace CLRProfiler
             }
             //          Brush brush = new SolidBrush(Color.Gray);
             //          g.FillRectangle(brush, graphPanel.ClientRectangle);
-            using (SolidBrush penBrush = new SolidBrush(Color.Blue))
+            using (var penBrush = new SolidBrush(Color.Blue))
             {
-                using (Pen pen = new Pen(penBrush, 1))
+                using (var pen = new Pen(penBrush, 1))
                 {
                     foreach (Vertex v in graph.vertices.Values)
                     {
@@ -632,7 +632,7 @@ namespace CLRProfiler
 
         private void scaleRadioButton_Click(object sender, System.EventArgs e)
         {
-            RadioButton clickedRadioButton = (RadioButton)sender;
+            var clickedRadioButton = (RadioButton)sender;
             string scaleString = clickedRadioButton.Text.Split(' ')[0];
             totalHeight = gapWidth = Convert.ToInt32(scaleString);
             placeVertices = placeEdges = true;
@@ -641,7 +641,7 @@ namespace CLRProfiler
 
         private void detailRadioButton_Click(object sender, System.EventArgs e)
         {
-            RadioButton clickedRadioButton = (RadioButton)sender;
+            var clickedRadioButton = (RadioButton)sender;
             string detailString = clickedRadioButton.Text.Split(' ')[0];
             minWidth = minHeight = Convert.ToSingle(detailString, CultureInfo.InvariantCulture);
             placeVertices = placeEdges = true;
@@ -759,7 +759,7 @@ namespace CLRProfiler
 
         private void graphPanel_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            Point p = new Point(e.X, e.Y);
+            var p = new Point(e.X, e.Y);
             lastMouseDownPoint = p;
             if ((e.Button & MouseButtons.Left) != 0)
             {
@@ -827,7 +827,7 @@ namespace CLRProfiler
 
         private void graphPanel_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            Point p = new Point(e.X, e.Y);
+            var p = new Point(e.X, e.Y);
             if (distance(p, lastMousePoint) >= 10)
             {
                 toolTip.Active = false;
@@ -961,7 +961,7 @@ namespace CLRProfiler
 
         private void copyMenuItem_Click(object sender, System.EventArgs e)
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             Vertex selectedVertex;
             int selectedVertexCount = SelectedVertexCount(out selectedVertex);
 
@@ -1008,7 +1008,7 @@ namespace CLRProfiler
                     sb.Append("\r\nContributions to callees:\r\n");
                 }
 
-                ArrayList callees = new ArrayList();
+                var callees = new ArrayList();
                 foreach (Edge edge in v.outgoingEdges.Values)
                 {
                     callees.Add(edge);
@@ -1077,9 +1077,9 @@ namespace CLRProfiler
                 v = e.FromVertex;
             }
             string caption = v.basicName + ": " + formatWeight(e.weight);
-            Rectangle r = new Rectangle(p.X, p.Y, 1, 1);
+            var r = new Rectangle(p.X, p.Y, 1, 1);
             r = graphPanel.RectangleToScreen(r);
-            Point screenPoint = new Point(r.X, r.Y-20);
+            var screenPoint = new Point(r.X, r.Y-20);
             toolTip.Active = true;
             toolTip.SetToolTip(graphPanel, caption);
         }
@@ -1351,7 +1351,7 @@ namespace CLRProfiler
 
         private void findInterestingNodesMenuItem_Click(object sender, System.EventArgs e)
         {
-            Dictionary<Vertex, double> scoreOfVertex = new Dictionary<Vertex, double>();
+            var scoreOfVertex = new Dictionary<Vertex, double>();
             var verticesSortedByScore = new ArrayList();
             foreach (Vertex v in graph.vertices.Values)
             {
@@ -1387,7 +1387,7 @@ namespace CLRProfiler
             Graph g;
             if (graph.graphSource is Graph)
             {
-                Graph orgGraph = (Graph)graph.graphSource;
+                var orgGraph = (Graph)graph.graphSource;
                 g = new Graph(orgGraph, type);
                 v = orgGraph.FindOrCreateVertex(v.name, v.signature, v.moduleName);
             }
@@ -1446,7 +1446,7 @@ namespace CLRProfiler
             }
 
             string title = titlePrefix + v.name + " " + (v.signature ?? "");
-            GraphViewForm graphViewForm = new GraphViewForm(g, title);
+            var graphViewForm = new GraphViewForm(g, title);
             graphViewForm.Visible = true;
         }
 
@@ -1499,7 +1499,7 @@ namespace CLRProfiler
 
             Graph originalGraph = GetOriginalGraph();
             ObjectGraph objectGraph = GetObjectGraph();
-            Histogram histogram = new Histogram(objectGraph.readNewLog);
+            var histogram = new Histogram(objectGraph.readNewLog);
             bool anyVertexSelected = SelectedVertexCount() != 0;
             foreach (KeyValuePair<ulong, ObjectGraph.GcObject> keyValuePair in objectGraph.idToObject)
             {
@@ -1541,7 +1541,7 @@ namespace CLRProfiler
 
             Graph g = histogram.BuildAllocationGraph(filterForm);
 
-            GraphViewForm graphViewForm = new GraphViewForm(g, title);
+            var graphViewForm = new GraphViewForm(g, title);
             graphViewForm.Visible = true;
         }
 
@@ -1565,11 +1565,11 @@ namespace CLRProfiler
 
         private void showNewObjectsMenuItem_Click(object sender, System.EventArgs e)
         {
-            ObjectGraph objectGraph = (ObjectGraph)graph.graphSource;
+            var objectGraph = (ObjectGraph)graph.graphSource;
             Graph g = objectGraph.BuildTypeGraph(graph.previousGraphTickIndex, int.MaxValue, ObjectGraph.BuildTypeGraphOptions.LumpBySignature, filterForm);
 
             string title = "New Live Objects";
-            GraphViewForm graphViewForm = new GraphViewForm(g, title);
+            var graphViewForm = new GraphViewForm(g, title);
             graphViewForm.Visible = true;       
         }
 
@@ -1598,21 +1598,21 @@ namespace CLRProfiler
 
         private void showObjectsAllocatedBetween_Click(object sender, System.EventArgs e)
         {
-            CommentRangeForm commentRangeForm = new CommentRangeForm();
+            var commentRangeForm = new CommentRangeForm();
             if (commentRangeForm.ShowDialog() == DialogResult.OK)
             {
-                ObjectGraph objectGraph = (ObjectGraph)graph.graphSource;
+                var objectGraph = (ObjectGraph)graph.graphSource;
                 Graph g = objectGraph.BuildTypeGraph(commentRangeForm.startTickIndex, commentRangeForm.endTickIndex, ObjectGraph.BuildTypeGraphOptions.LumpBySignature, filterForm);
 
                 string title = string.Format("Live Objects Allocated Between {0} and {1}", commentRangeForm.startComment, commentRangeForm.endComment);
-                GraphViewForm graphViewForm = new GraphViewForm(g, title);
+                var graphViewForm = new GraphViewForm(g, title);
                 graphViewForm.Visible = true;
             }
         }
 
         private void showWhoAllocatedObjectsBetweenMenuItem_Click(object sender, System.EventArgs e)
         {
-            CommentRangeForm commentRangeForm = new CommentRangeForm();
+            var commentRangeForm = new CommentRangeForm();
             if (commentRangeForm.ShowDialog() == DialogResult.OK)
             {
                 string title = string.Format("Allocation Graph for Live Objects Allocated Between {0} and {1}", commentRangeForm.startComment, commentRangeForm.endComment);
@@ -1628,7 +1628,7 @@ namespace CLRProfiler
                 orgGraph = (Graph)orgGraph.graphSource;
             }
 
-            ObjectGraph objectGraph = (ObjectGraph)orgGraph.graphSource;
+            var objectGraph = (ObjectGraph)orgGraph.graphSource;
             ObjectGraph.BuildTypeGraphOptions options; 
             if (graph.typeGraphOptions == ObjectGraph.BuildTypeGraphOptions.LumpBySignature)
             {
@@ -1653,7 +1653,7 @@ namespace CLRProfiler
 
                 ObjectGraph objectGraph =  GetObjectGraph();
                 string title = string.Format("Histogram by Size for Live Objects at {0}", objectGraph.readNewLog.TickIndexToTime(objectGraph.tickIndex));
-                HistogramViewForm histogramViewForm = new HistogramViewForm(histogram, title);
+                var histogramViewForm = new HistogramViewForm(histogram, title);
                 histogramViewForm.Show();
             }
         }
@@ -1665,17 +1665,17 @@ namespace CLRProfiler
                 ObjectGraph objectGraph = GetObjectGraph();
                 Graph g = objectGraph.BuildReferenceGraph(graph);
                 string title = "References to selected objects";
-                GraphViewForm graphViewForm = new GraphViewForm(g, title);
+                var graphViewForm = new GraphViewForm(g, title);
                 graphViewForm.Visible = true;
             }
         }
 
         private void FilterToSelectedVertex(bool ancestors, bool descendants)
         {
-            StringBuilder types = new StringBuilder();
-            StringBuilder methods = new StringBuilder();
-            StringBuilder signatures = new StringBuilder();
-            StringBuilder addresses = new StringBuilder();
+            var types = new StringBuilder();
+            var methods = new StringBuilder();
+            var signatures = new StringBuilder();
+            var addresses = new StringBuilder();
 
             var selectedVertices = new ArrayList();
             foreach (Vertex v in graph.vertices.Values)

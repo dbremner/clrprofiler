@@ -504,7 +504,7 @@ namespace CLRProfiler
 
         internal GcObject CreateObject(int typeSizeStackTraceId, int numberOfReferences, ulong[] references)
         {
-            GcObject o = GcObject.CreateGcObject(numberOfReferences);
+            var o = GcObject.CreateGcObject(numberOfReferences);
             o.TypeSizeStackTraceId = typeSizeStackTraceId;
 
             for (int i = 0; i < numberOfReferences; i++)
@@ -616,7 +616,7 @@ namespace CLRProfiler
             // To do this, we make use of a queue of objects still to process.
 
             // Initialize
-            Queue<GcObject> queue = new Queue<GcObject>();
+            var queue = new Queue<GcObject>();
             queue.Enqueue(rootObject);
 
             // Loop
@@ -650,7 +650,7 @@ namespace CLRProfiler
 
         internal string SignatureOfObject(ulong id, GcObject gcObject, BuildTypeGraphOptions options)
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             if (gcObject.parent != null)
             {
                 switch (options)
@@ -678,7 +678,7 @@ namespace CLRProfiler
                         sb.Append(gcObject.parent.Type(this).name);
                         sb.Append("->");
                         sb.Append(gcObject.Type(this).name);
-                        List<GcObject> references = new List<GcObject>();
+                        var references = new List<GcObject>();
                         foreach (GcObject refObject in gcObject.References)
                         {
                             references.Add(refObject);
@@ -689,7 +689,7 @@ namespace CLRProfiler
                             sb.Append("->(");
 
                             const int MAXREFTYPECOUNT = 3;
-                            List<string> typeNameList = new List<string>(MAXREFTYPECOUNT);
+                            var typeNameList = new List<string>(MAXREFTYPECOUNT);
                             string separator = "";
                             int refTypeCount = 0;
                             for (int i = 0; i < references.Count; i++)
@@ -1270,7 +1270,7 @@ namespace CLRProfiler
 
         internal Graph BuildReferenceGraph(Graph orgGraph)
         {
-            Graph graph = new Graph(this, Graph.GraphType.ReferenceGraph);
+            var graph = new Graph(this, Graph.GraphType.ReferenceGraph);
             Vertex[] pathFromRoot = new Vertex[32];
 
             GcObject rootObject = CreateRootObject();
@@ -1292,9 +1292,9 @@ namespace CLRProfiler
             // Initialize
             rootObject.parent = null;
 
-            GcObject foundBeforeMarker = new GcObject();
+            var foundBeforeMarker = new GcObject();
 
-            Queue<GcObject> queue = new Queue<GcObject>();
+            var queue = new Queue<GcObject>();
             queue.Enqueue(rootObject);
 
             // Loop
@@ -1407,9 +1407,9 @@ namespace CLRProfiler
 
         GcObject CreateRootObject()
         {
-            GcObject rootObject = GcObject.CreateGcObject(rootCount);
+            var rootObject = GcObject.CreateGcObject(rootCount);
             rootObject.TypeSizeStackTraceId = GetOrCreateGcType("<root>");
-            GcObject unknownObject = GcObject.CreateGcObject(0);
+            var unknownObject = GcObject.CreateGcObject(0);
             unknownObject.TypeSizeStackTraceId = GetOrCreateGcType("<unknown type>");
             for (int i = 0; i < rootCount; i++)
             {

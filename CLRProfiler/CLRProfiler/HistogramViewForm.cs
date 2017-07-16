@@ -76,7 +76,7 @@ namespace CLRProfiler
 
             public int CompareTo(Object o)
             {
-                TypeDesc t = (TypeDesc)o;
+                var t = (TypeDesc)o;
                 if (t.totalSize < this.totalSize)
                 {
                     return -1;
@@ -259,7 +259,7 @@ namespace CLRProfiler
                 int typeIndex = stacktrace[0];
                 int size = stacktrace[1];
 
-                TypeDesc t = (TypeDesc)typeIndexToTypeDesc[typeIndex];
+                var t = (TypeDesc)typeIndexToTypeDesc[typeIndex];
                 if (t == null)
                 {
                     t = new TypeDesc(typeName[typeIndex]);
@@ -685,7 +685,7 @@ namespace CLRProfiler
             }
             else if ((e.Button & MouseButtons.Right) != MouseButtons.None)
             {
-                Point p = new Point(e.X, e.Y);
+                var p = new Point(e.X, e.Y);
                 contextMenu.Show(typeLegendPanel, p);
             }
         }
@@ -720,7 +720,7 @@ namespace CLRProfiler
 
                         y -= height;
 
-                        Rectangle r = new Rectangle(x, y, bucketWidth, height);
+                        var r = new Rectangle(x, y, bucketWidth, height);
                         if (r.Contains(e.X, e.Y))
                         {
                             t.selected = true;
@@ -735,7 +735,7 @@ namespace CLRProfiler
             }
             else if ((e.Button & MouseButtons.Right) != MouseButtons.None)
             {
-                Point p = new Point(e.X, e.Y);
+                var p = new Point(e.X, e.Y);
                 contextMenu.Show(graphPanel, p);
             }
         }
@@ -762,7 +762,7 @@ namespace CLRProfiler
 
                         y -= height;
 
-                        Rectangle bucketRect = new Rectangle(x, y, bucketWidth, height);
+                        var bucketRect = new Rectangle(x, y, bucketWidth, height);
                         if (bucketRect.Contains(e.X, e.Y))
                         {
                             string caption = string.Format("{0} {1} ({2:f2}%) - {3:n0} instances, {4} average size", t.typeName, FormatSize(size), 100.0*size/totalSize, sizeCount.count, FormatSize(sizeCount.size/(ulong)sizeCount.count));
@@ -806,7 +806,7 @@ namespace CLRProfiler
             exportSaveFileDialog.Filter = "Comma separated files | *.csv";
             if (exportSaveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                StreamWriter w = new StreamWriter(exportSaveFileDialog.FileName);
+                var w = new StreamWriter(exportSaveFileDialog.FileName);
 
                 TypeDesc selectedType = FindSelectedType();
 
@@ -870,7 +870,7 @@ namespace CLRProfiler
                     
                     if (minSize <= size && size <= maxSize)
                     {
-                        TypeDesc t = (TypeDesc)typeIndexToTypeDesc[typeIndex];
+                        var t = (TypeDesc)typeIndexToTypeDesc[typeIndex];
                 
                         if (selectedType == null || t == selectedType)
                         {
@@ -923,7 +923,7 @@ namespace CLRProfiler
 
                         if (minSize <= size && size <= maxSize)
                         {
-                            TypeDesc t = (TypeDesc)typeIndexToTypeDesc[typeIndex];
+                            var t = (TypeDesc)typeIndexToTypeDesc[typeIndex];
                         
                             if (t == selectedType)
                             {
@@ -936,7 +936,7 @@ namespace CLRProfiler
 
             Graph graph = selectedHistogram.BuildAllocationGraph(new FilterForm());
 
-            GraphViewForm graphViewForm = new GraphViewForm(graph, title);
+            var graphViewForm = new GraphViewForm(graph, title);
             graphViewForm.Visible = true;
         }
     }

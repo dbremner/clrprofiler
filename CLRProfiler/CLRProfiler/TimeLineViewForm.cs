@@ -123,7 +123,7 @@ namespace CLRProfiler
 
             public int CompareTo(Object o)
             {
-                TypeDesc t = (TypeDesc)o;
+                var t = (TypeDesc)o;
                 if (t.totalSize < this.totalSize)
                 {
                     return -1;
@@ -487,7 +487,7 @@ namespace CLRProfiler
             }
 
             Brush brush = new SolidBrush(Color.Black);
-            Pen pen = new Pen(brush);
+            var pen = new Pen(brush);
             const int minLabelPitchInPixels = 30;
             ulong minLabelPitch = (ulong)minLabelPitchInPixels * (ulong)verticalScale;
 
@@ -526,7 +526,7 @@ namespace CLRProfiler
             double labelPitch = labelPitchInPixels*horizontalScale*0.001;
 
             Brush brush = new SolidBrush(Color.DarkBlue);
-            Pen pen = new Pen(brush);
+            var pen = new Pen(brush);
 
             int y = topMargin;
             for (AddressRange r = rangeList; r != null; r = r.next)
@@ -695,15 +695,15 @@ namespace CLRProfiler
 
         private void DrawCommentLines(Graphics g, Rectangle clipRect)
         {
-            Color color = Color.FromArgb(150, Color.LimeGreen);
-            Pen pen = new Pen(color);
+            var color = Color.FromArgb(150, Color.LimeGreen);
+            var pen = new Pen(color);
             int prevX = 0;
             for (int i = 0; i < lastLog.commentEventList.count; i++)
             {
                 int x = TimeToX(lastLog.TickIndexToTime(lastLog.commentEventList.eventTickIndex[i]));
                 if (x != prevX)
                 {
-                    Rectangle r = new Rectangle(x, commentVerticalMargin, 1, graphPanel.Height - commentVerticalMargin*2);
+                    var r = new Rectangle(x, commentVerticalMargin, 1, graphPanel.Height - commentVerticalMargin*2);
                     r.Intersect(clipRect);
                     if (r.Width != 0 && r.Height != 0)
                     {
@@ -771,7 +771,7 @@ namespace CLRProfiler
 
             g.SetClip(e.ClipRectangle);
 
-            SolidBrush backgroundBrush = new SolidBrush(graphPanel.BackColor);
+            var backgroundBrush = new SolidBrush(graphPanel.BackColor);
             g.FillRectangle(backgroundBrush, e.ClipRectangle);
 
             DrawSamples(g, sampleObjectTable.masterTable);
@@ -952,7 +952,7 @@ namespace CLRProfiler
             }
             else if ((e.Button & MouseButtons.Right) != MouseButtons.None)
             {
-                Point p = new Point(e.X, e.Y);
+                var p = new Point(e.X, e.Y);
                 contextMenu.Show(typeLegendPanel, p);
             }
         }
@@ -1061,7 +1061,7 @@ namespace CLRProfiler
 
         private void EraseSelectionVerticalLine(Graphics g, int tickIndex)
         {
-            Pen backgroundPen = new Pen(graphPanel.BackColor);
+            var backgroundPen = new Pen(graphPanel.BackColor);
             int x = TimeToX(lastLog.TickIndexToTime(tickIndex));
             g.DrawLine(backgroundPen, x-1, selectionVerticalMargin+1, x-1, graphPanel.Height-selectionVerticalMargin-1);
             g.DrawLine(backgroundPen, x, selectionVerticalMargin+1, x, graphPanel.Height-selectionVerticalMargin-1);
@@ -1072,7 +1072,7 @@ namespace CLRProfiler
         private void DrawSelectionVerticalLine(Graphics g, int tickIndex)
         {
             int x = TimeToX(lastLog.TickIndexToTime(tickIndex));
-            Pen blackPen = new Pen(Color.Black);
+            var blackPen = new Pen(Color.Black);
             g.DrawLine(blackPen, x, selectionVerticalMargin+1, x, graphPanel.Height-selectionVerticalMargin-1);
         }
 
@@ -1086,13 +1086,13 @@ namespace CLRProfiler
 
         private void EraseSelectionHorizontalLines(Graphics g, int startTick, int endTick)
         {
-            Pen backGroundPen = new Pen(graphPanel.BackColor);
+            var backGroundPen = new Pen(graphPanel.BackColor);
             DrawSelectionHorizontalLines(g, backGroundPen, startTick, endTick);
         }
 
         private void DrawSelectionHorizontalLines(Graphics g, int startTick, int endTick)
         {
-            Pen blackPen = new Pen(Color.Black);
+            var blackPen = new Pen(Color.Black);
             DrawSelectionHorizontalLines(g, blackPen, startTick, endTick);
         }
 
@@ -1238,7 +1238,7 @@ namespace CLRProfiler
             }
             else if ((e.Button & MouseButtons.Right) != MouseButtons.None)
             {
-                Point p = new Point(e.X, e.Y);
+                var p = new Point(e.X, e.Y);
                 contextMenu.Show(graphPanel, p);
             }
         }
@@ -1371,7 +1371,7 @@ namespace CLRProfiler
             long endPos = log.TickIndexToPos(endTickIndex);
 
             // Read the selected portion of the log again
-            ReadLogResult readLogResult = new ReadLogResult();
+            var readLogResult = new ReadLogResult();
             readLogResult.liveObjectTable = new LiveObjectTable(log);
             log.ReadFile(0, endPos, readLogResult);
 
@@ -1381,7 +1381,7 @@ namespace CLRProfiler
         private Histogram GetLiveHistogram()
         {
             LiveObjectTable liveObjectTable = GetLiveObjectTable();
-            Histogram histogram = new Histogram(sampleObjectTable.readNewLog);
+            var histogram = new Histogram(sampleObjectTable.readNewLog);
             LiveObjectTable.LiveObject o;
             for (liveObjectTable.GetNextObject(0, ulong.MaxValue, out o); o.id < ulong.MaxValue; liveObjectTable.GetNextObject(o.id + o.size, ulong.MaxValue, out o))
             {
@@ -1416,7 +1416,7 @@ namespace CLRProfiler
                 long endPos = log.TickIndexToPos(endTickIndex);
 
                 // Read the selected portion of the log again
-                ReadLogResult readLogResult = new ReadLogResult();
+                var readLogResult = new ReadLogResult();
                 readLogResult.allocatedHistogram = new Histogram(log);
                 log.ReadFile(startPos, endPos, readLogResult);
                 histogram = readLogResult.allocatedHistogram;
@@ -1426,7 +1426,7 @@ namespace CLRProfiler
 
             // And post it back to the main form - hardest part is to compute an appropriate title...
 
-            GraphViewForm graphViewForm = new GraphViewForm(graph, title);
+            var graphViewForm = new GraphViewForm(graph, title);
             graphViewForm.Visible = true;
         }
 
@@ -1453,7 +1453,7 @@ namespace CLRProfiler
                 long endPos = log.TickIndexToPos(endTickIndex);
 
                 // Read the selected portion of the log again
-                ReadLogResult readLogResult = new ReadLogResult();
+                var readLogResult = new ReadLogResult();
                 readLogResult.allocatedHistogram = new Histogram(log);
                 log.ReadFile(startPos, endPos, readLogResult);
                 histogram = readLogResult.allocatedHistogram;
@@ -1461,7 +1461,7 @@ namespace CLRProfiler
             }
             // And post it to a new histogram form - hardest part is to compute an appropriate title...
 
-            HistogramViewForm histogramViewForm = new HistogramViewForm(histogram, title);
+            var histogramViewForm = new HistogramViewForm(histogram, title);
             histogramViewForm.Show();
         }
 
@@ -1475,7 +1475,7 @@ namespace CLRProfiler
             LiveObjectTable liveObjectTable = GetLiveObjectTable();
 
             string title = string.Format("Live Objects by Address at {0:f3} seconds", lastLog.TickIndexToTime(endTickIndex));
-            ViewByAddressForm viewByAddressForm = new ViewByAddressForm(liveObjectTable, title);
+            var viewByAddressForm = new ViewByAddressForm(liveObjectTable, title);
             viewByAddressForm.Show();
         }
 
@@ -1494,7 +1494,7 @@ namespace CLRProfiler
 
             // Read the selected portion of the log again
 
-            ReadLogResult readLogResult = new ReadLogResult();
+            var readLogResult = new ReadLogResult();
             readLogResult.relocatedHistogram = new Histogram(log);
             readLogResult.liveObjectTable = new LiveObjectTable(log);
             log.ReadFile(startPos, endPos, readLogResult);
@@ -1502,7 +1502,7 @@ namespace CLRProfiler
             // And post it to a new histogram form - hardest part is to compute an appropriate title...
 
             string title = string.Format("Histogram by Size for Objects relocated between {0:f3} and {1:f3} seconds", lastLog.TickIndexToTime(startTickIndex), lastLog.TickIndexToTime(endTickIndex));
-            HistogramViewForm histogramViewForm = new HistogramViewForm(readLogResult.relocatedHistogram, title);
+            var histogramViewForm = new HistogramViewForm(readLogResult.relocatedHistogram, title);
             histogramViewForm.Show();
         }
 
@@ -1519,13 +1519,13 @@ namespace CLRProfiler
 
             // And post it to a new Histogram by Age form - hardest part is to compute an appropriate title...
             string title = string.Format("Histogram by Age for Live Objects at {0:f3} seconds", lastLog.TickIndexToTime(endTickIndex));
-            AgeHistogram ageHistogram = new AgeHistogram(liveObjectTable, title);
+            var ageHistogram = new AgeHistogram(liveObjectTable, title);
             ageHistogram.Show();        
         }
 
         private void setSelectionMenuItem_Click(object sender, System.EventArgs e)
         {
-            CommentRangeForm commentRangeForm = new CommentRangeForm();
+            var commentRangeForm = new CommentRangeForm();
             if (commentRangeForm.ShowDialog() == DialogResult.OK)
             {
                 SetSelection(commentRangeForm.startTickIndex, commentRangeForm.endTickIndex);
@@ -1543,19 +1543,19 @@ namespace CLRProfiler
             long endPos = log.TickIndexToPos(endTickIndex);
 
             // Read the selected portion of the log again
-            ReadLogResult readLogResult = new ReadLogResult();
+            var readLogResult = new ReadLogResult();
             readLogResult.liveObjectTable = new LiveObjectTable(log);
             readLogResult.objectGraph = new ObjectGraph(log, 0);
             log.ReadFile(0, endPos, readLogResult);
             Graph graph = readLogResult.objectGraph.BuildTypeGraph(new FilterForm());
             string title = string.Format("Heap Graph at {0:f3} seconds", lastLog.TickIndexToTime(readLogResult.objectGraph.tickIndex));
-            GraphViewForm graphViewForm = new GraphViewForm(graph, title);
+            var graphViewForm = new GraphViewForm(graph, title);
             graphViewForm.Visible = true;
         }
 
         private void showTimeLineForSelectionMenuItem_Click(object sender, System.EventArgs e)
         {
-            TimeLineViewForm timeLineViewForm = new TimeLineViewForm(selectedStartTickIndex, selectedEndTickIndex);
+            var timeLineViewForm = new TimeLineViewForm(selectedStartTickIndex, selectedEndTickIndex);
             timeLineViewForm.Show();
         }
     }
