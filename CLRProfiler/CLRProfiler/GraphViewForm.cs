@@ -856,8 +856,7 @@ namespace CLRProfiler
                 {
                     if (v.selectionRectangle.Contains(lastMousePoint))
                     {
-                        string caption;
-                        caption = v.name;
+                        string caption = v.name;
                         if (v.signature != null)
                         {
                             caption += Environment.NewLine + v.signature;

@@ -672,7 +672,6 @@ namespace CLRProfiler
             int[] rootStacktrace = IndexToStacktrace(node.stackid);
             int rootStackLength = rootStacktrace.Length;
             int prevStackLength = rootStackLength;
-            int [] kidStacktrace;
             int functionId = 0;
 
             try
@@ -680,10 +679,9 @@ namespace CLRProfiler
                 ArrayList kids = FetchKids( null, node );
                 foreach( TreeNode kidNode in kids )
                 {
-                    GlobalCallStats s;
                     bool fAddNode = false;
 
-                    kidStacktrace = IndexToStacktrace( kidNode.stackid );
+                    int [] kidStacktrace = IndexToStacktrace( kidNode.stackid );
                     if (kidNode.nodetype == TreeNode.NodeType.Call)
                     {
                         functionId = kidStacktrace[ kidStacktrace.Length - 1 ];
@@ -697,6 +695,7 @@ namespace CLRProfiler
 
                     if (fAddNode)
                     {
+                        GlobalCallStats s;
                         if ( !fns.ContainsKey( functionId ))
                         {
                             s = new GlobalCallStats();
@@ -1085,14 +1084,13 @@ namespace CLRProfiler
                 StringBuilder sb = new StringBuilder();
                 c = ReadChar();
 
-                bool found;
                 string assemblyName = null;
                 int threadid = 0, stackid = 0;
                 TreeNode.NodeType nodetype = TreeNode.NodeType.Call;
 
                 while (c != -1)
                 {
-                    found = false;
+                    bool found = false;
                     if ((line % 1024) == 0)
                     {
                         int currentProgress = (int)(pos/1024);
@@ -1194,11 +1192,10 @@ namespace CLRProfiler
                     bool fFoundAllocInclude = true;
                     bool fFoundAllocExclude = false;
 
-                    int includeMatches;
-
                     //  Apply filters to current node
                     if (filterInclude.Length != 0 || filterExclude.Length != 0)
                     {
+                        int includeMatches;
                         if (nodetype == TreeNode.NodeType.Call ||
                             nodetype == TreeNode.NodeType.Allocation)
                         {
@@ -1365,10 +1362,9 @@ namespace CLRProfiler
                         //  Ignore first 2 ints in the stack trace.  They are allocation information.
                         int curStackLen = stacktrace.Length - 2;
                         int i;
-                        bool fNewStack;
 
                         //  Find out how much of the callstack we need to construct
-                        fNewStack = curStackLen != prevStackLen;
+                        bool fNewStack = curStackLen != prevStackLen;
                         for (i = 0; i < curStackLen && i < prevStackLen; i++)
                         {
                             if (prevStackTrace[i] != stacktrace[i+2]) 
@@ -1624,10 +1620,8 @@ namespace CLRProfiler
 
         private void GetConfiguration()
         {
-            RegistryKey rkMsft;
-
             //  Open or create the CLR Profiler registry key
-            rkMsft = Registry.CurrentUser.OpenSubKey( "Software\\Microsoft", true);
+            RegistryKey rkMsft = Registry.CurrentUser.OpenSubKey( "Software\\Microsoft", true);
             rkProfiler = rkMsft.OpenSubKey( "CLRProfiler", true );
             if (rkProfiler == null)
             {
@@ -1643,35 +1637,29 @@ namespace CLRProfiler
 
             try 
             {
-                String value;
-                string svalue;
-                int o1, o2;
-
                 //  Read the saved rectangle from the registry and restore
                 //  the app to that size.
-                value = (String)rkProfiler.GetValue( "Rectangle" );
+                var value = (String)rkProfiler.GetValue( "Rectangle" );
                 if (value != null)
                 {
-                    int left, top, right, bottom;
-
-                    o1 = 0;
-                    o2 = value.IndexOf(",", o1);
-                    svalue = value.Substring( o1, o2-o1 );
-                    left = Int32.Parse( svalue );
+                    int o1 = 0;
+                    int o2 = value.IndexOf(",", o1);
+                    string svalue = value.Substring( o1, o2-o1 );
+                    int left = Int32.Parse( svalue );
 
                     o1 = o2 + 1;
                     o2 = value.IndexOf(",", o1);
                     svalue = value.Substring( o1, o2-o1 );
-                    top = Int32.Parse( svalue );
+                    int top = Int32.Parse( svalue );
 
                     o1 = o2 + 1;
                     o2 = value.IndexOf(",", o1);
                     svalue = value.Substring( o1, o2-o1 );
-                    right = Int32.Parse( svalue );
+                    int right = Int32.Parse( svalue );
                 
                     o1 = o2 + 1;
                     svalue = value.Substring( o1 );
-                    bottom = Int32.Parse( svalue );
+                    int bottom = Int32.Parse( svalue );
 
                     formRect = new Rectangle( left, top, right - left, bottom - top );
                 }
@@ -1907,10 +1895,8 @@ namespace CLRProfiler
 
             try
             {
-                string strValue;
-
                 //  Save rectangle of the app
-                strValue = Left.ToString() + "," + Top.ToString() + "," + Right.ToString() + "," + Bottom.ToString();
+                string strValue = Left.ToString() + "," + Top.ToString() + "," + Right.ToString() + "," + Bottom.ToString();
                 rkProfiler.SetValue( "Rectangle", strValue );
 
                 strValue = splitter.Location.X.ToString();
@@ -2251,7 +2237,6 @@ namespace CLRProfiler
         private void stackView_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
         {
             ListViewItem item = stackView.GetItemAt(e.X, e.Y);
-            int index;
             string strFn;
 
             if (e.Button != MouseButtons.Right)
@@ -2267,7 +2252,7 @@ namespace CLRProfiler
                 return;
             }
 
-            index = item.Index;
+            int index = item.Index;
 
             //  Customize the context menu
             contextSelection = index;
@@ -2328,16 +2313,12 @@ namespace CLRProfiler
                 case 2:
                 case 3:
                     // Add function to filters
-                    TreeNode.NodeType nodeType;
-                    int idCurrent;
-                    string name;
-                    FnViewFilter []filters;
 
                     // include or exclude filters?
                     bool fIncludes = miClicked.Index == 0 || miClicked.Index == 1;
                     int filterId = (miClicked.Index) & 1;  // 0 or 1
 
-                    nodeType = TreeNode.NodeType.Call;
+                    TreeNode.NodeType nodeType = TreeNode.NodeType.Call;
 
                     // A bit of a hack.  Use font color to distinguish allocations from functions.
                     if (stackView.Items[contextSelection].ForeColor == Color.Green)
@@ -2345,10 +2326,10 @@ namespace CLRProfiler
                         nodeType = TreeNode.NodeType.Allocation;
                     }
 
-                    name = stackView.Items[ contextSelection ].Text;
-                    idCurrent = nodeType == TreeNode.NodeType.Call ? GetFunctionId(name) : GetTypeId(name);
+                    string name = stackView.Items[ contextSelection ].Text;
+                    int idCurrent = nodeType == TreeNode.NodeType.Call ? GetFunctionId(name) : GetTypeId(name);
 
-                    filters = fIncludes ? filterInclude : filterExclude;
+                    FnViewFilter []filters = fIncludes ? filterInclude : filterExclude;
                     filters[ filterId ].nodetype = nodeType;
                     filters[ filterId ].functionId = idCurrent;
 

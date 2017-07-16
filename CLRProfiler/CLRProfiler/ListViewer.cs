@@ -61,7 +61,7 @@ namespace CLRProfiler
 
         public int Compare(object x, object y)
         {
-            int res = 0;
+            int res;
             ListViewItem a = x as ListViewItem, b = y as ListViewItem;
             string aa = a.SubItems[sortColumn].Text, bb = b.SubItems[sortColumn].Text;
             if(sortColumn != 0)
@@ -101,11 +101,13 @@ namespace CLRProfiler
 
                 bool formatNicely = !sf.FileName.ToLower().EndsWith(".csv");
 
-                int i, j, columns = list.Columns.Count;
+                int columns = list.Columns.Count;
                 try
                 {
                     StreamWriter s = new StreamWriter(sf.FileName);
                     string[] formats = new string[columns];
+                    int i;
+                    int j;
                     if(formatNicely)
                     {
                         // figure out widths of the columns

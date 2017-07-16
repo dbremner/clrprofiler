@@ -270,10 +270,9 @@ namespace CLRProfiler
                 LiveObjectTable.LiveObject o;
                 for (liveObjectTable.GetNextObject(0, ulong.MaxValue, out o); o.id < ulong.MaxValue; liveObjectTable.GetNextObject(o.id + o.size, ulong.MaxValue, out o))
                 {
-                    int bucketIndex;
                     double allocTime = log.TickIndexToTime(o.allocTickIndex);
                     age = nowTime - allocTime;
-                    bucketIndex = (int)(age/timeScale);
+                    int bucketIndex = (int)(age/timeScale);
                     if (bucketIndex >= bucketTable.Length)
                     {
                         bucketIndex = bucketTable.Length - 1;
@@ -929,8 +928,6 @@ namespace CLRProfiler
 
         private void showWhoAllocatedMenuItem_Click(object sender, System.EventArgs e)
         {
-            Histogram selectedHistogram;
-            string title;
             TypeDesc selectedType = FindSelectedType();
             double minAge = 0;
             double maxAge = double.PositiveInfinity;
@@ -942,7 +939,7 @@ namespace CLRProfiler
                     maxAge = b.maxAge;
                 }
             }
-            title = "Allocation Graph for objects";
+            string title = "Allocation Graph for objects";
             if (selectedType != null)
             {
                 title = string.Format("Allocation Graph for {0} objects", selectedType.typeName);
@@ -953,7 +950,7 @@ namespace CLRProfiler
                 title += string.Format(" of age between {0} and {1} seconds", FormatTime(minAge), FormatTime(maxAge));
             }
 
-            selectedHistogram = new Histogram(liveObjectTable.readNewLog);
+            var selectedHistogram = new Histogram(liveObjectTable.readNewLog);
             LiveObjectTable.LiveObject o;
             double nowTime = liveObjectTable.readNewLog.TickIndexToTime(liveObjectTable.lastTickIndex);
             for (liveObjectTable.GetNextObject(0, ulong.MaxValue, out o); o.id < ulong.MaxValue; liveObjectTable.GetNextObject(o.id + o.size, uint.MaxValue, out o))

@@ -121,9 +121,9 @@ namespace CLRProfiler
 			int numNodes = nodes.Count, nodesInList = treeListBox.Items.Count;
 			int costOfRebuilding = 3 * (numNodes + nodesInList);
 			int costOfInsertions = (1 + nodesInList - index) * numNodes;
-			int i, newDepth = 1 + root.depth;
+		    int newDepth = 1 + root.depth;
 
-			if(costOfInsertions < costOfRebuilding)
+		    if(costOfInsertions < costOfRebuilding)
 			{
 				foreach(TreeNodeBase curr in nodes)
 				{
@@ -136,7 +136,8 @@ namespace CLRProfiler
 				++index;
 				ListBox.ObjectCollection items = treeListBox.Items;
 				object[] allNodes = new object[numNodes + nodesInList];
-				for(i = 0; i < index; i++)
+			    int i;
+			    for(i = 0; i < index; i++)
 				{
 					allNodes[i] = items[i];
 				}
@@ -379,16 +380,15 @@ namespace CLRProfiler
 				ColumnInformation ci = ((Column)columns[0]).ColumnInformation;
 				string fnName = treeOwner.GetInfo(TokenObject, node, ci).ToString();
 				String strFn;
-				CallTreeForm.FnViewFilter[] filterFns;
 
-				ContextSelection = index;
+			    ContextSelection = index;
 				EventHandler eventHandler = new EventHandler( this.ContextMenu_Selection );
 				contextMenu.MenuItems.Clear();
 				contextMenu.MenuItems.Add( new MenuItem( "Find...", eventHandler));
 				contextMenu.MenuItems.Add( new MenuItem( "Find " + fnName + " forward", eventHandler));
 				contextMenu.MenuItems.Add( new MenuItem( "Find " + fnName + " backward", eventHandler));
 				
-				filterFns = treeOwner.GetIncludeFilters();				
+				CallTreeForm.FnViewFilter[] filterFns = treeOwner.GetIncludeFilters();				
 				for (int i = 0; i < 2; i++)
 				{
 					if (filterFns[i].functionId > 0)
@@ -444,13 +444,12 @@ namespace CLRProfiler
 
 				case 0:
 					// Find ...
-					int findId;
 					FunctionFind dlgFnFind = new FunctionFind( treeOwner, "" );
 					if (dlgFnFind.ShowDialog() == DialogResult.OK)
 					{
-						// Find dlgFn
-						findId = dlgFnFind.SelectedFunctionId;
-						FindNode( ContextSelection, TreeNode.NodeType.Call, findId, Direction.Forward );	
+					    // Find dlgFn
+					    int findId = dlgFnFind.SelectedFunctionId;
+					    FindNode( ContextSelection, TreeNode.NodeType.Call, findId, Direction.Forward );
 					}
 					break;
 
@@ -518,12 +517,11 @@ namespace CLRProfiler
 		private void FindNode( int StartId, TreeNode.NodeType nodeType, int targetId, Direction direction )
 		{
 			int curSel = StartId;
-			TreeNode node;
-			int functionId;
-	
-			while(true)
+
+		    while(true)
 			{
-				if (direction == Direction.Forward)
+			    TreeNode node;
+			    if (direction == Direction.Forward)
 				{
 					curSel++;
 					if (curSel >= treeListBox.Items.Count)
@@ -553,7 +551,7 @@ namespace CLRProfiler
 				}
 
 				node = (TreeNode)Items[curSel];
-				functionId = treeOwner.GetNodeId( node );
+				int functionId = treeOwner.GetNodeId( node );
 				if (functionId == targetId && node.nodetype == nodeType)
 				{
 					treeListBox.SelectedIndex = curSel;

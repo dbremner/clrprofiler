@@ -61,7 +61,6 @@ namespace CLRProfiler
             {
                 get
                 {
-                    GcObject o;
                     int lowBits = (int)(objectID & lowAddressMask);
                     int highBits = (int)(objectID >> lowAddressBits);
                     if (highBits >= masterTable.Length)
@@ -77,7 +76,7 @@ namespace CLRProfiler
 
                     int bucket = lowBits >> bucketBits;
                     lowBits = (lowBits >> alignBits) & idMask;
-                    o = subTable[bucket];
+                    GcObject o = subTable[bucket];
                     while (o != null && o.Id != lowBits)
                     {
                         o = o.nextInHash;

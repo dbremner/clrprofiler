@@ -630,8 +630,7 @@ namespace CLRProfiler
 
 			root.currFunId = -1;
 			root.prevFunId = -1;
-			string diffkey = null;
-			string filter = null;
+		    string filter = null;
 			DataRow[] rRoot = null;
 			
 			if(_allocDiff._currcallTrace.LogResult.allocatedHistogram.readNewLog.funcSignatureIdHash.ContainsKey(name))
@@ -672,7 +671,8 @@ namespace CLRProfiler
 		
 			if(filter != null)
 			{
-				if(rRoot.Length == 1)
+			    string diffkey;
+			    if(rRoot.Length == 1)
 				{
 					tmproot = _allocDiff.Row2Node(rRoot[0]);
 					diffkey = tmproot.mapname + tmproot.prevIncl + tmproot.currIncl + tmproot.diffIncl + tmproot.prevFunId + tmproot.currFunId;
@@ -789,9 +789,8 @@ namespace CLRProfiler
 
 		private void aligDataGrids(object sender, System.Windows.Forms.MouseEventArgs e, DataGridTableStyle sty)
 		{
-			System.Windows.Forms.DataGrid.HitTestInfo hi;   
-			hi=((DataGrid) sender).HitTest(e.X, e.Y);
-			if(!iscoarse)
+		    DataGrid.HitTestInfo hi = ((DataGrid) sender).HitTest(e.X, e.Y);
+		    if(!iscoarse)
 			{
 				columnIdx idx = (columnIdx)hi.Column-1;
 				if(idx >= columnIdx.name && idx <= columnIdx.diffTimesMakecalls)

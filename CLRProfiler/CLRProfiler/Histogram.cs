@@ -73,8 +73,6 @@ namespace CLRProfiler
             int stackPtr = BuildVertexStack(stackTraceIndex, funcVertex, ref vertexStack, 2);
 
             Vertex toVertex = graph.TopVertex;
-            Vertex fromVertex;
-            Edge edge;
             if ((typeVertex[typeIndex].interestLevel & InterestLevel.Interesting) == InterestLevel.Interesting
                 && ReadNewLog.InterestingCallStack(vertexStack, stackPtr, filterForm))
             {
@@ -82,6 +80,8 @@ namespace CLRProfiler
                 stackPtr++;
                 stackPtr = ReadNewLog.FilterVertices(vertexStack, stackPtr);
                 stackPtr = Vertex.SqueezeOutRepetitions(vertexStack, stackPtr);
+                Vertex fromVertex;
+                Edge edge;
                 for (int i = 0; i < stackPtr; i++)
                 {
                     fromVertex = toVertex;
@@ -130,17 +130,15 @@ namespace CLRProfiler
             int stackPtr = BuildVertexStack(stackTraceIndex, funcVertex, ref vertexStack, 0);
 
             Vertex toVertex = graph.TopVertex;
-            Vertex fromVertex;
-            Edge edge;
             if (ReadNewLog.InterestingCallStack(vertexStack, stackPtr, filterForm))
             {
                 stackPtr = ReadNewLog.FilterVertices(vertexStack, stackPtr);
                 stackPtr = Vertex.SqueezeOutRepetitions(vertexStack, stackPtr);
                 for (int i = 0; i < stackPtr; i++)
                 {
-                    fromVertex = toVertex;
+                    Vertex fromVertex = toVertex;
                     toVertex = vertexStack[i];
-                    edge = graph.FindOrCreateEdge(fromVertex, toVertex);
+                    Edge edge = graph.FindOrCreateEdge(fromVertex, toVertex);
                     edge.AddWeight((uint)count);
                 }
             }
@@ -154,14 +152,14 @@ namespace CLRProfiler
             handleVertex.interestLevel = InterestLevel.Interesting;
 
             Vertex toVertex = graph.TopVertex;
-            Vertex fromVertex;
-            Edge edge;
             if (ReadNewLog.InterestingCallStack(vertexStack, stackPtr, filterForm))
             {
                 vertexStack[stackPtr] = handleVertex;
                 stackPtr++;
                 stackPtr = ReadNewLog.FilterVertices(vertexStack, stackPtr);
                 stackPtr = Vertex.SqueezeOutRepetitions(vertexStack, stackPtr);
+                Edge edge;
+                Vertex fromVertex;
                 for (int i = 0; i < stackPtr; i++)
                 {
                     fromVertex = toVertex;

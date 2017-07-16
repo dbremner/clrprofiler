@@ -813,7 +813,7 @@ namespace CLRProfiler
                 int[] intStack = new int[1000];
                 int stackPtr = 0;
                 c = ReadChar();
-                bool thisIsR = false, previousWasR;
+                bool thisIsR = false;
                 bool extendedRootInfoSeen = false;
                 int lastTickIndex = 0;
                 bool newGcEvent = false;
@@ -839,7 +839,7 @@ namespace CLRProfiler
                         }
                     }
                     lastLineStartPos = pos-1;
-                    previousWasR = thisIsR;
+                    bool previousWasR = thisIsR;
                     thisIsR = false;
                     switch (c)
                     {

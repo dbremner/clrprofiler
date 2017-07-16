@@ -75,8 +75,6 @@ namespace CLRProfiler
             int stackPtr = BuildVertexStack(stackTraceIndex, funcVertex, ref vertexStack, 0);
 
             Vertex toVertex = graph.TopVertex;
-            Vertex fromVertex;
-            Edge edge;
             if ((funcVertex[funcIndex].interestLevel & InterestLevel.Interesting) == InterestLevel.Interesting
                 && ReadNewLog.InterestingCallStack(vertexStack, stackPtr, filterForm))
             {
@@ -84,6 +82,8 @@ namespace CLRProfiler
                 stackPtr++;
                 stackPtr = ReadNewLog.FilterVertices(vertexStack, stackPtr);
                 stackPtr = Vertex.SqueezeOutRepetitions(vertexStack, stackPtr);
+                Edge edge;
+                Vertex fromVertex;
                 for (int i = 0; i < stackPtr; i++)
                 {
                     fromVertex = toVertex;
@@ -163,14 +163,14 @@ namespace CLRProfiler
             int stackPtr = BuildVertexStack(stackTraceIndex, funcVertex, ref vertexStack, 0) - functionsToSkip;
 
             Vertex toVertex = graph.TopVertex;
-            Vertex fromVertex;
-            Edge edge;
             if (ReadNewLog.InterestingCallStack(vertexStack, stackPtr, filterForm))
             {
                 vertexStack[stackPtr] = modVertex[modIndex];
                 stackPtr++;
                 stackPtr = ReadNewLog.FilterVertices(vertexStack, stackPtr);
                 stackPtr = Vertex.SqueezeOutRepetitions(vertexStack, stackPtr);
+                Edge edge;
+                Vertex fromVertex;
                 for (int i = 0; i < stackPtr; i++)
                 {
                     fromVertex = toVertex;
@@ -252,8 +252,6 @@ namespace CLRProfiler
             int stackPtr = BuildVertexStack(stackTraceIndex, funcVertex, ref vertexStack, 0) - functionsToSkip;
 
             Vertex toVertex = graph.TopVertex;
-            Vertex fromVertex;
-            Edge edge;
             if (ReadNewLog.InterestingCallStack(vertexStack, stackPtr, filterForm))
             {
                 vertexStack[stackPtr] = graph.FindOrCreateVertex(className, null, null);
@@ -263,6 +261,8 @@ namespace CLRProfiler
                 stackPtr++;
                 stackPtr = ReadNewLog.FilterVertices(vertexStack, stackPtr);
                 stackPtr = Vertex.SqueezeOutRepetitions(vertexStack, stackPtr);
+                Edge edge;
+                Vertex fromVertex;
                 for (int i = 0; i < stackPtr; i++)
                 {
                     fromVertex = toVertex;

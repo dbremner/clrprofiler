@@ -112,9 +112,9 @@ namespace CLRProfiler
 			int numNodes = nodes.Count, nodesInList = treeListBox.Items.Count;
 			int costOfRebuilding = 3 * (numNodes + nodesInList);
 			int costOfInsertions = (1 + nodesInList - index) * numNodes;
-			int i, newDepth = 1 + root.depth;
+		    int newDepth = 1 + root.depth;
 
-			if(costOfInsertions < costOfRebuilding)
+		    if(costOfInsertions < costOfRebuilding)
 			{
 				foreach(TreeNodeBase curr in nodes)
 				{
@@ -127,7 +127,8 @@ namespace CLRProfiler
 				++index;
 				ListBox.ObjectCollection items = treeListBox.Items;
 				object[] allNodes = new object[numNodes + nodesInList];
-				for(i = 0; i < index; i++)
+			    int i;
+			    for(i = 0; i < index; i++)
 				{
 					allNodes[i] = items[i];
 				}

@@ -298,7 +298,7 @@ namespace CLRProfiler
 		 * object's ToString() is used to display that data */
 		private object GetInfo(object obj, TreeNodeBase node, int counterId)
 		{
-			long number = 0;
+			long number;
 			//###TreeNode root = (TreeNode)node;
 			DiffDataNode root = (DiffDataNode)node;
 			if(counterId < 0)

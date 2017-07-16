@@ -449,10 +449,8 @@ namespace CLRProfiler
 		{
 			Vertex selectedVertex;
 			int selectedVertexCount = gb.SelectedVertexCount(out selectedVertex);
-			int id = 1;
-			
-			string nameAndSignature = null;
-			datanode n = new datanode();
+
+		    datanode n = new datanode();
 
 
 			try
@@ -463,7 +461,7 @@ namespace CLRProfiler
 					{
 						if (v.selected || (selectedVertexCount == 0) )
 						{
-							nameAndSignature  = v.name;
+							string nameAndSignature = v.name;
 							if(v.signature != null)
                             {
                                 nameAndSignature += ' ' + v.signature;
@@ -477,7 +475,8 @@ namespace CLRProfiler
 							n.excl = 0;
 							n.timesBeenCalled= n.timesMakeCalls = 0;
 							FillCallAlloc(ref n, v);
-							if(tmpcallTree.LogResult.allocatedHistogram.readNewLog.funcSignatureIdHash.ContainsKey(nameAndSignature))
+						    int id;
+						    if(tmpcallTree.LogResult.allocatedHistogram.readNewLog.funcSignatureIdHash.ContainsKey(nameAndSignature))
 							{
 								n.category = 1;	// func
 								id = tmpcallTree.LogResult.callstackHistogram.readNewLog.funcSignatureIdHash[nameAndSignature];
@@ -592,13 +591,10 @@ namespace CLRProfiler
 			 int id = 0;
 			try
 			{
-
 				foreach(string nameAndSignature in _prevbasedata.Keys)
 				{
-				
-					datanode pn= new datanode();
-					datanode cn= new datanode();
-					pn = (datanode)_prevbasedata[nameAndSignature];
+				    datanode cn= new datanode();
+					var pn = (datanode)_prevbasedata[nameAndSignature];
 					pn.id = id;
 					if(_currbasedata.ContainsKey(nameAndSignature))
 					{
@@ -614,8 +610,7 @@ namespace CLRProfiler
 					if(! _prevbasedata.ContainsKey(CnameAndSignature))
 					{
 						datanode pn= new datanode();
-						datanode cn= new datanode();
-						cn = (datanode)_currbasedata[CnameAndSignature];
+					    var cn = (datanode)_currbasedata[CnameAndSignature];
 						cn.id = id;
 						AddBaseTableRow(this.basedatatable, CnameAndSignature, pn, cn);
 						basedataId.Add(CnameAndSignature, id);
@@ -731,16 +726,14 @@ namespace CLRProfiler
 		#region build Caller and callee table
 		private void BuildBaseCallTables()
 		{
-			int id = -1;
-			string nameAndSignature = null;
-			try
+		    try
 			{
 				foreach(DictionaryEntry de in basedataId)
 				{
 					datanode pn= new datanode();
 					datanode cn= new datanode();
-					nameAndSignature = (string)de.Key;
-					id = (int)basedataId[nameAndSignature];
+					var nameAndSignature = (string)de.Key;
+					var id = (int)basedataId[nameAndSignature];
 					if(this._prevbasedata.ContainsKey(nameAndSignature))
 					{
 						pn = (datanode)_prevbasedata[nameAndSignature];
@@ -770,12 +763,11 @@ namespace CLRProfiler
 		}
 		private void BuildCallTables(DataTable tbl, int id, Dictionary<Vertex, Edge> callhash, bool iscaller)
 		{
-			string nameAndSignature = null;
-			callnode cn = new callnode();
+		    callnode cn = new callnode();
 			cn.id = id;
 			foreach(Vertex cv in  callhash.Keys)
 			{
-				nameAndSignature = cv.name;
+				string nameAndSignature = cv.name;
 				if(cv.signature != null)
                 {
                     nameAndSignature += ' ' + cv.signature;
@@ -803,9 +795,7 @@ namespace CLRProfiler
 
 		private void AddCallTableRow(DataTable tmptbl, callnode n, bool iscaller)
 		{
-			DataRow tmpRow;
-
-			tmpRow = tmptbl.NewRow();
+		    DataRow tmpRow = tmptbl.NewRow();
 			tmpRow["id"] = n.id;
 			if(iscaller)
             {
@@ -837,11 +827,7 @@ namespace CLRProfiler
 		#region build Caller and callee Contribution table
 		private void BuildContributionCalleeTable()
 		{
-			int id = -1;
-			string nameAndSignature = null;
-			bool exist = false;
-			Hashtable cnnew;
-			datanode pn1;
+		    datanode pn1;
 			datanode cn1;
 			try
 			{
@@ -849,13 +835,14 @@ namespace CLRProfiler
 				{
 					datanode pn= new datanode();
 					datanode cn= new datanode();
-					nameAndSignature = (string)de.Key;
+					var nameAndSignature = (string)de.Key;
 					
-					id = (int)basedataId[nameAndSignature];
+					var id = (int)basedataId[nameAndSignature];
 					if(this._prevbasedata.ContainsKey(nameAndSignature))
 					{
 						pn = (datanode)_prevbasedata[nameAndSignature];
-						if(_currbasedata.ContainsKey(nameAndSignature))
+					    bool exist;
+					    if(_currbasedata.ContainsKey(nameAndSignature))
 						{
 							cn = (datanode)_currbasedata[nameAndSignature];
 							exist = true;
@@ -864,7 +851,7 @@ namespace CLRProfiler
 						{
 							exist = false;
 						}
-						cnnew = new Hashtable();
+						var cnnew = new Hashtable();
 						foreach(string nameAndSignature1 in pn.calleeAlloc.Keys)
 						{
 							pn1 = new datanode();
@@ -941,11 +928,7 @@ namespace CLRProfiler
 
 		private void BuildContributionCallerTable()
 		{
-			int id = -1;
-			string nameAndSignature = null;
-			bool exist = false;
-			Hashtable cnnew;
-			datanode pn1;
+		    datanode pn1;
 			datanode cn1;
 			try
 			{
@@ -953,21 +936,17 @@ namespace CLRProfiler
 				{
 					datanode pn= new datanode();
 					datanode cn= new datanode();
-					nameAndSignature = (string)de.Key;
-					id = (int)basedataId[nameAndSignature];
+					var nameAndSignature = (string)de.Key;
+					var id = (int)basedataId[nameAndSignature];
 					if(this._prevbasedata.ContainsKey(nameAndSignature))
 					{
 						pn = (datanode)_prevbasedata[nameAndSignature];
-						if(_currbasedata.ContainsKey(nameAndSignature))
+					    bool exist = _currbasedata.ContainsKey(nameAndSignature);
+					    if(exist)
 						{
 							cn = (datanode)_currbasedata[nameAndSignature];
-							exist = true;
 						}
-						else
-						{
-							exist = false;
-						}
-						cnnew = new Hashtable();
+						var cnnew = new Hashtable();
 						foreach(Edge edge in pn.caller.Values)
 						{
 							pn1 = new datanode();
@@ -1065,8 +1044,7 @@ namespace CLRProfiler
 		#region share used functions
 		private void addTableRow(DataTable tbl, string colType, string colName)
 		{
-			DataColumn tmpColumn;
-			tmpColumn = new DataColumn();
+		    var tmpColumn = new DataColumn();
 			tmpColumn.DataType = System.Type.GetType(colType);
 			tmpColumn.ColumnName = colName;
 			tbl.Columns.Add(tmpColumn);
@@ -1155,15 +1133,14 @@ namespace CLRProfiler
 		{
 			ArrayList diffnodes = new ArrayList();
 			int functionId = 0;
-			int [] kidStacktrace;
-			
-			for( int i = 0; i < treeNode.Count; i++)
+
+		    for( int i = 0; i < treeNode.Count; i++)
 			{
 				TreeNode kidNode = treeNode[i] as TreeNode;
 				if(kidNode.data.bytesAllocated >0)
 				{
 					
-					kidStacktrace = _currcallTrace.IndexToStacktrace(kidNode.stackid);
+					int [] kidStacktrace = _currcallTrace.IndexToStacktrace(kidNode.stackid);
 					if (kidNode.nodetype == TreeNode.NodeType.Call)
 					{
 						functionId = kidStacktrace[ kidStacktrace.Length - 1 ];
@@ -1212,15 +1189,14 @@ namespace CLRProfiler
 		{
 			ArrayList diffnodes = new ArrayList();
 			int functionId = 0;
-			int [] kidStacktrace;
-			
-			for( int i = 0; i < treeNode.Count; i++)
+
+		    for( int i = 0; i < treeNode.Count; i++)
 			{
 				TreeNode kidNode = treeNode[i] as TreeNode;
 				if(kidNode.data.bytesAllocated >0)
 				{
 					
-					kidStacktrace = _prevcallTrace.IndexToStacktrace(kidNode.stackid);
+					int [] kidStacktrace = _prevcallTrace.IndexToStacktrace(kidNode.stackid);
 					if (kidNode.nodetype == TreeNode.NodeType.Call)
 					{
 						functionId = kidStacktrace[ kidStacktrace.Length - 1 ];
@@ -1517,15 +1493,14 @@ namespace CLRProfiler
 			
 			int idx = -1;
 			long savedalloc = long.MaxValue;
-			long alloc = 0;
 
-			for(int i = 0; i < nodelst.Count; i++)
+		    for(int i = 0; i < nodelst.Count; i++)
 			{
 				if( ((DiffDataNode)nodelst[i]).name.Equals(node.name) && 
 					!((DiffDataNode)nodelst[i]).marked )
 				{
-					alloc = Math.Abs(node.currIncl - ((DiffDataNode)nodelst[i]).prevIncl);
-					if(alloc < savedalloc)
+				    long alloc = Math.Abs(node.currIncl - ((DiffDataNode)nodelst[i]).prevIncl);
+				    if(alloc < savedalloc)
 					{
 						idx = i;
 						savedalloc = alloc;
@@ -1571,13 +1546,12 @@ namespace CLRProfiler
 			parent.allkids.Clear();
 			parent.HasKids = false;
 			Hashtable kidSum = new Hashtable();
-			string name = null;
-			
-			DataRow[] kidsRows = diffTracetbl.Select(filter);
+
+		    DataRow[] kidsRows = diffTracetbl.Select(filter);
 			for(int i = 0; i < kidsRows.Length; i++)
 			{
 				DiffDataNode sumNode = Row2Node(kidsRows[i]);
-				name = sumNode.mapname;
+				string name = sumNode.mapname;
 				if(kidSum.ContainsKey(name))
 				{
 					DiffDataNode updateNode = kidSum[name] as DiffDataNode;
@@ -1787,12 +1761,11 @@ namespace CLRProfiler
 		{
 			Hashtable funcCalled = new Hashtable();
 			Hashtable TypeAlloc = new Hashtable();
-			Stream s = null;
-			ProgressForm progressForm = null;
+		    ProgressForm progressForm = null;
 			try
 			{
 				/* log parser code (straight from the ReadNewLog.cs) */
-				s = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+				Stream s = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
 				r = new StreamReader(s);
 
 				progressForm = new ProgressForm();
@@ -1810,14 +1783,14 @@ namespace CLRProfiler
 				StringBuilder sb = new StringBuilder();
 				c = ReadChar();
 
-				bool found;
-				string assemblyName = null;
-				int threadid = 0, stackid = 0;
-				TreeNode.NodeType nodetype = TreeNode.NodeType.Call;
+			    string assemblyName = null;
+				int threadid = 0;
+			    int stackid = 0;
+			    TreeNode.NodeType nodetype = TreeNode.NodeType.Call;
 
 				while (c != -1)
 				{
-					found = false;
+					bool found = false;
 					if ((line % 1024) == 0)
 					{
 						int currentProgress = (int)(pos/1024);
@@ -1913,95 +1886,101 @@ namespace CLRProfiler
 					{
 						continue;
 					}
-				
-					string name = null;
-					string typename = null;
+
+				    string typename = null;
 
 					int[] stacktrace = callTrace.IndexToStacktrace(stackid);
 					int functionId = (nodetype != TreeNode.NodeType.AssemblyLoad ? stacktrace[stacktrace.Length - 1] : 0);
 					switch(nodetype)
 					{
 						case TreeNode.NodeType.Allocation:
-							string key = null;
-							if( (functionId < callTrace.LogResult.callstackHistogram.readNewLog.funcName.Length )&& 
-								((name = callTrace.LogResult.callstackHistogram.readNewLog.funcName[functionId]) != null))
-							{
-								if( callTrace.LogResult.callstackHistogram.readNewLog.funcSignature[functionId] != null)
-								{
-									name += ' ' + callTrace.LogResult.callstackHistogram.readNewLog.funcSignature[functionId];
-								}
-							}
-							else
-							{
-								name = "NATIVE FUNCTION ( UNKNOWN ARGUMENTS )";
-							}
-														
-							// function Excl							
-							if(FuncExcl.ContainsKey(name))
-							{
-								int alloc = (int)FuncExcl[(string)name];
-								alloc += stacktrace[1];
-								FuncExcl[name] = alloc;
-							}
-							else
-							{
-								FuncExcl.Add(name, stacktrace[1]);
-							}
-							
-							// Type Excl
-							if( stacktrace[0]>=0 && stacktrace[0] < callTrace.LogResult.callstackHistogram.readNewLog.typeName.Length)
-							{
-								typename = callTrace.LogResult.callstackHistogram.readNewLog.typeName[stacktrace[0]];
-							}
-							if(typename == null)
-                            {
-                                typename = "NATIVE FUNCTION ( UNKNOWN ARGUMENTS )";
-                            }
+					    {
+					        string name;
+					        if ((functionId < callTrace.LogResult.callstackHistogram.readNewLog.funcName.Length) &&
+					            ((name = callTrace.LogResult.callstackHistogram.readNewLog.funcName[functionId]) != null))
+					        {
+					            if (callTrace.LogResult.callstackHistogram.readNewLog.funcSignature[functionId] != null)
+					            {
+					                name += ' ' + callTrace.LogResult.callstackHistogram.readNewLog.funcSignature[functionId];
+					            }
+					        }
+					        else
+					        {
+					            name = "NATIVE FUNCTION ( UNKNOWN ARGUMENTS )";
+					        }
 
-                            if (TypeExcl.ContainsKey(typename))
-							{
-								int alloc = (int)TypeExcl[(string)typename];
-								alloc += stacktrace[1];
-								TypeExcl[typename] = alloc;
-							}
-							else
-							{
-								TypeExcl.Add(typename, stacktrace[1]);
-							}
-							
-							// Type Allocated by Excl
-							if(name != "NATIVE FUNCTION ( UNKNOWN ARGUMENTS )")
-                            {
-                                key = typename + '|' + functionId;
-                            }
-                            else
-                            {
-                                key = typename + '|' + 0;
-                            }
+					        // function Excl							
+					        if (FuncExcl.ContainsKey(name))
+					        {
+					            int alloc = (int) FuncExcl[(string) name];
+					            alloc += stacktrace[1];
+					            FuncExcl[name] = alloc;
+					        }
+					        else
+					        {
+					            FuncExcl.Add(name, stacktrace[1]);
+					        }
 
-                            if ( TypeAlloc.ContainsKey(key))
-							{
-								int alloc = (int)TypeAlloc[key];
-								alloc += stacktrace[1];
-								TypeAlloc[key] = alloc;
-							}
-							else
-							{
-								TypeAlloc.Add(key, stacktrace[1]);
-							}
-									
-							break;
-						case TreeNode.NodeType.Call:
-							if(funcCalled.ContainsKey(functionId))
-							{
-								int calls = (int)funcCalled[functionId] + 1;;
-								funcCalled[functionId]= calls;
-							}
-							else
-							{
-								funcCalled.Add(functionId,1);
-							}
-							break;
+					        // Type Excl
+					        if (stacktrace[0] >= 0 && stacktrace[0] <
+					            callTrace.LogResult.callstackHistogram.readNewLog.typeName.Length)
+					        {
+					            typename = callTrace.LogResult.callstackHistogram.readNewLog.typeName[stacktrace[0]];
+					        }
+					        if (typename == null)
+					        {
+					            typename = "NATIVE FUNCTION ( UNKNOWN ARGUMENTS )";
+					        }
+
+					        if (TypeExcl.ContainsKey(typename))
+					        {
+					            int alloc = (int) TypeExcl[(string) typename];
+					            alloc += stacktrace[1];
+					            TypeExcl[typename] = alloc;
+					        }
+					        else
+					        {
+					            TypeExcl.Add(typename, stacktrace[1]);
+					        }
+
+					        string key;
+					        // Type Allocated by Excl
+					        if (name != "NATIVE FUNCTION ( UNKNOWN ARGUMENTS )")
+					        {
+					            key = typename + '|' + functionId;
+					        }
+					        else
+					        {
+					            key = typename + '|' + 0;
+					        }
+
+					        if (TypeAlloc.ContainsKey(key))
+					        {
+					            int alloc = (int) TypeAlloc[key];
+					            alloc += stacktrace[1];
+					            TypeAlloc[key] = alloc;
+					        }
+					        else
+					        {
+					            TypeAlloc.Add(key, stacktrace[1]);
+					        }
+
+					        break;
+					    }
+					    case TreeNode.NodeType.Call:
+					    {
+					        if (funcCalled.ContainsKey(functionId))
+					        {
+					            int calls = (int) funcCalled[functionId] + 1;
+					            ;
+					            funcCalled[functionId] = calls;
+					        }
+					        else
+					        {
+					            funcCalled.Add(functionId, 1);
+					        }
+					        break;
+					    }
 					}
 				}
 
