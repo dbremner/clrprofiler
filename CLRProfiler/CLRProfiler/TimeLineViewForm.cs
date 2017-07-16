@@ -299,7 +299,7 @@ namespace CLRProfiler
                 }
 
                 t.brush = new SolidBrush(color);
-                t.pen = new Pen(t.brush);
+                t.pen = new Pen(color);
             }
         }
 
@@ -528,7 +528,7 @@ namespace CLRProfiler
             double labelPitch = labelPitchInPixels*horizontalScale*0.001;
 
             Brush brush = new SolidBrush(Color.DarkBlue);
-            var pen = new Pen(brush);
+            var pen = new Pen(Color.DarkBlue);
 
             int y = topMargin;
             for (AddressRange r = rangeList; r != null; r = r.next)

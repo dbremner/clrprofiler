@@ -414,7 +414,7 @@ namespace CLRProfiler
                 for (int i = 0; i < 2; i++)
                 {
                     t.brushes[i] = new SolidBrush(t.colors[i]);
-                    t.pens[i] = new Pen(t.brushes[i]);
+                    t.pens[i] = new Pen(t.colors[i]);
                 }
                 count++;
             }
