@@ -72,9 +72,10 @@ namespace CLRProfiler
 		    treeView.Font = defaultFont;
 
 		    var sort = new SortingBehaviour();
-		    var highlight = new SortingBehaviour();
-		    sort.sortingOrder = highlight.sortingOrder = -1;
+		    sort.sortingOrder = -1;
 		    sort.counterId = -1;
+		    var highlight = new SortingBehaviour();
+            highlight.sortingOrder = -1;
 		    highlight.counterId = 2;
 
 		    /* add columns */

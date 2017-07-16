@@ -627,15 +627,15 @@ namespace CLRProfiler
 			}
 						
 			var root = new DiffDataNode(name);
-			var tmproot = new DiffDataNode(name);
-			tmproot.mapname = name;
 			root.mapname = name;
 			root.prevIncl = prevIncl;
 			root.currIncl = currIncl;
 			root.diffIncl = diffIncl;
-
 			root.currFunId = -1;
 			root.prevFunId = -1;
+
+			var tmproot = new DiffDataNode(name);
+			tmproot.mapname = name;
 		    string filter = null;
 			DataRow[] rRoot = null;
 			
