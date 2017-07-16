@@ -629,8 +629,8 @@ namespace CLRProfiler
 		}
 		public void MakeBaseDataTable(DataTable tbl)
 		{
-			AddColumn(tbl, "System.Int32", "id");
-			AddColumn(tbl, "System.String", "name");
+			AddColumn(tbl, typeof(int), "id");
+			AddColumn(tbl, typeof(string), "name");
             AddColumn(tbl, typeof(DoubleInt), "prevIncl");
 			AddColumn(tbl, typeof(DoubleInt), "currIncl");
 			AddColumn(tbl, typeof(DoubleInt), "diffIncl");
@@ -737,13 +737,13 @@ namespace CLRProfiler
 
 	    private void MakeCallerTables(DataTable tbl)
 	    {
-	        AddColumn(tbl, "System.Int32", "id");
+	        AddColumn(tbl, typeof(int), "id");
 	        AddColumn(tbl, "System.Int32", "callerid");
         }
 
 	    private void MakeCalleeTables(DataTable tbl)
 	    {
-	        AddColumn(tbl, "System.Int32", "id");
+	        AddColumn(tbl, typeof(int), "id");
 	        AddColumn(tbl, "System.Int32", "calleeid");
         }
 	    #endregion
@@ -1596,10 +1596,10 @@ namespace CLRProfiler
 		private void MakeDiffTreceTable(DataTable tbl)
 		{
 			AddColumn(tbl, "System.Int32", "parentid");
-			AddColumn(tbl, "System.String", "parentname");
-			AddColumn(tbl, "System.Int32", "id");
-			AddColumn(tbl, "System.String", "name");
-			AddColumn(tbl, "System.String", "mapname");
+			AddColumn(tbl, typeof(string), "parentname");
+			AddColumn(tbl, typeof(int), "id");
+			AddColumn(tbl, typeof(string), "name");
+			AddColumn(tbl, typeof(string), "mapname");
 			
 			AddColumn(tbl, "System.Int32", "prevIncl");
 			AddColumn(tbl, "System.Int32", "currIncl");
