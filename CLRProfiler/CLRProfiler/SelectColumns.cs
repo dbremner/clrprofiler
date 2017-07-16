@@ -13,6 +13,7 @@
 using System;
 using System.Drawing;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
 
@@ -24,19 +25,19 @@ namespace CLRProfiler
     public partial class SelectColumns : System.Windows.Forms.Form
     {
 
-        private readonly ArrayList checkBoxes;
+        private readonly List<CheckBox> checkBoxes;
 
         public void Set(int id)
         {
-            ((CheckBox)checkBoxes[id]).Checked = true;
+            checkBoxes[id].Checked = true;
         }
 
-        public ArrayList GetCheckedColumns()
+        public List<int> GetCheckedColumns()
         {
-            var r = new ArrayList();
+            var r = new List<int>();
             for(int i = 0; i < checkBoxes.Count; i++)
             {
-                if(((CheckBox)checkBoxes[i]).Checked)
+                if(checkBoxes[i].Checked)
                 {
                     r.Add(i);
                 }
@@ -55,9 +56,9 @@ namespace CLRProfiler
             // TODO: Add any constructor code after InitializeComponent call
             //
 
-            checkBoxes = new ArrayList();
+            checkBoxes = new List<CheckBox>();
 
-            var underscored = new Hashtable();
+            var underscored = new HashSet<char>();
 
             int numCounters = Statistics.GetNumberOfCounters();
             for(int i = 0; i < numCounters; i++)
@@ -71,9 +72,9 @@ namespace CLRProfiler
                     }
 
                     char c = Char.ToLower(text[j]);
-                    if(!underscored.ContainsKey(c))
+                    if(!underscored.Contains(c))
                     {
-                        underscored.Add(c, null);
+                        underscored.Add(c);
                         text = text.Substring(0, j) + "&" + text.Substring(j);
                         break;
                     }
@@ -82,7 +83,7 @@ namespace CLRProfiler
                 int px = (i % 2) == 1 ? Width / 2 : 16, py = 56;
                 if(i > 1)
                 {
-                    py = ((CheckBox)checkBoxes[i - 2]).Bottom;
+                    py = checkBoxes[i - 2].Bottom;
                 }
 
                 CheckBox box = new CheckBox();
