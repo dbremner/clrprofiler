@@ -906,6 +906,7 @@ namespace CLRProfiler
                     if (b.selected)
                     {
                         noBucketSelected = false;
+                        break;
                     }
                 }
 
