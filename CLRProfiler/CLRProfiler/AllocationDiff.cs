@@ -1153,7 +1153,7 @@ namespace CLRProfiler
 				if( !((DiffDataNode)currKids[i]).marked)
 				{
 					DiffDataNode node = new DiffDataNode( ((DiffDataNode)currKids[i]).name);
-					int idx = CurrExactMatchIndex(prevKids, currKids[i] as DiffDataNode);
+					int idx = CurrExactMatchIndex(prevKids, (DiffDataNode) currKids[i]);
 					if(idx >=0)
 					{
 						node.currFunId = ((DiffDataNode)currKids[i]).currFunId;
@@ -1199,7 +1199,7 @@ namespace CLRProfiler
 				if( !((DiffDataNode)prevKids[i]).marked)
 				{
 					DiffDataNode node = new DiffDataNode( ((DiffDataNode)prevKids[i]).name);
-					int idx = PrevExactMatchIndex(currKids, prevKids[i] as DiffDataNode);
+					int idx = PrevExactMatchIndex(currKids, (DiffDataNode) prevKids[i]);
 					if(idx >=0)
 					{
 						node.currFunId = ((DiffDataNode)currKids[idx]).currFunId;
@@ -1247,7 +1247,7 @@ namespace CLRProfiler
 				if( !((DiffDataNode)curr[i]).marked)
 				{
 					DiffDataNode node = new DiffDataNode( ((DiffDataNode)curr[i]).name);
-					int idx = FirstMatchIndex(prevKids, curr[i] as DiffDataNode);
+					int idx = FirstMatchIndex(prevKids, (DiffDataNode) curr[i]);
 					if(idx >=0)
 					{
 						node.currFunId = ((DiffDataNode)curr[i]).currFunId;
