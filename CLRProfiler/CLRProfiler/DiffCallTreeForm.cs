@@ -61,50 +61,44 @@ namespace CLRProfiler
 		{
 			this.Root = root;
 			this._allocDiff = allocDiff;
-			
-			InitForm();
-		}
 
-		
-		private void InitForm()
-		{
-			Controls.Clear();
+		    Controls.Clear();
 		    controlCollection?.Controls.Clear();
 		    InitializeComponent();
-			defaultFont = new Font(new FontFamily("Tahoma"), 8);
+		    defaultFont = new Font(new FontFamily("Tahoma"), 8);
 			
-			var treeView = new DiffTreeListView(this);
-			treeView.Dock = DockStyle.Fill;
-			treeView.Font = defaultFont;
+		    var treeView = new DiffTreeListView(this);
+		    treeView.Dock = DockStyle.Fill;
+		    treeView.Font = defaultFont;
 
-			var sort = new SortingBehaviour();
-			var highlight = new SortingBehaviour();
-			sort.sortingOrder = highlight.sortingOrder = -1;
-			sort.counterId = -1;
-			highlight.counterId = 2;
+		    var sort = new SortingBehaviour();
+		    var highlight = new SortingBehaviour();
+		    sort.sortingOrder = highlight.sortingOrder = -1;
+		    sort.counterId = -1;
+		    highlight.counterId = 2;
 
-			/* add columns */
-			treeView.AddColumn(new ColumnInformation(-1, "Function name", ColumnInformation.ColumnTypes.Tree), 250);
-			foreach(int counter in DiffStatistics.DefaultCounters)
-			{
-				AddColumn(treeView, counter);
-			}
+		    /* add columns */
+		    treeView.AddColumn(new ColumnInformation(-1, "Function name", ColumnInformation.ColumnTypes.Tree), 250);
+		    foreach(int counter in DiffStatistics.DefaultCounters)
+		    {
+		        AddColumn(treeView, counter);
+		    }
 
-			treeView.ColumnClick += new EventHandler(SortOn);
+		    treeView.ColumnClick += new EventHandler(SortOn);
 			
-			treeView.TokenObject = new ViewState(sort, highlight);
-			treeView.Root = Root;
+		    treeView.TokenObject = new ViewState(sort, highlight);
+		    treeView.Root = Root;
 			
 			
-			treeView.Size = new System.Drawing.Size(332, 108);
-			treeView.Visible = true;
-			controlCollection.Controls.Add(treeView);
-			SetcallTreeView();
-			this.Visible = true;
+		    treeView.Size = new System.Drawing.Size(332, 108);
+		    treeView.Visible = true;
+		    controlCollection.Controls.Add(treeView);
+		    SetcallTreeView();
+		    this.Visible = true;
 		}
-		
 
-		public ArrayList FetchKids(object tokenObject, TreeNodeBase nodebase)
+
+	    public ArrayList FetchKids(object tokenObject, TreeNodeBase nodebase)
 		{
 			return nodebase.allkids;
 		}
