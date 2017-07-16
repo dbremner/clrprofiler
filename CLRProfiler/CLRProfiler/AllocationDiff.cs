@@ -631,21 +631,15 @@ namespace CLRProfiler
 		{
 			AddColumn(tbl, "System.Int32", "id");
 			AddColumn(tbl, "System.String", "name");
-		    string typeName
-#if (V_EXEC)
-            = "System.Double";
-#else
-            = "System.Int32";
-#endif
-            AddColumn(tbl, typeName, "prevIncl");
-			AddColumn(tbl, typeName, "currIncl");
-			AddColumn(tbl, typeName, "diffIncl");
-			AddColumn(tbl, typeName, "prevExcl");
-            AddColumn(tbl, typeName, "currExcl");
-            AddColumn(tbl, typeName, "diffExcl");
-            AddColumn(tbl, typeName, "prevChildIncl");
-			AddColumn(tbl, typeName, "currChildIncl");
-			AddColumn(tbl, typeName, "diffChildIncl");
+            AddColumn(tbl, typeof(DoubleInt), "prevIncl");
+			AddColumn(tbl, typeof(DoubleInt), "currIncl");
+			AddColumn(tbl, typeof(DoubleInt), "diffIncl");
+			AddColumn(tbl, typeof(DoubleInt), "prevExcl");
+            AddColumn(tbl, typeof(DoubleInt), "currExcl");
+            AddColumn(tbl, typeof(DoubleInt), "diffExcl");
+            AddColumn(tbl, typeof(DoubleInt), "prevChildIncl");
+			AddColumn(tbl, typeof(DoubleInt), "currChildIncl");
+			AddColumn(tbl, typeof(DoubleInt), "diffChildIncl");
 			AddColumn(tbl, "System.Int32", "prevTimesCalled");
 			AddColumn(tbl, "System.Int32", "currTimesCalled");
 			AddColumn(tbl, "System.Int32", "diffTimesCalled");
