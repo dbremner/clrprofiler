@@ -397,7 +397,7 @@ namespace CLRProfiler
 		#endregion
 
 		#region build Base table method
-		private void BuildBaseData(GraphBase gb, CallTreeForm tmpcallTree,  Hashtable htbl, Hashtable FuncExcl, Hashtable TypeExcl)
+		private void BuildBaseData([NotNull] GraphBase gb, CallTreeForm tmpcallTree,  Hashtable htbl, Hashtable FuncExcl, Hashtable TypeExcl)
 		{
 			Vertex selectedVertex;
 			int selectedVertexCount = gb.SelectedVertexCount(out selectedVertex);

@@ -595,7 +595,7 @@ namespace CLRProfiler
             }
         }
 
-        private int BucketWidth(Graphics g)
+        private int BucketWidth([NotNull] Graphics g)
         {
             int width1 = (int)g.MeasureString("< 999.999 sec", font).Width;
             int width2 = (int)g.MeasureString("999 MB", font).Width;
@@ -613,7 +613,7 @@ namespace CLRProfiler
             return font.Height*3 + 10;
         }
 
-        private ulong Init(Graphics g)
+        private ulong Init([NotNull] Graphics g)
         {
             bucketWidth = BucketWidth(g);
             bottomMargin = BottomMargin();
@@ -663,7 +663,7 @@ namespace CLRProfiler
         const int typeLegendSpacing = 3;
         int dotSize = 8;
 
-        private void DrawTypeLegend(Graphics g)
+        private void DrawTypeLegend([NotNull] Graphics g)
         {
             dotSize = (int)g.MeasureString("0", font).Width;
             int maxWidth = 0;

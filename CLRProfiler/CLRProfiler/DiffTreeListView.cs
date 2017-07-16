@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.Text;
+using JetBrains.Annotations;
 
 namespace CLRProfiler
 {
@@ -472,7 +473,7 @@ namespace CLRProfiler
 			return null;
 
 		}
-		internal void writeToFile(string fileName, StringBuilder sb)
+		internal void writeToFile([NotNull] string fileName, [NotNull] StringBuilder sb)
 		{
 			try
 			{
