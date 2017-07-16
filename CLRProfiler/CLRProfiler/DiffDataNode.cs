@@ -15,7 +15,7 @@ namespace CLRProfiler
 		internal int parentId = -1;
 		internal int nodeId = -1;
 		internal string parentname = "";
-		internal readonly string name = "";
+		internal readonly string name;
 		internal string mapname = "";
 		internal long prevIncl = 0;
 		internal long currIncl = 0;

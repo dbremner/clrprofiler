@@ -49,10 +49,10 @@ namespace CLRProfiler
 		private const int idx_depth = 14;
 
 		private DiffCallTreeForm diffcallTreeForm = null;
-		private AllocationDiff	_allocDiff= null;
+		private AllocationDiff	_allocDiff;
 		private bool iscoarse = false;
-		private string strFilter = null;
-		private string strtypeFilter = null;
+		private string strFilter;
+		private string strtypeFilter;
 		private readonly string CallerCaption = "Caller table";
 		private readonly string SelectedCaption = "Selected item";
 		private readonly string CalleeCaption = "Callee table";

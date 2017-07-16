@@ -15,7 +15,7 @@ namespace CLRProfiler
 
         private readonly ReadNewLog log;
         private readonly ReadLogResult logResult;
-        private readonly string scenario = "";
+        private readonly string scenario;
 
         private string FormatNumber(double number)
         {
