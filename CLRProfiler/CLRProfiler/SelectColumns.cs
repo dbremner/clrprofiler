@@ -42,6 +42,7 @@ namespace CLRProfiler
                     r.Add(i);
                 }
             }
+            r.Sort();
             return r;
         }
 

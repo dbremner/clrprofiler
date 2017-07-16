@@ -1988,7 +1988,6 @@ namespace CLRProfiler
                 }
 
                 var ids = f.GetCheckedColumns();
-                ids.Sort();
                 foreach(int id in ids)
                 {
                     AddColumn(callTreeView, id);
