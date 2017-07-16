@@ -1035,7 +1035,7 @@ namespace CLRProfiler
 
 		    for( int i = 0; i < treeNode.Count; i++)
 			{
-				TreeNode kidNode = treeNode[i] as TreeNode;
+				var kidNode = (TreeNode) treeNode[i];
 				if(kidNode.data.bytesAllocated >0)
 				{
 					
