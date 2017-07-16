@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Data;
+using JetBrains.Annotations;
 #if V_EXEC
 using DoubleInt = double;
 using DoubleUInt64 = double;
@@ -959,13 +960,18 @@ namespace CLRProfiler
 		#endregion
 
 		#region share used functions
-		private void addTableRow(DataTable tbl, string colType, string colName)
+		private void addTableRow([NotNull] DataTable tbl, [NotNull] string colType, [NotNull] string colName)
 		{
-		    var tmpColumn = new DataColumn();
-			tmpColumn.DataType = System.Type.GetType(colType);
-			tmpColumn.ColumnName = colName;
-			tbl.Columns.Add(tmpColumn);
+            AddColumn(tbl, Type.GetType(colType), colName);
 		}
+
+	    private void AddColumn([NotNull] DataTable tbl, [NotNull] Type type, [NotNull] string name)
+	    {
+	        var tmpColumn = new DataColumn();
+	        tmpColumn.DataType = type;
+	        tmpColumn.ColumnName = name;
+	        tbl.Columns.Add(tmpColumn);
+        }
 
 		private void getDetailFilter(ref DetailFilter df)
 		{
