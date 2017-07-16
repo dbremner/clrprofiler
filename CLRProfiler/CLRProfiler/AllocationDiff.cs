@@ -741,9 +741,7 @@ namespace CLRProfiler
 		}
 		private void BuildCallTables(DataTable tbl, int id, Dictionary<Vertex, Edge> callhash, bool iscaller)
 		{
-		    callnode cn = new callnode();
-			cn.id = id;
-			foreach(Vertex cv in  callhash.Keys)
+		    foreach(Vertex cv in  callhash.Keys)
 			{
 				string nameAndSignature = cv.name;
 				if(cv.signature != null)
@@ -755,16 +753,16 @@ namespace CLRProfiler
 				{
 					if( basedataId.ContainsKey(nameAndSignature))
 					{
-						cn.callerid = (int)basedataId[nameAndSignature];
-					    AddCallerTableRow(tbl, cn.id, cn.callerid);
+						int callerid = (int)basedataId[nameAndSignature];
+					    AddCallerTableRow(tbl, id, callerid);
 					}
 				}
 				else
 				{
 					if( basedataId.ContainsKey(nameAndSignature))
 					{
-						cn.calleeid = (int)basedataId[nameAndSignature];
-					    AddCalleeTableRow(tbl, cn.id, cn.calleeid);
+						int calleeid = (int)basedataId[nameAndSignature];
+					    AddCalleeTableRow(tbl, id, calleeid);
 					}
 
 				}
