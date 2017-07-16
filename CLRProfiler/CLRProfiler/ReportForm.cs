@@ -728,7 +728,7 @@ namespace CLRProfiler
 								var r = (DataRow)lst[i];
 								tmproot = _allocDiff.Row2Node(r);
 								diffkey = tmproot.mapname + tmproot.prevIncl + tmproot.currIncl + tmproot.diffIncl + tmproot.prevFunId + tmproot.currFunId;
-								var subRoot =  _allocDiff.diffCallTreeNodes[diffkey] as DiffDataNode;
+								var subRoot =  (DiffDataNode) _allocDiff.diffCallTreeNodes[diffkey];
 								root.allkids.Add(subRoot);
 							}
 						}
@@ -742,7 +742,7 @@ namespace CLRProfiler
 							if(tmproot.depth > 0)
 							{
 								diffkey = tmproot.mapname + tmproot.prevIncl + tmproot.currIncl + tmproot.diffIncl + tmproot.prevFunId + tmproot.currFunId;
-								var subRoot =  _allocDiff.diffCallTreeNodes[diffkey] as DiffDataNode;
+								var subRoot =  (DiffDataNode) _allocDiff.diffCallTreeNodes[diffkey];
 								root.allkids.Add(subRoot);
 							}
 						}

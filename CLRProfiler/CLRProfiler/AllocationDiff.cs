@@ -1103,7 +1103,7 @@ namespace CLRProfiler
 
 		    for( int i = 0; i < treeNode.Count; i++)
 			{
-				var kidNode = treeNode[i] as TreeNode;
+				var kidNode = (TreeNode) treeNode[i];
 				if(kidNode.data.bytesAllocated >0)
 				{
 					
@@ -1427,7 +1427,7 @@ namespace CLRProfiler
 			node.IsExpanded = false;
 			for(int i = 0; i < node.allkids.Count; i++)
 			{
-				RefreshCallTreeNodes(node.allkids[i] as DiffDataNode);
+				RefreshCallTreeNodes((DiffDataNode) node.allkids[i]);
 			}
 
 		}
@@ -1518,7 +1518,7 @@ namespace CLRProfiler
 
 			foreach(string key in kidSum.Keys)
 			{
-				var sumNode = kidSum[key] as DiffDataNode;
+				var sumNode = (DiffDataNode) kidSum[key];
 				if(! (sumNode.diffIncl == 0))
 				{
 					parent.allkids.Add(sumNode);
