@@ -591,14 +591,13 @@ namespace CLRProfiler
         {
             RectangleF clipRect = g.VisibleClipBounds;
             Brush[] brushes = new Brush[3];
-            Pen[] pens = new Pen[3];
             brushes[0] = Brushes.Red;
             brushes[1] = Brushes.Green;
             brushes[2] = Brushes.Blue;
-            for (int i = 0; i < 3; i++)
-            {
-                pens[i] = new Pen(brushes[i]);
-            }
+            Pen[] pens = new Pen[3];
+            pens[0] = Pens.Red;
+            pens[1] = Pens.Green;
+            pens[2] = Pens.Blue;
 
             int[] totalGcCount = new int[3];
             for (SampleObjectTable.SampleObject gc = gcTickList; gc != null; gc = gc.prev)
