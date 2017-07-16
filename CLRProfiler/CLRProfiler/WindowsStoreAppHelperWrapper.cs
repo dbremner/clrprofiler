@@ -28,25 +28,6 @@ namespace CLRProfiler
     // Objects of these types are exchanged between and 
     // WindowsStoreAppHelperWrapper
 
-    public struct AppInfo
-    {
-        public string exeName;
-        public string userModelId;
-    }
-
-    public struct PackageInfo
-    {
-        public string installedLocation;
-        public string architecture;
-        public string fullName;
-        public string name;
-        public string publisher;
-        public string version;
-        public string tempDir;
-        public string acSid;
-        public List<AppInfo> appInfoList; 
-    }
-
     // Warning: Not multi-thread aware.  Designed to be used serially, primarily from main
     // UI thread (MainForm.cs)
     class WindowsStoreAppHelperWrapper

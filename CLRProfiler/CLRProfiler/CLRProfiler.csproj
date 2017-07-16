@@ -134,6 +134,7 @@
     <Compile Include="AllocationDiff.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="AppInfo.cs" />
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -206,6 +207,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="OmvUsage.cs" />
+    <Compile Include="PackageInfo.cs" />
     <Compile Include="PROCESS_INFORMATION.cs" />
     <Compile Include="ProfConfig.cs" />
     <Compile Include="ReadLogResult.cs" />
