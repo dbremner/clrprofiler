@@ -14,6 +14,7 @@ using System.Drawing;
 using System.Collections;
 using System.ComponentModel;
 using System.Windows.Forms;
+using JetBrains.Annotations;
 
 namespace CLRProfiler
 {
@@ -50,8 +51,8 @@ namespace CLRProfiler
             highlightOrder.SelectedIndex = (1 + highlight.sortingOrder) / 2;
         }
 
-        internal void GetSortResults(CallTreeForm.SortingBehaviour s,
-                                   CallTreeForm.SortingBehaviour h)
+        internal void GetSortResults([NotNull] CallTreeForm.SortingBehaviour s,
+                                     [NotNull] CallTreeForm.SortingBehaviour h)
         {
             s.counterId = sortCounter.SelectedIndex - 1;
             s.sortingOrder = sortOrder.SelectedIndex * 2 - 1;

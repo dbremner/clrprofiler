@@ -12,6 +12,7 @@ using System.Reflection;
 using System.Data;
 using System.IO;
 using System.Text;
+using JetBrains.Annotations;
 
 
 namespace CLRProfiler
@@ -57,7 +58,7 @@ namespace CLRProfiler
 		private readonly string SelectedCaption = "Selected item";
 		private readonly string CalleeCaption = "Callee table";
 		private readonly Graph.GraphType graphtype;
-		private readonly MainForm f;
+	    [NotNull] private readonly MainForm f;
 		private readonly string [] columName = {"name", 
 								"prevIncl", "currIncl", "diffIncl", 
 								"prevExcl", "currExcl", "diffExcl", 
@@ -79,7 +80,7 @@ namespace CLRProfiler
 		private enum coarsecolumnIdx {name, diffIncl,diffExcl,diffTimesCalled,diffTimesMakecalls};
 
 		#region Report -- Entrance
-		internal ReportForm(MainForm f)
+		internal ReportForm([NotNull] MainForm f)
 		{
 			this.f = f;
 			this.graphtype = f.graphtype;

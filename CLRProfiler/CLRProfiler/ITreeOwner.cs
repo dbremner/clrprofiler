@@ -3,22 +3,28 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using JetBrains.Annotations;
 
 namespace CLRProfiler
 {
     internal interface ITreeOwner
     {
-        ArrayList ProcessNodes(object obj, ArrayList nodesAtOneLevel);
+        [NotNull]
+        ArrayList ProcessNodes(object obj, [NotNull] ArrayList nodesAtOneLevel);
 
-        Font GetFont(object obj, TreeNodeBase node);
+        Font GetFont(object obj, [NotNull] TreeNodeBase node);
 
-        Color GetColor(object obj, TreeNodeBase node, bool positive);
+        Color GetColor(object obj, [NotNull] TreeNodeBase node, bool positive);
 
-        object GetInfo(object obj, TreeNodeBase node, ColumnInformation info);
+        object GetInfo(object obj, [NotNull] TreeNodeBase node, ColumnInformation info);
 
-        ArrayList FetchKids(object obj, TreeNodeBase node);
+        [NotNull]
+        ArrayList FetchKids(object obj, [NotNull] TreeNodeBase node);
 
+        [NotNull]
         string MakeNameForFunction(int functionId);
+
+        [NotNull]
         string MakeNameForAllocation(int typeId, int bytes);
 
         CallTreeForm.FnViewFilter[] GetIncludeFilters();
@@ -27,7 +33,7 @@ namespace CLRProfiler
         void SetIncludeFilters( CallTreeForm.FnViewFilter[] filters);
         void SetExcludeFilters( CallTreeForm.FnViewFilter[] filters);
 
-        int GetNodeId( TreeNodeBase node );
+        int GetNodeId([NotNull] TreeNodeBase node );
 
         void RegenerateTree();
     }

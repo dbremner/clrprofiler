@@ -53,9 +53,9 @@ namespace CLRProfiler
 	{
 		class CompareIncl : IComparer
 		{
-		    readonly Hashtable inclOfNode;
+		    [NotNull] readonly Hashtable inclOfNode;
 
-			internal CompareIncl(Hashtable inclOfNode)
+			internal CompareIncl([NotNull] Hashtable inclOfNode)
 			{
 				this.inclOfNode = inclOfNode;
 			}
@@ -86,21 +86,25 @@ namespace CLRProfiler
 
 	    // holds all useful data from base
 		// for build all diff, call relations, and type allocation tables
-		internal readonly Hashtable _prevbasedata = new Hashtable();
-		internal readonly Hashtable _currbasedata = new Hashtable();
+	    [NotNull] internal readonly Hashtable _prevbasedata = new Hashtable();
+
+	    [NotNull] internal readonly Hashtable _currbasedata = new Hashtable();
 
 
 		// maps for match search
-		public readonly Hashtable basedataId = new Hashtable();
-		public readonly Hashtable Idbasedata = new Hashtable();
+	    [NotNull] public readonly Hashtable basedataId = new Hashtable();
+
+	    [NotNull] public readonly Hashtable Idbasedata = new Hashtable();
 		public Hashtable typeAllocdataId = new Hashtable();
 
 		// hold log data		
-		private readonly LogBase _prevLog = new LogBase();
-		private readonly LogBase _currLog = new LogBase();
+	    [NotNull] private readonly LogBase _prevLog = new LogBase();
+
+	    [NotNull] private readonly LogBase _currLog = new LogBase();
 		// hold base graph related data
-		private readonly GraphBase _prevG = new GraphBase();
-		private readonly GraphBase _currG = new GraphBase();
+	    [NotNull] private readonly GraphBase _prevG = new GraphBase();
+
+	    [NotNull] private readonly GraphBase _currG = new GraphBase();
 
 		// hold base stacktrace info
 		internal CallTreeForm _prevcallTrace;
@@ -108,11 +112,11 @@ namespace CLRProfiler
 		internal DiffDataNode Root;
 		internal DataTable diffTracetbl;
 		private static int nodeidx = 0;
-				
-		internal readonly Hashtable prevFuncExcl = new Hashtable();
-		internal readonly Hashtable currFuncExcl = new Hashtable();
-		internal readonly Hashtable prevTypeExcl = new Hashtable();
-		internal readonly Hashtable currTypeExcl = new Hashtable();
+
+	    [NotNull] internal readonly Hashtable prevFuncExcl = new Hashtable();
+	    [NotNull] internal readonly Hashtable currFuncExcl = new Hashtable();
+	    [NotNull] internal readonly Hashtable prevTypeExcl = new Hashtable();
+	    [NotNull] internal readonly Hashtable currTypeExcl = new Hashtable();
 
 
 		StreamReader r;
@@ -127,7 +131,7 @@ namespace CLRProfiler
 		private static int depth = 0;
 
 		internal DataTable summaryTracetbl;
-		internal readonly Hashtable diffCallTreeNodes = new Hashtable();
+	    [NotNull] internal readonly Hashtable diffCallTreeNodes = new Hashtable();
 				
 		private const int idx_parentid = 0;
 	//	private const int idx_parentname = 1;
@@ -187,10 +191,14 @@ namespace CLRProfiler
             public DoubleInt allocmem { get; set; }
 			
 		}
-		public DataTable basedatatable { get; } = new DataTable("basedatatbl");
 
+	    [NotNull]
+	    public DataTable basedatatable { get; } = new DataTable("basedatatbl");
+
+	    [NotNull]
 	    public DataTable ContriTocallertbl { get; } = new DataTable("ContriTocallertbl");
 
+	    [NotNull]
 	    public DataTable ContriTocalleetbl { get; } = new DataTable("ContriTocalleetbl");
 
 	    // detailds for reportform details RadioButton
@@ -223,10 +231,13 @@ namespace CLRProfiler
 		// DataSet used to collect tables and 
 		// build relations between table in the near future
 		// also it usded by DataViewManager in ReportForm
-		public DataSet ds { get; } = new DataSet();
+	    [NotNull]
+	    public DataSet ds { get; } = new DataSet();
 
+	    [NotNull]
 	    public DataTable callertbl { get; } = new DataTable("caller");
 
+	    [NotNull]
 	    public DataTable calleetbl { get; } = new DataTable("callee");
 
 	    public string PrevLogFileName
@@ -249,7 +260,8 @@ namespace CLRProfiler
 			}
 		}
 
-		public string diffLogFileName { get; set; }
+	    [NotNull]
+	    public string diffLogFileName { get; set; }
 	    #endregion
 
 		#region public methods
@@ -1028,7 +1040,7 @@ namespace CLRProfiler
 
 		}
 	
-		private ArrayList TransCurrTree(ArrayList treeNode)
+		private ArrayList TransCurrTree([NotNull] ArrayList treeNode)
 		{
 			var diffnodes = new ArrayList();
 			int functionId = 0;
@@ -1081,7 +1093,7 @@ namespace CLRProfiler
 			return diffnodes;
 		}
 
-		private ArrayList TransPrevTree(ArrayList treeNode)
+		private ArrayList TransPrevTree([NotNull] ArrayList treeNode)
 		{
 			var diffnodes = new ArrayList();
 			int functionId = 0;
@@ -1407,7 +1419,7 @@ namespace CLRProfiler
 		#endregion
 
 		#region Summary table
-		internal void RefreshCallTreeNodes(DiffDataNode node)
+		internal void RefreshCallTreeNodes([NotNull] DiffDataNode node)
 		{
 			node.IsExpanded = false;
 			for(int i = 0; i < node.allkids.Count; i++)
@@ -1416,7 +1428,7 @@ namespace CLRProfiler
 			}
 
 		}
-		internal void GetAllKids(DiffDataNode root, string filter)
+		internal void GetAllKids([NotNull] DiffDataNode root, string filter)
 		{
 			DataRow[] rKids = summaryTracetbl.Select(filter, "name asc");
 			if(rKids.Length > 0)
@@ -1431,7 +1443,7 @@ namespace CLRProfiler
 				
 			}
 		}
-		private void BuildSummaryTable(DiffDataNode parent, int parentId, string filter)
+		private void BuildSummaryTable([NotNull] DiffDataNode parent, int parentId, string filter)
 		{
 			depth++;
 			parent.depth = depth;
@@ -1572,7 +1584,7 @@ namespace CLRProfiler
 			return node;
 		}
 
-		private void MakeDiffTreceTable(DataTable tbl)
+		private void MakeDiffTreceTable([NotNull] DataTable tbl)
 		{
 		    AddIntColumn(tbl, "parentid");
 		    AddStringColumn(tbl, "parentname");

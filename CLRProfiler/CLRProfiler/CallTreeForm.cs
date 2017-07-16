@@ -271,7 +271,7 @@ namespace CLRProfiler
         }
         /* </parsers> */
 
-        private Column AddColumn(TreeListView treeView, int counterId)
+        private Column AddColumn([NotNull] TreeListView treeView, int counterId)
         {
             Column c = treeView.AddColumn(new ColumnInformation(counterId,
                 Statistics.GetCounterName(counterId),
@@ -855,7 +855,7 @@ namespace CLRProfiler
         }
 
         /* make a name for either call or allocation */
-        internal string MakeName(TreeNode n)
+        internal string MakeName([NotNull] TreeNode n)
         {
             if(n.nodetype == TreeNode.NodeType.AssemblyLoad)
             {

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using JetBrains.Annotations;
 
 namespace CLRProfiler
 {
@@ -15,7 +16,8 @@ namespace CLRProfiler
 			//
 		}
 
-        private static ReadLogResult GetLogResult(ReadNewLog log)
+	    [NotNull]
+	    private static ReadLogResult GetLogResult([NotNull] ReadNewLog log)
         {
             var readLogResult = new ReadLogResult();
             readLogResult.liveObjectTable = new LiveObjectTable(log);

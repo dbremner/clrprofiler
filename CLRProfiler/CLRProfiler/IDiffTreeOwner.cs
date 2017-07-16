@@ -3,20 +3,23 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using JetBrains.Annotations;
 
 namespace CLRProfiler
 {
     internal interface IDiffTreeOwner
     {
-        ArrayList ProcessNodes(object obj, ArrayList nodesAtOneLevel);
+        [NotNull]
+        ArrayList ProcessNodes(object obj, [NotNull] ArrayList nodesAtOneLevel);
 
-        Font GetFont(object obj, TreeNodeBase node);
+        Font GetFont(object obj, [NotNull] TreeNodeBase node);
 
-        Color GetColor(object obj, TreeNodeBase node, bool positive);
+        Color GetColor(object obj, [NotNull] TreeNodeBase node, bool positive);
 
-        object GetInfo(object obj, TreeNodeBase node, ColumnInformation info);
+        object GetInfo(object obj, [NotNull] TreeNodeBase node, [NotNull] ColumnInformation info);
 
-        ArrayList FetchKids(object obj, TreeNodeBase node);
+        [NotNull]
+        ArrayList FetchKids(object obj, [NotNull] TreeNodeBase node);
 		
     }
 }
