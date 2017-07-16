@@ -6,6 +6,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Data;
+#if V_EXEC
+using DoubleInt = double;
+using DoubleUInt64 = double;
+#else
+using DoubleInt = System.Int32;
+using DoubleUInt64 = System.UInt64;
+#endif
 
 
 
@@ -48,17 +55,11 @@ namespace CLRProfiler
 	    public int id { get; set; }
 
 	    public string name { get; set; }
+        
+        public DoubleInt incl { get; set; }
 
-#if (V_EXEC)
-			public double incl { get; set; }
-			public double excl { get; set; }
-			
-#else
-        public int incl { get; set; }
+	    public DoubleInt excl { get; set; }
 
-	    public int excl { get; set; }
-
-#endif
 		public int timesBeenCalled { get; set; }
 
 	    public int timesMakeCalls { get; set; }
@@ -173,7 +174,7 @@ namespace CLRProfiler
 		
 
 		// table details filter value
-#if(V_EXEC)
+#if (V_EXEC)
 		private const double detail01D = 8.0;
 #else
 		private const int detail01D = 8;
@@ -207,13 +208,8 @@ namespace CLRProfiler
 			public int typeid { get; set; }
 
 		    public int funcid { get; set; }
-
-#if (V_EXEC)
-			public double allocmem { get; set; }
-#else
-            public int allocmem { get; set; }
-
-#endif
+            
+            public DoubleInt allocmem { get; set; }
 			
 		}
 		public DataTable basedatatable { get; set; } = null;
@@ -225,25 +221,13 @@ namespace CLRProfiler
 	    // detailds for reportform details RadioButton
 		public struct DetailFilter
 		{
-#if (V_EXEC)
-			public double detail01 { get; set; }
-			public double detail02 { get; set; }
-			public double detail05 { get; set; }
-			public double detail1 { get; set; }
-			public double detail2 { get; set; }
-			public double detail5 { get; set; }
-			public double detail10 { get; set; }
-#else
-            internal ulong detail01 { get; set; }
-
-		    internal ulong detail02 { get; set; }
-
-		    internal ulong detail05 { get; set; }
-            internal ulong detail1 { get; set; }
-            internal ulong detail2 { get; set; }
-            internal ulong detail5 { get; set; }
-            internal ulong detail10 { get; set; }
-#endif
+            internal DoubleUInt64 detail01 { get; set; }
+		    internal DoubleUInt64 detail02 { get; set; }
+		    internal DoubleUInt64 detail05 { get; set; }
+            internal DoubleUInt64 detail1 { get; set; }
+            internal DoubleUInt64 detail2 { get; set; }
+            internal DoubleUInt64 detail5 { get; set; }
+            internal DoubleUInt64 detail10 { get; set; }
             internal ulong max { get; set; }
         }
 		
@@ -646,7 +630,7 @@ namespace CLRProfiler
 			tmpRow["currIncl"] = cn.incl;
 			tmpRow["prevExcl"] = pn.excl;
 			tmpRow["currExcl"] = cn.excl;
-#if(V_EXEC)
+#if (V_EXEC)
 			//tmpRow["diffIncl"] = Convert.ToDouble(string.Format("{0:f2}", (cn.incl - pn.incl)));
 			tmpRow["diffIncl"] = Math.Round((cn.incl - pn.incl), 2);
 			tmpRow["diffExcl"] =  Math.Round((cn.excl - pn.excl), 2);
@@ -680,27 +664,20 @@ namespace CLRProfiler
 		{
 			addTableRow(tbl, "System.Int32", "id");
 			addTableRow(tbl, "System.String", "name");
-#if(V_EXEC)
-			addTableRow(tbl, "System.Double", "prevIncl");
-			addTableRow(tbl, "System.Double", "currIncl");
-			addTableRow(tbl, "System.Double", "diffIncl");
-			addTableRow(tbl, "System.Double", "prevExcl");
-			addTableRow(tbl, "System.Double", "currExcl");
-			addTableRow(tbl, "System.Double", "diffExcl");
-			addTableRow(tbl, "System.Double", "prevChildIncl");
-			addTableRow(tbl, "System.Double", "currChildIncl");
-			addTableRow(tbl, "System.Double", "diffChildIncl");
+#if (V_EXEC)
+            const string typeName = "System.Double";
 #else
-			addTableRow(tbl, "System.Int32", "prevIncl");
-			addTableRow(tbl, "System.Int32", "currIncl");
-			addTableRow(tbl, "System.Int32", "diffIncl");
-			addTableRow(tbl, "System.Int32", "prevExcl");
-			addTableRow(tbl, "System.Int32", "currExcl");
-			addTableRow(tbl, "System.Int32", "diffExcl");
-			addTableRow(tbl, "System.Int32", "prevChildIncl");
-			addTableRow(tbl, "System.Int32", "currChildIncl");
-			addTableRow(tbl, "System.Int32", "diffChildIncl");
+		    const string typeName = "System.Int32";
 #endif
+            addTableRow(tbl, typeName, "prevIncl");
+			addTableRow(tbl, typeName, "currIncl");
+			addTableRow(tbl, typeName, "diffIncl");
+			addTableRow(tbl, typeName, "prevExcl");
+            addTableRow(tbl, typeName, "currExcl");
+            addTableRow(tbl, typeName, "diffExcl");
+            addTableRow(tbl, typeName, "prevChildIncl");
+			addTableRow(tbl, typeName, "currChildIncl");
+			addTableRow(tbl, typeName, "diffChildIncl");
 			addTableRow(tbl, "System.Int32", "prevTimesCalled");
 			addTableRow(tbl, "System.Int32", "currTimesCalled");
 			addTableRow(tbl, "System.Int32", "diffTimesCalled");
@@ -1054,7 +1031,7 @@ namespace CLRProfiler
 		{
 			//DataRow[] r = basedatatable.Select("prevIncl = max(prevIncl)");
 			//double max = (double)r[0][2];
-#if(V_EXEC)
+#if (V_EXEC)
 			double max = FormatSize(df.max);
 			df.detail01 = Math.Round( (max / detail01D), 2);
 			df.detail02 = Math.Round((max / (detail01D - 1)), 2);
@@ -1075,22 +1052,19 @@ namespace CLRProfiler
 #endif
 		}
 
-#if(V_EXEC)
-		double FormatSize(int size)
+		DoubleInt FormatSize(DoubleInt size)
 		{
-			double w = size;
+#if (V_EXEC)
+            double w = size;
 			w /= 1024;
 			return Math.Round(w, 2);
-		}
 #else
-		int FormatSize(int size)
-		{
-			return size;
-		}
+            return size;
 #endif
-		#endregion
+		}
+        #endregion
 
-		#region CallTrace - MakeDiffTreceTable, BuildDiffTraceTable
+        #region CallTrace - MakeDiffTreceTable, BuildDiffTraceTable
 		private void BuildDiffTraceTable(DiffDataNode parent, TreeNode currRoot, TreeNode prevRoot)
 		{
 			ArrayList currKids = new ArrayList();
