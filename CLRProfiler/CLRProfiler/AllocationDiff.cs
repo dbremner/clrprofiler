@@ -181,10 +181,10 @@ namespace CLRProfiler
 #endif
 		private ulong maxIncl = 0;
 		private ulong typemaxIncl = 0;
-		public DetailFilter prevFilter = new DetailFilter();
-		public DetailFilter currFilter =new DetailFilter();
-		public DetailFilter prevTypedeFilter = new DetailFilter();
-		public DetailFilter currTypedeFilter = new DetailFilter();
+		public DetailFilter prevFilter;
+		public DetailFilter currFilter;
+		public DetailFilter prevTypedeFilter;
+		public DetailFilter currTypedeFilter;
 		
 		// dataset and tables
 
@@ -241,10 +241,6 @@ namespace CLRProfiler
             MakeCalleeTables(calleetbl);
 	        MakeBaseDataTable(ContriTocallertbl);
 	        MakeBaseDataTable(ContriTocalleetbl);
-	        prevFilter = new DetailFilter();
-	        currFilter = new DetailFilter();
-	        prevTypedeFilter = new DetailFilter();
-	        currTypedeFilter = new DetailFilter();
 	    }
 	    #endregion
 
