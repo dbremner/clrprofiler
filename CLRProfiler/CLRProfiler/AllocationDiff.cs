@@ -261,7 +261,7 @@ namespace CLRProfiler
 			}
 		}
 
-	    [NotNull]
+	    [CanBeNull]
 	    public string diffLogFileName { get; set; }
 	    #endregion
 

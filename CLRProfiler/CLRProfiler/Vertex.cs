@@ -19,7 +19,7 @@ namespace CLRProfiler
     public class Vertex : IComparable
     {
         [NotNull] internal readonly string name;
-        [NotNull] internal readonly string signature;
+        [CanBeNull] internal readonly string signature;
         internal string weightString;
         [NotNull] internal readonly Dictionary<Vertex, Edge> incomingEdges;
         [NotNull] internal readonly Dictionary<Vertex, Edge> outgoingEdges;
@@ -43,7 +43,7 @@ namespace CLRProfiler
         internal ulong[] weightHistory;
         private int hint;
         internal ulong basicWeight;
-        [NotNull] internal readonly string moduleName;
+        [CanBeNull] internal readonly string moduleName;
         internal int count;
         internal InterestLevel interestLevel;
         [NotNull] internal readonly Graph containingGraph;
