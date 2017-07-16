@@ -3,18 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using JetBrains.Annotations;
 
 namespace CLRProfiler
 {
     internal class Column : Button
     {
         private bool pressed;
-        private readonly ArrayList columnsRef;
-        private readonly ResizeBarCapture resizeBar;
+        [NotNull] private readonly ArrayList columnsRef;
+        [NotNull] private readonly ResizeBarCapture resizeBar;
 
+        [NotNull]
         internal ColumnInformation ColumnInformation { get; }
 
-        internal Column(ColumnInformation in_ci, ResizeBarCapture in_resizeBar,  ArrayList in_columnsRef) : base()
+        internal Column([NotNull] ColumnInformation in_ci, [NotNull] ResizeBarCapture in_resizeBar, [NotNull] ArrayList in_columnsRef) : base()
         {
             pressed = false;
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using JetBrains.Annotations;
 
 namespace CLRProfiler
 {
@@ -11,7 +12,7 @@ namespace CLRProfiler
         int track;
         readonly ArrayList columns;
 
-        internal DiffResizeBarCapture(ArrayList in_columns) : base()
+        internal DiffResizeBarCapture([NotNull] [ItemNotNull] ArrayList in_columns) : base()
         {
             track = -1;
             columns = in_columns;

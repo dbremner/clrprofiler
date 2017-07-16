@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using JetBrains.Annotations;
 
 namespace CLRProfiler
 {
     internal class ResizeBarCapture : Control
     {
         int track;
-        readonly ArrayList columns;
+        [NotNull] readonly ArrayList columns;
 
-        internal ResizeBarCapture(ArrayList in_columns) : base()
+        internal ResizeBarCapture([NotNull] [ItemNotNull] ArrayList in_columns) : base()
         {
             track = -1;
             columns = in_columns;

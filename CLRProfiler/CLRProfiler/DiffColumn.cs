@@ -3,18 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using JetBrains.Annotations;
 
 namespace CLRProfiler
 {
     internal class DiffColumn : Button
     {
         private bool pressed;
-        private readonly ArrayList columnsRef;
-        private readonly DiffResizeBarCapture resizeBar;
+        [NotNull] private readonly ArrayList columnsRef;
+        [NotNull] private readonly DiffResizeBarCapture resizeBar;
 
+        [NotNull]
         internal ColumnInformation ColumnInformation { get; }
 
-        internal DiffColumn(ColumnInformation in_ci, DiffResizeBarCapture in_resizeBar,  ArrayList in_columnsRef) : base()
+        internal DiffColumn([NotNull] ColumnInformation in_ci, [NotNull] DiffResizeBarCapture in_resizeBar,
+            [NotNull] ArrayList in_columnsRef)
         {
             pressed = false;
 
