@@ -1051,13 +1051,10 @@ namespace CLRProfiler
 					}
 				
 					string name = _currcallTrace.MakeName(kidNode);
-					var node = new DiffDataNode(name);
+					var node = new DiffDataNode(name, (DiffDataNode.NodeType)kidNode.nodetype);
 					node.currIncl = kidNode.data.bytesAllocated;
 					node.currCalls = kidNode.data.numberOfFunctionsCalled;
-														
-				
 					node.currTreenode = kidNode;
-					node.nodetype = (DiffDataNode.NodeType)kidNode.nodetype;
 					
 					switch(node.nodetype)
 					{
@@ -1107,13 +1104,10 @@ namespace CLRProfiler
 					}
 				
 					string name = _prevcallTrace.MakeName(kidNode);
-					var node = new DiffDataNode(name);
+					var node = new DiffDataNode(name, (DiffDataNode.NodeType)kidNode.nodetype);
 					node.prevIncl = kidNode.data.bytesAllocated;
 					node.prevCalls = kidNode.data.numberOfFunctionsCalled;
-				
-				
 					node.prevTreenode = kidNode;
-					node.nodetype = (DiffDataNode.NodeType)kidNode.nodetype;
 					
 					switch(node.nodetype)
 					{
@@ -1309,7 +1303,7 @@ namespace CLRProfiler
 			{
 				if(!((DiffDataNode)prev[i]).marked)
 				{
-					var node = new DiffDataNode( ((DiffDataNode)prev[i]).name);
+					var node = new DiffDataNode( ((DiffDataNode)prev[i]).name, ((DiffDataNode)prev[i]).nodetype);
 					
 					// prev not exist in curr
 					node.prevFunId = ((DiffDataNode)prev[i]).prevFunId;
@@ -1325,7 +1319,6 @@ namespace CLRProfiler
 					node.parentId = parent.nodeId;
 					node.parentname = parent.name;
 					node.prevTreenode = ((DiffDataNode)prev[i]).prevTreenode;
-					node.nodetype = ((DiffDataNode)prev[i]).nodetype;
 
 					((DiffDataNode)prev[i]).marked = true;
 					if(node.diffIncl != 0)
@@ -1546,7 +1539,21 @@ namespace CLRProfiler
 		internal DiffDataNode Row2Node(DataRow r)
 		{
 			string name = r[idx_name].ToString();
-			var node = new DiffDataNode(name); 
+			int nodetype = int.Parse(r[idx_type].ToString());
+		    DiffDataNode.NodeType nodeType;
+			if(nodetype == 0)
+			{
+				nodeType = DiffDataNode.NodeType.Call;
+			}
+			else if(nodetype == 1)
+			{
+			    nodeType = DiffDataNode.NodeType.Allocation;
+			}
+			else
+			{
+			    nodeType = DiffDataNode.NodeType.AssemblyLoad;
+			}
+			var node = new DiffDataNode(name, nodeType); 
 			
 			node.mapname = r[idx_mapname].ToString();
 				
@@ -1558,19 +1565,6 @@ namespace CLRProfiler
 			node.prevCalls = int.Parse(r[idx_prevCalls].ToString());
 			node.currCalls = int.Parse(r[idx_currCalls].ToString());
 			node.diffCalls = int.Parse(r[idx_diffCalls].ToString());
-			int nodetype = int.Parse(r[idx_type].ToString());
-			if(nodetype == 0)
-			{
-				node.nodetype = DiffDataNode.NodeType.Call;
-			}
-			else if(nodetype == 1)
-			{
-				node.nodetype = DiffDataNode.NodeType.Allocation;
-			}
-			else
-			{
-				node.nodetype = DiffDataNode.NodeType.AssemblyLoad;
-			}
 				
 			node.nodeId = int.Parse(r[idx_id].ToString());
 			node.parentId = int.Parse(r[idx_parentid].ToString());

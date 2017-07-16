@@ -49,5 +49,11 @@ namespace CLRProfiler
 			allkids = new ArrayList();
 			data = new DiffStatistics(this);
 		}
+
+	    public DiffDataNode([NotNull] String name, NodeType nodeType)
+            : this(name)
+	    {
+	        
+	    }
 	}
 }
