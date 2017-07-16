@@ -249,11 +249,11 @@ namespace CLRProfiler
 		// DataSet used to collect tables and 
 		// build relations between table in the near future
 		// also it usded by DataViewManager in ReportForm
-		public DataSet ds { get; set; } = new DataSet();
+		public DataSet ds { get; } = new DataSet();
 
-	    public DataTable callertbl { get; set; } = new DataTable("caller");
+	    public DataTable callertbl { get; } = new DataTable("caller");
 
-	    public DataTable calleetbl { get; set; } = new DataTable("callee");
+	    public DataTable calleetbl { get; } = new DataTable("callee");
 
 	    public string PrevLogFileName
 		{

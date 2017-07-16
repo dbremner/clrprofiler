@@ -18,7 +18,7 @@ namespace CLRProfiler
         internal Pen pen;
         internal Vertex ToVertex { get; }
 
-        internal Vertex FromVertex { get; set; }
+        internal Vertex FromVertex { get; }
 
         internal ulong weight;
         internal int width;
