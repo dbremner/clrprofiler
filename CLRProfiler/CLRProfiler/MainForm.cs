@@ -61,8 +61,8 @@ namespace CLRProfiler
         private string logDirectory;
         private int attachTargetPID;
         private readonly SafeFileHandle handshakingPipeHandle;
-        private readonly SafeFileHandle loggingPipeHandle;
         private readonly FileStream handshakingPipe;
+        private readonly SafeFileHandle loggingPipeHandle;
         private readonly FileStream loggingPipe;
         internal static MainForm instance;
         private bool saveNever;
