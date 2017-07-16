@@ -88,7 +88,7 @@ namespace CLRProfiler
             internal ArrayList stack;
             internal ArrayList queuedNodes;
             internal SortedList functions;
-            internal TreeListView callTreeView;
+            [NotNull] internal TreeListView callTreeView;
         };
 
         internal class ViewState
@@ -284,6 +284,7 @@ namespace CLRProfiler
             return c;
         }
 
+        [NotNull]
         internal int[] IndexToStacktrace(int stackid)
         {
             if(stackid < 0)

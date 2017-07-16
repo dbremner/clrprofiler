@@ -16,6 +16,7 @@ using System.Collections;
 using System.Diagnostics;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using JetBrains.Annotations;
 
 namespace CLRProfiler
 {
@@ -23,19 +24,19 @@ namespace CLRProfiler
 	{
 		private int leftEdge;
 
-		private readonly ArrayList columns;
-		private readonly ListBox treeListBox;
-		private readonly ResizeBarCapture resizeBar;
+	    [NotNull] private readonly ArrayList columns;
+	    [NotNull] private readonly ListBox treeListBox;
+	    [NotNull] private readonly ResizeBarCapture resizeBar;
 
 		private object keepSelected;
-		private readonly PlacedToolTip hoverPopup;
+	    [NotNull] private readonly PlacedToolTip hoverPopup;
 
 		// events of interest
 		internal event EventHandler ColumnClick;
 		internal event EventHandler SelectedIndexChanged;
 
 		internal object TokenObject = null;
-		private readonly ITreeOwner treeOwner;
+	    [NotNull] private readonly ITreeOwner treeOwner;
 
 		// item in treeListBox for current context menu
 		private int ContextSelection;
@@ -72,7 +73,7 @@ namespace CLRProfiler
 		    set => treeListBox.SelectedItem = value;
 		}
 
-		private void Resort(int depth, TreeNodeBase root)
+		private void Resort(int depth, [NotNull] TreeNodeBase root)
 		{
 			root.depth = depth;
 			treeListBox.Items.Add(root);
@@ -93,7 +94,7 @@ namespace CLRProfiler
 			Resort(0, root);
 		}
 
-		private void ReplaceContents(object[] nodes)
+		private void ReplaceContents([NotNull] object[] nodes)
 		{
 			/* an attempt to prevent the control from jerking */
 			object selection = treeListBox.Items[treeListBox.SelectedIndex];
@@ -111,7 +112,7 @@ namespace CLRProfiler
 			SendMessage(treeListBox.Handle, 0x0114, 4 + (leftEdge << 16), 0);
 		}
 
-		private int AddAfter(int index, TreeNodeBase root)
+		private int AddAfter(int index, [NotNull] TreeNodeBase root)
 		{
 			if(root.allkids == null)
 			{
@@ -163,7 +164,7 @@ namespace CLRProfiler
 			treeListBox.ItemHeight = Font.Height + 3;
 		}
 
-		internal TreeListView(ITreeOwner in_treeOwner)
+		internal TreeListView([NotNull] ITreeOwner in_treeOwner)
 		{
 			treeOwner = in_treeOwner;
 
@@ -622,7 +623,8 @@ namespace CLRProfiler
             ColumnClick?.Invoke(sender, e);
         }
 
-		internal ArrayList GetColumns()
+	    [NotNull]
+	    internal ArrayList GetColumns()
 		{
 			return columns;
 		}

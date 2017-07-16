@@ -14,11 +14,11 @@ namespace CLRProfiler
 	{
 		#region Data member
 		private int leftEdge;
-		private readonly ArrayList columns;
-		private readonly ListBox treeListBox;
-		private readonly DiffResizeBarCapture resizeBar;
+	    [NotNull] private readonly ArrayList columns;
+	    [NotNull] private readonly ListBox treeListBox;
+	    [NotNull] private readonly DiffResizeBarCapture resizeBar;
 		private object keepSelected;
-		private readonly PlacedToolTip hoverPopup;
+	    [NotNull] private readonly PlacedToolTip hoverPopup;
 
 		// events of interest
 		internal event EventHandler ColumnClick;
@@ -26,7 +26,8 @@ namespace CLRProfiler
 
 		//
 		internal object TokenObject = null;
-		private readonly IDiffTreeOwner treeOwner;
+
+	    [NotNull] private readonly IDiffTreeOwner treeOwner;
 
 		private int ContextSelection;
 
@@ -64,7 +65,7 @@ namespace CLRProfiler
 	        set => treeListBox.SelectedItem = value;
 	    }
 
-		private void Resort(int depth, TreeNodeBase root)
+		private void Resort(int depth, [NotNull] TreeNodeBase root)
 		{
 			root.depth = depth;
 			treeListBox.Items.Add(root);
@@ -85,7 +86,7 @@ namespace CLRProfiler
 			Resort(0, root);
 		}
 
-		private void ReplaceContents(object[] nodes)
+		private void ReplaceContents([NotNull] object[] nodes)
 		{
 			/* an attempt to prevent the control from jerking */
 			object selection = treeListBox.Items[treeListBox.SelectedIndex];
@@ -103,7 +104,7 @@ namespace CLRProfiler
 			SendMessage(treeListBox.Handle, 0x0114, 4 + (leftEdge << 16), 0);
 		}
 
-		private int AddAfter(int index, TreeNodeBase root)
+		private int AddAfter(int index, [NotNull] TreeNodeBase root)
 		{
 			if(root.allkids == null)
 			{
@@ -157,7 +158,7 @@ namespace CLRProfiler
 
 		#endregion
 
-		internal DiffTreeListView(IDiffTreeOwner in_treeOwner)
+		internal DiffTreeListView([NotNull] IDiffTreeOwner in_treeOwner)
 		{
 			// This call is required by the Windows.Forms Form Designer.
 			InitializeComponent();
@@ -419,7 +420,7 @@ namespace CLRProfiler
 					{
 						//node = (TreeNodeBase)treeListBox.Items[ ContextSelection ];
 						
-						GetTreeContent(sb, this.Root as DiffDataNode);
+						GetTreeContent(sb, (DiffDataNode) this.Root);
 					}
 					break;
 
@@ -438,7 +439,7 @@ namespace CLRProfiler
 			}
 		}
 
-		private void GetTreeContent(StringBuilder sb, DiffDataNode root)
+		private void GetTreeContent(StringBuilder sb, [NotNull] DiffDataNode root)
 		{
 			string prefx = "-";
 			
@@ -453,7 +454,7 @@ namespace CLRProfiler
 			    Debug.Assert(root.allkids != null, "root.allkids != null");
 			    for(int i = 0; i < root.allkids.Count; i++)
 				{
-					GetTreeContent(sb, root.allkids[i] as DiffDataNode);
+					GetTreeContent(sb, (DiffDataNode) root.allkids[i]);
 				}
 			}
 

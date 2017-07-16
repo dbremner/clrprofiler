@@ -18,8 +18,8 @@ namespace CLRProfiler
     /// </summary>
     public class Vertex : IComparable
     {
-        internal readonly string name;
-        internal readonly string signature;
+        [NotNull] internal readonly string name;
+        [NotNull] internal readonly string signature;
         internal string weightString;
         [NotNull] internal readonly Dictionary<Vertex, Edge> incomingEdges;
         [NotNull] internal readonly Dictionary<Vertex, Edge> outgoingEdges;
@@ -31,7 +31,7 @@ namespace CLRProfiler
         internal Rectangle selectionRectangle;
         internal bool selected;
         internal bool visible;
-        internal readonly string nameSpace;
+        [NotNull] internal readonly string nameSpace;
         internal string basicName;
         internal string basicSignature;
 // disable csharp compiler warning #0414: field assigned unused value
@@ -43,7 +43,7 @@ namespace CLRProfiler
         internal ulong[] weightHistory;
         private int hint;
         internal ulong basicWeight;
-        internal readonly string moduleName;
+        [NotNull] internal readonly string moduleName;
         internal int count;
         internal InterestLevel interestLevel;
         [NotNull] internal readonly Graph containingGraph;
@@ -155,7 +155,7 @@ namespace CLRProfiler
             }
         }
 
-        public int CompareTo(Object o)
+        public int CompareTo([NotNull] Object o)
         {
             var v = (Vertex)o;
             if (v.weight < this.weight)

@@ -131,7 +131,7 @@ namespace CLRProfiler
             }
         }
 
-        public MainForm(string[] arguments)
+        public MainForm([NotNull] string[] arguments)
         {
             int i;
             string logFileName = "";
@@ -884,7 +884,7 @@ namespace CLRProfiler
             graphViewForm.Visible = true;
         }
 
-        private void readLogFile(ReadNewLog log, ReadLogResult logResult, string exeName, Graph.GraphType graphType)
+        private void readLogFile([NotNull] ReadNewLog log, ReadLogResult logResult, string exeName, Graph.GraphType graphType)
         {
             log.ReadFile(logFileStartOffset, logFileEndOffset, logResult);
             ViewGraph(logResult, exeName, graphType);
@@ -1331,7 +1331,7 @@ namespace CLRProfiler
             }
         }
 
-        private string[] CombineEnvironmentVariables(string[] a, string[] b)
+        private string[] CombineEnvironmentVariables([NotNull] string[] a, [NotNull] string[] b)
         {
             string[] c = new string[a.Length + b.Length];
             int i = 0;
@@ -1348,46 +1348,50 @@ namespace CLRProfiler
             return c;
         }
 
-        private Microsoft.Win32.RegistryKey GetServiceKey(string serviceName)
+        [CanBeNull]
+        private Microsoft.Win32.RegistryKey GetServiceKey([NotNull] string serviceName)
         {
             Microsoft.Win32.RegistryKey localMachine = Microsoft.Win32.Registry.LocalMachine;
             Microsoft.Win32.RegistryKey key = localMachine.OpenSubKey("SYSTEM\\CurrentControlSet\\Services\\" + serviceName, true);
             return key;
         }
 
-        private void SetEnvironmentVariables(string serviceName, string[] environment)
+        private void SetEnvironmentVariables([NotNull] string serviceName, [NotNull] string[] environment)
         {
             Microsoft.Win32.RegistryKey key = GetServiceKey(serviceName);
             key?.SetValue("Environment", environment);
         }
 
-        private void DeleteEnvironmentVariables(string serviceName)
+        private void DeleteEnvironmentVariables([NotNull] string serviceName)
         {
             Microsoft.Win32.RegistryKey key = GetServiceKey(serviceName);
             key?.DeleteValue("Environment");
         }
 
-        private string EnvKey(string envVariable)
+        [NotNull]
+        private string EnvKey([NotNull] string envVariable)
         {
             int index = envVariable.IndexOf('=');
             Debug.Assert(index >= 0);
             return envVariable.Substring(0, index);
         }
 
-        private string EnvValue(string envVariable)
+        [NotNull]
+        private string EnvValue([NotNull] string envVariable)
         {
             int index = envVariable.IndexOf('=');
             Debug.Assert(index >= 0);
             return envVariable.Substring(index + 1);
         }
 
-        private Microsoft.Win32.RegistryKey GetAccountEnvironmentKey(string serviceAccountSid)
+        [CanBeNull]
+        private Microsoft.Win32.RegistryKey GetAccountEnvironmentKey([NotNull] string serviceAccountSid)
         {
             Microsoft.Win32.RegistryKey users = Microsoft.Win32.Registry.Users;
             return users.OpenSubKey(serviceAccountSid + @"\Environment", true);
         }
 
-        private void SetAccountEnvironment(string serviceAccountSid, string[] profilerEnvironment)
+        private void SetAccountEnvironment([NotNull] string serviceAccountSid, [NotNull] string[] profilerEnvironment)
         {
             Microsoft.Win32.RegistryKey key = GetAccountEnvironmentKey(serviceAccountSid);
             if (key != null)
@@ -1399,7 +1403,7 @@ namespace CLRProfiler
             }
         }
 
-        private void ResetAccountEnvironment(string serviceAccountSid, string[] profilerEnvironment)
+        private void ResetAccountEnvironment([NotNull] string serviceAccountSid, [NotNull] string[] profilerEnvironment)
         {
             Microsoft.Win32.RegistryKey key = GetAccountEnvironmentKey(serviceAccountSid);
             if (key != null)
@@ -1441,7 +1445,9 @@ namespace CLRProfiler
             return flags.ToString();
         }
 
-        private string[] CreateProfilerEnvironment(string tempDir)
+        [ItemNotNull]
+        [NotNull]
+        private string[] CreateProfilerEnvironment([NotNull] string tempDir)
         {
             return new string[]
             { 
@@ -1461,7 +1467,8 @@ namespace CLRProfiler
             };
         }
 
-        private string GetServiceAccountName(string serviceName)
+        [CanBeNull]
+        private string GetServiceAccountName([NotNull] string serviceName)
         {
             Microsoft.Win32.RegistryKey key = GetServiceKey(serviceName);
             if (key != null)
@@ -1472,7 +1479,8 @@ namespace CLRProfiler
             return null;
         }
 
-        private string LookupAccountSid(string accountName)
+        [CanBeNull]
+        private string LookupAccountSid([NotNull] string accountName)
         {
             int sidLen = 0;
             byte[] sid = new byte[sidLen];
@@ -1594,6 +1602,7 @@ namespace CLRProfiler
             }
         }
 
+        [CanBeNull]
         private string GetASP_NETaccountName()
         {
             try
@@ -1783,7 +1792,7 @@ namespace CLRProfiler
         [DllImport("Kernel32.dll")]
         private static extern int IsWow64Process(IntPtr process, out int wow64Process);
 
-        private bool CreatePipe(string pipeName, bool blockingPipe, ref SafeFileHandle pipeHandle, ref FileStream pipe)
+        private bool CreatePipe([NotNull] string pipeName, bool blockingPipe, ref SafeFileHandle pipeHandle, ref FileStream pipe)
         {
             SECURITY_ATTRIBUTES sa;
             sa.nLength = 12;
@@ -1818,7 +1827,7 @@ namespace CLRProfiler
             pipeHandle = null;
         }
 
-        private void InitWindowsStoreAppLogDirectory(string acFolderPath)
+        private void InitWindowsStoreAppLogDirectory([NotNull] string acFolderPath)
         {
             // Profiler will need to write under the AppContainer directory that
             // the Windows Store app is given access to.  Create a CLRProfiler subdirectory
