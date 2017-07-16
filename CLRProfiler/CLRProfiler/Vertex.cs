@@ -111,6 +111,16 @@ namespace CLRProfiler
             }
         }
 
+        public string GetNameAndSignature()
+        {
+            string nameAndSignature = name;
+            if (signature != null)
+            {
+                nameAndSignature += ' ' + signature;
+            }
+            return nameAndSignature;
+        }
+
         internal Edge FindOrCreateOutgoingEdge(Vertex toVertex)
         {
             Edge edge = cachedOutgoingEdge;

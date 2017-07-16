@@ -445,11 +445,7 @@ namespace CLRProfiler
 					{
 						if (v.selected || (selectedVertexCount == 0) )
 						{
-							string nameAndSignature = v.name;
-							if(v.signature != null)
-                            {
-                                nameAndSignature += ' ' + v.signature;
-                            }
+							string nameAndSignature = v.GetNameAndSignature();
 
                             n.name = nameAndSignature;
 							n.incl = FormatSize((int)v.weight);
@@ -544,11 +540,7 @@ namespace CLRProfiler
 			n.callerAlloc = new Hashtable();
 			foreach(Edge edge in v.outgoingEdges.Values)
 			{
-				string nameAndSignature = edge.ToVertex.name;
-				if(edge.ToVertex.signature != null)
-                {
-                    nameAndSignature += ' ' + edge.ToVertex.signature;
-                }
+			    string nameAndSignature = edge.ToVertex.GetNameAndSignature();
 
                 if (!n.calleeAlloc.ContainsKey(nameAndSignature))
 				{
@@ -557,11 +549,7 @@ namespace CLRProfiler
 			}
 			foreach(Edge edge in v.incomingEdges.Values)
 			{
-				string nameAndSignature = edge.FromVertex.name;
-				if(edge.FromVertex.signature != null)
-                {
-                    nameAndSignature += ' ' + edge.FromVertex.signature;
-                }
+				string nameAndSignature = edge.FromVertex.GetNameAndSignature();
 
                 if (!n.callerAlloc.ContainsKey(nameAndSignature))
 				{
@@ -742,11 +730,7 @@ namespace CLRProfiler
 	    {
 	        foreach (Vertex cv in callhash.Keys)
 	        {
-	            string nameAndSignature = cv.name;
-	            if (cv.signature != null)
-	            {
-	                nameAndSignature += ' ' + cv.signature;
-	            }
+	            string nameAndSignature = cv.GetNameAndSignature();
 
 	            if (basedataId.ContainsKey(nameAndSignature))
 	            {
@@ -760,13 +744,9 @@ namespace CLRProfiler
 	    {
             foreach (Vertex cv in callhash.Keys)
 	        {
-	            string nameAndSignature = cv.name;
-	            if (cv.signature != null)
-	            {
-	                nameAndSignature += ' ' + cv.signature;
-	            }
+	            string nameAndSignature = cv.GetNameAndSignature();
 
-	            if (basedataId.ContainsKey(nameAndSignature))
+                if (basedataId.ContainsKey(nameAndSignature))
 	            {
 	                int callerid = (int)basedataId[nameAndSignature];
 	                AddCallerTableRow(tbl, id, callerid);
@@ -930,11 +910,7 @@ namespace CLRProfiler
 						{
 							pn1 = new datanode();
 							cn1 = new datanode();
-							string nameAndSignature1 = edge.FromVertex.name;
-							if(edge.FromVertex.signature != null)
-                            {
-                                nameAndSignature1 += ' ' + edge.FromVertex.signature;
-                            }
+						    string nameAndSignature1 = edge.FromVertex.GetNameAndSignature();
 
                             if (this._prevbasedata.ContainsKey(nameAndSignature1))
 							{
@@ -967,11 +943,7 @@ namespace CLRProfiler
 							foreach(Edge edgec in cn.caller.Values)
 							{
 								pn1 = new datanode();
-								string nameAndSignature1 = edgec.FromVertex.name;
-								if(edgec.FromVertex.signature != null)
-                                {
-                                    nameAndSignature1 += ' ' + edgec.FromVertex.signature;
-                                }
+								string nameAndSignature1 = edgec.FromVertex.GetNameAndSignature();
 
                                 if (!cnnew.ContainsKey(nameAndSignature1))
 								{
@@ -993,11 +965,7 @@ namespace CLRProfiler
 							cn1 = (datanode)_currbasedata[nameAndSignature];
 							foreach(Edge edge in cn.caller.Values)
 							{
-								string nameAndSignature1 = edge.FromVertex.name;
-								if(edge.FromVertex.signature != null)
-                                {
-                                    nameAndSignature1 += ' ' + edge.FromVertex.signature;
-                                }
+								string nameAndSignature1 = edge.FromVertex.GetNameAndSignature();
 
                                 if (this._currbasedata.ContainsKey(nameAndSignature1))
 								{
