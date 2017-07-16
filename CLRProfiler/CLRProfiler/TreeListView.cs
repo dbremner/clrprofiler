@@ -13,6 +13,7 @@ using System;
 using System.IO;
 using System.Drawing;
 using System.Collections;
+using System.Diagnostics;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 
@@ -349,7 +350,8 @@ namespace CLRProfiler
 			{
 				hoverPopup.Parent = FindForm();
 			}
-			Point controlPoint = hoverPopup.Parent.PointToClient(screenPoint);
+		    Debug.Assert(hoverPopup.Parent != null);
+            Point controlPoint = hoverPopup.Parent.PointToClient(screenPoint);
 
 			string textToDisplay = treeOwner.GetInfo(TokenObject, node, null).ToString();
 			if(textToDisplay != hoverPopup.CurrentlyDisplayed())

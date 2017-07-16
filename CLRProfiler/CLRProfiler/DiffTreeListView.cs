@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Drawing;
 using System.Collections;
+using System.Diagnostics;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -349,6 +350,7 @@ namespace CLRProfiler
 			{
 				hoverPopup.Parent = FindForm();
 			}
+		    Debug.Assert(hoverPopup.Parent != null);
 			Point controlPoint = hoverPopup.Parent.PointToClient(screenPoint);
 
 			string textToDisplay = treeOwner.GetInfo(TokenObject, node, null).ToString();
@@ -447,7 +449,8 @@ namespace CLRProfiler
 			
 			if(root.IsExpanded)
 			{
-				for(int i = 0; i < root.allkids.Count; i++)
+			    Debug.Assert(root.allkids != null, "root.allkids != null");
+			    for(int i = 0; i < root.allkids.Count; i++)
 				{
 					GetTreeContent(sb, root.allkids[i] as DiffDataNode);
 				}

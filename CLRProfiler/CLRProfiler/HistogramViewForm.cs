@@ -420,6 +420,7 @@ namespace CLRProfiler
             }
             else
             {
+                Debug.Assert(maxLowScaleRB != null, "maxLowScaleRB != null");
                 maxLowScaleRB.Checked = true;
                 return Int32.Parse(maxLowScaleRB.Text);
             }

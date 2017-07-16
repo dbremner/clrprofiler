@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Data;
+using System.Diagnostics;
 using JetBrains.Annotations;
 #if V_EXEC
 using DoubleInt = double;
@@ -361,31 +362,33 @@ namespace CLRProfiler
 			summaryTracetbl = new DataTable("summaryTracetbl");
 			MakeDiffTreceTable(diffTracetbl);
 			MakeDiffTreceTable(summaryTracetbl);
-		
+
+		    Debug.Assert(_currcallTrace.callTreeView != null);
 
 			string rname = _currcallTrace.MakeName((TreeNode)_currcallTrace.callTreeView.Root);
 			Root = new DiffDataNode(rname);
-			Root.prevIncl = ((TreeNode)_prevcallTrace.callTreeView.Root).data.bytesAllocated;
+            Debug.Assert(_prevcallTrace.callTreeView != null);
+            Root.prevIncl = ((TreeNode)_prevcallTrace.callTreeView.Root).data.bytesAllocated;
+		    Debug.Assert(_currcallTrace.callTreeView != null);
 			Root.currIncl = ((TreeNode)_currcallTrace.callTreeView.Root).data.bytesAllocated;
 			Root.diffIncl = Root.currIncl - Root.prevIncl;
 			Root.prevCalls = ((TreeNode)_prevcallTrace.callTreeView.Root).data.numberOfFunctionsCalled;
 			Root.currCalls = ((TreeNode)_currcallTrace.callTreeView.Root).data.numberOfFunctionsCalled;
 			Root.diffCalls = Root.currCalls - Root.prevCalls;
-			
 
 			Root.nodeId = nodeidx++;
 			Root.parentId = -1;
 			Root.prevFunId = 0;
 			Root.currFunId = 0;
 			AddDiffTraceTableRow(diffTracetbl, Root);
-
 			
 			BuildDiffTraceTable(Root, (TreeNode)_currcallTrace.callTreeView.Root, (TreeNode)_prevcallTrace.callTreeView.Root);
 			this.ds.Tables.Add(diffTracetbl);
 			sumnodeidx = 0;
 			depth = -1;
 			BuildSummaryTable(Root, -1, "parentid = -1");
-			Root = (DiffDataNode)Root.allkids[0];
+		    Debug.Assert(Root.allkids != null, "Root.allkids != null");
+		    Root = (DiffDataNode)Root.allkids[0];
 			this.ds.Tables.Add(summaryTracetbl);
 
 		

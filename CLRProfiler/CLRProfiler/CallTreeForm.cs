@@ -1970,6 +1970,7 @@ namespace CLRProfiler
 
         private void selectColumns_Click(object sender, System.EventArgs e)
         {
+            Debug.Assert(callTreeView != null);
             var f = new SelectColumns();
 
             /* 0 is "function name", it's irrelevant */
@@ -1991,8 +1992,10 @@ namespace CLRProfiler
                 var ids = f.GetCheckedColumns();
                 foreach(int id in ids)
                 {
+                    Debug.Assert(callTreeView != null);
                     AddColumn(callTreeView, id);
                 }
+                Debug.Assert(callTreeView != null);
                 callTreeView.Invalidate(true);
             }
         }

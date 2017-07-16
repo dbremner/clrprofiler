@@ -13,7 +13,7 @@ using System.Data;
 using System.IO;
 using System.Text;
 using JetBrains.Annotations;
-
+using System.Diagnostics;
 
 namespace CLRProfiler
 {
@@ -715,9 +715,11 @@ namespace CLRProfiler
                             break;
                         }
                     }
-					
+
+				    Debug.Assert(root.allkids != null);
 					if(sum != root.diffIncl && diffincl == root.diffIncl )
 					{
+                        Debug.Assert(depth != null);
 						if(depLst.ContainsKey(depth))
 						{
 							var lst = (ArrayList)depLst[depth];

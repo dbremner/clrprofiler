@@ -324,6 +324,7 @@ namespace CLRProfiler
 
             totalSize = 0;
             sortedTypeTable = new ArrayList();
+            Debug.Assert(typeIndexToTypeDesc != null);
             foreach (TypeDesc t in typeIndexToTypeDesc)
             {
                 if (t != null)
@@ -382,6 +383,7 @@ namespace CLRProfiler
             }
             else
             {
+                Debug.Assert(maxLowScaleRB != null, "maxLowScaleRB != null");
                 maxLowScaleRB.Checked = true;
                 return UInt32.Parse(maxLowScaleRB.Text);
             }
@@ -427,6 +429,7 @@ namespace CLRProfiler
         [CanBeNull]
         private TypeDesc FindSelectedType()
         {
+            Debug.Assert(sortedTypeTable != null, "sortedTypeTable != null");
             foreach (TypeDesc t in sortedTypeTable)
             {
                 if (t.selected)
@@ -444,6 +447,7 @@ namespace CLRProfiler
 
             bool anyTypeSelected = FindSelectedType() != null;
 
+            Debug.Assert(sortedTypeTable != null, "sortedTypeTable != null");
             foreach (TypeDesc t in sortedTypeTable)
             {
                 if (count >= colors.Length)
@@ -523,6 +527,7 @@ namespace CLRProfiler
         {
             Debug.Assert(verticalScale != 0);
             bool noBucketSelected = true;
+            Debug.Assert(bucketTable != null, "bucketTable != null");
             foreach (Bucket b in bucketTable)
             {
                 if (b.selected)
@@ -781,6 +786,7 @@ namespace CLRProfiler
                 }
 
                 int x = leftMargin;
+                Debug.Assert(bucketTable != null, "bucketTable != null");
                 for (int i = 0; i < bucketTable.Length; i++)
                 {
                     bucketTable[i].selected = false;

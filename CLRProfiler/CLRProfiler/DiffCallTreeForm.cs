@@ -100,6 +100,7 @@ namespace CLRProfiler
 
 	    public ArrayList FetchKids(object tokenObject, TreeNodeBase nodebase)
 		{
+            Debug.Assert(nodebase.allkids != null);
 			return nodebase.allkids;
 		}
 		private void SortOn(object obj, EventArgs e)
