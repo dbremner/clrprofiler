@@ -260,10 +260,12 @@ namespace CLRProfiler
 				return;
 			}
 
-			StringFormat sf = new StringFormat(StringFormatFlags.NoWrap);
-			sf.Trimming = StringTrimming.EllipsisCharacter;
+		    StringFormat sf = new StringFormat(StringFormatFlags.NoWrap)
+		    {
+		        Trimming = StringTrimming.EllipsisCharacter
+		    };
 
-			TreeNodeBase node = (TreeNodeBase)Items[e.Index];
+		    TreeNodeBase node = (TreeNodeBase)Items[e.Index];
 
 			int crossover = (treeListBox.ItemHeight - 1) * (1 + node.depth);
 			g.FillRectangle(new SolidBrush(Color.White), position, e.Bounds.Top, crossover, e.Bounds.Height);

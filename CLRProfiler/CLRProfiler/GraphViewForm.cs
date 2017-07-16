@@ -44,11 +44,13 @@ namespace CLRProfiler
             //
             InitializeComponent();
 
-            toolTip = new ToolTip();
-            toolTip.Active = false;
-            toolTip.ShowAlways = true;
-            toolTip.AutomaticDelay = 70;
-            toolTip.ReshowDelay = 1;
+            toolTip = new ToolTip
+            {
+                Active = false,
+                ShowAlways = true,
+                AutomaticDelay = 70,
+                ReshowDelay = 1
+            };
 
             this.graph = graph;
 
