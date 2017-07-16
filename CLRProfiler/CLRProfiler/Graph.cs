@@ -4,6 +4,9 @@
 // 
 // ==--==
 //#define whatever
+
+using JetBrains.Annotations;
+
 namespace CLRProfiler
 {
     using System;
@@ -49,6 +52,11 @@ namespace CLRProfiler
             vertices = new Dictionary<string, Vertex>();
             TopVertex = FindOrCreateVertex("<root>", null, null);
             BottomVertex = FindOrCreateVertex("<bottom>", null, null);
+        }
+
+        internal Graph([NotNull] object graphSource, GraphType type) : this(graphSource)
+        {
+            graphType = type;
         }
 
         private string NameSignatureModule(string name, string signature, string module)

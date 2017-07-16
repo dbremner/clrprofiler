@@ -900,8 +900,7 @@ namespace CLRProfiler
                 || allocatedAfterTickIndex > 0
                 || allocatedBeforeTickIndex < int.MaxValue)
             {
-                graph = new Graph(this);
-                graph.graphType = Graph.GraphType.HeapGraph;
+                graph = new Graph(this, Graph.GraphType.HeapGraph);
                 graph.previousGraphTickIndex = allocatedAfterTickIndex;
             }
             else
@@ -912,8 +911,7 @@ namespace CLRProfiler
                     return previousGraph;
                 }
 
-                cachedGraph = graph = new Graph(this);
-                graph.graphType = Graph.GraphType.HeapGraph;
+                cachedGraph = graph = new Graph(this, Graph.GraphType.HeapGraph);
                 graph.graphSource = this;
                 if (previousGraph != null)
                 {
@@ -1273,8 +1271,7 @@ namespace CLRProfiler
 
         internal Graph BuildReferenceGraph(Graph orgGraph)
         {
-            Graph graph = new Graph(this);
-            graph.graphType = Graph.GraphType.ReferenceGraph;
+            Graph graph = new Graph(this, Graph.GraphType.ReferenceGraph);
             Vertex[] pathFromRoot = new Vertex[32];
 
             GcObject rootObject = CreateRootObject();

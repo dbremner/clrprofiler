@@ -224,8 +224,7 @@ namespace CLRProfiler
             Vertex[] funcVertex = new Vertex[1];
             Vertex[] vertexStack = new Vertex[1];
 
-            Graph graph = new Graph(this);
-            graph.graphType = Graph.GraphType.AllocationGraph;
+            Graph graph = new Graph(this, Graph.GraphType.AllocationGraph);
 
             BuildTypeVertices(graph, ref typeVertex, filterForm);
             BuildFuncVertices(graph, ref funcVertex, filterForm);
@@ -260,8 +259,7 @@ namespace CLRProfiler
             Vertex[] typeVertex = new Vertex[1];
             Vertex[] vertexStack = new Vertex[1];
 
-            Graph graph = new Graph(this);
-            graph.graphType = Graph.GraphType.AssemblyGraph;
+            Graph graph = new Graph(this, Graph.GraphType.AssemblyGraph);
 
             int count = BuildAssemblyVertices(graph, ref assemblyVertex, filterForm);
             BuildTypeVertices(graph, ref typeVertex, filterForm);
@@ -294,8 +292,7 @@ namespace CLRProfiler
             Vertex[] funcVertex = new Vertex[1];
             Vertex[] vertexStack = new Vertex[1];
 
-            Graph graph = new Graph(this);
-            graph.graphType = Graph.GraphType.CallGraph;
+            Graph graph = new Graph(this, Graph.GraphType.CallGraph);
 
             BuildFuncVertices(graph, ref funcVertex, filterForm);
 
@@ -337,8 +334,7 @@ namespace CLRProfiler
             Vertex[] funcVertex = new Vertex[1];
             Vertex[] vertexStack = new Vertex[1];
 
-            Graph graph = new Graph(this);
-            graph.graphType = Graph.GraphType.HandleAllocationGraph;
+            Graph graph = new Graph(this, Graph.GraphType.HandleAllocationGraph);
 
             BuildFuncVertices(graph, ref funcVertex, filterForm);
 
