@@ -990,7 +990,7 @@ namespace CLRProfiler
         #endregion
 
         #region CallTrace - MakeDiffTreceTable, BuildDiffTraceTable
-		private void BuildDiffTraceTable(DiffDataNode parent, TreeNode currRoot, TreeNode prevRoot)
+		private void BuildDiffTraceTable(DiffDataNode parent, [CanBeNull] TreeNode currRoot, [CanBeNull] TreeNode prevRoot)
 		{
 			var currKids = new ArrayList();
 		    var prevKids = new ArrayList();

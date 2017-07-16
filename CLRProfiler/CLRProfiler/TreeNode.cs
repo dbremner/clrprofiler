@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JetBrains.Annotations;
 
 namespace CLRProfiler
 {
@@ -19,7 +20,7 @@ namespace CLRProfiler
 
         internal long prevOffset, kidOffset;
 
-        internal Statistics data;
+        [NotNull] internal Statistics data;
 
         internal TreeNode(NodeType in_nodetype, int in_stackid) : base()
         {
@@ -31,7 +32,7 @@ namespace CLRProfiler
             prevOffset = kidOffset = nodeOffset = -1;
         }
 
-        internal void Write(BitWriter writer)
+        internal void Write([NotNull] BitWriter writer)
         {
             writer.WriteBits((ulong)nodetype, 2);
             Helpers.WriteNumber(writer, stackid);

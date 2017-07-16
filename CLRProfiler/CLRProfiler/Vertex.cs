@@ -3,6 +3,9 @@
 //   Copyright (c) Microsoft Corporation.  All rights reserved.
 // 
 // ==--==
+
+using JetBrains.Annotations;
+
 namespace CLRProfiler
 {
     using System;
@@ -18,8 +21,8 @@ namespace CLRProfiler
         internal readonly string name;
         internal readonly string signature;
         internal string weightString;
-        internal readonly Dictionary<Vertex, Edge> incomingEdges;
-        internal readonly Dictionary<Vertex, Edge> outgoingEdges;
+        [NotNull] internal readonly Dictionary<Vertex, Edge> incomingEdges;
+        [NotNull] internal readonly Dictionary<Vertex, Edge> outgoingEdges;
         internal int level;
         internal ulong weight;
         internal ulong incomingWeight;
@@ -36,14 +39,14 @@ namespace CLRProfiler
         internal bool signatureCurtated;
 #pragma warning restore 0414
         internal bool active;
-        private  Edge cachedOutgoingEdge;
+        [CanBeNull] private  Edge cachedOutgoingEdge;
         internal ulong[] weightHistory;
         private int hint;
         internal ulong basicWeight;
         internal readonly string moduleName;
         internal int count;
         internal InterestLevel interestLevel;
-        internal readonly Graph containingGraph;
+        [NotNull] internal readonly Graph containingGraph;
         internal ulong id;
 
         string nameSpaceOf(string name, out string basicName)
@@ -88,7 +91,7 @@ namespace CLRProfiler
             }
         }
 
-        internal Vertex(string name, string signature, string module, Graph containingGraph)
+        internal Vertex(string name, string signature, string module, [NotNull] Graph containingGraph)
         {
             this.signature = signature;
             this.incomingEdges = new Dictionary<Vertex, Edge>();

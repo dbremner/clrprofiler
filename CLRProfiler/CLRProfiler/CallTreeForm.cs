@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.ComponentModel;
 using System.Windows.Forms;
+using JetBrains.Annotations;
 using Microsoft.Win32;
 
 namespace CLRProfiler
@@ -124,7 +125,7 @@ namespace CLRProfiler
         private int currentThreadId;
         private bool manyThreads;
         private ViewState viewState;
-        internal TreeListView callTreeView;
+        [CanBeNull] internal TreeListView callTreeView;
         private int previousSplitterLocation;
         private int firstNewStack;
 

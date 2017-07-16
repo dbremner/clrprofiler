@@ -19,7 +19,10 @@ namespace CLRProfiler
     /// </summary>
     internal class Graph
     {
+        [NotNull]
         internal readonly object graphSource;
+
+        [NotNull]
         internal readonly Dictionary<string, Vertex> vertices;
 
         internal enum GraphType
@@ -42,8 +45,10 @@ namespace CLRProfiler
         internal int previousGraphTickIndex;
         internal int filterVersion;
 
+        [NotNull]
         internal Vertex TopVertex { get; }
 
+        [NotNull]
         internal Vertex BottomVertex { get; }
 
         internal Graph([NotNull] object graphSource, GraphType type)
@@ -55,7 +60,7 @@ namespace CLRProfiler
             graphType = type;
         }
 
-        private string NameSignatureModule(string name, string signature, string module)
+        private string NameSignatureModule(string name, [CanBeNull] string signature, [CanBeNull] string module)
         {
             string nameSignatureModule = name;
             if (signature != null)
@@ -71,7 +76,7 @@ namespace CLRProfiler
             return nameSignatureModule;
         }
 
-        internal Vertex FindOrCreateVertex(string name, string signature, string module)
+        internal Vertex FindOrCreateVertex(string name, [CanBeNull] string signature, [CanBeNull] string module)
         {
             string nameSignatureModule = NameSignatureModule(name, signature, module);
             Vertex vertex;

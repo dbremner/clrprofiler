@@ -1,6 +1,8 @@
 using System;
 using System.Data;
 using System.Collections;
+using JetBrains.Annotations;
+
 namespace CLRProfiler
 {
 	/// <summary>
@@ -31,12 +33,12 @@ namespace CLRProfiler
 		internal bool marked = false;
 
 		internal NodeType nodetype = 0;
-		internal readonly DiffStatistics data;
+	    [NotNull] internal readonly DiffStatistics data;
 		internal bool highlighted;
 		//internal ArrayList kids;
 		
 		
-		public DiffDataNode(String name)
+		public DiffDataNode([NotNull] String name)
 		{
 			this.name = name;
 			int at = name.IndexOf('(');

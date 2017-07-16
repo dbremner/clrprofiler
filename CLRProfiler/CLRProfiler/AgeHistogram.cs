@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using JetBrains.Annotations;
 
 namespace CLRProfiler
 {
@@ -57,7 +58,7 @@ namespace CLRProfiler
             autoUpdate = false;
         }
 
-        LiveObjectTable liveObjectTable;
+        [CanBeNull] LiveObjectTable liveObjectTable;
 
         const int leftMargin = 30;
         int bottomMargin = 50;
@@ -169,7 +170,7 @@ namespace CLRProfiler
             }
         }
 
-        TypeDesc[] typeIndexToTypeDesc;
+        [CanBeNull] TypeDesc[] typeIndexToTypeDesc;
 
         struct Bucket
         {
@@ -188,9 +189,9 @@ namespace CLRProfiler
             internal uint count;
         }
 
-        private Bucket[] bucketTable;
+        [CanBeNull] private Bucket[] bucketTable;
 
-        private ArrayList sortedTypeTable;
+        [CanBeNull] private ArrayList sortedTypeTable;
         ulong totalSize;
 
         private ulong BuildBuckets(double timeScale, double maxAge)
@@ -424,6 +425,7 @@ namespace CLRProfiler
             colors = newColors;
         }
 
+        [CanBeNull]
         private TypeDesc FindSelectedType()
         {
             foreach (TypeDesc t in sortedTypeTable)
@@ -865,7 +867,7 @@ namespace CLRProfiler
             }       
         }
 
-        string FormatAge(double age, string ageComment)
+        string FormatAge(double age, [CanBeNull] string ageComment)
         {
             if (ageComment == null)
             {

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JetBrains.Annotations;
 
 namespace CLRProfiler
 {
@@ -52,7 +53,7 @@ namespace CLRProfiler
 
         internal readonly bool firstTimeBroughtIn;
 		
-        internal DiffStatistics(DiffDataNode node)
+        internal DiffStatistics([NotNull] DiffDataNode node)
         {
             this.node = node;
 			

@@ -25,6 +25,7 @@ using System.Security.AccessControl;
 using System.Security.Principal;
 using System.Globalization;
 using System.Xml;
+using JetBrains.Annotations;
 using Microsoft.Win32.SafeHandles;
 
 namespace CLRProfiler
@@ -46,7 +47,7 @@ namespace CLRProfiler
         private long logFileStartOffset;
         private long logFileEndOffset;
         internal ReadNewLog log;
-        internal ReadLogResult lastLogResult;
+        [CanBeNull] internal ReadLogResult lastLogResult;
         private NamedManualResetEvent loggingActiveEvent;
         private NamedManualResetEvent forceGcEvent;
         private NamedManualResetEvent loggingActiveCompletedEvent;
