@@ -212,11 +212,11 @@ namespace CLRProfiler
             public DoubleInt allocmem { get; set; }
 			
 		}
-		public DataTable basedatatable { get; set; } = new DataTable("basedatatbl");
+		public DataTable basedatatable { get; } = new DataTable("basedatatbl");
 
-	    public DataTable ContriTocallertbl { get; set; } = new DataTable("ContriTocallertbl");
+	    public DataTable ContriTocallertbl { get; } = new DataTable("ContriTocallertbl");
 
-	    public DataTable ContriTocalleetbl { get; set; } = new DataTable("ContriTocalleetbl");
+	    public DataTable ContriTocalleetbl { get; } = new DataTable("ContriTocalleetbl");
 
 	    // detailds for reportform details RadioButton
 		public struct DetailFilter
