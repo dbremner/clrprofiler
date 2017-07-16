@@ -664,10 +664,11 @@ namespace CLRProfiler
 		{
 			addTableRow(tbl, "System.Int32", "id");
 			addTableRow(tbl, "System.String", "name");
+		    string typeName
 #if (V_EXEC)
-            const string typeName = "System.Double";
+            = "System.Double";
 #else
-		    const string typeName = "System.Int32";
+            = "System.Int32";
 #endif
             addTableRow(tbl, typeName, "prevIncl");
 			addTableRow(tbl, typeName, "currIncl");
