@@ -38,7 +38,10 @@ namespace CLRProfiler
         {
             SampleObject[][] newMasterTable = new SampleObject[masterTable.Length * 2][];
             for (int i = 0; i < masterTable.Length; i++)
+            {
                 newMasterTable[i] = masterTable[i];
+            }
+
             masterTable = newMasterTable;
         }
 
@@ -63,7 +66,10 @@ namespace CLRProfiler
             {
                 uint index = (uint)(id >> firstLevelShift);
                 while (masterTable.Length <= index)
+                {
                     GrowMasterTable();
+                }
+
                 SampleObject[] so = masterTable[index];
                 if (so == null)
                 {
@@ -88,13 +94,17 @@ namespace CLRProfiler
         internal void Insert(ulong start, ulong end, int changeTickIndex, int origAllocTickIndex, int typeIndex)
         {
             if (IsGoodSample(start, end))
+            {
                 RecordChange(start, end, changeTickIndex, origAllocTickIndex, typeIndex);
+            }
         }
 
         internal void Delete(ulong start, ulong end, int changeTickIndex)
         {
             if (IsGoodSample(start, end))
+            {
                 RecordChange(start, end, changeTickIndex, 0, 0);
+            }
         }
 
         internal void AddGcTick(int tickIndex, int gen)

@@ -162,9 +162,13 @@ namespace CLRProfiler
         {
             pos++;
             if (bufPos < bufLevel)
+            {
                 return buffer[bufPos++];
+            }
             else
+            {
                 return FillBuffer();
+            }
         }
 
         int FillBuffer()
@@ -172,9 +176,13 @@ namespace CLRProfiler
             bufPos = 0;
             bufLevel = r.BaseStream.Read(buffer, 0, buffer.Length);
             if (bufPos < bufLevel)
+            {
                 return buffer[bufPos++];
+            }
             else
+            {
                 return -1;
+            }
         }
 
         int ReadHex()
@@ -185,13 +193,22 @@ namespace CLRProfiler
                 c = ReadChar();
                 int digit = c;
                 if (digit >= '0' && digit <= '9')
+                {
                     digit -= '0';
+                }
                 else if (digit >= 'a' && digit <= 'f')
+                {
                     digit -= 'a' - 10;
+                }
                 else if (digit >= 'A' && digit <= 'F')
+                {
                     digit -= 'A' - 10;
+                }
                 else
+                {
                     return value;
+                }
+
                 value = value*16 + digit;
             }
         }
@@ -199,7 +216,10 @@ namespace CLRProfiler
         int ReadInt()
         {
             while (c == ' ' || c == '\t')
+            {
                 c = ReadChar();
+            }
+
             bool negative = false;
             if (c == '-')
             {
@@ -213,7 +233,9 @@ namespace CLRProfiler
                 {
                     c = ReadChar();
                     if (c == 'x' || c == 'X')
+                    {
                         value = ReadHex();
+                    }
                 }
                 while (c >= '0' && c <= '9')
                 {
@@ -222,7 +244,10 @@ namespace CLRProfiler
                 }
 
                 if (negative)
+                {
                     value = -value;
+                }
+
                 return value;
             }
             else
@@ -235,9 +260,13 @@ namespace CLRProfiler
         {
             int value = ReadInt();
             if (value >= 0)
+            {
                 return value;
+            }
             else
+            {
                 throw new Exception(string.Format("Bad format in log file {0} line {1}", logFileName, line));
+            }
         }
         /* </parsers> */
 
@@ -485,9 +514,11 @@ namespace CLRProfiler
         private void SetcallTreeView()
         {
             if (tabs.SelectedTab == null)
+            {
                 return;
+            }
 
-            foreach(Control c in tabs.SelectedTab.Controls)
+            foreach (Control c in tabs.SelectedTab.Controls)
             {
                 TreeListView v = null;
                 try
@@ -811,7 +842,9 @@ namespace CLRProfiler
             string res;
 
             if (types[typeId] == null)
+            {
                 return null;
+            }
 
             if (bytes == 0)
             {
@@ -1014,9 +1047,13 @@ namespace CLRProfiler
                 if (filterInclude[j].functionId != -1)
                 {
                     if (filterInclude[j].nodetype == TreeNode.NodeType.Call)
+                    {
                         nIncludeCallFilters++;
+                    }
                     else if (filterInclude[j].nodetype == TreeNode.NodeType.Allocation)
+                    {
                         nIncludeAllocFilters++;
+                    }
                 }
             }
  
@@ -1132,9 +1169,15 @@ namespace CLRProfiler
                         }
                     }
                     while (c == ' ' || c == '\t')
+                    {
                         c = ReadChar();
+                    }
+
                     if (c == '\r')
+                    {
                         c = ReadChar();
+                    }
+
                     if (c == '\n')
                     {
                         c = ReadChar();
@@ -1178,13 +1221,17 @@ namespace CLRProfiler
                                     if (filterInclude[j].nodetype == TreeNode.NodeType.Call && filterInclude[j].functionId != -1)
                                     {
                                         if (stacktrace[i] == filterInclude[j].functionId )
+                                        {
                                             includeMatches++;
+                                        }
                                     }
 
                                 }
 
                                 if (includeMatches > 0)
+                                {
                                     includesFound++;
+                                }
 
 
                                 //  Now see if the stack contains any exclude functions
@@ -1202,7 +1249,9 @@ namespace CLRProfiler
 
                             //  This node can pass the filter only if all include filters are found
                             if (includesFound == nIncludeCallFilters)
+                            {
                                 fFoundCallInclude = true;
+                            }
                         }
                         else 
                         {
@@ -1216,14 +1265,20 @@ namespace CLRProfiler
 
                             //  See if the stack contain the required include allocations
                             for (int j=0; j < filterInclude.Length; j++)
+                            {
                                 if (filterInclude[j].nodetype == TreeNode.NodeType.Allocation)
                                 {
                                     if (stacktrace[0] == filterInclude[j].functionId || filterInclude[j].functionId == -1)
+                                    {
                                         includeMatches++;
+                                    }
                                 }
+                            }
 
                             if (includeMatches > 0 || nIncludeAllocFilters == 0)
+                            {
                                 fFoundAllocInclude = true;
+                            }
 
                             //  Now see if the stack contains any exclude allocations
                             for (int j=0; j < filterExclude.Length; j++)
@@ -1902,9 +1957,11 @@ namespace CLRProfiler
         private void TabsSelectedIndexChanged(object sender, System.EventArgs e)
         {
             if (tabs.SelectedTab == null)
+            {
                 return;
+            }
 
-            foreach(Control c in tabs.SelectedTab.Controls)
+            foreach (Control c in tabs.SelectedTab.Controls)
             {
                 TreeListView v = null;
                 try
@@ -2121,7 +2178,9 @@ namespace CLRProfiler
             foreach (System.Windows.Forms.ColumnHeader h in stackView.Columns)
             {
                 if (!fFirstHeader)
+                {
                     sb.Append("\t");
+                }
 
                 fFirstHeader = false;
                 
@@ -2137,7 +2196,9 @@ namespace CLRProfiler
                 foreach (ListViewItem.ListViewSubItem sitm in itm.SubItems)
                 {
                     if (!fFirst)
+                    {
                         sb.Append("\t");
+                    }
 
                     fFirst = false;
                     
@@ -2162,7 +2223,9 @@ namespace CLRProfiler
         {
             //  Only sort if subtree is showing
             if (subtreeline == -1)
+            {
                 return;
+            }
 
             prevSortCol = sortCol;
             sortCol = e.Column;
@@ -2215,9 +2278,13 @@ namespace CLRProfiler
                 if (filterInclude[i].functionId > 0)
                 {
                     if (filterInclude[i].nodetype == TreeNode.NodeType.Call)
+                    {
                         strFn = MakeNameForFunction( filterInclude[i].functionId );
+                    }
                     else
+                    {
                         strFn = MakeNameForAllocation( filterInclude[i].functionId, 0);
+                    }
                 }
                 else
                 {
@@ -2231,9 +2298,13 @@ namespace CLRProfiler
                 if (filterExclude[i].functionId > 0)
                 {
                     if (filterExclude[i].nodetype == TreeNode.NodeType.Call)
+                    {
                         strFn = MakeNameForFunction( filterExclude[i].functionId );
+                    }
                     else
+                    {
                         strFn = MakeNameForAllocation( filterExclude[i].functionId, 0 );
+                    }
                 }
                 else
                 {

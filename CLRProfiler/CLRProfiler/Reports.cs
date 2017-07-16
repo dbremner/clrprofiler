@@ -39,15 +39,21 @@ namespace CLRProfiler
             int result = -1;
 
             if (marker == CommentRangeForm.startCommentString)
+            {
                 result = 0;
+            }
             else if (marker == CommentRangeForm.shutdownCommentString)
+            {
                 result = log.maxTickIndex;
+            }
             else
             {
                 for (int i = 0; i < log.commentEventList.count; i++)
                 {
                     if (log.commentEventList.eventString[i] == marker)
+                    {
                         result = log.commentEventList.eventTickIndex[i];
+                    }
                 }
             }
 
@@ -84,11 +90,17 @@ namespace CLRProfiler
             {
                 TypeDescriptor that = (TypeDescriptor)o;
                 if (that.size[0] < this.size[0])
+                {
                     return -1;
+                }
                 else if (that.size[0] > this.size[0])
+                {
                     return 1;
+                }
                 else
+                {
                     return 0;
+                }
             }
         }
 
@@ -111,14 +123,19 @@ namespace CLRProfiler
                 {
                     int count = typeSizeStacktraceToCount[i];
                     if (count == 0)
+                    {
                         continue;
+                    }
 
                     int[] stacktrace = histogram[h].readNewLog.stacktraceTable.IndexToStacktrace(i);
                     int typeIndex = stacktrace[0];
                     int size = stacktrace[1];
 
                     if (typeIndexToTypeDescriptor[typeIndex] == null)
+                    {
                         typeIndexToTypeDescriptor[typeIndex] = new TypeDescriptor(typeIndex, histogram.Length);
+                    }
+
                     typeIndexToTypeDescriptor[typeIndex].size[h] += size*count;
                     typeIndexToTypeDescriptor[typeIndex].count[h] += count;
 
@@ -131,26 +148,38 @@ namespace CLRProfiler
             for (int i = 0; i < typeIndexToTypeDescriptor.Length; i++)
             {
                 if (typeIndexToTypeDescriptor[i] == null)
+                {
                     continue;
+                }
+
                 al.Add(typeIndexToTypeDescriptor[i]);
             }
             al.Sort();
 
             Console.Write("Typename");
             for (int h = 0; h < histogram.Length; h++)
+            {
                 Console.Write(",Size({0}),#Instances({1})", timeMarker[h], timeMarker[h]);
+            }
+
             Console.WriteLine();
             
             Console.Write("Grand total");
             for (int h = 0; h < histogram.Length; h++)
+            {
                 Console.Write(",{0},{1}", totalSize[h], totalCount[h]);
+            }
+
             Console.WriteLine();
 
             foreach (TypeDescriptor td in al)
             {
                 Console.Write("{0}", histogram[0].readNewLog.typeName[td.typeIndex]);
                 for (int h = 0; h < histogram.Length; h++)
+                {
                     Console.Write(",{0},{1}", td.size[h], td.count[h]);
+                }
+
                 Console.WriteLine();
             }
         }
@@ -176,14 +205,19 @@ namespace CLRProfiler
                 {
                     int count = typeSizeStacktraceToCount[i];
                     if (count == 0)
+                    {
                         continue;
+                    }
 
                     int[] stacktrace = histogram[h].readNewLog.stacktraceTable.IndexToStacktrace(i);
                     int typeIndex = stacktrace[0];
                     int size = stacktrace[1];
 
                     if (typeIndexToTypeDescriptor[typeIndex] == null)
+                    {
                         typeIndexToTypeDescriptor[typeIndex] = new TypeDescriptor(typeIndex, histogram.Length);
+                    }
+
                     typeIndexToTypeDescriptor[typeIndex].size[h] += size * count;
                     typeIndexToTypeDescriptor[typeIndex].count[h] += count;
 
@@ -196,7 +230,10 @@ namespace CLRProfiler
             for (int i = 0; i < typeIndexToTypeDescriptor.Length; i++)
             {
                 if (typeIndexToTypeDescriptor[i] == null)
+                {
                     continue;
+                }
+
                 al.Add(typeIndexToTypeDescriptor[i]);
             }
             al.Sort();
@@ -253,10 +290,15 @@ namespace CLRProfiler
                     Console.WriteLine("<Instances>{0}</Instances>", diffCount);
                     Console.WriteLine("<Size>{0}</Size>", diffSize);
                     if (entireLogResult.requestedObjectGraph != null)
+                    {
                         entireLogResult.requestedObjectGraph.WriteVertexPaths(histogram[0].tickIndex, histogram[histogram.Length - 1].tickIndex, histogram[0].readNewLog.typeName[td.typeIndex]);
+                    }
                     else
                         if (entireLogResult.objectGraph != null)
-                            entireLogResult.objectGraph.WriteVertexPaths(histogram[0].tickIndex, histogram[histogram.Length - 1].tickIndex, histogram[0].readNewLog.typeName[td.typeIndex]);
+                    {
+                        entireLogResult.objectGraph.WriteVertexPaths(histogram[0].tickIndex, histogram[histogram.Length - 1].tickIndex, histogram[0].readNewLog.typeName[td.typeIndex]);
+                    }
+
                     Console.WriteLine("</LeakedObject>");
                 }
             }
@@ -279,10 +321,14 @@ namespace CLRProfiler
                 int endTickIndex = entireLogResult.sampleObjectTable.lastTickIndex;
 
                 if (startMarker != null)
+                {
                     startTickIndex = FindMarkerTickIndex(startMarker, log);
+                }
 
                 if (endMarker != null)
+                {
                     endTickIndex = FindMarkerTickIndex(endMarker, log);
+                }
 
                 long startPos = log.TickIndexToPos(startTickIndex);
                 long endPos = log.TickIndexToPos(endTickIndex);
@@ -295,13 +341,22 @@ namespace CLRProfiler
                     logResult.liveObjectTable = new LiveObjectTable(log);
                 }
                 else
+                {
                     logResult.allocatedHistogram = new Histogram(log);
+                }
+
                 log.ReadFile(startPos, endPos, logResult);
 
                 if (startMarker == null)
+                {
                     startMarker = CommentRangeForm.startCommentString;
+                }
+
                 if (endMarker == null)
+                {
                     endMarker = CommentRangeForm.shutdownCommentString;
+                }
+
                 Console.WriteLine("{0} summary for {1} between {2} ({3} secs) and {4} ({5} secs)",
                                     relocationReport ? "Relocation" : "Allocation",
                                                     logFileName, 
@@ -311,9 +366,11 @@ namespace CLRProfiler
                                                                                         log.TickIndexToTime(endTickIndex));
             }
             else
+            {
                 Console.WriteLine("{0} summary for {1}",
                                     relocationReport ? "Relocation" : "Allocation",
                                                     logFileName);
+            }
 
             // now we are ready to produce the allocation report from the allocation histogram
             WriteReport(relocationReport ? logResult.relocatedHistogram : logResult.allocatedHistogram, "");
@@ -352,7 +409,9 @@ namespace CLRProfiler
                 logResult.liveObjectTable.GetNextObject(o.id + o.size, ulong.MaxValue, out o))
             {
                 if (startTickIndex <= o.allocTickIndex && o.allocTickIndex < endTickIndex)
+                {
                     histogram.AddObject(o.typeSizeStacktraceIndex, 1);
+                }
             }
 
             return histogram;
@@ -366,9 +425,15 @@ namespace CLRProfiler
             log.ReadFile(0, long.MaxValue, entireLogResult);
 
             if (startMarker == null)
+            {
                 startMarker = CommentRangeForm.startCommentString;
+            }
+
             if (endMarker == null)
+            {
                 endMarker = CommentRangeForm.shutdownCommentString;
+            }
+
             int startTickIndex = FindMarkerTickIndex(startMarker, log);
             int endTickIndex = FindMarkerTickIndex(endMarker, log);
 
@@ -389,7 +454,10 @@ namespace CLRProfiler
             for (int i = 0; i < timeMarker.Length; i++)
             {
                 if (timeMarker[i] == null)
+                {
                     timeMarker[i] = CommentRangeForm.shutdownCommentString;
+                }
+
                 histogram[i] = GetSurvivorHistogram(log, entireLogResult, startTickIndex, endTickIndex, timeMarker[i]);
                 int timeTickIndex = FindMarkerTickIndex(timeMarker[i], log);
                 Console.Write("{0} {1} ({2} secs) ", separator, timeMarker[i], log.TickIndexToTime(timeTickIndex));
@@ -420,11 +488,17 @@ namespace CLRProfiler
             {
                 DiffTypeDescriptor that = (DiffTypeDescriptor)o;
                 if (that.diffSize < this.diffSize)
+                {
                     return -1;
+                }
                 else if (that.diffSize > this.diffSize)
+                {
                     return 1;
+                }
                 else
+                {
                     return 0;
+                }
             }
         }
 
@@ -434,14 +508,19 @@ namespace CLRProfiler
             {
                 int count = histogram.typeSizeStacktraceToCount[i];
                 if (count == 0)
+                {
                     continue;
+                }
 
                 int[] stacktrace = histogram.readNewLog.stacktraceTable.IndexToStacktrace(i);
                 int typeIndex = stacktrace[0];
                 int size = stacktrace[1];
 
                 if (typeIndexToDiffTypeDescriptor[typeIndex] == null)
+                {
                     typeIndexToDiffTypeDescriptor[typeIndex] = new DiffTypeDescriptor(typeIndex);
+                }
+
                 typeIndexToDiffTypeDescriptor[typeIndex].bSize += size*count;
                 typeIndexToDiffTypeDescriptor[typeIndex].diffSize += size*count;
                 typeIndexToDiffTypeDescriptor[typeIndex].bCount += count;
@@ -504,9 +583,15 @@ namespace CLRProfiler
             log.ReadFile(0, long.MaxValue, entireLogResult);
 
             if (startMarker == null)
+            {
                 startMarker = CommentRangeForm.startCommentString;
+            }
+
             if (endMarker == null)
+            {
                 endMarker = CommentRangeForm.shutdownCommentString;
+            }
+
             int startTickIndex = FindMarkerTickIndex(startMarker, log);
             int endTickIndex = FindMarkerTickIndex(endMarker, log);
 
@@ -532,9 +617,14 @@ namespace CLRProfiler
         internal static void LeakReport(string logFileName, string startMarker, string endMarker)
         {
             if (startMarker == null)
+            {
                 startMarker = "1";
+            }
+
             if (endMarker == null)
+            {
                 endMarker = "2";
+            }
 
             int startIndex;
             int endIndex;
@@ -582,9 +672,13 @@ namespace CLRProfiler
                 timeMarkers[i] = string.Format("Heap dump #{0}", i + 1);
             }
             if (heapDumpHistograms.Length > 0)
+            {
                 WriteDiffReport(heapDumpHistograms, timeMarkers, entireLogResult);
+            }
             else
+            {
                 Console.WriteLine("***** No heap dumps found *****");
+            }
         }
 
         internal static void HeapDumpReport(string logFileName, string startMarker, string endMarker)
@@ -601,28 +695,41 @@ namespace CLRProfiler
                 int endTickIndex = entireLogResult.sampleObjectTable.lastTickIndex;
 
                 if (startMarker != null)
+                {
                     startTickIndex = FindMarkerTickIndex(startMarker, log);
+                }
 
                 if (endMarker != null)
+                {
                     endTickIndex = FindMarkerTickIndex(endMarker, log);
+                }
 
                 int startIndex = 0;
                 int endIndex = 0;
                 for (int i = 0; i < log.heapDumpEventList.count; i++)
                 {
                     if (log.heapDumpEventList.eventTickIndex[i] < startTickIndex)
+                    {
                         startIndex = i + 1;
+                    }
+
                     if (log.heapDumpEventList.eventTickIndex[i] < endTickIndex)
+                    {
                         endIndex = i + 1;
+                    }
                 }
 
                 if (endMarker == null)
                 {
                     Console.WriteLine("Heap dump for {0} after {1}", logFileName, startMarker);
                     if (startIndex < log.heapDumpEventList.count)
+                    {
                         endIndex = startIndex + 1;
+                    }
                     else
+                    {
                         endIndex = startIndex;
+                    }
                 }
                 else
                 {
@@ -652,9 +759,13 @@ namespace CLRProfiler
                 timeMarkers[i] = string.Format("Heap dump #{0}", i);
             }
             if (heapDumpHistograms.Length > 0)
+            {
                 WriteReport(heapDumpHistograms, timeMarkers);
+            }
             else
+            {
                 Console.WriteLine("***** No heap dumps found *****");
+            }
         }
 
         internal static void FinalizerReport(bool criticalFinalizers, string logFileName, string startMarker, string endMarker)
@@ -672,10 +783,14 @@ namespace CLRProfiler
                 int endTickIndex = entireLogResult.sampleObjectTable.lastTickIndex;
 
                 if (startMarker != null)
+                {
                     startTickIndex = FindMarkerTickIndex(startMarker, log);
+                }
 
                 if (endMarker != null)
+                {
                     endTickIndex = FindMarkerTickIndex(endMarker, log);
+                }
 
                 long startPos = log.TickIndexToPos(startTickIndex);
                 long endPos = log.TickIndexToPos(endTickIndex);
@@ -689,9 +804,15 @@ namespace CLRProfiler
                 log.ReadFile(startPos, endPos, logResult);
 
                 if (startMarker == null)
+                {
                     startMarker = CommentRangeForm.startCommentString;
+                }
+
                 if (endMarker == null)
+                {
                     endMarker = CommentRangeForm.shutdownCommentString;
+                }
+
                 Console.WriteLine("{0} summary for {1} Objects between {2} ({3} secs) and {4} ({5} secs)",
                                     criticalFinalizers ? "Critical Finalized" : "Finalized",
                                                     logFileName, 
@@ -701,9 +822,11 @@ namespace CLRProfiler
                                                                                         log.TickIndexToTime(endTickIndex));
             }
             else
+            {
                 Console.WriteLine("{0} summary for {1}",
                                     criticalFinalizers ? "Critical Finalized" : "Finalized",
                                                     logFileName);
+            }
 
             // now we are ready to produce the allocation report from the allocation histogram
             WriteReport(criticalFinalizers ? logResult.criticalFinalizerHistogram : logResult.finalizerHistogram, "");
@@ -719,7 +842,9 @@ namespace CLRProfiler
             Console.WriteLine("Comments logged in {0}", logFileName);
             Console.WriteLine("Time (seconds),Comment");
             for (int i = 0; i < log.commentEventList.count; i++)
+            {
                 Console.WriteLine("{1:f3},{0}", log.commentEventList.eventString[i], log.TickIndexToTime(log.commentEventList.eventTickIndex[i]));
+            }
         }
 	}
 }

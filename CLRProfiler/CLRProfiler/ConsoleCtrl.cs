@@ -32,7 +32,10 @@ namespace CLRProfiler
         private bool Handler(ConsoleEvent consoleEvent)
         {
             if (ControlEvent != null)
+            {
                 return ControlEvent(consoleEvent);
+            }
+
             return false;
         }
 

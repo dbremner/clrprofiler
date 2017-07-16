@@ -34,7 +34,10 @@ namespace CLRProfiler
         internal int MapTypeSizeStacktraceId(int id)
         {
             if (mappingTable != null)
+            {
                 return mappingTable[id];
+            }
+
             return id;
         }
 
@@ -53,14 +56,19 @@ namespace CLRProfiler
         {
             mappingTable = new int[stacktraceTable.Length];
             for (int i = 0; i < mappingTable.Length; i++)
+            {
                 mappingTable[i] = i;
+            }
         }
 
         void GrowMappingTable()
         {
             int[] newMappingTable = new int[mappingTable.Length*2];
             for (int i = 0; i < mappingTable.Length; i++)
+            {
                 newMappingTable[i] = mappingTable[i];
+            }
+
             mappingTable = newMappingTable;
         }
 
@@ -68,27 +76,40 @@ namespace CLRProfiler
         {
             int oldId = -1;
             if (isAllocStack && length == 2)
+            {
                 oldId = LookupAlloc(stack[start], stack[start+1]);
+            }
 
             if (oldId >= 0)
             {
                 if (mappingTable == null)
+                {
                     CreateMappingTable();
+                }
+
                 while (mappingTable.Length <= id)
+                {
                     GrowMappingTable();
+                }
+
                 mappingTable[id] = oldId;
             }
             else
             {
                 int[] stacktrace = new int[length];
                 for (int i = 0; i < stacktrace.Length; i++)
+                {
                     stacktrace[i] = stack[start++];
+                }
 
                 if (mappingTable != null)
                 {
                     int newId = maxID + 1;
                     while (mappingTable.Length <= id)
+                    {
                         GrowMappingTable();
+                    }
+
                     mappingTable[id] = newId;
                     id = newId;
                 }
@@ -102,7 +123,10 @@ namespace CLRProfiler
                 {
                     int[][] newStacktraceTable = new int[stacktraceTable.Length*2][];
                     for (int i = 0; i < stacktraceTable.Length; i++)
+                    {
                         newStacktraceTable[i] = stacktraceTable[i];
+                    }
+
                     stacktraceTable = newStacktraceTable;
                 }
 
@@ -119,9 +143,15 @@ namespace CLRProfiler
         {
             int id = LookupAlloc(typeId, size);
             if (id > 0)
+            {
                 return id;
+            }
+
             if (mappingTable == null)
+            {
                 CreateMappingTable();
+            }
+
             id = ++maxID;
 
             EnterAlloc(id, typeId, size);
@@ -130,7 +160,10 @@ namespace CLRProfiler
             {
                 int[][] newStacktraceTable = new int[stacktraceTable.Length * 2][];
                 for (int i = 0; i < stacktraceTable.Length; i++)
+                {
                     newStacktraceTable[i] = stacktraceTable[i];
+                }
+
                 stacktraceTable = newStacktraceTable;
             }
 
@@ -145,7 +178,10 @@ namespace CLRProfiler
         internal int[] IndexToStacktrace(int index)
         {
             if (index < 0 || index >= stacktraceTable.Length || stacktraceTable[index] == null)
+            {
                 Console.WriteLine("bad index {0}", index);
+            }
+
             return stacktraceTable[index];
         }
 

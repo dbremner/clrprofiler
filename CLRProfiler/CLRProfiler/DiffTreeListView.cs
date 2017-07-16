@@ -471,8 +471,11 @@ namespace CLRProfiler
 			try
 			{
 				if(File.Exists(fileName))
-					File.Delete(fileName);
-				string path = Path.GetDirectoryName(fileName);
+                {
+                    File.Delete(fileName);
+                }
+
+                string path = Path.GetDirectoryName(fileName);
 			
 				// Determine whether the directory exists.
 				if (!Directory.Exists(path)) 

@@ -44,7 +44,9 @@ namespace CLRProfiler
             if (!this.disposed)
             {
                 if (eventHandle != IntPtr.Zero)
+                {
                     CloseHandle(eventHandle);
+                }
 
                 eventHandle = IntPtr.Zero;
 
@@ -77,7 +79,9 @@ namespace CLRProfiler
             sa.nLength = 12;
             sa.bInheritHandle = 0;
             if (!ConvertStringSecurityDescriptorToSecurityDescriptor("D: (A;OICI;GRGWGXSDWDWO;;;AU)", 1, out sa.lpSecurityDescriptor, IntPtr.Zero))
+            {
                 throw new Exception("ConvertStringSecurityDescriptorToSecurityDescriptor returned error");
+            }
 
             if (createEvent)
             {
@@ -87,7 +91,9 @@ namespace CLRProfiler
                 {
                     eventHandle = OpenEvent(0x00100002, false, eventName);
                     if (eventHandle == IntPtr.Zero)
+                    {
                         throw new Exception(string.Format("Couldn't create or open event {0}", eventName));
+                    }
                 }
             }
             else
@@ -104,7 +110,9 @@ namespace CLRProfiler
         public bool Reset()
         {
             if (eventHandle == IntPtr.Zero)
+            {
                 throw new Exception("Event handle is not valid");
+            }
 
             return ResetEvent(eventHandle);
         }
@@ -112,7 +120,9 @@ namespace CLRProfiler
         public bool Set()
         {
             if (eventHandle == IntPtr.Zero)
+            {
                 throw new Exception("Event handle is not valid");
+            }
 
             return SetEvent(eventHandle);
         }
@@ -120,7 +130,9 @@ namespace CLRProfiler
         public bool Wait(int timeOut)
         {
             if (eventHandle == IntPtr.Zero)
+            {
                 throw new Exception("Event handle is not valid");
+            }
 
             return WaitForSingleObject(eventHandle, timeOut) == 0;
         }

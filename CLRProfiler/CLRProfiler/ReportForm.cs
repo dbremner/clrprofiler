@@ -138,8 +138,11 @@ namespace CLRProfiler
 						_allocDiff.diffLogFileName = _allocDiff.diffLogFileName.Substring(0,at);
 						_allocDiff.diffLogFileName += ".err";
 						if(File.Exists(_allocDiff.diffLogFileName))
-							File.Delete(_allocDiff.diffLogFileName);
-						FileStream fs = new FileStream(_allocDiff.diffLogFileName,
+                        {
+                            File.Delete(_allocDiff.diffLogFileName);
+                        }
+
+                        FileStream fs = new FileStream(_allocDiff.diffLogFileName,
 							FileMode.CreateNew, FileAccess.Write, FileShare.None);
 						StreamWriter sw = new StreamWriter(fs);
 						sw.WriteLine("Report profiler Error message: \n{0}\n",  e.Message);
@@ -179,8 +182,11 @@ namespace CLRProfiler
 						}
 						
 						if(File.Exists(_allocDiff.diffLogFileName))
-							File.Delete(_allocDiff.diffLogFileName);
-						FileStream fs = new FileStream(_allocDiff.diffLogFileName,
+                        {
+                            File.Delete(_allocDiff.diffLogFileName);
+                        }
+
+                        FileStream fs = new FileStream(_allocDiff.diffLogFileName,
 							FileMode.CreateNew, FileAccess.Write, FileShare.None);
 						StreamWriter sw = new StreamWriter(fs);
 						sw.Write(sb);
@@ -550,8 +556,11 @@ namespace CLRProfiler
 		private void ViewSelectedInfo(DataGrid dg)
 		{
 			if( dg.DataMember == "")
-				return;
-			dvm = new DataViewManager(_allocDiff.ds);
+            {
+                return;
+            }
+
+            dvm = new DataViewManager(_allocDiff.ds);
 			dvm_caller = new DataViewManager(_allocDiff.ds);
 			dvm_callee = new DataViewManager(_allocDiff.ds);
 			
@@ -696,8 +705,10 @@ namespace CLRProfiler
 							depSum.Add(depth, diffincl);
 						}
 						if(diffincl == root.diffIncl)
-							break;
-					}
+                        {
+                            break;
+                        }
+                    }
 					
 					if(sum != root.diffIncl && diffincl == root.diffIncl )
 					{

@@ -120,7 +120,9 @@ namespace CLRProfiler
         {
             i++;
             if (arguments.Length > i)
+            {
                 return arguments[i];
+            }
             else
             {
                 CommandLineError("Option {0} expects an argument", arguments[i - 1]);
@@ -217,7 +219,9 @@ namespace CLRProfiler
                         }
 
                         if (!InitWindowsStoreAppProfileeInfoIfNecessary(pid))
+                        {
                             return;
+                        }
 
                         if (!isProfilerLoaded(pid))
                         {
@@ -248,7 +252,9 @@ namespace CLRProfiler
                         }
 
                         if (!InitWindowsStoreAppProfileeInfoIfNecessary(pid))
+                        {
                             return;
+                        }
 
                         if (!isProfilerLoaded(pid))
                         {
@@ -288,11 +294,17 @@ namespace CLRProfiler
                         string version = FetchArgument(arguments, ref i);
 
                         if (String.Compare(version, "V4DesktopCLR", true) == 0)
+                        {
                             targetCLRVersion = CLRSKU.V4DesktopCLR;
+                        }
                         else if (String.Compare(version, "V4CoreCLR", true) == 0)
+                        {
                             targetCLRVersion = CLRSKU.V4CoreCLR;
+                        }
                         else if (String.Compare(version, "V2DesktopCLR", true) == 0)
+                        {
                             targetCLRVersion = CLRSKU.V2DesktopCLR;
+                        }
                         else
                         {
                             CommandLineError("No matched target CLR version.");
@@ -311,7 +323,9 @@ namespace CLRProfiler
                         {
                             profilingURL = FetchArgument(arguments, ref i);
                             if (profilingURL != null)
+                            {
                                 onlyCreateLog = true;
+                            }
                         }
                         break;
 
@@ -344,7 +358,10 @@ namespace CLRProfiler
                     case "/p":
                         processFileName = FetchArgument(arguments, ref i);
                         if (processFileName != null)
+                        {
                             onlyCreateLog = true;
+                        }
+
                         break;
 
                     case "-diff":
@@ -433,7 +450,10 @@ namespace CLRProfiler
                         {
                             string[] newTimeMarker = new String[timeMarker.Length + 1];
                             for (int j = 0; j < timeMarker.Length; j++)
+                            {
                                 newTimeMarker[j] = timeMarker[j];
+                            }
+
                             newTimeMarker[timeMarker.Length] = FetchArgument(arguments, ref i);
                             timeMarker = newTimeMarker;
                         }
@@ -459,11 +479,18 @@ namespace CLRProfiler
 
                     default:
                         if (arguments[i][0] == '-' || arguments[i][0] == '/')
+                        {
                             CommandLineError("Unrecognized option {0}", arguments[i]);
+                        }
                         else if (File.Exists(arguments[i]))
+                        {
                             logFileName = arguments[i];
+                        }
                         else
+                        {
                             CommandLineError("Log file {0} not found", arguments[i]);
+                        }
+
                         break;
                 }
             }
@@ -495,9 +522,13 @@ namespace CLRProfiler
             else if (reportKind != ReportKind.NoReport)
             {
                 if (logFileName == "")
+                {
                     CommandLineError("Need -l logFileName for report");
+                }
                 else if (!File.Exists(logFileName))
+                {
                     CommandLineError("Log file {0} not found", logFileName);
+                }
                 else
                 {
                     switch (reportKind)
@@ -577,7 +608,9 @@ namespace CLRProfiler
                     font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(204))); ;
 
                     if (logFileName != "" && File.Exists(logFileName))
+                    {
                         LoadLogFile(logFileName);
+                    }
 
                     EnableDisableViewMenuItems();
                 }
@@ -613,7 +646,9 @@ namespace CLRProfiler
                         }
 
                         while (profiledProcess != null && !ProfiledProcessHasExited())
+                        {
                             Thread.Sleep(500);
+                        }
                     }
                     catch (Exception e)
                     {
@@ -728,7 +763,9 @@ namespace CLRProfiler
         private bool ProfiledProcessHasExited()
         {
             if (profiledProcess == null)
+            {
                 return true;
+            }
 
             try
             {
@@ -752,7 +789,9 @@ namespace CLRProfiler
             MainForm f = new MainForm(arguments);
 
             if (f.exitProgram)
+            {
                 return;
+            }
 
             if (!f.viewdiff && f.reportKind == ReportKind.NoReport && f.processFileName == null)
             {
@@ -781,7 +820,10 @@ namespace CLRProfiler
         {
             MainForm instance = MainForm.instance;
             if (instance == null || (instance.CheckProcessTerminate() && instance.CheckFileSave()))
+            {
                 Application.Exit();
+            }
+
             return true;
         }
 
@@ -789,7 +831,10 @@ namespace CLRProfiler
         {
             string fileName = log.fileName;
             if (exeName != null)
+            {
                 fileName = exeName;
+            }
+
             Graph graph = null;
             string title = "";
             switch (graphType)
@@ -949,7 +994,9 @@ namespace CLRProfiler
         private void fileOpenMenuItem_Click(object sender, System.EventArgs e)
         {
             if (!CheckProcessTerminate() || !CheckFileSave())
+            {
                 return;
+            }
 
             saveAsMenuItem.Enabled = false;
 
@@ -1003,7 +1050,9 @@ namespace CLRProfiler
                     saveAsMenuItem.Enabled = false;
                 }
                 if (log != null)
+                {
                     log.fileName = saveFileDialog.FileName;
+                }
             }
         }
 
@@ -1086,7 +1135,9 @@ namespace CLRProfiler
         private void exitMenuItem_Click(object sender, System.EventArgs e)
         {
             if (CheckProcessTerminate() && CheckFileSave())
+            {
                 Application.Exit();
+            }
         }
 
         private void fontMenuItem_Click(object sender, System.EventArgs e)
@@ -1100,7 +1151,9 @@ namespace CLRProfiler
         private void profileApplicationMenuItem_Click(object sender, System.EventArgs e)
         {
             if (!CheckProcessTerminate() || !CheckFileSave())
+            {
                 return;
+            }
 
             openFileDialog.FileName = "*.exe";
             openFileDialog.Filter = "Applications | *.exe";
@@ -1123,9 +1176,14 @@ namespace CLRProfiler
             Text = "Stopping IIS ";
             ProcessStartInfo processStartInfo = new ProcessStartInfo("cmd.exe");
             if (Environment.OSVersion.Version.Major >= 6/*Vista*/)
+            {
                 processStartInfo.Arguments = "/c net stop was /y";
+            }
             else
+            {
                 processStartInfo.Arguments = "/c net stop iisadmin /y";
+            }
+
             Process process = Process.Start(processStartInfo);
             while (!process.HasExited)
             {
@@ -1138,7 +1196,9 @@ namespace CLRProfiler
                 Text += string.Format(" Error {0} occurred", process.ExitCode);
             }
             else
+            {
                 Text = "IIS stopped";
+            }
         }
 
         [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands", Justification = "CLRProfiler.exe is a stand-alone tool, not a library.")]
@@ -1181,7 +1241,9 @@ namespace CLRProfiler
                 Text += string.Format(" Error {0} occurred", process.ExitCode);
             }
             else
+            {
                 Text = serviceName + " stopped";
+            }
         }
 
         [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands", Justification = "CLRProfiler.exe is a stand-alone tool, not a library.")]
@@ -1198,7 +1260,10 @@ namespace CLRProfiler
         {
             char* e;
             for (e = s; *e != '\0'; e++)
+            {
                 ;
+            }
+
             return (int)(e - s);
         }
 
@@ -1210,18 +1275,29 @@ namespace CLRProfiler
             {
                 servicesProcesses = Process.GetProcessesByName("services.exe");
                 if (servicesProcesses == null || servicesProcesses.Length != 1)
+                {
                     return new string[0];
+                }
             }
             Process servicesProcess = servicesProcesses[0];
             IntPtr processHandle = OpenProcess(0x20400, false, servicesProcess.Id);
             if (processHandle == IntPtr.Zero)
+            {
                 return new string[0];
+            }
+
             IntPtr tokenHandle = IntPtr.Zero;
             if (!OpenProcessToken(processHandle, 0x20008, ref tokenHandle))
+            {
                 return new string[0];
+            }
+
             IntPtr environmentPtr = IntPtr.Zero;
             if (!CreateEnvironmentBlock(out environmentPtr, tokenHandle, false))
+            {
                 return new String[0];
+            }
+
             unsafe
             {
                 string[] envStrings = null;
@@ -1236,14 +1312,22 @@ namespace CLRProfiler
                     {
                         int len = wcslen(env);
                         if (len == 0)
+                        {
                             break;
+                        }
+
                         if (envStrings != null)
+                        {
                             envStrings[count] = new String(env);
+                        }
+
                         count++;
                         env += len + 1;
                     }
                     if (envStrings == null)
+                    {
                         envStrings = new string[count];
+                    }
                 }
                 return envStrings;
             }
@@ -1254,9 +1338,15 @@ namespace CLRProfiler
             string[] c = new string[a.Length + b.Length];
             int i = 0;
             foreach (string s in a)
+            {
                 c[i++] = s;
+            }
+
             foreach (string s in b)
+            {
                 c[i++] = s;
+            }
+
             return c;
         }
 
@@ -1271,14 +1361,18 @@ namespace CLRProfiler
         {
             Microsoft.Win32.RegistryKey key = GetServiceKey(serviceName);
             if (key != null)
+            {
                 key.SetValue("Environment", environment);
+            }
         }
 
         private void DeleteEnvironmentVariables(string serviceName)
         {
             Microsoft.Win32.RegistryKey key = GetServiceKey(serviceName);
             if (key != null)
+            {
                 key.DeleteValue("Environment");
+            }
         }
 
         private string EnvKey(string envVariable)
@@ -1379,7 +1473,10 @@ namespace CLRProfiler
         {
             Microsoft.Win32.RegistryKey key = GetServiceKey(serviceName);
             if (key != null)
+            {
                 return key.GetValue("ObjectName") as string;
+            }
+
             return null;
         }
 
@@ -1418,9 +1515,13 @@ namespace CLRProfiler
             for (int i = 0; i < env.Length; i++)
             {
                 if (env[i].StartsWith("TEMP="))
+                {
                     env[i] = "TEMP=" + newTempDir;
+                }
                 else if (env[i].StartsWith("TMP="))
+                {
                     env[i] = "TMP=" + newTempDir;
+                }
             }
             return env;
         }
@@ -1429,7 +1530,9 @@ namespace CLRProfiler
         private void ProfileService()
         {
             if (!CheckProcessTerminate() || !CheckFileSave())
+            {
                 return;
+            }
 
             if (targetv2DesktopCLR())
             {
@@ -1448,7 +1551,10 @@ namespace CLRProfiler
             // assuming we can find out the account SID
             string serviceAccountName = GetServiceAccountName(serviceName);
             if (serviceAccountName.StartsWith(@".\"))
+            {
                 serviceAccountName = Environment.MachineName + serviceAccountName.Substring(1);
+            }
+
             if (serviceAccountName != null && serviceAccountName != "LocalSystem")
             {
                 serviceAccountSid = LookupAccountSid(serviceAccountName);
@@ -1513,11 +1619,17 @@ namespace CLRProfiler
                     {
                         string userName = userNameAttribute.InnerText;
                         if (userName == "machine")
+                        {
                             return "ASPNET";
+                        }
                         else if (userName == "SYSTEM")
+                        {
                             return null;
+                        }
                         else
+                        {
                             return userName;
+                        }
                     }
                 }
             }
@@ -1532,7 +1644,9 @@ namespace CLRProfiler
         private void profileASP_NETmenuItem_Click(object sender, System.EventArgs e)
         {
             if (!CheckProcessTerminate() || !CheckFileSave())
+            {
                 return;
+            }
 
             if (targetv2DesktopCLR())
             {
@@ -1559,7 +1673,9 @@ namespace CLRProfiler
             {
                 asp_netAccountSid = LookupAccountSid(asp_netAccountName);
                 if (asp_netAccountSid != null)
+                {
                     SetAccountEnvironment(asp_netAccountSid, profilerEnvironment);
+                }
             }
 
             if (StartIIS())
@@ -1588,7 +1704,9 @@ namespace CLRProfiler
             DeleteEnvironmentVariables("WAS");
 
             if (asp_netAccountSid != null)
+            {
                 ResetAccountEnvironment(asp_netAccountSid, profilerEnvironment);
+            }
 
             serviceName = null;
         }
@@ -1679,15 +1797,24 @@ namespace CLRProfiler
             sa.nLength = 12;
             sa.bInheritHandle = 0;
             if (!ConvertStringSecurityDescriptorToSecurityDescriptor("D: (A;OICI;GRGW;;;AU)", 1, out sa.lpSecurityDescriptor, IntPtr.Zero))
+            {
                 return false;
+            }
+
             uint flags = 4 | 2 | 0;
 
             if (!blockingPipe)
+            {
                 flags |= 1;
+            }
+
             pipeHandle = CreateNamedPipe(pipeName, 3, flags, 1, 512, 512, 1000, ref sa);
             LocalFree(sa.lpSecurityDescriptor);
             if (pipeHandle.IsInvalid)
+            {
                 return false;
+            }
+
             pipe = new FileStream(pipeHandle, FileAccess.ReadWrite, 512, false);
             return true;
         }
@@ -1758,7 +1885,9 @@ namespace CLRProfiler
         private string GetLogDir()
         {
             if (logDirectory != null)
+            {
                 return logDirectory;
+            }
 
             string tempDir = null;
             string winDir = Environment.GetEnvironmentVariable("WINDIR");
@@ -1766,7 +1895,9 @@ namespace CLRProfiler
             {
                 tempDir = winDir + @"\TEMP";
                 if (!Directory.Exists(tempDir))
+                {
                     tempDir = null;
+                }
             }
             if (tempDir == null)
             {
@@ -1775,7 +1906,9 @@ namespace CLRProfiler
                 {
                     tempDir = Environment.GetEnvironmentVariable("TMP");
                     if (tempDir == null)
+                    {
                         tempDir = @"C:\TEMP";
+                    }
                 }
             }
             return tempDir;
@@ -1805,7 +1938,9 @@ namespace CLRProfiler
         private bool VerifyCorrectBitness(Process process)
         {
             if (process == null)
+            {
                 return true;
+            }
 
             if (!Environment.Is64BitOperatingSystem)
             {
@@ -1815,13 +1950,18 @@ namespace CLRProfiler
 
             int areYouWow;
             if (IsWow64Process(process.Handle, out areYouWow) == 0)
+            {
                 return true;
+            }
+
             bool areYou64 = (areYouWow == 0);
 
             bool amI64 = Environment.Is64BitProcess;
 
             if (amI64 == areYou64)
+            {
                 return true;
+            }
 
             ShowErrorMessage(
                 string.Format(
@@ -1847,7 +1987,9 @@ namespace CLRProfiler
         private int WaitForWindowsStoreAppProcessToConnect(uint pid, string text, bool attachMode, uint result)
         {
             if (!VerifyCorrectBitness(Process.GetProcessById((int) pid)))
+            {
                 return -1;
+            }
 
             WaitingForConnectionForm waitingForConnectionForm = null;
 
@@ -1861,7 +2003,10 @@ namespace CLRProfiler
                 else
                 {
                     if (waitingForConnectionForm == null)
+                    {
                         waitingForConnectionForm = new WaitingForConnectionForm();
+                    }
+
                     waitingForConnectionForm.setMessage(text);
                     waitingForConnectionForm.Visible = true;
                 }
@@ -1886,7 +2031,9 @@ namespace CLRProfiler
             }
 
             if (waitingForConnectionForm != null)
+            {
                 waitingForConnectionForm.Visible = false;
+            }
 
             CreateEvents((int)pid);
             logFileName = logFilePath;
@@ -1901,10 +2048,14 @@ namespace CLRProfiler
                 EnableDisableViewMenuItems();
                 EnableDisableLaunchControls(false);
                 if (!allocationsCheckBox.Checked && callsCheckBox.Checked)
+                {
                     showHeapButton.Enabled = false;
+                }
                 else
+                {
                     showHeapButton.Enabled = true;
-                
+                }
+
                 killApplicationButton.Enabled = true;
             }
             logFileStartOffset = 0;
@@ -1931,7 +2082,9 @@ namespace CLRProfiler
             if (fProfiledProcessInitialized)
             {
                 if (!VerifyCorrectBitness(profiledProcess))
+                {
                     return -1;
+                }
             }
 
 
@@ -1959,7 +2112,10 @@ namespace CLRProfiler
                 else
                 {
                     if (waitingForConnectionForm == null)
+                    {
                         waitingForConnectionForm = new WaitingForConnectionForm();
+                    }
+
                     waitingForConnectionForm.setMessage(text);
                     waitingForConnectionForm.Visible = true;
                 }
@@ -1987,7 +2143,9 @@ namespace CLRProfiler
                 //Read 9 bytes from handshaking pipe
                 //means the profielr was initialized successfully
                 if (handshakingReadBytes == 9)
+                {
                     break;
+                }
 
                 Application.DoEvents();
                 //  (2)User canceled
@@ -2018,7 +2176,9 @@ namespace CLRProfiler
                 {
                     char[] charBuffer = new char[loggingReadBytes];
                     for (int i = 0; i < loggingReadBytes; i++)
+                    {
                         charBuffer[i] = Convert.ToChar(loggingBuffer[i]);
+                    }
 
                     string message = new String(charBuffer, 0, loggingReadBytes);
 
@@ -2069,15 +2229,23 @@ namespace CLRProfiler
             }
 
             if (waitingForConnectionForm != null)
+            {
                 waitingForConnectionForm.Visible = false;
+            }
 
             if (pid == -1)
+            {
                 return pid;
+            }
+
             if (handshakingReadBytes == 9)
             {
                 char[] charBuffer = new char[9];
                 for (int i = 0; i < handshakingBuffer.Length; i++)
+                {
                     charBuffer[i] = Convert.ToChar(handshakingBuffer[i]);
+                }
+
                 pid = Int32.Parse(new String(charBuffer, 0, 8), NumberStyles.HexNumber);
 
                 CreateEvents(pid);
@@ -2085,7 +2253,9 @@ namespace CLRProfiler
                 string fileName = getLogFileName(pid);
                 byte[] fileNameBuffer = new Byte[fileName.Length + 1];
                 for (int i = 0; i < fileName.Length; i++)
+                {
                     fileNameBuffer[i] = (byte)fileName[i];
+                }
 
                 fileNameBuffer[fileName.Length] = 0;
                 handshakingPipe.Write(fileNameBuffer, 0, fileNameBuffer.Length);
@@ -2129,10 +2299,14 @@ namespace CLRProfiler
                 EnableDisableLaunchControls(false);
 
                 if (!allocationsCheckBox.Checked && callsCheckBox.Checked)
+                {
                     showHeapButton.Enabled = false;
+                }
                 else
+                {
                     showHeapButton.Enabled = true;
-                
+                }
+
                 killApplicationButton.Enabled = true;
                 detachProcessMenuItem.Enabled = false;
             }
@@ -2146,7 +2320,9 @@ namespace CLRProfiler
         private void startWindowsStoreAppButton_Click(object sender, EventArgs e)
         {
             if (!CheckProcessTerminate() || !CheckFileSave())
+            {
                 return;
+            }
 
             // Win 8 check
             WindowsStoreAppHelperWrapper.Init();
@@ -2165,14 +2341,18 @@ namespace CLRProfiler
 
             // Ensure WindowsStoreApp packages will have access to CLRProfiler binaries
             if (!WindowsStoreAppHelperWrapper.IsWindowsStoreAppAccessEnabledForProfiler(Path.GetDirectoryName(Application.ExecutablePath)))
+            {
                 return;
+            }
 
             // User picks the package
-            
+
             WindowsStoreAppChooserForm windowsStoreAppAppChooserForm = new WindowsStoreAppChooserForm();
             DialogResult result = windowsStoreAppAppChooserForm.ShowDialog();
             if (result == DialogResult.Cancel)
+            {
                 return;
+            }
 
             string packageFullName = windowsStoreAppAppChooserForm.SelectedPackageFullName;
             string appUserModelId = windowsStoreAppAppChooserForm.SelectedAppUserModelId;
@@ -2194,12 +2374,16 @@ namespace CLRProfiler
             // There was an error spawning the WindowsStoreApp process; an error message should
             // already have been displayed.
             if ((int)pid == -1)
+            {
                 return;
+            }
 
             profiledProcess = Process.GetProcessById((int) pid);
 
             if (WaitForWindowsStoreAppProcessToConnect(pid, "Waiting for Windows Store application to start common language runtime") <= 0)
+            {
                 ClearProfiledProcessInfo();
+            }
         }
 
 
@@ -2207,9 +2391,10 @@ namespace CLRProfiler
         private void startApplicationButton_Click(object sender, System.EventArgs e)
         {
             if (!CheckProcessTerminate() || !CheckFileSave())
+            {
                 return;
+            }
 
-            
             if (processFileName == null)
             {
                 profileApplicationMenuItem_Click(null, null);
@@ -2232,7 +2417,9 @@ namespace CLRProfiler
             }
 
             if (processFileName == null)
+            {
                 return;
+            }
 
             if (profiledProcess == null || ProfiledProcessHasExited())
             {
@@ -2262,17 +2449,23 @@ namespace CLRProfiler
 
 
                 if (commandLine != null)
+                {
                     processStartInfo.Arguments = commandLine;
+                }
 
                 if (workingDirectory != null)
+                {
                     processStartInfo.WorkingDirectory = workingDirectory;
+                }
 
                 processStartInfo.UseShellExecute = false;
 
                 profiledProcess = Process.Start(processStartInfo);
 
                 if (WaitForProcessToConnect(GetLogDir(), "Waiting for application to start common language runtime") <= 0)
+                {
                     ClearProfiledProcessInfo();
+                }
             }
         }
 
@@ -2293,7 +2486,10 @@ namespace CLRProfiler
             readLogResult.createdHandlesHistogram = new Histogram(log);
             readLogResult.destroyedHandlesHistogram = new Histogram(log);
             if (readLogResult.objectGraph != null)
+            {
                 readLogResult.objectGraph.Neuter();
+            }
+
             readLogResult.objectGraph = new ObjectGraph(log, 0);
             readLogResult.functionList = new FunctionList(log);
             readLogResult.hadCallInfo = readLogResult.hadAllocInfo = false;
@@ -2313,9 +2509,13 @@ namespace CLRProfiler
                 {
                     toggleEvent.Set();
                     if (toggleEventCompleted.Wait(10 * 1000))
+                    {
                         toggleEventCompleted.Reset();
+                    }
                     else
+                    {
                         MessageBox.Show("There was no response from the application");
+                    }
                 }
             }
         }
@@ -2333,9 +2533,13 @@ namespace CLRProfiler
 
             // disable check boxes if profiling is turned off
             if (profilingActiveCheckBox.Checked)
+            {
                 allocationsCheckBox.Enabled = callsCheckBox.Enabled = targetCLRVersioncomboBox.Enabled = true;
+            }
             else
+            {
                 attachProcessButton.Enabled = allocationsCheckBox.Enabled = callsCheckBox.Enabled = targetCLRVersioncomboBox.Enabled = false;
+            }
 
             enableDisableAttachProcessButtonAndMenuItem();
             detachProcessButton.Enabled = false;
@@ -2351,13 +2555,17 @@ namespace CLRProfiler
                 long offset = s.Length;
                 s.Close();
                 if (profilingActiveCheckBox.Checked)
+                {
                     logFileStartOffset = offset;
+                }
                 else
                 {
                     logFileEndOffset = offset;
                     if (logFileStartOffset >= logFileEndOffset && profiledProcess != null && !ProfiledProcessHasExited())
+                    {
                         MessageBox.Show("No new data found", "",
                             MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    }
                 }
                 if (!profilingActiveCheckBox.Checked && logFileStartOffset < logFileEndOffset && logFileName != null)
                 {
@@ -2373,9 +2581,13 @@ namespace CLRProfiler
         private void allocationsCheckBox_CheckedChanged(object sender, System.EventArgs e)
         {
             if (profilerConnected && (allocationsCheckBox.Checked || !callsCheckBox.Checked))
+            {
                 showHeapButton.Enabled = true;
+            }
             else
+            {
                 showHeapButton.Enabled = false;
+            }
 
             ToggleEvent(loggingActiveEvent, loggingActiveCompletedEvent);
             enableDisableAttachProcessButtonAndMenuItem();
@@ -2384,9 +2596,13 @@ namespace CLRProfiler
         private void callsCheckBox_CheckedChanged(object sender, System.EventArgs e)
         {
             if (profilerConnected && (allocationsCheckBox.Checked || !callsCheckBox.Checked))
+            {
                 showHeapButton.Enabled = true;
+            }
             else
+            {
                 showHeapButton.Enabled = false;
+            }
 
             ToggleEvent(callGraphActiveEvent, callGraphActiveCompletedEvent);
             enableDisableAttachProcessButtonAndMenuItem();
@@ -2429,9 +2645,13 @@ namespace CLRProfiler
             killApplicationButton.Enabled = processRunning;
 
             if (!allocationsCheckBox.Checked && callsCheckBox.Checked)
+            {
                 showHeapButton.Enabled = false;
+            }
             else
+            {
                 showHeapButton.Enabled = processRunning && profilerConnected;
+            }
         }
                 
         [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands", Justification = "CLRProfiler.exe is a stand-alone tool, not a library.")]
@@ -2590,25 +2810,33 @@ namespace CLRProfiler
         private void viewAllocationGraphmenuItem_Click(object sender, System.EventArgs e)
         {
             if (lastLogResult != null)
+            {
                 ViewGraph(lastLogResult, processFileName, Graph.GraphType.AllocationGraph);
+            }
         }
 
         private void viewAssemblyGraphmenuItem_Click(object sender, System.EventArgs e)
         {
             if (lastLogResult != null)
+            {
                 ViewGraph(lastLogResult, processFileName, Graph.GraphType.AssemblyGraph);
+            }
         }
 
         private void viewHeapGraphMenuItem_Click(object sender, System.EventArgs e)
         {
             if (lastLogResult != null)
+            {
                 ViewGraph(lastLogResult, processFileName, Graph.GraphType.HeapGraph);
+            }
         }
 
         private void viewCallGraphMenuItem_Click(object sender, System.EventArgs e)
         {
             if (lastLogResult != null)
+            {
                 ViewGraph(lastLogResult, processFileName, Graph.GraphType.CallGraph);
+            }
         }
 
         private void Form1_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
@@ -2635,19 +2863,25 @@ namespace CLRProfiler
         private void viewFunctionGraphMenuItem_Click(object sender, System.EventArgs e)
         {
             if (lastLogResult != null)
+            {
                 ViewGraph(lastLogResult, processFileName, Graph.GraphType.FunctionGraph);
+            }
         }
 
         private void viewModuleGraphMenuItem_Click(object sender, System.EventArgs e)
         {
             if (lastLogResult != null)
+            {
                 ViewGraph(lastLogResult, processFileName, Graph.GraphType.ModuleGraph);
+            }
         }
 
         private void viewClassGraphMenuItem_Click(object sender, System.EventArgs e)
         {
             if (lastLogResult != null)
+            {
                 ViewGraph(lastLogResult, processFileName, Graph.GraphType.ClassGraph);
+            }
         }
 
         private void viewCommentsMenuItem_Click(object sender, System.EventArgs e)
@@ -2697,7 +2931,10 @@ namespace CLRProfiler
             {
                 string scenario = log.fileName;
                 if (processFileName != null)
+                {
                     scenario = processFileName + " " + commandLine;
+                }
+
                 SummaryForm summaryForm = new SummaryForm(log, lastLogResult, scenario);
                 summaryForm.Show();
             }
@@ -2728,7 +2965,9 @@ namespace CLRProfiler
         private void startURLButton_Click(object sender, EventArgs e)
         {
             if (!CheckProcessTerminate() || !CheckFileSave())
+            {
                 return;
+            }
 
             if (!noUI)
             {
@@ -2794,7 +3033,9 @@ namespace CLRProfiler
                     profiledProcess = Process.GetProcessById((int)pi.dwProcessId);
 
                     if (WaitForProcessToConnect(GetLogDir(), "Waiting for application to start common language runtime") <= 0)
+                    {
                         ClearProfiledProcessInfo();
+                    }
                 }
             }
             catch
@@ -2838,7 +3079,9 @@ namespace CLRProfiler
         private void attachProcessButton_Click(object sender, EventArgs e)
         {
             if (!CheckProcessTerminate() || !CheckFileSave())
+            {
                 return;
+            }
 
             AttachTargetPIDForm attachTargetPIDForm = new AttachTargetPIDForm();
             if (attachTargetPIDForm.ShowDialog() == DialogResult.Cancel)
@@ -2901,9 +3144,13 @@ namespace CLRProfiler
         private void enableDisableAttachProcessButtonAndMenuItem()
         {
             if (profilingActiveCheckBox.Checked && targetv4DesktopCLR() && !allocationsCheckBox.Checked && !callsCheckBox.Checked && profiledProcess == null)
+            {
                 attachProcessButton.Enabled = attachProcessMenuItem.Enabled = true;
+            }
             else
+            {
                 attachProcessButton.Enabled = attachProcessMenuItem.Enabled = false;
+            }
         }
 
         private bool targetv4DesktopCLR()
@@ -2995,7 +3242,9 @@ namespace CLRProfiler
                 {
                     // Ensure WindowsStoreApp packages will have access to CLRProfiler binaries
                     if (!WindowsStoreAppHelperWrapper.IsWindowsStoreAppAccessEnabledForProfiler(Path.GetDirectoryName(Application.ExecutablePath)))
+                    {
                         return false;
+                    }
 
                     windowsStoreAppProfileeInfo = new WindowsStoreAppProfileeInfo(windowsStoreAppPackageFullName, acSid);
                     InitWindowsStoreAppLogDirectory(acFolderPath);
@@ -3024,7 +3273,9 @@ namespace CLRProfiler
             }
 
             if (!InitWindowsStoreAppProfileeInfoIfNecessary(pid))
+            {
                 return false;
+            }
 
 
             // For WindowsStoreApps, there's no choice of where the log file can be, so

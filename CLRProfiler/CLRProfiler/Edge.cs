@@ -28,16 +28,28 @@ namespace CLRProfiler
             Edge e = (Edge)o;
             int diff = this.ToVertex.rectangle.Top - e.ToVertex.rectangle.Top;
             if (diff != 0)
+            {
                 return diff;
+            }
+
             diff = this.FromVertex.rectangle.Top - e.FromVertex.rectangle.Top;
             if (diff != 0)
+            {
                 return diff;
+            }
+
             if (e.weight < this.weight)
+            {
                 return -1;
+            }
             else if (e.weight > this.weight)
+            {
                 return 1;
+            }
             else
+            {
                 return 0;
+            }
         }
         internal Edge(Vertex fromVertex, Vertex toVertex)
         {

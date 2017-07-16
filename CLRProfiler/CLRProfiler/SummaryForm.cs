@@ -87,17 +87,31 @@ namespace CLRProfiler
                 inducedCollectionsValueLabel.Text = FormatNumber(log.inducedGcCount[0]);
                 gen0HeapBytesValueLabel.Text = FormatNumber(log.cumulativeGenerationSize[0] / (uint)log.gcCount[0]);
                 if (log.gcCount[1] > 0)
+                {
                     gen1HeapBytesValueLabel.Text = FormatNumber(log.cumulativeGenerationSize[1] / (uint)log.gcCount[1]);
+                }
                 else
+                {
                     gen1HeapBytesValueLabel.Text = FormatNumber(log.generationSize[1]);
+                }
+
                 if (log.gcCount[2] > 0)
+                {
                     gen2HeapBytesValueLabel.Text = FormatNumber(log.cumulativeGenerationSize[2] / (uint)log.gcCount[2]);
+                }
                 else
+                {
                     gen2HeapBytesValueLabel.Text = FormatNumber(log.generationSize[2]);
+                }
+
                 if (log.gcCount[3] > 0)
+                {
                     largeObjectHeapBytesValueLabel.Text = FormatNumber(log.cumulativeGenerationSize[3] / (uint)log.gcCount[3]);
+                }
                 else
+                {
                     largeObjectHeapBytesValueLabel.Text = FormatNumber(log.generationSize[3]);
+                }
             }
             else if (!logResult.createdHandlesHistogram.Empty)
             {
@@ -121,7 +135,9 @@ namespace CLRProfiler
                 handlesDestroyedValueLabel.Text = CalculateTotalCount(logResult.destroyedHandlesHistogram);
                 int count = 0;
                 foreach (HandleInfo handleInfo in logResult.handleHash.Values)
+                {
                     count++;
+                }
 
                 handlesSurvivingValueLabel.Text = FormatNumber(count);
             }
@@ -290,7 +306,10 @@ namespace CLRProfiler
             StringBuilder sb = new StringBuilder();
             sb.AppendFormat("Summary for {0}\r\n", scenario);
             for (int i = 0; i < copyLabel.Length; i += 2)
+            {
                 sb.AppendFormat("{0,-30}{1,13}\r\n", copyLabel[i].Text, copyLabel[i+1].Text);
+            }
+
             Clipboard.SetDataObject(sb.ToString());
         }
     }

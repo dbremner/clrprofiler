@@ -40,7 +40,9 @@ namespace CLRProfiler
         
             MainForm form1 = MainForm.instance;
             if (form1.lastLogResult != null)
+            {
                 liveObjectTable = form1.lastLogResult.liveObjectTable;
+            }
 
             font = form1.font;
             markersRadioButton.Enabled = form1.log.commentEventList.count > 0;
@@ -76,9 +78,13 @@ namespace CLRProfiler
                     if (rb.Checked)
                     {
                         if (rb == markersRadioButton)
+                        {
                             return 0.001;
+                        }
                         else
+                        {
                             return Convert.ToDouble(rb.Text, CultureInfo.InvariantCulture);
+                        }
                     }
                 }
             }
@@ -92,7 +98,10 @@ namespace CLRProfiler
             foreach (RadioButton rb in timeScaleGroupBox.Controls)
             {
                 if (rb == markersRadioButton)
+                {
                     continue;
+                }
+
                 double scale = Convert.ToDouble(rb.Text, CultureInfo.InvariantCulture);
                 if (scale >= suggestedScale)
                 {
@@ -144,11 +153,17 @@ namespace CLRProfiler
             {
                 TypeDesc t = (TypeDesc)o;
                 if (t.totalSize < this.totalSize)
+                {
                     return -1;
+                }
                 else if (t.totalSize > this.totalSize)
+                {
                     return 1;
+                }
                 else
+                {
                     return 0;
+                }
             }
         }
 
@@ -189,15 +204,22 @@ namespace CLRProfiler
             if (useMarkers)
             {
                 for (bucketCount = 0; bucketCount < log.commentEventList.count; bucketCount++)
+                {
                     if (log.commentEventList.eventTickIndex[bucketCount] >= liveObjectTable.lastTickIndex)
+                    {
                         break;
+                    }
+                }
+
                 bucketCount++;
             }
             else
             {
                 bucketCount = (int)Math.Ceiling(maxAge/timeScale);
                 if (bucketCount == 0)
+                {
                     bucketCount = 1;
+                }
             }
             if (bucketTable == null || bucketTable.Length != bucketCount)
             {
@@ -213,7 +235,10 @@ namespace CLRProfiler
                     {
                         int markerIndex = bucketTable.Length - i - 1;
                         if (i > 0)
+                        {
                             bucketTable[i].minComment = log.commentEventList.eventString[markerIndex];
+                        }
+
                         age = nowTime;
                         if (markerIndex > 0)
                         {
@@ -229,13 +254,17 @@ namespace CLRProfiler
                 }
 
                 if (typeIndexToTypeDesc == null || typeIndexToTypeDesc.Length < log.typeName.Length)
+                {
                     typeIndexToTypeDesc = new TypeDesc[log.typeName.Length];
+                }
                 else
                 {
                     foreach (TypeDesc t in typeIndexToTypeDesc)
                     {
                         if (t != null)
+                        {
                             t.totalSize = 0;
+                        }
                     }
                 }
                 LiveObjectTable.LiveObject o;
@@ -246,13 +275,24 @@ namespace CLRProfiler
                     age = nowTime - allocTime;
                     bucketIndex = (int)(age/timeScale);
                     if (bucketIndex >= bucketTable.Length)
+                    {
                         bucketIndex = bucketTable.Length - 1;
+                    }
                     else if (bucketIndex < 0)
+                    {
                         bucketIndex = 0;
+                    }
+
                     while (bucketIndex < bucketTable.Length - 1 && age >= bucketTable[bucketIndex].maxAge)
+                    {
                         bucketIndex++;
+                    }
+
                     while (bucketIndex > 0 && age < bucketTable[bucketIndex].minAge)
+                    {
                         bucketIndex--;
+                    }
+
                     bucketTable[bucketIndex].totalSize += o.size;
                     TypeDesc t = typeIndexToTypeDesc[o.typeIndex];
                     if (t == null)
@@ -276,7 +316,9 @@ namespace CLRProfiler
             foreach (Bucket b in bucketTable)
             {
                 if (maxBucketSize < b.totalSize)
+                {
                     maxBucketSize = b.totalSize;
+                }
             }
 
             totalSize = 0;
@@ -302,7 +344,9 @@ namespace CLRProfiler
                 foreach (RadioButton rb in groupBox.Controls)
                 {
                     if (rb.Checked)
+                    {
                         return UInt32.Parse(rb.Text);
+                    }
                 }
             }
             // No radio button was checked - let's come up with a suitable default
@@ -372,15 +416,23 @@ namespace CLRProfiler
         {
             Color[] newColors = new Color[2*colors.Length];
             for (int i = 0; i < colors.Length; i++)
+            {
                 newColors[i] = colors[i];
+            }
+
             colors = newColors;
         }
 
         private TypeDesc FindSelectedType()
         {
             foreach (TypeDesc t in sortedTypeTable)
+            {
                 if (t.selected)
+                {
                     return t;
+                }
+            }
+
             return null;
         }
 
@@ -393,14 +445,25 @@ namespace CLRProfiler
             foreach (TypeDesc t in sortedTypeTable)
             {
                 if (count >= colors.Length)
+                {
                     GrowColors();
+                }
+
                 if (count < firstColors.Length)
+                {
                     colors[count] = firstColors[count];
+                }
                 else
+                {
                     colors[count] = MixColor(colors[count - firstColors.Length], colors[count - firstColors.Length + 1]);
+                }
+
                 t.color = colors[count];
                 if (anyTypeSelected)
+                {
                     t.color = MixColor(colors[count], Color.White);
+                }
+
                 t.brush = new SolidBrush(t.color);
                 t.pen = new Pen(t.brush);
                 count++;
@@ -428,20 +491,31 @@ namespace CLRProfiler
             }
             string format = "{0:f0} {1}";
             if (w < 10)
+            {
                 format = "{0:f1} {1}";
+            }
+
             return string.Format(format, w, byteString);
         }
 
         private string FormatTime(double time)
         {
             if (timeScale < 0.01)
+            {
                 return string.Format("{0:f3}", time);
+            }
             else if (timeScale < 0.1)
+            {
                 return string.Format("{0:f2}", time);
+            }
             else if (timeScale < 1.0)
+            {
                 return string.Format("{0:f1}", time);
+            }
             else
+            {
                 return string.Format("{0:f0}", time);
+            }
         }
 
         private void DrawBuckets(Graphics g)
@@ -478,7 +552,9 @@ namespace CLRProfiler
                     if (g.MeasureString(s, font).Width > bucketWidth)
                     {
                         do
+                        {
                             s = s.Substring(0, s.Length-1);
+                        }
                         while (g.MeasureString(s, font).Width > bucketWidth);
                         s += "...";
                     }
@@ -502,7 +578,10 @@ namespace CLRProfiler
                     y -= height;
                     Brush brush = t.brush;
                     if (t.selected && (b.selected || noBucketSelected))
+                    {
                         brush = blackBrush;
+                    }
+
                     g.FillRectangle(brush, x, y, bucketWidth, height);
                 }
 
@@ -516,7 +595,9 @@ namespace CLRProfiler
             int width2 = (int)g.MeasureString("999 MB", font).Width;
             width1 = Math.Max(width1, width2);
             if (markersRadioButton.Checked)
+            {
                 width1 = Math.Max(width1, (int)g.MeasureString("0123456789012345", font).Width);
+            }
 
             return Math.Max(width1, bucketWidth);
         }
@@ -549,7 +630,9 @@ namespace CLRProfiler
             initialized = false;
 
             if (liveObjectTable == null)
+            {
                 return;
+            }
 
             Graphics g = e.Graphics;
 
@@ -586,7 +669,10 @@ namespace CLRProfiler
                 int sizeWidth = (int)g.MeasureString(" (999,999,999 bytes, 100.00%)", font).Width;
                 t.rect = new Rectangle(x, y, Math.Max(typeNameWidth, sizeWidth)+dotSize*2, font.Height*2);
                 if (maxWidth < t.rect.Width)
+                {
                     maxWidth = t.rect.Width;
+                }
+
                 y = t.rect.Bottom + typeLegendSpacing;
             }
             int height = y + bottomMargin;
@@ -605,7 +691,10 @@ namespace CLRProfiler
             {
                 Brush brush = t.brush;
                 if (t.selected)
+                {
                     brush = blackBrush;
+                }
+
                 g.FillRectangle(brush, t.rect.Left, t.rect.Top+dotOffset, dotSize, dotSize);
                 g.DrawString(t.typeName, font, blackBrush, t.rect.Left + dotSize*2, t.rect.Top);
                 string s = string.Format(" ({0:n0} bytes, {1:f2}%)", t.totalSize, (double)t.totalSize/totalSize*100.0);
@@ -619,7 +708,9 @@ namespace CLRProfiler
             initialized = false;
 
             if (liveObjectTable == null)
+            {
                 return;
+            }
 
             Init(e.Graphics);
 
@@ -636,7 +727,9 @@ namespace CLRProfiler
         private void typeLegendPanel_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
         {
             if (!initialized)
+            {
                 return;
+            }
 
             if ((e.Button & MouseButtons.Left) != MouseButtons.None)
             {
@@ -672,14 +765,18 @@ namespace CLRProfiler
         private void graphPanel_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
         {
             if (!initialized || verticalScale == 0)
+            {
                 return;
+            }
 
             if ((e.Button & MouseButtons.Left) != MouseButtons.None)
             {
                 if (sortedTypeTable != null)
                 {
                     foreach (TypeDesc t in sortedTypeTable)
+                    {
                         t.selected = false;
+                    }
                 }
 
                 int x = leftMargin;
@@ -718,7 +815,9 @@ namespace CLRProfiler
         private void graphPanel_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
         {
             if (!initialized || verticalScale == 0)
+            {
                 return;
+            }
 
             if (Form.ActiveForm == this)
             {
@@ -768,9 +867,13 @@ namespace CLRProfiler
         string FormatAge(double age, string ageComment)
         {
             if (ageComment == null)
+            {
                 return FormatTime(age);
+            }
             else
+            {
                 return string.Format("{0} ({1} sec)", ageComment, FormatTime(age));
+            }
         }
 
         private void exportMenuItem_Click(object sender, System.EventArgs e)
@@ -785,7 +888,9 @@ namespace CLRProfiler
 
                 string title = "Histogram by Age";
                 if (selectedType != null)
+                {
                     title += " of " + selectedType.typeName + " objects";
+                }
 
                 w.WriteLine(title);
                 w.WriteLine();
@@ -794,8 +899,13 @@ namespace CLRProfiler
 
                 bool noBucketSelected = true;
                 foreach (Bucket b in bucketTable)
+                {
                     if (b.selected)
+                    {
                         noBucketSelected = false;
+                    }
+                }
+
                 foreach (Bucket b in bucketTable)
                 {
                     if (noBucketSelected || b.selected)
@@ -806,7 +916,9 @@ namespace CLRProfiler
                             SizeCount sizeCount = d.Value;
 
                             if (selectedType == null || t == selectedType)
+                            {
                                 w.WriteLine("{0},{1},{2},{3},{4}", FormatAge(b.minAge, b.minComment), FormatAge(b.maxAge, b.maxComment), sizeCount.count, sizeCount.size, t.typeName);
+                            }
                         }
                     }
                 }
@@ -832,9 +944,15 @@ namespace CLRProfiler
             }
             title = "Allocation Graph for objects";
             if (selectedType != null)
+            {
                 title = string.Format("Allocation Graph for {0} objects", selectedType.typeName);
+            }
+
             if (minAge > 0.0)
+            {
                 title += string.Format(" of age between {0} and {1} seconds", FormatTime(minAge), FormatTime(maxAge));
+            }
+
             selectedHistogram = new Histogram(liveObjectTable.readNewLog);
             LiveObjectTable.LiveObject o;
             double nowTime = liveObjectTable.readNewLog.TickIndexToTime(liveObjectTable.lastTickIndex);

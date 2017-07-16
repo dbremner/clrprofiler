@@ -50,7 +50,10 @@ namespace CLRProfiler
             {
                 GcObject[][] newmasterTable = new GcObject[masterTable.Length * 2][];
                 for (int i = 0; i < masterTable.Length; i++)
+                {
                     newmasterTable[i] = masterTable[i];
+                }
+
                 masterTable = newmasterTable;
             }
 
@@ -62,15 +65,24 @@ namespace CLRProfiler
                     int lowBits = (int)(objectID & lowAddressMask);
                     int highBits = (int)(objectID >> lowAddressBits);
                     if (highBits >= masterTable.Length)
+                    {
                         return null;
+                    }
+
                     GcObject[] subTable = masterTable[highBits];
                     if (subTable == null)
+                    {
                         return null;
+                    }
+
                     int bucket = lowBits >> bucketBits;
                     lowBits = (lowBits >> alignBits) & idMask;
                     o = subTable[bucket];
                     while (o != null && o.Id != lowBits)
+                    {
                         o = o.nextInHash;
+                    }
+
                     return o;
                 }
                 set
@@ -100,7 +112,10 @@ namespace CLRProfiler
                 {
                     GcObject[] subTable = masterTable[i];
                     if (subTable == null)
+                    {
                         continue;
+                    }
+
                     for (int j = 0; j < subTable.Length; j++)
                     {
                         for (GcObject gcObject = subTable[j]; gcObject != null; gcObject = gcObject.nextInHash)
@@ -121,7 +136,10 @@ namespace CLRProfiler
                     {
                         GcObject[] subTable = masterTable[i];
                         if (subTable == null)
+                        {
                             continue;
+                        }
+
                         for (int j = 0; j < subTable.Length; j++)
                         {
                             for (GcObject gcObject = subTable[j]; gcObject != null; gcObject = gcObject.nextInHash)
@@ -213,7 +231,10 @@ namespace CLRProfiler
             {
                 int typeSizeStackTraceId = TypeSizeStackTraceId;
                 if (typeSizeStackTraceId < 0)
+                {
                     return 0;
+                }
+
                 int[] stackTrace = graph.readNewLog.stacktraceTable.IndexToStacktrace(typeSizeStackTraceId);
                 return (uint)stackTrace[1];
             }
@@ -222,7 +243,9 @@ namespace CLRProfiler
             {
                 int typeSizeStackTraceId = TypeSizeStackTraceId;
                 if (typeSizeStackTraceId < 0)
+                {
                     return graph.typeIdToGcType[typeSizeStackTraceId];
+                }
                 else
                 {
                     int[] stackTrace = graph.readNewLog.stacktraceTable.IndexToStacktrace(typeSizeStackTraceId);
@@ -417,7 +440,9 @@ namespace CLRProfiler
                 get
                 {
                     for (int i = 0; i < references.Length; i++)
+                    {
                         yield return references[i];
+                    }
                 }
             }
 
@@ -487,9 +512,13 @@ namespace CLRProfiler
             {
                 GcObject target = idToObject[references[i]];
                 if (target != null)
+                {
                     o.SetReference(i, target);
+                }
                 else
+                {
                     CreateForwardReference(references[i], o, i);
+                }
             }
             empty = false;
             return o;
@@ -553,7 +582,10 @@ namespace CLRProfiler
                 rootIDs = new ulong[initialRootCount];
             }
             while (roots.Length < rootCount + count)
+            {
                 GrowRoots();
+            }
+
             for (int i = 0; i < count; i++)
             {
                 roots[rootCount] = null;
@@ -570,7 +602,10 @@ namespace CLRProfiler
                 rootIDs = new ulong[initialRootCount];
             }
             if (roots.Length < rootCount + 1)
+            {
                 GrowRoots();
+            }
+
             rootIDs[rootCount] = rootID;
             roots[rootCount] = rootObject;
             rootCount++;
@@ -605,9 +640,13 @@ namespace CLRProfiler
         private string FormatAddress(ulong addr)
         {
             if (addr > uint.MaxValue)
+            {
                 return string.Format("{0:X2}.{1:X4}.{2:X4}", addr >> 32, (addr >> 16) & 0xffff, addr & 0xffff);
+            }
             else
+            {
                 return string.Format("{0:X4}.{1:X4}", (addr >> 16) & 0xffff, addr & 0xffff);
+            }
         }
 
         internal string SignatureOfObject(ulong id, GcObject gcObject, BuildTypeGraphOptions options)
@@ -621,12 +660,19 @@ namespace CLRProfiler
                         if (gcObject.Type(this).name == "Stack" || gcObject.Type(this).name.StartsWith("Stack, "))
                         {
                             if (id < (ulong)readNewLog.funcName.Length)
+                            {
                                 sb.AppendFormat(readNewLog.funcName[id] + "  " + readNewLog.funcSignature[id]);
+                            }
                             else
+                            {
                                 sb.AppendFormat("Function id = {0}", id);
+                            }
                         }
                         else
+                        {
                             sb.AppendFormat("Address = {0}, size = {1:n0} bytes", FormatAddress(id), gcObject.Size(this));
+                        }
+
                         break;
 
                     case    BuildTypeGraphOptions.LumpBySignature:
@@ -680,7 +726,9 @@ namespace CLRProfiler
                             }
 
                             if (refTypeCount > MAXREFTYPECOUNT)
+                            {
                                 sb.Append(",...");
+                            }
 
                             sb.Append(")");
                         }
@@ -698,7 +746,9 @@ namespace CLRProfiler
         {
             Vertex vertex = gcObject.vertex;
             if (vertex != null)
+            {
                 return vertex;
+            }
 
             string signature = SignatureOfObject(id, gcObject, options);
             vertex = graph.FindOrCreateVertex(gcObject.Type(this).name, signature, null);
@@ -737,7 +787,10 @@ namespace CLRProfiler
         {
             GcObject parentObject = gcObject.parent;
             if (parentObject == null)
+            {
                 return false;
+            }
+
             switch (parentObject.InterestLevel & InterestLevel.InterestingChildren)
             {
                 // Parent says it wants to show children
@@ -753,7 +806,9 @@ namespace CLRProfiler
                         return true;
                     }
                     else
+                    {
                         return false;
+                    }
 
                 default:
                     return false;
@@ -776,7 +831,9 @@ namespace CLRProfiler
             {
                 gcObject.InterestLevel = InterestLevel.Interesting;
                 if (!isRoot)
+                {
                     gcObject.InterestLevel |= filterForm.InterestLevelForParentsAndChildren();
+                }
             }
             else
             {
@@ -793,9 +850,13 @@ namespace CLRProfiler
                     // will itself mark its parents, or it isn't interested in them (and we
                     // respect that despite the interest of the current object, somewhat arbitrarily).
                     if ((parentObject.InterestLevel & InterestLevel.InterestingParents) == InterestLevel.Ignore)
+                    {
                         parentObject.InterestLevel |= InterestLevel.Display;
+                    }
                     else
+                    {
                         break;
+                    }
                 }
             }
 
@@ -819,9 +880,15 @@ namespace CLRProfiler
         internal double TickIndexToTime(int tickIndex)
         {
             if (tickIndex < 0)
+            {
                 tickIndex = 0;
+            }
+
             if (tickIndex > MainForm.instance.log.maxTickIndex)
+            {
                 tickIndex = MainForm.instance.log.maxTickIndex;
+            }
+
             return MainForm.instance.log.TickIndexToTime(tickIndex);
         }
 
@@ -842,7 +909,10 @@ namespace CLRProfiler
             {
                 Graph previousGraph = cachedGraph;
                 if (previousGraph != null && previousGraph.graphSource == this)
+                {
                     return previousGraph;
+                }
+
                 cachedGraph = graph = new Graph(this);
                 graph.graphType = Graph.GraphType.HeapGraph;
                 graph.graphSource = this;
@@ -853,13 +923,17 @@ namespace CLRProfiler
                     {
                         Vertex newV = graph.FindOrCreateVertex(v.name, v.signature, v.moduleName);
                         if (v.weightHistory == null)
+                        {
                             newV.weightHistory = new ulong[1];
+                        }
                         else
                         {
                             ulong[] weightHistory = v.weightHistory;
                             newV.weightHistory = new ulong[Math.Min(weightHistory.Length + 1, historyDepth)];
                             for (int i = v.weightHistory.Length - 1; i > 0; i--)
+                            {
                                 newV.weightHistory[i] = weightHistory[i - 1];
+                            }
                         }
                         newV.weightHistory[0] = v.weight;
                     }
@@ -868,7 +942,10 @@ namespace CLRProfiler
             graph.typeGraphOptions = options;
             graph.filterVersion = filterForm.filterVersion;
             if (graph.previousGraphTickIndex < graph.allocatedAfterTickIndex)
+            {
                 graph.previousGraphTickIndex = graph.allocatedAfterTickIndex;
+            }
+
             graph.allocatedAfterTickIndex = allocatedAfterTickIndex;
             graph.allocatedBeforeTickIndex = allocatedBeforeTickIndex;
 
@@ -910,15 +987,20 @@ namespace CLRProfiler
             {
                 GcObject gcObject = keyValuePair.Value;
                 if (gcObject.AllocTickIndex > allocatedAfterTickIndex && gcObject.AllocTickIndex < allocatedBeforeTickIndex)
+                {
                     AssignInterestLevelToObject(keyValuePair.Key, gcObject, options, filterForm, false);
+                }
                 else
+                {
                     gcObject.InterestLevel = InterestLevel.Ignore;
-
+                }
             }
             foreach (GcObject gcObject in idToObject.Values)
             {
                 if (gcObject.InterestLevel == InterestLevel.Ignore)
+                {
                     CheckForParentMarkingDescendant(gcObject);
+                }
             }
 
             FindVertex(0, rootObject, graph, options);
@@ -956,7 +1038,9 @@ namespace CLRProfiler
                 for (GcObject pathObject = gcObject; pathObject != null; pathObject = pathObject.parent)
                 {
                     if (pathObject.vertex != null)
+                    {
                         levels++;
+                    }
                 }
 
                 while (pathFromRoot.Length < levels + 1)
@@ -992,15 +1076,26 @@ namespace CLRProfiler
             foreach (Vertex v in graph.vertices.Values)
             {
                 if (v.weight < v.outgoingWeight)
+                {
                     v.weight = v.outgoingWeight;
+                }
+
                 if (v.weight < v.incomingWeight)
+                {
                     v.weight = v.incomingWeight;
+                }
+
                 if (v.weightHistory == null)
+                {
                     v.weightHistory = new ulong[1];
+                }
             }
 
             foreach (Vertex v in graph.vertices.Values)
+            {
                 v.active = true;
+            }
+
             graph.BottomVertex.active = false;
 
             return graph;
@@ -1014,9 +1109,11 @@ namespace CLRProfiler
             {
                 GcObject temp = idToObject[path[j]];
                 if (temp != null)
+                {
                     System.Console.WriteLine("{0}, {1:X} ->", temp.Type(this).name, path[j]);
+                }
                 //else
-                  //  System.Console.WriteLine("{0}, n/a ->", path[j]);
+                //  System.Console.WriteLine("{0}, n/a ->", path[j]);
             }
             Console.WriteLine("-->");
             Console.WriteLine("</GcRoot>");
@@ -1031,7 +1128,10 @@ namespace CLRProfiler
                 Console.WriteLine("<!-- ");
                 int[] stacktrace = readNewLog.stacktraceTable.IndexToStacktrace(tempGcObject.TypeSizeStackTraceId);
                 for (int i = stacktrace.Length - 1; i >= 2; i--)
+                {
                     System.Console.WriteLine("{0} <-", readNewLog.funcName[stacktrace[i]]);
+                }
+
                 Console.WriteLine("-->");
             }
             System.Console.WriteLine("</StackTrace>");
@@ -1073,14 +1173,18 @@ namespace CLRProfiler
 				{
 					idsFromRoot = new ulong[counter + 1][];
 					for (int i = 0; i < _idsFromRoot.Length; i++)
-						idsFromRoot[i] = _idsFromRoot[i];
-				}
+                    {
+                        idsFromRoot[i] = _idsFromRoot[i];
+                    }
+                }
 
                 int levels = 0;
                 for (GcObject pathObject = gcObject; pathObject != null; pathObject = pathObject.parent)
                 {
                     if (pathObject.vertex != null)
+                    {
                         levels++;
+                    }
                 }
 
                 while (pathFromRoot.Length < levels + 1)
@@ -1137,7 +1241,9 @@ namespace CLRProfiler
                             {
                                 differentCulprits.Add(temp.Type(this).name);
                                 if (differentCulprits.Count <= 5)
+                                {
                                     System.Console.WriteLine("<CulPrit><!--{0}--></CulPrit>", temp.Type(this).name);
+                                }
                             }
                         }
                         break;
@@ -1214,7 +1320,9 @@ namespace CLRProfiler
                             // add <root> -> ... -> head -> refObject to the reference graph
                             int levels = 0;
                             for (GcObject pathObject = head; pathObject != null; pathObject = pathObject.parent)
+                            {
                                 levels++;
+                            }
 
                             while (pathFromRoot.Length < levels + 2)
                             {
@@ -1227,9 +1335,14 @@ namespace CLRProfiler
                             {
                                 if (  (pathObject.InterestLevel & (InterestLevel.Interesting | InterestLevel.Display)) == InterestLevel.Ignore
                                     || pathObject.vertex == null)
+                                {
                                     pathFromRoot[level] = null;
+                                }
                                 else
+                                {
                                     pathFromRoot[level] = graph.FindOrCreateVertex(pathObject.vertex.name, pathObject.vertex.signature, pathObject.vertex.moduleName);
+                                }
+
                                 level--;
                             }
 
@@ -1237,7 +1350,9 @@ namespace CLRProfiler
                             for (int j = 0; j <= levels+1; j++)
                             {
                                 if (pathFromRoot[j] != null)
+                                {
                                     pathFromRoot[nonZeroLevels++] = pathFromRoot[j];
+                                }
                             }
 
                             levels = Vertex.SqueezeOutRepetitions(pathFromRoot, nonZeroLevels);
@@ -1270,15 +1385,26 @@ namespace CLRProfiler
             foreach (Vertex v in graph.vertices.Values)
             {
                 if (v.weight < v.outgoingWeight)
+                {
                     v.weight = v.outgoingWeight;
+                }
+
                 if (v.weight < v.incomingWeight)
+                {
                     v.weight = v.incomingWeight;
+                }
+
                 if (v.weightHistory == null)
+                {
                     v.weightHistory = new ulong[1];
+                }
             }
 
             foreach (Vertex v in graph.vertices.Values)
+            {
                 v.active = true;
+            }
+
             graph.BottomVertex.active = false;
 
             return graph;
@@ -1296,7 +1422,9 @@ namespace CLRProfiler
                 {
                     roots[i] = idToObject[rootIDs[i]];
                     if (roots[i] == null)
+                    {
                         roots[i] = unknownObject;
+                    }
                 }
                 roots[i].parent = null;
                 roots[i].InterestLevel = InterestLevel.Interesting;

@@ -56,15 +56,23 @@ namespace CLRProfiler
             // On the other hand, we need to handle "<root>"
             int endPos = name.IndexOf('<');
             if (endPos <= 0)
+            {
                 endPos = name.Length;
+            }
 
             while (true)
             {
                 int nextSeparatorPos = name.IndexOf('.', thisSeparatorPos+1, endPos - (thisSeparatorPos+1));
                 if (nextSeparatorPos < 0 && thisSeparatorPos < name.Length-2)
+                {
                     nextSeparatorPos = name.IndexOf("::", thisSeparatorPos+1, endPos - (thisSeparatorPos+1));
+                }
+
                 if (nextSeparatorPos < 0 || nextSeparatorPos >= name.Length-1)
+                {
                     break;
+                }
+
                 prevSeparatorPos = thisSeparatorPos;
                 thisSeparatorPos = nextSeparatorPos;
             }
@@ -107,7 +115,10 @@ namespace CLRProfiler
         {
             Edge edge = cachedOutgoingEdge;
             if (edge != null && edge.ToVertex == toVertex)
+            {
                 return edge;
+            }
+
             if (!outgoingEdges.TryGetValue(toVertex, out edge))
             {
                 edge = new Edge(this, toVertex);
@@ -135,18 +146,29 @@ namespace CLRProfiler
         {
             Vertex v = (Vertex)o;
             if (v.weight < this.weight)
+            {
                 return -1;
+            }
             else if (v.weight > this.weight)
+            {
                 return 1;
+            }
             else
+            {
                 return 0;
+            }
         }
 
         static bool IdenticalSequence(Vertex[] path, int i, int j, int length)
         {
             for (int k = 0; k < length; k++)
+            {
                 if (path[i+k] != path[j+k])
+                {
                     return false;
+                }
+            }
+
             return true;
         }
 
@@ -154,14 +176,22 @@ namespace CLRProfiler
         {
             int len = i;
             if (len > length - j)
+            {
                 len = length - j;
+            }
+
             for ( ; len > 0; len--)
             {
                 int repLen = 0;
                 while (j + repLen + len <= length && IdenticalSequence(path, i - len, j + repLen, len))
+                {
                     repLen += len;
+                }
+
                 if (repLen > 0)
+                {
                     return repLen;
+                }
             }
             return 0;
         }
@@ -173,7 +203,10 @@ namespace CLRProfiler
                 Vertex element = path[i];
                 int hint = element.hint;
                 if (hint < i && path[hint] == element)
+                {
                     return true;
+                }
+
                 element.hint = i;
             }
             return false;
@@ -183,15 +216,26 @@ namespace CLRProfiler
         {
             int i = name.Length-1;
             if (i <= 0 || name[i] != ')')
+            {
                 return name;
+            }
+
             i--;
             if (i <= 0 || !char.IsDigit(name[i]))
+            {
                 return name;
+            }
+
             i--;
             while (i >= 0 && char.IsDigit(name[i]))
+            {
                 i--;
+            }
+
             if (i <= 0 || name[i] != '(')
+            {
                 return name;
+            }
 
             return name.Substring(0, i);
         }
@@ -199,7 +243,9 @@ namespace CLRProfiler
         internal static int SqueezeOutRepetitions(Vertex[] path, int length)
         {
             if (!RepeatedElementsPresent(path, length))
+            {
                 return length;
+            }
 
             int k = 0;
             int l = 0;
@@ -207,9 +253,13 @@ namespace CLRProfiler
             {
                 int repetitionLength = LargestRepetition(path, k, l, length);
                 if (repetitionLength == 0)
+                {
                     path[k++] = path[l++];
+                }
                 else
+                {
                     l += repetitionLength;
+                }
             }
 
             if (RepeatedElementsPresent(path, k))
@@ -221,7 +271,10 @@ namespace CLRProfiler
                     Vertex element = path[i];
                     int hint = element.hint;
                     if (hint < i && path[hint] == element)
+                    {
                         level[i] = level[hint] + 1;
+                    }
+
                     element.hint = i;
                 }
 

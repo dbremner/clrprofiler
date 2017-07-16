@@ -49,11 +49,15 @@ namespace CLRProfiler
         private string Title()
         {
             if (firstAllocTickIndex != 0 || lastAllocTickIndex != int.MaxValue)
+            {
                 return string.Format("Time Line for Objects allocated between {0:f3} and {1:f3} seconds",
                     lastLog.TickIndexToTime(firstAllocTickIndex),
                     lastLog.TickIndexToTime(lastAllocTickIndex));
+            }
             else
+            {
                 return "Time Line";
+            }
         }
 
         public TimeLineViewForm(int firstAllocTickIndex, int lastAllocTickIndex) : this()
@@ -119,11 +123,17 @@ namespace CLRProfiler
             {
                 TypeDesc t = (TypeDesc)o;
                 if (t.totalSize < this.totalSize)
+                {
                     return -1;
+                }
                 else if (t.totalSize > this.totalSize)
+                {
                     return 1;
+                }
                 else
+                {
                     return 0;
+                }
             }
         }
 
@@ -158,13 +168,17 @@ namespace CLRProfiler
             rangeCount = 0;
 
             if (typeIndexToTypeDesc == null || typeIndexToTypeDesc.Length < typeName.Length)
+            {
                 typeIndexToTypeDesc = new TypeDesc[typeName.Length];
+            }
             else
             {
                 foreach (TypeDesc t in typeIndexToTypeDesc)
                 {
                     if (t != null)
+                    {
                         t.totalSize = 0;
+                    }
                 }
             }
 
@@ -187,8 +201,13 @@ namespace CLRProfiler
             }
             sortedTypeTable = new ArrayList();
             foreach (TypeDesc t in typeIndexToTypeDesc)
+            {
                 if (t != null)
+                {
                     sortedTypeTable.Add(t);
+                }
+            }
+
             sortedTypeTable.Sort();
         }
 
@@ -217,7 +236,10 @@ namespace CLRProfiler
         {
             Color[] newColors = new Color[2*colors.Length];
             for (int i = 0; i < colors.Length; i++)
+            {
                 newColors[i] = colors[i];
+            }
+
             colors = newColors;
         }
 
@@ -228,16 +250,28 @@ namespace CLRProfiler
             foreach (TypeDesc t in sortedTypeTable)
             {
                 if (count >= colors.Length)
+                {
                     GrowColors();
+                }
+
                 if (count < firstColors.Length)
+                {
                     colors[count] = firstColors[count];
+                }
                 else
+                {
                     colors[count] = MixColor(colors[count - firstColors.Length], colors[count - firstColors.Length + 1]);
+                }
+
                 t.color = colors[count];
                 if (t.typeName == "Free Space")
+                {
                     t.color = Color.White;
+                }
                 else
+                {
                     count++;
+                }
             }
         }
 
@@ -245,15 +279,22 @@ namespace CLRProfiler
         {
             bool anyTypeSelected = false;
             foreach (TypeDesc t in sortedTypeTable)
+            {
                 anyTypeSelected |= t.selected;
+            }
 
             foreach (TypeDesc t in sortedTypeTable)
             {
                 Color color = t.color;
                 if (t.selected)
+                {
                     color = Color.Black;
+                }
                 else if (anyTypeSelected)
+                {
                     color = MixColor(color, Color.White);
+                }
+
                 t.brush = new SolidBrush(color);
                 t.pen = new Pen(t.brush);
             }
@@ -266,7 +307,9 @@ namespace CLRProfiler
                 foreach (RadioButton rb in groupBox.Controls)
                 {
                     if (rb.Checked)
+                    {
                         return Int32.Parse(rb.Text);
+                    }
                 }
             }
             // No radio button was checked - let's come up with a suitable default
@@ -329,7 +372,10 @@ namespace CLRProfiler
             for (AddressRange r = rangeList; r != null; r = r.next)
             {
                 if (r.loAddr <= addr && addr <= r.hiAddr)
+                {
                     return y + (int)((r.hiAddr - addr)/(uint)verticalScale);
+                }
+
                 y += (int)((r.hiAddr - r.loAddr)/(uint)verticalScale);
                 y += gap + timeLabelHeight;
             }
@@ -351,16 +397,23 @@ namespace CLRProfiler
             {
                 TypeDesc t;
                 if (firstAllocTickIndex <= so.origAllocTickIndex && so.origAllocTickIndex < lastAllocTickIndex)
+                {
                     t = typeIndexToTypeDesc[so.typeIndex];
+                }
                 else
+                {
                     t = typeIndexToTypeDesc[0];
+                }
 
                 double changeTime = lastLog.TickIndexToTime(so.changeTickIndex);
                 int x1 = TimeToX(changeTime);
                 int x2 = TimeToX(lastTime);
                 IntersectIntervals((int)clipRect.Left, (int)clipRect.Right, ref x1, ref x2);
                 if (x1 < x2)
+                {
                     g.DrawLine(t.pen, x1, y, x2, y);
+                }
+
                 lastTime = changeTime;
             }
         }
@@ -405,9 +458,13 @@ namespace CLRProfiler
         private string FormatAddress(ulong addr)
         {
             if (addr > uint.MaxValue)
+            {
                 return string.Format("{0:X2}.{1:X4}.{2:X4}", addr >> 32, (addr >> 16) & 0xffff, addr & 0xffff);
+            }
             else
+            {
                 return string.Format("{0:X4}.{1:X4}", (addr >> 16) & 0xffff, addr & 0xffff);
+            }
         }
 
         private void DrawAddressLabel(Graphics g, Brush brush, Pen pen, AddressRange r, int y, ulong addr)
@@ -423,7 +480,10 @@ namespace CLRProfiler
         {
             RectangleF clipRect = g.VisibleClipBounds;
             if (clipRect.Left > leftMargin + addressLabelWidth)
+            {
                 return;
+            }
+
             Brush brush = new SolidBrush(Color.Black);
             Pen pen = new Pen(brush);
             const int minLabelPitchInPixels = 30;
@@ -431,14 +491,19 @@ namespace CLRProfiler
 
             ulong labelPitch = 1024;
             while (labelPitch < minLabelPitch)
+            {
                 labelPitch *= 2;
+            }
 
             int y = topMargin;
             for (AddressRange r = rangeList; r != null; r = r.next)
             {
                 DrawAddressLabel(g, brush, pen, r, y, r.loAddr);
                 for (ulong addr = (r.loAddr + labelPitch * 3 / 2) & ~(labelPitch - 1); addr <= r.hiAddr; addr += labelPitch)
+                {
                     DrawAddressLabel(g, brush, pen, r, y, addr);
+                }
+
                 y += (int)((r.hiAddr - r.loAddr)/(uint)verticalScale);
                 y += gap + timeLabelHeight;
             }
@@ -452,7 +517,10 @@ namespace CLRProfiler
             int labelPitchInPixels = 100;
             int timeLabelWidth = (int)g.MeasureString("999.9 sec ", font).Width;
             while (labelPitchInPixels < timeLabelWidth)
+            {
                 labelPitchInPixels += 100;
+            }
+
             double labelPitch = labelPitchInPixels*horizontalScale*0.001;
 
             Brush brush = new SolidBrush(Color.DarkBlue);
@@ -494,9 +562,15 @@ namespace CLRProfiler
                 {
                     gcCount[0]--;
                     if (gc.typeIndex >= 1)
+                    {
                         gcCount[1]--;
+                    }
+
                     if (gc.typeIndex >= 2)
+                    {
                         gcCount[2]--;
+                    }
+
                     if (gc.typeIndex > gen)
                     {
                         int x = TimeToX(lastLog.TickIndexToTime(gc.changeTickIndex));
@@ -518,16 +592,23 @@ namespace CLRProfiler
             brushes[1] = new SolidBrush(Color.Green);
             brushes[2] = new SolidBrush(Color.Blue);
             for (int i = 0; i < 3; i++)
+            {
                 pens[i] = new Pen(brushes[i]);
+            }
 
             int[] totalGcCount = new int[3];
             for (SampleObjectTable.SampleObject gc = gcTickList; gc != null; gc = gc.prev)
             {
                 totalGcCount[0]++;
                 if (gc.typeIndex >= 1)
+                {
                     totalGcCount[1]++;
+                }
+
                 if (gc.typeIndex >= 2)
+                {
                     totalGcCount[2]++;
+                }
             }
 
             int y = topMargin;
@@ -549,15 +630,22 @@ namespace CLRProfiler
                             if (gc.typeIndex != gen)
                             {
                                 if (gc.typeIndex > gen)
+                                {
                                     lastLabelX = x;
+                                }
                             }
                             else
                             {
                                 string s;
                                 if (gen == 0)
+                                {
                                     s = string.Format("gc #{0}", gcCount[0]);
+                                }
                                 else
+                                {
                                     s = string.Format("gc #{0} (gen {1}#{2})", gcCount[0], gen, gcCount[gen]);
+                                }
+
                                 int minLabelPitch = (int)g.MeasureString(s, font).Width + 10;
                                 if (lastLabelX - x >= minLabelPitch && x > NextLabelX(g, gc, gen, gcCount))
                                 {
@@ -578,9 +666,14 @@ namespace CLRProfiler
                             }
                             gcCount[0]--;
                             if (gc.typeIndex >= 1)
+                            {
                                 gcCount[1]--;
+                            }
+
                             if (gc.typeIndex >= 2)
+                            {
                                 gcCount[2]--;
+                            }
                         }
                     }
                 }
@@ -611,7 +704,10 @@ namespace CLRProfiler
                     Rectangle r = new Rectangle(x, commentVerticalMargin, 1, graphPanel.Height - commentVerticalMargin*2);
                     r.Intersect(clipRect);
                     if (r.Width != 0 && r.Height != 0)
+                    {
                         g.DrawLine(pen, r.Left, r.Top, r.Left, r.Top + r.Height);
+                    }
+
                     prevX = x;
                 }
             }
@@ -636,13 +732,18 @@ namespace CLRProfiler
 
             ulong range = 0;
             for (AddressRange r = rangeList; r != null; r = r.next)
+            {
                 range += r.hiAddr - r.loAddr;
+            }
 
             timeLabelHeight = font.Height*2;
             
             int availablePixels = graphPanel.Height - topMargin - bottomMargin - timeLabelHeight - (timeLabelHeight + gap)*(rangeCount-1);
             if (availablePixels < graphPanel.Height/2)
+            {
                 availablePixels = graphPanel.Height/2;
+            }
+
             verticalScale = Scale(verticalScaleGroupBox, availablePixels, (int)(range/1024), verticalScale == 0)*1024;
 
             addressLabelWidth = (int)e.Graphics.MeasureString("0123456789A", font).Width;
@@ -682,7 +783,10 @@ namespace CLRProfiler
             DrawGcTicks(g, sampleObjectTable.gcTickList);
 
             if (selectedStartTickIndex != selectedEndTickIndex)
+            {
                 DrawSelectionVerticalLine(g, selectedStartTickIndex);
+            }
+
             DrawSelectionVerticalLine(g, selectedEndTickIndex);
             DrawSelectionHorizontalLines(g, selectedStartTickIndex, selectedEndTickIndex);
 
@@ -701,7 +805,9 @@ namespace CLRProfiler
             uint index = (uint)(addr >> SampleObjectTable.firstLevelShift);
             SampleObjectTable.SampleObject[] sot = sampleObjectTable.masterTable[index];
             if (sot == null)
+            {
                 return;
+            }
 
             index = (uint)((addr >> SampleObjectTable.secondLevelShift) & (SampleObjectTable.secondLevelLength-1));
 
@@ -710,7 +816,9 @@ namespace CLRProfiler
                 if (startTickIndex <= so.origAllocTickIndex && so.origAllocTickIndex < endTickIndex && so.typeIndex != 0)
                 {
                     if (so.prev == null || so.prev.typeIndex == 0)
+                    {
                         typeIndexToTypeDesc[so.typeIndex].totalSize += SampleObjectTable.sampleGrain;
+                    }
                 }
             }
         }
@@ -734,7 +842,9 @@ namespace CLRProfiler
                 {
                     SampleObjectTable.SampleObject so = FindSampleObject(tick, addr);
                     if (so != null && so.typeIndex != 0)
+                    {
                         typeIndexToTypeDesc[so.typeIndex].totalSize += SampleObjectTable.sampleGrain;
+                    }
                 }
             }
         }
@@ -750,7 +860,10 @@ namespace CLRProfiler
                 int typeWidth = (int)g.MeasureString(t.typeName + " - 999,999,999 bytes (100.00%)", font).Width+dotSize*2;
                 t.rect = new Rectangle(x, y, typeWidth, font.Height);
                 if (maxWidth < t.rect.Width)
+                {
                     maxWidth = t.rect.Width;
+                }
+
                 y = t.rect.Bottom + typeLegendSpacing;
             }
             int height = y + bottomMargin;
@@ -766,9 +879,14 @@ namespace CLRProfiler
 
             long totalSize = 0;
             foreach (TypeDesc t in sortedTypeTable)
+            {
                 totalSize += t.totalSize;
+            }
+
             if (totalSize == 0)
+            {
                 totalSize = 1;
+            }
 
             string title = "Types:";
             if (selectedStartTickIndex != 0)
@@ -876,7 +994,10 @@ namespace CLRProfiler
             {
                 int nextY = rY + (int)((r.hiAddr - r.loAddr)/(uint)verticalScale);
                 if (rY <= y && y <= nextY)
+                {
                     return r.hiAddr - (ulong)(y - rY) * (ulong)verticalScale;
+                }
+
                 rY = nextY;
                 rY += gap + timeLabelHeight;
             }
@@ -892,9 +1013,13 @@ namespace CLRProfiler
                 {
                     TypeDesc t;
                     if (firstAllocTickIndex <= so.origAllocTickIndex && so.origAllocTickIndex < lastAllocTickIndex)
+                    {
                         t = typeIndexToTypeDesc[so.typeIndex];
+                    }
                     else
+                    {
                         t = typeIndexToTypeDesc[0];
+                    }
 
                     int x = TimeToX(lastLog.TickIndexToTime(tickIndex));
                     int y = AddrToY(addr);
@@ -920,7 +1045,9 @@ namespace CLRProfiler
                             ulong addr = ((ulong)i<<SampleObjectTable.firstLevelShift)
                                               + (j<<SampleObjectTable.secondLevelShift);
                             if ((addr % (uint)verticalScale) == 0)
+                            {
                                 DrawChangeList(g, so, addr, tick);
+                            }
                         }
                     }
                 }
@@ -973,25 +1100,42 @@ namespace CLRProfiler
         {
             Graphics g = graphPanel.CreateGraphics();
             if (newStartTickIndex != selectedStartTickIndex)
+            {
                 EraseSelectionVerticalLine(g, selectedStartTickIndex);
+            }
+
             if (newEndTickIndex!= selectedEndTickIndex)
+            {
                 EraseSelectionVerticalLine(g, selectedEndTickIndex);
+            }
+
             if (newStartTickIndex != newEndTickIndex)
+            {
                 DrawSelectionVerticalLine(g, newStartTickIndex);
+            }
+
             DrawSelectionVerticalLine(g, newEndTickIndex);
             if (newStartTickIndex == selectedStartTickIndex)
             {
                 if (newEndTickIndex < selectedEndTickIndex)
+                {
                     EraseSelectionHorizontalLines(g, newEndTickIndex, selectedEndTickIndex);
+                }
                 else
+                {
                     DrawSelectionHorizontalLines(g, selectedEndTickIndex, newEndTickIndex);
+                }
             }
             else if (newEndTickIndex == selectedEndTickIndex)
             {
                 if (newStartTickIndex < selectedStartTickIndex)
+                {
                     DrawSelectionHorizontalLines(g, newStartTickIndex, selectedStartTickIndex);
+                }
                 else
+                {
                     EraseSelectionHorizontalLines(g, selectedStartTickIndex, newStartTickIndex);
+                }
             }
             else
             {
@@ -1042,12 +1186,18 @@ namespace CLRProfiler
             if (selectedStartTickIndex != 0)
             {
                 foreach (TypeDesc t in sortedTypeTable)
+                {
                     t.totalSize = 0;
+                }
 
                 if (selectedStartTickIndex == selectedEndTickIndex)
+                {
                     CalculateLiveObjectSizes(selectedStartTickIndex);
+                }
                 else
+                {
                     CalculateAllocatedObjectSizes(selectedStartTickIndex, selectedEndTickIndex);
+                }
 
                 sortedTypeTable.Sort();
             }
@@ -1060,9 +1210,13 @@ namespace CLRProfiler
             if (selectedTickIndex != 0)
             {
                 if (selectedTickIndex < selectionAnchorTickIndex)
+                {
                     SetSelection(selectedTickIndex, selectionAnchorTickIndex);
+                }
                 else
+                {
                     SetSelection(selectionAnchorTickIndex, selectedTickIndex);
+                }
             }
         }
 
@@ -1092,7 +1246,9 @@ namespace CLRProfiler
             uint index = (uint)(addr >> SampleObjectTable.firstLevelShift);
             SampleObjectTable.SampleObject[] sot = sampleObjectTable.masterTable[index];
             if (sot == null)
+            {
                 return null;
+            }
 
             index = (uint)((addr >> SampleObjectTable.secondLevelShift) & (SampleObjectTable.secondLevelLength-1));
             
@@ -1102,9 +1258,13 @@ namespace CLRProfiler
                 if (so.changeTickIndex <= tickIndex && tickIndex < nextTickIndex)
                 {
                     if (firstAllocTickIndex <= so.origAllocTickIndex && so.origAllocTickIndex < lastAllocTickIndex)
+                    {
                         return so;
+                    }
                     else
+                    {
                         return null;
+                    }
                 }
                 nextTickIndex = so.changeTickIndex;
             }
@@ -1120,7 +1280,9 @@ namespace CLRProfiler
                 {
                     SampleObjectTable.SampleObject so = FindSampleObject(tick, addr);
                     if (so != null && so.typeIndex != 0)
+                    {
                         sum += SampleObjectTable.sampleGrain;
+                    }
                 }
             }
             return sum;
@@ -1146,7 +1308,9 @@ namespace CLRProfiler
         private void graphPanel_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
         {
             if (!initialized)
+            {
                 return;
+            }
 
             if ((e.Button & MouseButtons.Left) != 0)
             {
@@ -1162,15 +1326,23 @@ namespace CLRProfiler
                     string caption = string.Format("{0:f3} seconds, {1:n0} bytes heap size", lastLog.TickIndexToTime(tickIndex), heapSize);
                     SampleObjectTable.SampleObject so = FindSampleObject(tickIndex, addr);
                     if (so != null && so.typeIndex != 0)
+                    {
                         caption = string.Format("{0} at {1} - ", typeName[so.typeIndex], FormatAddress(addr)) + caption;
+                    }
+
                     string comment = FindComment(e.X);
                     if (comment != null)
+                    {
                         caption = caption + "\r\n" + comment;
+                    }
+
                     toolTip.Active = true;
                     toolTip.SetToolTip(graphPanel, caption);
                 }
                 else
+                {
                     toolTip.Active = false;
+                }
             }
         }
 
@@ -1212,7 +1384,9 @@ namespace CLRProfiler
             for (liveObjectTable.GetNextObject(0, ulong.MaxValue, out o); o.id < ulong.MaxValue; liveObjectTable.GetNextObject(o.id + o.size, ulong.MaxValue, out o))
             {
                 if (firstAllocTickIndex <= o.allocTickIndex && o.allocTickIndex < lastAllocTickIndex)
+                {
                     histogram.AddObject(o.typeSizeStacktraceIndex, 1);
+                }
             }
             return histogram;
         }

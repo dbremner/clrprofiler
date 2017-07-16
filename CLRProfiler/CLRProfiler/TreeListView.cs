@@ -394,10 +394,14 @@ namespace CLRProfiler
 					if (filterFns[i].functionId > 0)
 					{
 						if (filterFns[i].nodetype == TreeNode.NodeType.Call)
-							strFn = treeOwner.MakeNameForFunction( filterFns[i].functionId );
-						else
-							strFn = treeOwner.MakeNameForAllocation( filterFns[i].functionId, 0);
-					}
+                        {
+                            strFn = treeOwner.MakeNameForFunction( filterFns[i].functionId );
+                        }
+                        else
+                        {
+                            strFn = treeOwner.MakeNameForAllocation( filterFns[i].functionId, 0);
+                        }
+                    }
 					else
 					{
 						strFn = "none";
@@ -411,10 +415,14 @@ namespace CLRProfiler
 					if (filterFns[i].functionId > 0)
 					{
 						if (filterFns[i].nodetype == TreeNode.NodeType.Call)
-							strFn = treeOwner.MakeNameForFunction( filterFns[i].functionId );
-						else
-							strFn = treeOwner.MakeNameForAllocation( filterFns[i].functionId, 0 );
-					}
+                        {
+                            strFn = treeOwner.MakeNameForFunction( filterFns[i].functionId );
+                        }
+                        else
+                        {
+                            strFn = treeOwner.MakeNameForAllocation( filterFns[i].functionId, 0 );
+                        }
+                    }
 					else
 					{
 						strFn = "none";
@@ -519,8 +527,10 @@ namespace CLRProfiler
 				{
 					curSel++;
 					if (curSel >= treeListBox.Items.Count)
-						curSel = -1;
-					else
+                    {
+                        curSel = -1;
+                    }
+                    else
 					{
 						//  Expand if not already expanded
 						//  Note that we expand only on forward search

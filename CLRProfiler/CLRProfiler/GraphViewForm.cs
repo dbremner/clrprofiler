@@ -94,15 +94,22 @@ namespace CLRProfiler
             if (v.selected)
             {
                 using (SolidBrush selectBrush = new SolidBrush(Color.Aqua))
+                {
                     g.FillRectangle(selectBrush, r);
+                }
             }
 
             RectangleF stringRect;
             int lineCount = 2;
             if (v.signature != null)
+            {
                 lineCount = 3;
+            }
+
             if (r.Height > fontHeight*lineCount)
+            {
                 stringRect = new RectangleF(r.X,r.Y,r.Width,fontHeight);
+            }
             else
             {
                 stringRect = new RectangleF(r.X,r.Y+r.Height+3,r.Width,fontHeight);
@@ -150,7 +157,9 @@ namespace CLRProfiler
                 stringRect.Y += fontHeight;
                 int width = (int)g.MeasureString(v.basicSignature, font).Width;
                 if (stringRect.Width < width)
+                {
                     v.signatureCurtated = true;
+                }
             }
 
             g.DrawString(v.weightString, font, penBrush, stringRect);
@@ -248,11 +257,18 @@ namespace CLRProfiler
                         else
                         {
                             if (red <= green && red <= blue)
+                            {
                                 red = 0;
+                            }
                             else if (green <= blue && green <= red)
+                            {
                                 green = 0;
+                            }
                             else if (blue <= red && blue <= green)
+                            {
                                 blue = 0;
+                            }
+
                             Color color = Color.FromArgb(100, red, green, blue);
                             Debug.Assert(!color.IsEmpty);
                             brush = new SolidBrush(color);
@@ -264,14 +280,19 @@ namespace CLRProfiler
                         {
                             int iWidth = (int)fWidth;
                             if (iWidth < 1)
+                            {
                                 iWidth = 1;
+                            }
+
                             e.width = iWidth;
                             Pen pen = e.pen;
                             if (pen == null || pen.Width != iWidth || e.selected)
                             {
                                 pen = new Pen(brush, iWidth);
                                 if (!e.selected)
+                                {
                                     e.pen = pen;
+                                }
                             }
                             Debug.Assert(pen != null);
                             int deltaX = e.toPoint.X - e.fromPoint.X;
@@ -309,9 +330,13 @@ namespace CLRProfiler
             if (graph.graphType == Graph.GraphType.CallGraph)
             {
                 if (weight == 1)
+                {
                     return "1 call";
+                }
                 else
+                {
                     return string.Format("{0:n0} calls", weight);
+                }
             }
             if (graph.graphType == Graph.GraphType.AssemblyGraph)
             {
@@ -327,9 +352,13 @@ namespace CLRProfiler
             else if (graph.graphType == Graph.GraphType.HandleAllocationGraph)
             {
                 if (weight == 1)
+                {
                     return "1 handle";
+                }
                 else
+                {
                     return string.Format("{0:n0} handles", weight);
+                }
             }
             else
             {
@@ -352,7 +381,10 @@ namespace CLRProfiler
                 }
                 string format = "{0,4:f0} {1} ({2:f2}%)";
                 if (w < 10)
+                {
                     format = "{0,4:f1} {1} ({2:f2}%)";
+                }
+
                 return string.Format(format, w, byteString, weight*100.0/totalWeight);
             }
         }
@@ -365,15 +397,23 @@ namespace CLRProfiler
             {
                 v.weight = v.incomingWeight;
                 if (v.weight < v.outgoingWeight)
+                {
                     v.weight = v.outgoingWeight;
+                }
+
                 if (graph.graphType == Graph.GraphType.CallGraph)
                 {
                     if (totalWeight < v.weight)
+                    {
                         totalWeight = v.weight;
+                    }
                 }
             }
             if (graph.graphType != Graph.GraphType.CallGraph)
+            {
                 totalWeight = graph.TopVertex.weight;
+            }
+
             if (totalWeight == 0)
             {
                 totalWeight = 1;
@@ -397,9 +437,14 @@ namespace CLRProfiler
                         if (graph.graphType == Graph.GraphType.CallGraph)
                         {
                             if (v.incomingWeight > v.outgoingWeight)
+                            {
                                 v.basicWeight = v.incomingWeight - v.outgoingWeight;
+                            }
                             else
+                            {
                                 v.basicWeight = 0;
+                            }
+
                             v.weightString = string.Format("Gets {0}, causes {1}",
                                 formatWeight(v.basicWeight),
                                 formatWeight(v.outgoingWeight));
@@ -407,44 +452,69 @@ namespace CLRProfiler
                         else if (graph.graphType == Graph.GraphType.ReferenceGraph)
                         {
                             if (v.weight == 1)
+                            {
                                 v.weightString = "1 reference";
+                            }
                             else
+                            {
                                 v.weightString = string.Format("{0} references", v.weight);
+                            }
+
                             if (v.count > 0)
                             {
                                 if (v.count == 1)
+                                {
                                     v.weightString += " (1 object)";
+                                }
                                 else
+                                {
                                     v.weightString += string.Format(" ({0} objects)", v.count);
+                                }
                             }
                         }
                         else
                         {
                             if (v.count == 0)
+                            {
                                 v.weightString = formatWeight(v.weight);
+                            }
                             else if (v.count == 1)
+                            {
                                 v.weightString = string.Format("{0}  (1 object, {1})", formatWeight(v.weight), formatWeight(v.basicWeight));
+                            }
                             else
+                            {
                                 v.weightString = string.Format("{0}  ({1} objects, {2})", formatWeight(v.weight), v.count, formatWeight(v.basicWeight));
+                            }
                         }
                         if (v.weight*scale > minHeight)
                         {
                             int width = (int)g.MeasureString(v.basicName, font).Width;
                             if (maxWidth < width)
+                            {
                                 maxWidth = width;
+                            }
 
                             width = (int)g.MeasureString(v.weightString, font).Width;
                             if (maxWidth < width)
+                            {
                                 maxWidth = width;
+                            }
                         }
                     }
                     int y = 10;
                     ulong levelWeight = 0;
                     foreach (Vertex v in all)
+                    {
                         levelWeight += v.weight;
+                    }
+
                     float levelHeight = levelWeight*scale;
                     if (levelHeight < totalHeight*0.5)
-                        y+= (int)((totalHeight - levelHeight)*2);
+                    {
+                        y += (int)((totalHeight - levelHeight)*2);
+                    }
+
                     foreach (Vertex v in all)
                     {
                         // For the in-between vertices, sometimes it's good
@@ -464,12 +534,17 @@ namespace CLRProfiler
                                 }
                             }
                             if (y < bestY && bestY < totalHeight*5)
+                            {
                                 y = bestY;
+                            }
                         }
                         float fHeight = v.weight*scale;
                         int iHeight = (int)fHeight;
                         if (iHeight < 1)
+                        {
                             iHeight = 1;
+                        }
+
                         v.rectangle = new Rectangle(x, y, maxWidth+5, iHeight);
 //                        if (placeEdges)
 //                            PlaceEdges(v.outgoingEdges.Values, false, v.rectangle.X + v.rectangle.Width, v.rectangle.Y, scale);
@@ -484,9 +559,15 @@ namespace CLRProfiler
                             y += iHeight;
                             int lines = 2;
                             if (v.signature != null)
+                            {
                                 lines = 3;
+                            }
+
                             if (iHeight <= fontHeight*lines)
+                            {
                                 y += fontHeight*lines + 3;
+                            }
+
                             y += 30;
                             drawnVertexCount++;
                         }
@@ -495,17 +576,27 @@ namespace CLRProfiler
                     {
                         x += maxWidth + gapWidth;
                         if (maxY < y)
+                        {
                             maxY = y;
+                        }
                     }
                 }
                 if (x < Size.Width)
+                {
                     x = Size.Width;
+                }
+
                 if (maxY < Size.Height)
+                {
                     maxY = Size.Height;
+                }
+
                 graphPanel.Size = new System.Drawing.Size (x, maxY);
             }
             if (placeEdges)
+            {
                 PlaceEdges(scale);
+            }
         }
 
         private void graphPanel_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
@@ -528,7 +619,9 @@ namespace CLRProfiler
                     foreach (Vertex v in graph.vertices.Values)
                     {
                         if (v.visible)
+                        {
                             PaintVertex(v, g, penBrush, pen);
+                        }
                     }
                 }
             }
@@ -562,17 +655,26 @@ namespace CLRProfiler
         private void selectEdges()
         {
             foreach (Vertex v in graph.vertices.Values)
+            {
                 foreach (Edge e in v.outgoingEdges.Values)
+                {
                     e.selected = false;
+                }
+            }
 
             foreach (Vertex v in graph.vertices.Values)
             {
                 if (v.selected)
                 {
                     foreach (Edge e in v.outgoingEdges.Values)
+                    {
                         e.selected = true;
+                    }
+
                     foreach (Edge e in v.incomingEdges.Values)
+                    {
                         e.selected = true;
+                    }
                 }
             }
         }
@@ -586,7 +688,9 @@ namespace CLRProfiler
                 if (vv.level == v.level)
                 {
                     if (nowSelected != vv.selected)
+                    {
                         selectVertex(vv, nowSelected);
+                    }
                 }
             }
         }
@@ -594,7 +698,10 @@ namespace CLRProfiler
         private void selectIncoming(Vertex v)
         {
             if (v.selected)
+            {
                 return;
+            }
+
             v.selected = true;
             foreach (Edge e in v.incomingEdges.Values)
             {
@@ -606,7 +713,10 @@ namespace CLRProfiler
         private void selectOutgoing(Vertex v)
         {
             if (v.selected)
+            {
                 return;
+            }
+
             v.selected = true;
             foreach (Edge e in v.outgoingEdges.Values)
             {
@@ -621,9 +731,14 @@ namespace CLRProfiler
             {
                 vv.selected = false;
                 foreach (Edge e in vv.incomingEdges.Values)
+                {
                     e.selected = false;
+                }
+
                 foreach (Edge e in vv.outgoingEdges.Values)
+                {
                     e.selected = false;
+                }
             }
 
             v.selected = true;
@@ -660,10 +775,14 @@ namespace CLRProfiler
                                 return;
                             }
                             else
+                            {
                                 continue;
+                            }
                         }
                         else
+                        {
                             nowSelected = v.selected != v.selectionRectangle.Contains(p);
+                        }
                     }
                     else if ((Control.ModifierKeys & Keys.Shift) != 0)
                     {
@@ -673,12 +792,19 @@ namespace CLRProfiler
                             break;
                         }
                         else
+                        {
                             nowSelected = v.selected;
+                        }
                     }
                     else
+                    {
                         nowSelected = v.selectionRectangle.Contains(p);
+                    }
+
                     if (nowSelected != v.selected)
+                    {
                         selectVertex(v, nowSelected);
+                    }
                 }
                 selectEdges();
             }
@@ -733,9 +859,15 @@ namespace CLRProfiler
                         string caption;
                         caption = v.name;
                         if (v.signature != null)
+                        {
                             caption += Environment.NewLine + v.signature;
+                        }
+
                         if (v.moduleName != null)
+                        {
                             caption += Environment.NewLine + v.moduleName;
+                        }
+
                         toolTip.Active = true;
                         toolTip.SetToolTip(graphPanel, caption);
                         break;
@@ -764,23 +896,37 @@ namespace CLRProfiler
         private bool NonEmptyWeightHistory(Vertex v)
         {
             if (v.weightHistory == null)
+            {
                 return false;
+            }
+
             for (int i = 0; i < v.weightHistory.Length; i++)
+            {
                 if (v.weightHistory[i] != 0)
+                {
                     return true;
+                }
+            }
+
             return false;
         }
 
         private void AppendVertexHeader(StringBuilder sb, Vertex v, int indent)
         {
             for (int i = 0; i < indent; i++)
+            {
                 sb.Append(" ");
+            }
+
             string signature = v.signature != null ? v.signature : "";
             sb.AppendFormat("{0} {1}:\t{2}\r\n", v.name, signature, v.weightString);
             if (NonEmptyWeightHistory(v))
             {
                 for (int i = 0; i < indent; i++)
+                {
                     sb.Append(" ");
+                }
+
                 sb.Append("  Previous allocations (newest to oldest): ");
                 for (int i = 0; i < v.weightHistory.Length; i++)
                 {
@@ -824,13 +970,20 @@ namespace CLRProfiler
                 AppendVertexHeader(sb, v, 0);
 
                 if (graph.graphType == Graph.GraphType.HeapGraph)
+                {
                     sb.Append("\r\nReferred to by:\r\n");
+                }
                 else
+                {
                     sb.Append("\r\nContributions from callers:\r\n");
+                }
 
                 ArrayList callers = new ArrayList();
                 foreach (Edge edge in v.incomingEdges.Values)
+                {
                     callers.Add(edge);
+                }
+
                 callers.Sort();
                 foreach (Edge edge in callers)
                 {
@@ -838,18 +991,28 @@ namespace CLRProfiler
                     string signature1 = vv.signature != null ? vv.signature : "";
                     string explain = "from";
                     if (graph.graphType == Graph.GraphType.CallGraph)
+                    {
                         explain = "caused by";
+                    }
+
                     sb.AppendFormat("\t{0} {1}\t{2}\t{3}\r\n", formatWeight(edge.weight), explain, vv.name, signature1);
                 }
 
                 if (graph.graphType == Graph.GraphType.HeapGraph)
+                {
                     sb.Append("\r\nReferring to:\r\n");
+                }
                 else
+                {
                     sb.Append("\r\nContributions to callees:\r\n");
+                }
 
                 ArrayList callees = new ArrayList();
                 foreach (Edge edge in v.outgoingEdges.Values)
+                {
                     callees.Add(edge);
+                }
+
                 callees.Sort();
                 foreach (Edge edge in callees)
                 {
@@ -857,7 +1020,10 @@ namespace CLRProfiler
                     string signature2 = vv.signature != null ? vv.signature : "";
                     string explain = "to";
                     if (graph.graphType == Graph.GraphType.CallGraph)
+                    {
                         explain = "caused by";
+                    }
+
                     sb.AppendFormat("\t{0} {1}\t{2}\t{3}\r\n", formatWeight(edge.weight), explain, vv.name, signature2);
                 }
             }
@@ -920,33 +1086,51 @@ namespace CLRProfiler
         private void activateIncoming(Vertex v)
         {
             if (v.active)
+            {
                 return;
+            }
+
             v.active = true;
             foreach (Edge e in v.incomingEdges.Values)
+            {
                 activateIncoming(e.FromVertex);
+            }
         }
 
         private void activateOutgoing(Vertex v)
         {
             if (v.active)
+            {
                 return;
+            }
+
             v.active = true;
             foreach (Edge e in v.outgoingEdges.Values)
+            {
                 activateOutgoing(e.ToVertex);
+            }
         }
 
         private void prune()
         {
             int selectedVerticesCount = 0;
             foreach (Vertex v in graph.vertices.Values)
+            {
                 if (v.selected)
+                {
                     selectedVerticesCount += 1;
+                }
+            }
 
             if (selectedVerticesCount == 0)
+            {
                 return;
+            }
 
             foreach (Vertex v in graph.vertices.Values)
+            {
                 v.active = false;
+            }
 
             foreach (Vertex v in graph.vertices.Values)
             {
@@ -954,9 +1138,14 @@ namespace CLRProfiler
                 {
                     v.active = true;
                     foreach (Edge edge in v.incomingEdges.Values)
+                    {
                         activateIncoming(edge.FromVertex);
+                    }
+
                     foreach (Edge edge in v.outgoingEdges.Values)
+                    {
                         activateOutgoing(edge.ToVertex);
+                    }
                 }
             }
             graph.BottomVertex.active = false;
@@ -1055,7 +1244,10 @@ namespace CLRProfiler
                 if (again)
                 {
                     if (v.selected)
+                    {
                         again = false;
+                    }
+
                     continue;
                 }
                 foundVertex = v;
@@ -1119,9 +1311,13 @@ namespace CLRProfiler
                 sumSq += dWeight*dWeight;
             }
             if (sumSq <= 0.0)
+            {
                 return 0.0;
+            }
             else
+            {
                 return sum*sum/sumSq;
+            }
         }
 
         private double Score(Vertex v)
@@ -1143,11 +1339,17 @@ namespace CLRProfiler
                 double scoreX = scoreOfVertex[(Vertex)x];
                 double scoreY = scoreOfVertex[(Vertex)y];
                 if (scoreX < scoreY)
+                {
                     return 1;
+                }
                 else if (scoreX > scoreY)
+                {
                     return -1;
+                }
                 else
+                {
                     return 0;
+                }
             }
         }
 
@@ -1193,7 +1395,10 @@ namespace CLRProfiler
                 v = orgGraph.FindOrCreateVertex(v.name, v.signature, v.moduleName);
             }
             else
+            {
                 g = new Graph(graph);
+            }
+
             g.allocatedAfterTickIndex = graph.allocatedAfterTickIndex;
             g.allocatedBeforeTickIndex = graph.allocatedBeforeTickIndex;
             Vertex vn = CloneVertex(g, v);
@@ -1201,7 +1406,9 @@ namespace CLRProfiler
             if (v.incomingEdges.Count == 0)
             {
                 if (v != graph.TopVertex)
+                {
                     g.FindOrCreateEdge(g.TopVertex, vn).AddWeight(v.weight);
+                }
             }
             else
             {
@@ -1210,13 +1417,17 @@ namespace CLRProfiler
                     Vertex vin = CloneVertex(g, e.FromVertex);
                     g.FindOrCreateEdge(vin, vn).AddWeight(e.weight);
                     if (vin != g.TopVertex)
+                    {
                         g.FindOrCreateEdge(g.TopVertex, vin).AddWeight(e.weight);
+                    }
                 }
             }
             if (v.outgoingEdges.Count == 0)
             {
                 if (v != graph.BottomVertex)
+                {
                     g.FindOrCreateEdge(vn, g.BottomVertex).AddWeight(v.weight);
+                }
             }
             else
             {
@@ -1225,14 +1436,19 @@ namespace CLRProfiler
                     Vertex von = CloneVertex(g, e.ToVertex);
                     g.FindOrCreateEdge(vn, von).AddWeight(e.weight);
                     if (von != g.BottomVertex)
+                    {
                         g.FindOrCreateEdge(von, g.BottomVertex).AddWeight(e.weight);
+                    }
                 }
             }
             g.BottomVertex.active = false;
             g.graphType = graph.graphType;
             g.typeGraphOptions = graph.typeGraphOptions;
             if (titlePrefix == null)
+            {
                 titlePrefix = "Zoom to: ";
+            }
+
             string title = titlePrefix + v.name + " " + (v.signature != null? v.signature : "");
             GraphViewForm graphViewForm = new GraphViewForm(g, title);
             graphViewForm.Visible = true;
@@ -1259,7 +1475,9 @@ namespace CLRProfiler
                 return (Graph)graph.graphSource;
             }
             else
+            {
                 return graph;
+            }
         }
 
         private ObjectGraph GetObjectGraph()
@@ -1274,9 +1492,14 @@ namespace CLRProfiler
 
             // First of all, limit the interval to the one of the underlying graph
             if (allocatedAfterTickIndex < graph.allocatedAfterTickIndex)
+            {
                 allocatedAfterTickIndex = graph.allocatedAfterTickIndex;
+            }
+
             if (allocatedBeforeTickIndex > graph.allocatedBeforeTickIndex)
+            {
                 allocatedBeforeTickIndex = graph.allocatedBeforeTickIndex;
+            }
 
             Graph originalGraph = GetOriginalGraph();
             ObjectGraph objectGraph = GetObjectGraph();
@@ -1299,10 +1522,14 @@ namespace CLRProfiler
                         {
                             v = graph.FindVertex(v.name, v.signature, v.moduleName);
                             if (v == null)
+                            {
                                 continue;
+                            }
                         }
                         if (anyVertexSelected && !v.selected)
+                        {
                             continue;
+                        }
                     }
                     histogram.AddObject(gcObject.TypeSizeStackTraceId, 1);
                 }
@@ -1354,15 +1581,21 @@ namespace CLRProfiler
         {
             int selectedVertexCount = SelectedVertexCount();
             if (selectedVertexCount == 0)
+            {
                 MessageBox.Show("Please select a node first by clicking on it");
+            }
             else if (selectedVertexCount > 10)
+            {
                 MessageBox.Show("Too many vertices selected");
+            }
             else
             {
                 foreach (Vertex v in graph.vertices.Values)
                 {
                     if (v.selected)
+                    {
                         ZoomVertex(v, null);
+                    }
                 }
             }
         }
@@ -1395,7 +1628,10 @@ namespace CLRProfiler
         {
             Graph orgGraph = graph;
             if (orgGraph.graphSource is Graph)
+            {
                 orgGraph = (Graph)orgGraph.graphSource;
+            }
+
             ObjectGraph objectGraph = (ObjectGraph)orgGraph.graphSource;
             ObjectGraph.BuildTypeGraphOptions options; 
             if (graph.typeGraphOptions == ObjectGraph.BuildTypeGraphOptions.LumpBySignature)
@@ -1454,13 +1690,19 @@ namespace CLRProfiler
                     if (v.signature == null || graph.graphType == Graph.GraphType.HeapGraph)
                     {
                         if (types.Length != 0)
+                        {
                             types.Append(';');
+                        }
+
                         types.Append(v.name);
                     }
                     else
                     {
                         if (methods.Length != 0)
+                        {
                             methods.Append(';');
+                        }
+
                         methods.Append(Vertex.RemoveRecursionCount(v.name));
                     }
                     if (v.signature != null)
@@ -1469,7 +1711,10 @@ namespace CLRProfiler
                             graph.typeGraphOptions == ObjectGraph.BuildTypeGraphOptions.IndividualObjects)
                         {
                             if (addresses.Length != 0)
+                            {
                                 addresses.Append(';');
+                            }
+
                             string[] pieces = v.signature.Split('=', ',');
                             Debug.Assert(pieces.Length == 4 && pieces[0] == "Address ");
                             addresses.Append(pieces[1].Trim());
@@ -1477,7 +1722,10 @@ namespace CLRProfiler
                         else
                         {
                             if (signatures.Length != 0)
+                            {
                                 signatures.Append(';');
+                            }
+
                             signatures.Append(v.signature);
                         }
                     }
@@ -1520,7 +1768,9 @@ namespace CLRProfiler
             if (findForm.nameTextBox.Text == "" && findForm.signatureTextBox.Text == "")
             {
                 if (findForm.ShowDialog() != DialogResult.OK)
+                {
                     return;
+                }
             }
             FindVertex(findForm.nameTextBox.Text, findForm.signatureTextBox.Text, true);
         }

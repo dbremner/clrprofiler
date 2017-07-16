@@ -47,7 +47,9 @@ namespace CLRProfiler
                 string name = readNewLog.funcName[i];
                 string signature = readNewLog.funcSignature[i];
                 if (name != null && signature != null)
+                {
                     readNewLog.AddFunctionVertex(i, name, signature, graph, ref funcVertex, filterForm);
+                }
             }
         }
 
@@ -56,10 +58,14 @@ namespace CLRProfiler
             int[] stackTrace = readNewLog.stacktraceTable.IndexToStacktrace(stackTraceIndex);
                 
             while (vertexStack.Length < stackTrace.Length+1)
+            {
                 vertexStack = new Vertex[vertexStack.Length*2];
+            }
 
             for (int i = skipCount; i < stackTrace.Length; i++)
+            {
                 vertexStack[i-skipCount] = funcVertex[stackTrace[i]];
+            }
 
             return stackTrace.Length - skipCount;
         }
@@ -108,7 +114,10 @@ namespace CLRProfiler
             }
 
             foreach (Vertex v in graph.vertices.Values)
+            {
                 v.active = true;
+            }
+
             graph.BottomVertex.active = false;
 
             return graph;
@@ -137,9 +146,13 @@ namespace CLRProfiler
             {
                 int funcIndex = stackTrace[i];
                 if (readNewLog.funcModule[funcIndex] == modIndex)
+                {
                     result++;
+                }
                 else
+                {
                     break;
+                }
             }
             return result;
         }
@@ -190,7 +203,10 @@ namespace CLRProfiler
             }
 
             foreach (Vertex v in graph.vertices.Values)
+            {
                 v.active = true;
+            }
+
             graph.BottomVertex.active = false;
 
             return graph;
@@ -201,9 +217,13 @@ namespace CLRProfiler
             string funcName = readNewLog.funcName[funcIndex];
             int colonColonIndex = funcName.IndexOf("::");
             if (colonColonIndex > 0)
+            {
                 return funcName.Substring(0, colonColonIndex);
+            }
             else
+            {
                 return funcName;
+            }
         }
 
         int FunctionsInSameClass(string className, int stackTraceIndex)
@@ -214,9 +234,13 @@ namespace CLRProfiler
             {
                 int funcIndex = stackTrace[i];
                 if (ClassNameOfFunc(funcIndex) == className)
+                {
                     result++;
+                }
                 else
+                {
                     break;
+                }
             }
             return result;
         }
@@ -272,7 +296,10 @@ namespace CLRProfiler
             }
 
             foreach (Vertex v in graph.vertices.Values)
+            {
                 v.active = true;
+            }
+
             graph.BottomVertex.active = false;
 
             return graph;

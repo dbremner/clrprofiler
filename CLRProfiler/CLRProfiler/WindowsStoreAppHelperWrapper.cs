@@ -61,7 +61,9 @@ namespace CLRProfiler
             const string windowsStoreAppHelperType = "CLRProfilerWindowsStoreAppHelper.WindowsStoreAppHelper";
 
             if (s_isInitialized)
+            {
                 return;
+            }
 
             s_isWindowsStoreAppSupported = false;
             s_isInitialized = true;

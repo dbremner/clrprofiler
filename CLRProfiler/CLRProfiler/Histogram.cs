@@ -28,7 +28,10 @@ namespace CLRProfiler
         internal void AddObject(int typeSizeStacktraceIndex, int count)
         {
             while (typeSizeStacktraceIndex >= typeSizeStacktraceToCount.Length)
+            {
                 typeSizeStacktraceToCount = ReadNewLog.GrowIntVector(typeSizeStacktraceToCount);
+            }
+
             typeSizeStacktraceToCount[typeSizeStacktraceIndex] += count;
         }
 
@@ -37,8 +40,13 @@ namespace CLRProfiler
             get
             {
                 foreach (int count in typeSizeStacktraceToCount)
+                {
                     if (count != 0)
+                    {
                         return false;
+                    }
+                }
+
                 return true;
             }
         }
@@ -174,7 +182,10 @@ namespace CLRProfiler
             {
                 string typeName = readNewLog.typeName[i];
                 if (typeName == null)
+                {
                     typeName = string.Format("???? type {0}", i);
+                }
+
                 readNewLog.AddTypeVertex(i, typeName, graph, ref typeVertex, filterForm);
             }
         }
@@ -196,9 +207,15 @@ namespace CLRProfiler
                 string name = readNewLog.funcName[i];
                 string signature = readNewLog.funcSignature[i];
                 if (name == null)
+                {
                     name = string.Format("???? function {0}", i);
+                }
+
                 if (signature == null)
+                {
                     signature = "( ???????? )";
+                }
+
                 readNewLog.AddFunctionVertex(i, name, signature, graph, ref funcVertex, filterForm);
             }
         }
@@ -229,7 +246,10 @@ namespace CLRProfiler
             }
 
             foreach (Vertex v in graph.vertices.Values)
+            {
                 v.active = true;
+            }
+
             graph.BottomVertex.active = false;
 
             return graph;
@@ -292,7 +312,10 @@ namespace CLRProfiler
             }
 
             foreach (Vertex v in graph.vertices.Values)
+            {
                 v.active = true;
+            }
+
             graph.BottomVertex.active = false;
 
             return graph;
@@ -334,7 +357,10 @@ namespace CLRProfiler
             }
 
             foreach (Vertex v in graph.vertices.Values)
+            {
                 v.active = true;
+            }
+
             graph.BottomVertex.active = false;
 
             return graph;

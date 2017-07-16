@@ -56,10 +56,14 @@ namespace CLRProfiler
 			else
 			{
 				if (nodetype == TreeNode.NodeType.Call)
-					return m_treeOwner.MakeNameForFunction( id );
-				else
-					return m_treeOwner.MakeNameForAllocation( id, 0 );					
-			}
+                {
+                    return m_treeOwner.MakeNameForFunction( id );
+                }
+                else
+                {
+                    return m_treeOwner.MakeNameForAllocation( id, 0 );
+                }
+            }
 		}
 
 		private void btnIncludeFn0_Click(object sender, System.EventArgs e)

@@ -120,16 +120,26 @@ namespace CLRProfiler
                 if (t.selectedSize != this.selectedSize)
                 {
                     if (t.selectedSize < this.selectedSize)
+                    {
                         return -1;
+                    }
                     else
+                    {
                         return 1;
+                    }
                 }
                 if (t.totalSize < this.totalSize)
+                {
                     return -1;
+                }
                 else if (t.totalSize > this.totalSize)
+                {
                     return 1;
+                }
                 else
+                {
                     return 0;
+                }
             }
         }
 
@@ -144,7 +154,9 @@ namespace CLRProfiler
             rangeCount = 0;
 
             if (typeIndexToTypeDesc == null || typeIndexToTypeDesc.Length < typeName.Length)
+            {
                 typeIndexToTypeDesc = new TypeDesc[typeName.Length];
+            }
             else
             {
                 foreach (TypeDesc t in typeIndexToTypeDesc)
@@ -165,7 +177,9 @@ namespace CLRProfiler
             {
                 int gen = liveObjectTable.GenerationOfObject(ref o);
                 if (gen > generations-1)
+                {
                     gen = generations-1;
+                }
 
                 bool thisLOH = gen == generations-1;
 
@@ -198,25 +212,40 @@ namespace CLRProfiler
                 }
                 
                 if (rangeList.genLoAddr[gen] > o.id)
+                {
                     rangeList.genLoAddr[gen] = o.id;
+                }
+
                 if (rangeList.genHiAddr[gen] < o.id + o.size)
+                {
                     rangeList.genHiAddr[gen] = o.id + o.size;
+                }
             }
 
             sortedTypeTable = new ArrayList();
             foreach (TypeDesc t in typeIndexToTypeDesc)
+            {
                 if (t != null)
+                {
                     sortedTypeTable.Add(t);
+                }
+            }
+
             sortedTypeTable.Sort();
 
             foreach (TypeDesc t in sortedTypeTable)
             {
                 t.percentage = 0.0;
                 if (totalAllocated > 0)
+                {
                     t.percentage = 100.0*t.totalSize/totalAllocated;
+                }
+
                 t.selectedPercentage = 0.0;
                 if (totalSelected > 0)
+                {
                     t.selectedPercentage = 100*t.selectedSize/totalSelected;
+                }
             }
         }
 
@@ -243,7 +272,9 @@ namespace CLRProfiler
                 foreach (RadioButton rb in groupBox.Controls)
                 {
                     if (rb.Checked)
+                    {
                         return Int32.Parse(rb.Text);
+                    }
                 }
             }
             // No radio button was checked - let's come up with a suitable default
@@ -293,7 +324,9 @@ namespace CLRProfiler
             foreach (RadioButton rb in heapWidthGroupBox.Controls)
             {
                 if (rb.Checked)
+                {
                     return Int32.Parse(rb.Text);
+                }
             }
             foreach (RadioButton rb in heapWidthGroupBox.Controls)
             {
@@ -333,7 +366,10 @@ namespace CLRProfiler
         {
             Color[] newColors = new Color[2*colors.Length];
             for (int i = 0; i < colors.Length; i++)
+            {
                 newColors[i] = colors[i];
+            }
+
             colors = newColors;
         }
 
@@ -341,20 +377,32 @@ namespace CLRProfiler
         {
             bool anyTypesUncolored = false;
             foreach (TypeDesc t in sortedTypeTable)
+            {
                 anyTypesUncolored |= t.brushes == null;
+            }
 
             if (!anyTypesUncolored)
+            {
                 return;
+            }
 
             int count = 0;
             foreach (TypeDesc t in sortedTypeTable)
             {
                 if (count >= colors.Length)
+                {
                     GrowColors();
+                }
+
                 if (count < firstColors.Length)
+                {
                     colors[count] = firstColors[count];
+                }
                 else
+                {
                     colors[count] = MixColor(colors[count - firstColors.Length], colors[count - firstColors.Length + 1]);
+                }
+
                 t.colors = new Color[2];
                 t.colors[0] = colors[count];
                 t.colors[1] = MixColor(colors[count], Color.Black);
@@ -375,7 +423,9 @@ namespace CLRProfiler
             for (r = rangeList; r != null; r = r.next)
             {
                 if (r.loAddr <= addr && addr <= r.hiAddr)
+                {
                     break;
+                }
             }
             return r;
         }
@@ -384,7 +434,9 @@ namespace CLRProfiler
         {
             AddressRange r = AddressRangeOf(o.id);
             if (r != null)
+            {
                 return r;
+            }
 
             Debug.Assert(false);
             rangeList = new AddressRange(o.id, o.id + o.size, rangeList, rangeCount++);
@@ -395,7 +447,9 @@ namespace CLRProfiler
         private AddressRange AddressRangeOfObject(ref LiveObjectTable.LiveObject o, AddressRange hint)
         {
             if (hint != null && hint.loAddr <= o.id && o.id < hint.hiAddr)
+            {
                 return hint;
+            }
 
             return AddressRangeOfObject(ref o);
         }
@@ -407,7 +461,9 @@ namespace CLRProfiler
             {
                 IntersectIntervals((int)clipRect.Left, (int)clipRect.Right, ref x1, ref x2);
                 if (x1 < x2)
+                {
                     g.DrawLine(pen, x1, y, x2, y);
+                }
             }
         }
 
@@ -460,16 +516,23 @@ namespace CLRProfiler
         {
             int relativeY = graphPanel.Size.Height - bottomMargin - y + graphPanel.Top;
             if (relativeY < 0)
+            {
                 relativeY = 0;
+            }
+
             return r.loAddr + (ulong)relativeY * (ulong)(heapWidth * bytesPerPixel);
         }
 
         private int InsideSelection(ulong addr)
         {
             if (selectedLowAddr <= addr && addr < selectedHighAddr)
+            {
                 return 1;
+            }
             else
+            {
                 return 0;
+            }
         }
 
         const int align = 4;
@@ -497,7 +560,10 @@ namespace CLRProfiler
                 int x1 = leftMargin + r.index*(heapWidth + gap);
                 int x2 = x1 + heapWidth;
                 if (x2 < clipRect.Left || clipRect.Right < x1)
+                {
                     continue;
+                }
+
                 ulong visibleStartAddr = VisibleYToAddress(r, outerGraphPanel.Size.Height);
                 ulong visibleEndAddr = VisibleYToAddress(r, 0);
                 if (clipRect.Height < outerGraphPanel.Size.Height)
@@ -513,7 +579,10 @@ namespace CLRProfiler
                 ulong addr = liveObjectTable.FindObjectBackward(visibleStartAddr);
                 liveObjectTable.GetNextObject(addr, visibleStartAddr, out o);
                 if (o.id + o.size + align - 1 < visibleStartAddr)
+                {
                     addr = visibleStartAddr;
+                }
+
                 visibleEndAddr += align - 1;
                 for (liveObjectTable.GetNextObject(addr, visibleEndAddr, out o); o.id < visibleEndAddr; liveObjectTable.GetNextObject(addr, visibleEndAddr, out o))
                 {
@@ -534,7 +603,9 @@ namespace CLRProfiler
                             addr = oo.id + oo.size;
                         }
                         else
+                        {
                             break;
+                        }
                     }
 
                     // figure out what type the object is
@@ -556,9 +627,13 @@ namespace CLRProfiler
         private string FormatAddress(ulong addr)
         {
             if (addr > uint.MaxValue)
+            {
                 return string.Format("{0:X2}.{1:X4}.{2:X4}", addr >> 32, (addr >> 16) & 0xffff, addr & 0xffff);
+            }
             else
+            {
                 return string.Format("{0:X4}.{1:X4}", (addr >> 16) & 0xffff, addr & 0xffff);
+            }
         }
 
 
@@ -639,9 +714,14 @@ namespace CLRProfiler
                             g.DrawLine(pen[gen], baseX+gen*3, yLo, baseX+gen*3, yHi);
                             string label;
                             if (gen == 3)
+                            {
                                 label = "LOH";
+                            }
                             else
+                            {
                                 label = string.Format("gen {0}", gen);
+                            }
+
                             g.DrawString(label, font, brush[gen], baseX+gen*3+3, (yLo + yHi - font.Height)/2);
                         }
                     }
@@ -678,9 +758,13 @@ namespace CLRProfiler
             foreach (TypeDesc t in sortedTypeTable)
             {
                 if (totalSelected != 0)
+                {
                     t.selectedPercentage = 100.0*t.selectedSize/totalSelected;
+                }
                 else
+                {
                     t.selectedPercentage = 0.0;
+                }
             }
 
             sortedTypeTable.Sort();
@@ -716,7 +800,9 @@ namespace CLRProfiler
             if (!initialized)
             {
                 if (autoUpdate)
+                {
                     liveObjectTable = MainForm.instance.lastLogResult.liveObjectTable;
+                }
 
                 typeName = liveObjectTable.readNewLog.typeName;
 
@@ -735,7 +821,9 @@ namespace CLRProfiler
                 {
                     ulong rangeSize = r.hiAddr - r.loAddr;
                     if (maxRangeSize < rangeSize)
+                    {
                         maxRangeSize = rangeSize;
+                    }
                 }
 
                 bytesPerPixel = BytesPerPixel(graphPanel.Height - topMargin - bottomMargin, (int)(maxRangeSize/(uint)heapWidth), bytesPerPixel == 0);
@@ -743,7 +831,10 @@ namespace CLRProfiler
                 int maxHeight = (int)(maxRangeSize/(uint)(bytesPerPixel*heapWidth));
                 int height = topMargin + maxHeight + bottomMargin;
                 if (height < minHeight)
+                {
                     height = minHeight;
+                }
+
                 graphPanel.Height = height;
 
                 int width = leftMargin + rangeCount*(heapWidth + gap) + rightMargin;
@@ -801,13 +892,22 @@ namespace CLRProfiler
                 {
                     // This is the right range - limit the coordinates to the actual extremes.
                     if (x < minX)
+                    {
                         x = minX;
+                    }
                     else if (x > maxX)
+                    {
                         x = maxX;
+                    }
+
                     if (y < minY)
+                    {
                         y = minY;
+                    }
                     else if (y > maxY)
+                    {
                         y = maxY;
+                    }
 
                     // Reduce the coordinates to relative coordinates in the range - flipping y
                     x = x - minX;
@@ -818,9 +918,14 @@ namespace CLRProfiler
 
                     // Limit it so it's within the range of address in r
                     if (addr < r.loAddr)
+                    {
                         addr = r.loAddr;
+                    }
+
                     if (addr > r.hiAddr)
+                    {
                         addr = r.hiAddr;
+                    }
 
                     return addr;
                 }
@@ -832,7 +937,9 @@ namespace CLRProfiler
         private void DrawLiveObjectInterval(Graphics g, ulong low, ulong high)
         {
             if (low < high)
+            {
                 DrawLiveObjects(g, null, low, high);
+            }
         }
 
         private void DrawLiveObjectIntervals(ulong aLow, ulong aHigh, ulong bLow, ulong bHigh)
@@ -878,7 +985,10 @@ namespace CLRProfiler
                 Pen backGroundPen = new Pen(graphPanel.BackColor);
                 AddressRange r = AddressRangeOf(addr);
                 if (r != null)
+                {
                     FillSpace(g, r, backGroundPen, addr, addr + (uint)(heapWidth*bytesPerPixel));
+                }
+
                 DrawLiveObjectInterval(g, addr, addr + (uint)(heapWidth*bytesPerPixel));
             }
         }
@@ -887,14 +997,18 @@ namespace CLRProfiler
         {
             AddressRange r = AddressRangeOf(addr);
             if (r != null)
+            {
                 FillSpace(g, r, pen, addr, addr + (uint)(heapWidth*bytesPerPixel));
+            }
         }
 
         private void DrawSelectionVerticalLines(Graphics g, Pen pen, ulong lowAddr, ulong highAddr)
         {
             AddressRange r = AddressRangeOf(lowAddr);
             if (r == null)
+            {
                 return;
+            }
 
             int baseX = leftMargin + r.index*(heapWidth + gap);
 
@@ -919,7 +1033,10 @@ namespace CLRProfiler
             TypeDesc selectedType = FindSelectedType();
             string title = baseTitle;
             if (selectedType != null || selectedLowAddr != 0)
+            {
                 title += " - selected: " + ComputeObjectsDescription(selectedType, selectedLowAddr, selectedHighAddr);
+            }
+
             Text = title;
         }
 
@@ -951,24 +1068,38 @@ namespace CLRProfiler
                 Pen blackPen = new Pen(Color.Black);
                 Pen backGroundPen = new Pen(graphPanel.BackColor);
                 if (oldLowAddr != selectedLowAddr)
+                {
                     EraseSelectionHorizontalLine(g, oldLowAddr);
+                }
+
                 if (oldHighAddr != selectedHighAddr)
+                {
                     EraseSelectionHorizontalLine(g, oldHighAddr);
+                }
+
                 DrawSelectionHorizontalLine(g, blackPen, selectedHighAddr);
                 DrawSelectionHorizontalLine(g, blackPen, selectedLowAddr);
                 if (oldLowAddr == selectedLowAddr)
                 {
                     if (oldHighAddr < selectedHighAddr)
+                    {
                         DrawSelectionVerticalLines(g, blackPen, oldHighAddr, selectedHighAddr);
+                    }
                     else
+                    {
                         DrawSelectionVerticalLines(g, backGroundPen, selectedHighAddr, oldHighAddr);
+                    }
                 }
                 else if (oldHighAddr == selectedHighAddr)
                 {
                     if (oldLowAddr < selectedLowAddr)
+                    {
                         DrawSelectionVerticalLines(g, backGroundPen, oldLowAddr, selectedLowAddr);
+                    }
                     else
+                    {
                         DrawSelectionVerticalLines(g, blackPen, selectedLowAddr, oldLowAddr);
+                    }
                 }
                 else
                 {
@@ -1035,14 +1166,19 @@ namespace CLRProfiler
             }
             string format = "{0:f0} {1}";
             if (w < 10)
+            {
                 format = "{0:f1} {1}";
+            }
+
             return string.Format(format, w, byteString);
         }
 
         private void graphPanel_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
         {
             if (!initialized)
+            {
                 return;
+            }
 
             if (e.Button == MouseButtons.None)
             {
@@ -1084,7 +1220,10 @@ namespace CLRProfiler
             if (e.Button == MouseButtons.None)
             {
                 if (selectedStartAddr != 0)
+                {
                     selectedEndAddr = PixelCoordinatesToAddress(e.X, e.Y);
+                }
+
                 SetSelection();
             }
         }
@@ -1104,10 +1243,15 @@ namespace CLRProfiler
             {
                 int typeWidth = (int)g.MeasureString(t.typeName, font).Width;
                 if (maxTypeNameWidth < typeWidth)
+                {
                     maxTypeNameWidth = typeWidth;
+                }
+
                 typeWidth = (int)g.MeasureString(" (999,999,999 bytes, 99.99% - 999,999,999 bytes, 99.99% selected)", font).Width;
                 if (maxTypeNameWidth < typeWidth)
+                {
                     maxTypeNameWidth = typeWidth;
+                }
             }
             dotSize = (int)g.MeasureString("0", font).Width;
 
@@ -1164,7 +1308,9 @@ namespace CLRProfiler
             }
 
             if (!autoUpdate)
+            {
                 return;
+            }
 
             ReadLogResult logResult = MainForm.instance.lastLogResult;
             if (logResult != null && logResult.liveObjectTable != liveObjectTable)
@@ -1182,7 +1328,9 @@ namespace CLRProfiler
             foreach (TypeDesc t in sortedTypeTable)
             {
                 if (t.selected != 0)
+                {
                     return t;
+                }
             }
             return null;
         }
@@ -1191,10 +1339,16 @@ namespace CLRProfiler
         {
             string description = "";
             if (selectedType != null)
+            {
                 description += selectedType.typeName + " ";
+            }
+
             description += "objects ";
             if (selectedLowAddr > 0)
+            {
                 description += string.Format("between {0} and {1}", FormatAddress(selectedLowAddr), FormatAddress(selectedHighAddr));
+            }
+
             return description;
         }
 
@@ -1213,7 +1367,9 @@ namespace CLRProfiler
             for (liveObjectTable.GetNextObject(low, high, out o); o.id < high; liveObjectTable.GetNextObject(o.id + o.size, high, out o))
             {
                 if (selectedType == null || selectedType.typeIndex == o.typeIndex)
+                {
                     histogram.AddObject(o.typeSizeStacktraceIndex, 1);
+                }
             }
 
             // Build the real graph from the histogram
@@ -1242,7 +1398,9 @@ namespace CLRProfiler
             for (liveObjectTable.GetNextObject(low, high, out o); o.id < high; liveObjectTable.GetNextObject(o.id + o.size, high, out o))
             {
                 if (selectedType == null || selectedType.typeIndex == o.typeIndex)
+                {
                     histogram.AddObject(o.typeSizeStacktraceIndex, 1);
+                }
             }
 
             string title = "Histogram by Size for live " + ComputeObjectsDescription(selectedType, selectedLowAddr, selectedHighAddr);
@@ -1274,7 +1432,10 @@ namespace CLRProfiler
                 for (liveObjectTable.GetNextObject(low, high, out o); o.id < high; liveObjectTable.GetNextObject(o.id + o.size, high, out o))
                 {
                     if (selectedType != null && selectedType.typeIndex != o.typeIndex)
+                    {
                         continue;
+                    }
+
                     double age = (log.TickIndexToTime(liveObjectTable.lastTickIndex) - log.TickIndexToTime(o.allocTickIndex));
                     w.Write("{0},{1},{2},{3:f3}", FormatAddress(o.id), o.size, typeName[o.typeIndex], age);
 

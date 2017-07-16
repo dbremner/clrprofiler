@@ -40,9 +40,14 @@ namespace CLRProfiler
             startComboBox.SelectedIndex = 0;
             endComboBox.SelectedIndex = endComboBox.Items.Count - 1;
             if (startComboBox.Items.Count > 2)
+            {
                 startComboBox.SelectedIndex = 1;
+            }
+
             if (endComboBox.Items.Count > 2)
+            {
                 endComboBox.SelectedIndex = 2;
+            }
         }
 
         internal CommentRangeForm()
@@ -64,11 +69,17 @@ namespace CLRProfiler
         {
             ReadNewLog log = MainForm.instance.log;
             if (selectedIndex == 0)
+            {
                 return 0;
+            }
             else if (selectedIndex - 1 < log.commentEventList.count)
+            {
                 return log.commentEventList.eventTickIndex[selectedIndex - 1];
+            }
             else
+            {
                 return log.maxTickIndex;
+            }
         }
 
         private void okButton_Click(object sender, System.EventArgs e)

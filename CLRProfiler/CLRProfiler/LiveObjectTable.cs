@@ -59,7 +59,9 @@ namespace CLRProfiler
                     if (ii != i)
                     {
                         if (ii.hiAddr > i.loAddr && ii.loAddr < i.hiAddr)
+                        {
                             return ii;
+                        }
                     }
                 }
                 return null;
@@ -73,9 +75,14 @@ namespace CLRProfiler
                     if (ii == i)
                     {
                         if (prevInterval != null)
+                        {
                             prevInterval.next = ii.next;
+                        }
                         else
+                        {
                             liveRoot = ii.next;
+                        }
+
                         break;
                     }
                     prevInterval = ii;
@@ -139,7 +146,10 @@ namespace CLRProfiler
                         liveRoot = bestInterval;
                     }
                     if (OverlappingInterval(bestInterval) != null)
+                    {
                         MergeInterval(bestInterval);
+                    }
+
                     return emptySpace;
                 }
                 liveRoot = new Interval(id, id + size, -1, liveRoot);
@@ -176,25 +186,37 @@ namespace CLRProfiler
             internal void Preserve(ulong id, ulong length)
             {
                 if (updateRoot != null && updateRoot.hiAddr == id)
+                {
                     updateRoot.hiAddr = id + length;
+                }
                 else
+                {
                     updateRoot = new Interval(id, id + length, -1, updateRoot);
+                }
             }
 
             internal void Relocate(ulong oldId, ulong newId, uint length)
             {
                 if (oldId == newId)
+                {
                     nullRelocationsSeen = true;
+                }
 
                 if (updateRoot != null && updateRoot.hiAddr == newId)
+                {
                     updateRoot.hiAddr = newId + length;
+                }
                 else
+                {
                     updateRoot = new Interval(newId, newId + length, -1, updateRoot);
+                }
 
                 for (Interval i = liveRoot; i != null; i = i.next)
                 {
                     if (i.loAddr <= oldId && oldId < i.hiAddr)
+                    {
                         i.hadRelocations = true;
+                    }
                 }
                 Interval bestInterval = null;
                 for (Interval i = liveRoot; i != null; i = i.next)
@@ -202,17 +224,27 @@ namespace CLRProfiler
                     if (i.loAddr <= newId + length && newId <= i.hiAddr + allowableGap)
                     {
                         if (bestInterval == null || bestInterval.loAddr < i.loAddr)
+                        {
                             bestInterval = i;
+                        }
                     }
                 }
                 if (bestInterval != null)
                 {
                     if (bestInterval.hiAddr < newId + length)
+                    {
                         bestInterval.hiAddr = newId + length;
+                    }
+
                     if (bestInterval.loAddr > newId)
+                    {
                         bestInterval.loAddr = newId;
+                    }
+
                     if (OverlappingInterval(bestInterval) != null)
+                    {
                         MergeInterval(bestInterval);
+                    }
                 }
                 else
                 {
@@ -234,7 +266,10 @@ namespace CLRProfiler
                     for (ii = newRoot; ii != null; ii = ii.next)
                     {
                         if (i.loAddr < ii.loAddr)
+                        {
                             break;
+                        }
+
                         prev = ii;
                     }
                     if (prev == null)
@@ -260,14 +295,21 @@ namespace CLRProfiler
                     ulong lo = Math.Max(loAddr, i.loAddr);
                     ulong hi = Math.Min(hiAddr, i.hiAddr);
                     if (lo >= hi)
+                    {
                         continue;
+                    }
+
                     liveObjectTable.RemoveObjectRange(lo, hi - lo, tickIndex, sampleObjectTable);
                     if (i.hiAddr == hi)
                     {
                         if (i.loAddr == lo)
+                        {
                             DeleteInterval(i);
+                        }
                         else
+                        {
                             i.hiAddr = lo;
+                        }
                     }
                 }
             }
@@ -286,7 +328,9 @@ namespace CLRProfiler
                             RemoveRange(prevHiAddr, i.loAddr, tickIndex, sampleObjectTable);
                         }
                         if (prevHiAddr < i.hiAddr)
+                        {
                             prevHiAddr = i.hiAddr;
+                        }
                     }
                     RemoveRange(prevHiAddr, ulong.MaxValue, tickIndex, sampleObjectTable);
                     updateRoot = null;
@@ -299,7 +343,9 @@ namespace CLRProfiler
                 else
                 {
                     for (Interval i = liveRoot; i != null; i = i.next)
+                    {
                         i.justHadGc = true;
+                    }
                 }
                 nullRelocationsSeen = false;
             }
@@ -322,7 +368,10 @@ namespace CLRProfiler
         {
             ushort[][] newFirstLevelTable = new ushort[firstLevelTable.Length*2][];
             for (int i = 0; i < firstLevelTable.Length; i++)
+            {
                 newFirstLevelTable[i] = firstLevelTable[i];
+            }
+
             firstLevelTable = newFirstLevelTable;
         }
 
@@ -356,19 +405,28 @@ namespace CLRProfiler
                     while (j != uint.MaxValue)
                     {
                         if ((secondLevelTable[j] & 0x8000) != 0)
+                        {
                             break;
+                        }
+
                         j--;
                     }
                     if (j != uint.MaxValue)
+                    {
                         break;
+                    }
                 }
                 j = secondLevelLength - 1;
                 i--;
             }
             if (i == uint.MaxValue)
+            {
                 return 0;
+            }
             else
+            {
                 return (((ulong)i<<firstLevelShift) + j) << alignShift;
+            }
         }
 
         ulong FindObjectForward(ulong startId, ulong endId)
@@ -392,19 +450,28 @@ namespace CLRProfiler
                     while (j < secondLevelLength && (j <= jEnd || i < iEnd))
                     {
                         if ((secondLevelTable[j] & 0x8000) != 0)
+                        {
                             break;
+                        }
+
                         j++;
                     }
                     if (j < secondLevelLength)
+                    {
                         break;
+                    }
                 }
                 j = 0;
                 i++;
             }
             if (i > iEnd || (i == iEnd && j > jEnd))
+            {
                 return ulong.MaxValue;
+            }
             else
+            {
                 return (((ulong)i<<firstLevelShift) + j) << alignShift;
+            }
         }
 
         internal void GetNextObject(ulong startId, ulong endId, out LiveObject o)
@@ -416,7 +483,10 @@ namespace CLRProfiler
             uint j = (uint)(id & secondLevelMask);
             ushort[] secondLevelTable = null;
             if (i < firstLevelTable.Length)
+            {
                 secondLevelTable = firstLevelTable[i];
+            }
+
             if (secondLevelTable != null)
             {
                 ushort u1 = secondLevelTable[j];
@@ -461,7 +531,10 @@ namespace CLRProfiler
             uint i = (uint)(id >> firstLevelShift);
             uint j = (uint)(id & secondLevelMask);
             while (firstLevelTable.Length <= i+1)
+            {
                 GrowFirstLevelTable();
+            }
+
             ushort[] secondLevelTable = firstLevelTable[i];
             if (secondLevelTable == null)
             {
@@ -505,7 +578,10 @@ namespace CLRProfiler
             uint j = (uint)(id & secondLevelMask);
             ushort[] secondLevelTable = null;
             if (i < firstLevelTable.Length)
+            {
                 secondLevelTable = firstLevelTable[i];
+            }
+
             while (count > 0)
             {
                 // Does the piece to clear fit within the secondLevelTable?
@@ -513,7 +589,10 @@ namespace CLRProfiler
                 {
                     // yes - if there is no secondLevelTable, there is nothing left to do
                     if (secondLevelTable == null)
+                    {
                         break;
+                    }
+
                     while (count > 0)
                     {
                         secondLevelTable[j] = 0;
@@ -541,7 +620,9 @@ namespace CLRProfiler
                     i++;
                     secondLevelTable = null;
                     if (i < firstLevelTable.Length)
+                    {
                         secondLevelTable = firstLevelTable[i];
+                    }
                 }
             }
         }
@@ -567,7 +648,10 @@ namespace CLRProfiler
         internal void InsertObject(ulong id, int typeSizeStacktraceIndex, int allocTickIndex, int nowTickIndex, bool newAlloc, SampleObjectTable sampleObjectTable)
         {
             if (lastPos >= readNewLog.pos && newAlloc)
+            {
                 return;
+            }
+
             lastPos = readNewLog.pos;
 
             lastTickIndex = nowTickIndex;
@@ -597,11 +681,16 @@ namespace CLRProfiler
                 ushort u3 = (ushort)(allocTickIndex >> 8);
                 Write3WordsAt(id, u1, u2, u3);
                 if (!emptySpace)
+                {
                     Zero(id + 12, size - 12);
+                }
+
                 Debug.Assert(CanReadObjectBackCorrectly(id, size, typeSizeStacktraceIndex, allocTickIndex));
             }
             if (sampleObjectTable != null)
+            {
                 sampleObjectTable.Insert(id, id + size, nowTickIndex, allocTickIndex, typeIndex);
+            }
         }
 
         void RemoveObjectRange(ulong firstId, ulong length, int tickIndex, SampleObjectTable sampleObjectTable)
@@ -609,7 +698,9 @@ namespace CLRProfiler
             ulong lastId = firstId + length;
 
             if (sampleObjectTable != null)
+            {
                 sampleObjectTable.Delete(firstId, lastId, tickIndex);
+            }
 
             Zero(firstId, length);
         }
@@ -629,9 +720,13 @@ namespace CLRProfiler
             {
                 generation = 0;
                 if (o.allocTickIndex <= gen2LimitTickIndex)
+                {
                     generation = 2;
+                }
                 else if (o.allocTickIndex <= gen1LimitTickIndex)
+                {
                     generation = 1;
+                }
             }
             return generation;
         }
@@ -639,7 +734,10 @@ namespace CLRProfiler
         internal void Preserve(ulong id, ulong length, int tickIndex)
         {
             if (lastPos >= readNewLog.pos)
+            {
                 return;
+            }
+
             lastPos = readNewLog.pos;
 
             lastTickIndex = tickIndex;
@@ -649,14 +747,19 @@ namespace CLRProfiler
         internal void UpdateObjects(Histogram relocatedHistogram, ulong oldId, ulong newId, uint length, int tickIndex, SampleObjectTable sampleObjectTable)
         {
             if (lastPos >= readNewLog.pos)
+            {
                 return;
+            }
+
             lastPos = readNewLog.pos;
 
             lastTickIndex = tickIndex;
             intervalTable.Relocate(oldId, newId, length);
 
             if (oldId == newId)
+            {
                 return;
+            }
 
             ulong nextId;
             ulong lastId = oldId + length;
@@ -666,11 +769,16 @@ namespace CLRProfiler
                 nextId = o.id + o.size;
                 ulong offset = o.id - oldId;
                 if (sampleObjectTable != null)
+                {
                     sampleObjectTable.Delete(o.id, o.id + o.size, tickIndex);
+                }
+
                 Zero(o.id, o.size);
                 InsertObject(newId + offset, o.typeSizeStacktraceIndex, o.allocTickIndex, tickIndex, false, sampleObjectTable);
                 if (relocatedHistogram != null)
+                {
                     relocatedHistogram.AddObject(o.typeSizeStacktraceIndex, 1);
+                }
             }
         }
 
@@ -686,12 +794,17 @@ namespace CLRProfiler
             lastTickIndex = tickIndex;
 
             if (sampleObjectTable != null)
+            {
                 sampleObjectTable.AddGcTick(tickIndex, gen);
-    
+            }
+
             intervalTable.RecordGc(tickIndex, sampleObjectTable, simpleForm);
 
             if (gen >= 1)
+            {
                 gen2LimitTickIndex = gen1LimitTickIndex;
+            }
+
             gen1LimitTickIndex = tickIndex;
 
             lastGcGen0Count++;
@@ -699,7 +812,9 @@ namespace CLRProfiler
             {
                 lastGcGen1Count++;
                 if (gen > 1)
+                {
                     lastGcGen2Count++;
+                }
             }
         }
 
@@ -707,9 +822,13 @@ namespace CLRProfiler
         {
             int gen = 0;
             if (gcGen2Count != lastGcGen2Count)
+            {
                 gen = 2;
+            }
             else if (gcGen1Count != lastGcGen1Count)
+            {
                 gen = 1;
+            }
 
             RecordGc(tickIndex, gen, sampleObjectTable, false);
 

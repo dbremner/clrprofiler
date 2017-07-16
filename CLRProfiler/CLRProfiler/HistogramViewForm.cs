@@ -77,11 +77,17 @@ namespace CLRProfiler
             {
                 TypeDesc t = (TypeDesc)o;
                 if (t.totalSize < this.totalSize)
+                {
                     return -1;
+                }
                 else if (t.totalSize > this.totalSize)
+                {
                     return 1;
+                }
                 else
+                {
                     return 0;
+                }
             }
         }
 
@@ -105,13 +111,21 @@ namespace CLRProfiler
         {
             double scaleFactor = 2.0;
             if (coarseRadioButton.Checked)
+            {
                 scaleFactor = 2.0;
+            }
             else if (mediumRadioButton.Checked)
+            {
                 scaleFactor = Math.Sqrt(2.0);
+            }
             else if (fineRadioButton.Checked)
+            {
                 scaleFactor = Math.Pow(2.0, 0.25);
+            }
             else if (veryFineRadioButton.Checked)
+            {
                 scaleFactor = Math.Pow(2.0, 0.125);
+            }
 
             if (currentScaleFactor == scaleFactor)
             {
@@ -129,7 +143,9 @@ namespace CLRProfiler
             int startSize = 8;
             double minSize;
             for (minSize = startSize; minSize < int.MaxValue; minSize *= scaleFactor)
+            {
                 count++;
+            }
 
             buckets = new Bucket[count-1];
             minSize = startSize;
@@ -176,21 +192,30 @@ namespace CLRProfiler
             for (int i = 0; i < buckets.Length-1; i++)
             {
                 if (buckets[i].totalSize != 0 || buckets[i+1].totalSize != 0)
+                {
                     break;
+                }
+
                 lo++;
             }
             int hi = buckets.Length-1;
             for (int i = buckets.Length-1; i >= 0; i--)
             {
                 if (buckets[i].totalSize != 0)
+                {
                     break;
+                }
+
                 hi--;
             }
             if (lo <= hi)
             {
                 Bucket[] newBuckets = new Bucket[hi-lo+1];
                 for (int i = lo; i <= hi; i++)
+                {
                     newBuckets[i-lo] = buckets[i];
+                }
+
                 buckets = newBuckets;
             }
         }
@@ -206,7 +231,9 @@ namespace CLRProfiler
             totalCount = 0;
 
             if (typeIndexToTypeDesc == null)
+            {
                 typeIndexToTypeDesc = new TypeDesc[histogram.readNewLog.typeName.Length];
+            }
             else
             {
                 foreach (TypeDesc t in typeIndexToTypeDesc)
@@ -223,7 +250,9 @@ namespace CLRProfiler
             {
                 int count = typeSizeStacktraceToCount[i];
                 if (count == 0)
+                {
                     continue;
+                }
 
                 int[] stacktrace = histogram.readNewLog.stacktraceTable.IndexToStacktrace(i);
                 int typeIndex = stacktrace[0];
@@ -245,16 +274,26 @@ namespace CLRProfiler
             }
 
             if (totalSize == 0)
+            {
                 totalSize = 1;
+            }
+
             if (totalCount == 0)
+            {
                 totalCount = 1;
+            }
 
             TrimEmptyBuckets();
 
             sortedTypeTable = new ArrayList();
             foreach (TypeDesc t in typeIndexToTypeDesc)
+            {
                 if (t != null)
+                {
                     sortedTypeTable.Add(t);
+                }
+            }
+
             sortedTypeTable.Sort();
         }
 
@@ -283,15 +322,23 @@ namespace CLRProfiler
         {
             Color[] newColors = new Color[2*colors.Length];
             for (int i = 0; i < colors.Length; i++)
+            {
                 newColors[i] = colors[i];
+            }
+
             colors = newColors;
         }
 
         private TypeDesc FindSelectedType()
         {
             foreach (TypeDesc t in sortedTypeTable)
+            {
                 if (t.selected)
+                {
                     return t;
+                }
+            }
+
             return null;
         }
 
@@ -304,14 +351,25 @@ namespace CLRProfiler
             foreach (TypeDesc t in sortedTypeTable)
             {
                 if (count >= colors.Length)
+                {
                     GrowColors();
+                }
+
                 if (count < firstColors.Length)
+                {
                     colors[count] = firstColors[count];
+                }
                 else
+                {
                     colors[count] = MixColor(colors[count - firstColors.Length], colors[count - firstColors.Length + 1]);
+                }
+
                 t.color = colors[count];
                 if (anyTypeSelected)
+                {
                     t.color = MixColor(colors[count], Color.White);
+                }
+
                 t.brush = new SolidBrush(t.color);
                 t.pen = new Pen(t.brush);
                 count++;
@@ -325,7 +383,9 @@ namespace CLRProfiler
                 foreach (RadioButton rb in groupBox.Controls)
                 {
                     if (rb.Checked)
+                    {
                         return Int32.Parse(rb.Text);
+                    }
                 }
             }
             // No radio button was checked - let's come up with a suitable default
@@ -402,7 +462,10 @@ namespace CLRProfiler
             }
             string format = "{0:f0} {1}";
             if (w < 10)
+            {
                 format = "{0:f1} {1}";
+            }
+
             return string.Format(format, w, byteString);
         }
 
@@ -442,7 +505,10 @@ namespace CLRProfiler
 
                         Brush brush = t.brush;
                         if (t.selected && (b.selected || noBucketSelected))
+                        {
                             brush = blackBrush;
+                        }
+
                         g.FillRectangle(brush, x, y, bucketWidth, height);
                     }
 
@@ -465,7 +531,10 @@ namespace CLRProfiler
                 int sizeWidth = (int)g.MeasureString(" (999,999,999 bytes, 100.00% - 999,999 instances, 999 bytes average size)", font).Width;
                 t.rect = new Rectangle(x, y, Math.Max(typeNameWidth, sizeWidth)+dotSize*2, font.Height*2);
                 if (maxWidth < t.rect.Width)
+                {
                     maxWidth = t.rect.Width;
+                }
+
                 y = t.rect.Bottom + typeLegendSpacing;
             }
             int height = y + bottomMargin;
@@ -489,7 +558,10 @@ namespace CLRProfiler
             {
                 Brush brush = t.brush;
                 if (t.selected)
+                {
                     brush = blackBrush;
+                }
+
                 g.FillRectangle(brush, t.rect.Left, t.rect.Top+dotOffset, dotSize, dotSize);
                 g.DrawString(t.typeName, font, blackBrush, t.rect.Left + dotSize*2, t.rect.Top);
                 s = string.Format(" ({0:n0} bytes, {1:f2}% - {2:n0} instances, {3:n0} bytes average size)", t.totalSize, (double)t.totalSize/totalSize*100.0, t.count, t.totalSize/(ulong)t.count);
@@ -521,7 +593,9 @@ namespace CLRProfiler
             initialized = false;
 
             if (histogram == null || typeName == null)
+            {
                 return;
+            }
 
             Graphics g = e.Graphics;
 
@@ -535,7 +609,9 @@ namespace CLRProfiler
             foreach (Bucket b in buckets)
             {
                 if (maxTotalSize < b.totalSize)
+                {
                     maxTotalSize = b.totalSize;
+                }
             }
 
             verticalScale = VerticalScale(graphPanel.Height - topMargin - bottomMargin, maxTotalSize, verticalScale == 0);
@@ -543,7 +619,9 @@ namespace CLRProfiler
             int maxBucketHeight = (int)(maxTotalSize/(ulong)verticalScale);
             int height = topMargin + maxBucketHeight + bottomMargin;
             if (height < minHeight)
+            {
                 height = minHeight;
+            }
 
             graphPanel.Height = height;
             
@@ -560,7 +638,9 @@ namespace CLRProfiler
             initialized = false;
 
             if (histogram == null || typeName == null)
+            {
                 return;
+            }
 
             BuildSizeRangesAndTypeTable(histogram.typeSizeStacktraceToCount);
             ColorTypes();
@@ -613,14 +693,18 @@ namespace CLRProfiler
         private void graphPanel_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
         {
             if (!initialized || verticalScale == 0)
+            {
                 return;
+            }
 
             if ((e.Button & MouseButtons.Left) != MouseButtons.None)
             {
                 if (sortedTypeTable != null)
                 {
                     foreach (TypeDesc t in sortedTypeTable)
+                    {
                         t.selected = false;
+                    }
                 }
 
                 int x = leftMargin;
@@ -659,7 +743,9 @@ namespace CLRProfiler
         private void graphPanel_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
         {
             if (!initialized || verticalScale == 0)
+            {
                 return;
+            }
 
             if (Form.ActiveForm == this)
             {
@@ -726,7 +812,9 @@ namespace CLRProfiler
 
                 string title = "Histogram by Size";
                 if (selectedType != null)
+                {
                     title += " of " + selectedType.typeName + " objects";
+                }
 
                 w.WriteLine(title);
                 w.WriteLine();
@@ -755,7 +843,9 @@ namespace CLRProfiler
                             SizeCount sizeCount = d.Value;
 
                             if (selectedType == null || t == selectedType)
+                            {
                                 w.WriteLine("{0},{1},{2},{3},{4}", b.minSize, b.maxSize, sizeCount.count, sizeCount.size, t.typeName);
+                            }
                         }
                     }
                 }
@@ -770,7 +860,10 @@ namespace CLRProfiler
                 {
                     int count = histogram.typeSizeStacktraceToCount[i];
                     if (count == 0)
+                    {
                         continue;
+                    }
+
                     int[] stacktrace = histogram.readNewLog.stacktraceTable.IndexToStacktrace(i);
                     int typeIndex = stacktrace[0];
                     int size = stacktrace[1];
@@ -814,7 +907,10 @@ namespace CLRProfiler
                 }
                 title = string.Format("Allocation Graph for {0} objects", selectedType.typeName);
                 if (minSize > 0)
+                {
                     title += string.Format(" of size between {0:n0} and {1:n0} bytes", minSize, maxSize);
+                }
+
                 selectedHistogram = new Histogram(histogram.readNewLog);
                 for (int i = 0; i < histogram.typeSizeStacktraceToCount.Length; i++)
                 {

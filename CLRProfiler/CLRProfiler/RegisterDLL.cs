@@ -27,9 +27,13 @@ namespace CLRProfiler
             if (!initialized)
             {
                 if (DllRegisterServer() == 0)
+                {
                     initialized = true;
+                }
                 else
+                {
                     throw new Exception("Couldn't register profilerOBJ.dll");
+                }
             }
             return initialized;
         }

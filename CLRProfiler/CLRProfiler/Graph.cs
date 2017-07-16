@@ -55,9 +55,15 @@ namespace CLRProfiler
         {
             string nameSignatureModule = name;
             if (signature != null)
+            {
                 nameSignatureModule += signature;
+            }
+
             if (module != null)
+            {
                 nameSignatureModule += module;
+            }
+
             return nameSignatureModule;
         }
 
@@ -91,14 +97,24 @@ namespace CLRProfiler
         {
             string nameSignatureModule = name;
             if (signature != null)
+            {
                 nameSignatureModule += signature;
+            }
+
             if (module != null)
+            {
                 nameSignatureModule += module;
+            }
+
             Vertex v;
             if (vertices.TryGetValue(nameSignatureModule, out v))
+            {
                 return v;
+            }
             else
+            {
                 return null;
+            }
         }
 
         internal Edge FindOrCreateEdge(Vertex fromVertex, Vertex toVertex)
@@ -176,10 +192,14 @@ namespace CLRProfiler
                 {
                     if (   v.incomingEdges.Count == 0
                         && v.outgoingEdges.Count != 0)
+                    {
                         TopVertex.FindOrCreateOutgoingEdge(v);
+                    }
                     else if (v.incomingEdges.Count != 0
                         && v.outgoingEdges.Count == 0)
+                    {
                         v.FindOrCreateOutgoingEdge(BottomVertex);
+                    }
                 }
             }
             TopVertex.level = 0;
@@ -192,7 +212,9 @@ namespace CLRProfiler
                 {
                     // If the vertex already has a level, we're done
                     if (v.level != UNASSIGNED_LEVEL)
+                    {
                         continue;
+                    }
 
                     // It the vertex is only called by vertices
                     // that have a level, we assign this vertex
@@ -201,7 +223,9 @@ namespace CLRProfiler
                     foreach (Edge e in v.incomingEdges.Values)
                     {
                         if (maxIncomingLevel < e.FromVertex.level)
+                        {
                             maxIncomingLevel = e.FromVertex.level;
+                        }
                     }
                     if (maxIncomingLevel < UNASSIGNED_LEVEL)
                     {
@@ -217,7 +241,9 @@ namespace CLRProfiler
                     foreach (Edge e in v.outgoingEdges.Values)
                     {
                         if (minOutgoingLevel > e.ToVertex.level)
+                        {
                             minOutgoingLevel = e.ToVertex.level;
+                        }
                     }
                     if (minOutgoingLevel > UNASSIGNED_LEVEL)
                     {
@@ -229,7 +255,9 @@ namespace CLRProfiler
                 
                 // If we made progress, continue.
                 if (assignedVertexCount > 0)
+                {
                     continue;
+                }
 
                 // There are no more easy vertices.
                 // Among the ones remaining (if any), choose one
@@ -245,23 +273,35 @@ namespace CLRProfiler
                 foreach (Vertex v in vertices.Values)
                 {
                     if (v.level != UNASSIGNED_LEVEL)
+                    {
                         continue;
+                    }
+
                     int assignedInputCount = 0;
                     int unAssignedInputCount = 0;
                     foreach (Edge e in v.incomingEdges.Values)
                     {
                         if (e.FromVertex.level == UNASSIGNED_LEVEL)
+                        {
                             unAssignedInputCount++;
+                        }
                         else
+                        {
                             assignedInputCount++;
+                        }
                     }
                     if (assignedInputCount == 0)
+                    {
                         continue;
+                    }
+
                     int unAssignedOutputCount = 0;
                     foreach (Edge e in v.outgoingEdges.Values)
                     {
                         if (e.ToVertex.level == UNASSIGNED_LEVEL)
+                        {
                             unAssignedOutputCount++;
+                        }
                     }
                     if (   unAssignedInputCount <  minInputCount
                         || unAssignedInputCount == minInputCount && unAssignedOutputCount > maxOutputCount)
@@ -273,13 +313,18 @@ namespace CLRProfiler
                 }
                 // If we couldn't find a vertex, we are done.
                 if (bestVertex == null)
+                {
                     break;
+                }
+
                 int maxInputLevel = 0;
                 foreach (Edge e in bestVertex.incomingEdges.Values)
                 {
                     if (   e.FromVertex.level != UNASSIGNED_LEVEL
                         && e.FromVertex.level > maxInputLevel)
+                    {
                         maxInputLevel = e.FromVertex.level;
+                    }
                 }
                 bestVertex.level = maxInputLevel + 1;
             }
@@ -294,12 +339,17 @@ namespace CLRProfiler
                 foreach (Vertex v in vertices.Values)
                 {
                     if (v.level < UNASSIGNED_LEVEL)
+                    {
                         continue;
+                    }
+
                     int maxInputLevel = 0;
                     foreach (Edge e in v.incomingEdges.Values)
                     {
                         if (maxInputLevel < e.FromVertex.level)
+                        {
                             maxInputLevel = e.FromVertex.level;
+                        }
                     }
                     if (maxInputLevel < UNASSIGNED_LEVEL)
                     {
@@ -321,7 +371,9 @@ namespace CLRProfiler
                 if (v != BottomVertex)
                 {
                     if (maxLevel < v.level)
+                    {
                         maxLevel = v.level;
+                    }
                 }
             }
 
@@ -332,7 +384,9 @@ namespace CLRProfiler
             {
                 Vertex v = e.FromVertex;
                 if (v.outgoingEdges.Count == 1)
+                {
                     e.FromVertex.level = maxLevel;
+                }
             }
         }
 #endif

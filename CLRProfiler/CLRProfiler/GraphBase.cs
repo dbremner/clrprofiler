@@ -92,10 +92,14 @@ namespace CLRProfiler
 			if (basegraph.graphType == Graph.GraphType.CallGraph)
 			{
 				if (weight == 1)
-					return "1 call";
-				else
-					return string.Format("{0} calls", weight);
-			}
+                {
+                    return "1 call";
+                }
+                else
+                {
+                    return string.Format("{0} calls", weight);
+                }
+            }
 			if(basegraph.graphType == Graph.GraphType.AssemblyGraph)
 			{
 				if(weight == 1)
@@ -128,8 +132,11 @@ namespace CLRProfiler
 				}
 				string format = "{0,4:f0} {1} ({2:f2}%)";
 				if (w < 10)
-					format = "{0,4:f1} {1} ({2:f2}%)";
-				return string.Format(format, w, byteString, weight*100.0/totalWeight);
+                {
+                    format = "{0,4:f1} {1} ({2:f2}%)";
+                }
+
+                return string.Format(format, w, byteString, weight*100.0/totalWeight);
 			}
 		}
 
@@ -159,16 +166,24 @@ namespace CLRProfiler
 			{
 				v.weight = v.incomingWeight;
 				if (v.weight < v.outgoingWeight)
-					v.weight = v.outgoingWeight;
-				if (basegraph.graphType == Graph.GraphType.CallGraph)
+                {
+                    v.weight = v.outgoingWeight;
+                }
+
+                if (basegraph.graphType == Graph.GraphType.CallGraph)
 				{
 					if (totalWeight < v.weight)
-						totalWeight = v.weight;
-				}
+                    {
+                        totalWeight = v.weight;
+                    }
+                }
 			}
 			if (basegraph.graphType != Graph.GraphType.CallGraph)
-				totalWeight = basegraph.TopVertex.weight;
-			if (totalWeight == 0)
+            {
+                totalWeight = basegraph.TopVertex.weight;
+            }
+
+            if (totalWeight == 0)
 			{
 				totalWeight = 1;
 			}
@@ -188,30 +203,45 @@ namespace CLRProfiler
 						{
 							v.basicWeight = v.incomingWeight - v.outgoingWeight;
 							if (v.basicWeight < 0)
-								v.basicWeight = 0;
-							v.weightString = string.Format("Gets {0}, causes {1}",
+                            {
+                                v.basicWeight = 0;
+                            }
+
+                            v.weightString = string.Format("Gets {0}, causes {1}",
 								formatWeight(v.basicWeight),
 								formatWeight(v.outgoingWeight));
 						}
 						else
 						{
 							if (v.count == 0)
-								v.weightString = formatWeight(v.weight);
-							else if (v.count == 1)
-								v.weightString = string.Format("{0}  (1 object, {1})", formatWeight(v.weight), formatWeight(v.basicWeight));
-							else
-								v.weightString = string.Format("{0}  ({1} objects, {2})", formatWeight(v.weight), v.count, formatWeight(v.basicWeight));
-						}
+                            {
+                                v.weightString = formatWeight(v.weight);
+                            }
+                            else if (v.count == 1)
+                            {
+                                v.weightString = string.Format("{0}  (1 object, {1})", formatWeight(v.weight), formatWeight(v.basicWeight));
+                            }
+                            else
+                            {
+                                v.weightString = string.Format("{0}  ({1} objects, {2})", formatWeight(v.weight), v.count, formatWeight(v.basicWeight));
+                            }
+                        }
 						
 					}
 					int y = 10;
                     ulong levelWeight = 0;
 					foreach (Vertex v in all)
-						levelWeight += v.weight;
-					float levelHeight = levelWeight*scale;
+                    {
+                        levelWeight += v.weight;
+                    }
+
+                    float levelHeight = levelWeight*scale;
 					if (levelHeight < totalHeight*0.5)
-						y+= (int)((totalHeight - levelHeight)*2);
-					foreach (Vertex v in all)
+                    {
+                        y += (int)((totalHeight - levelHeight)*2);
+                    }
+
+                    foreach (Vertex v in all)
 					{
 						// For the in-between vertices, sometimes it's good
 						// to shift them down a little to line them up with
@@ -232,15 +262,22 @@ namespace CLRProfiler
 						float fHeight = v.weight*scale;
 						int iHeight = (int)fHeight;
 						if (iHeight < 1)
-							iHeight = 1;
-						if (placeEdges)
-							PlaceEdges(v.outgoingEdges.Values, false, scale);
-					}
+                        {
+                            iHeight = 1;
+                        }
+
+                        if (placeEdges)
+                        {
+                            PlaceEdges(v.outgoingEdges.Values, false, scale);
+                        }
+                    }
 				}
 			}
 			if (placeEdges)
-				PlaceEdges(scale);
-		}
+            {
+                PlaceEdges(scale);
+            }
+        }
 		#endregion
 		internal Graph basegraph { get; private set; } = null;
 	}

@@ -89,12 +89,18 @@ namespace CLRProfiler
 				long inclX = (long)inclOfNode[x];
 				long inclY = (long)inclOfNode[y];
 				if (inclX < inclY)
-					return 1;
-				else if (inclX > inclY)
-					return -1;
-				else
-					return 0;
-			}
+                {
+                    return 1;
+                }
+                else if (inclX > inclY)
+                {
+                    return -1;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
 		}
 
 		#region data member
@@ -459,8 +465,11 @@ namespace CLRProfiler
 						{
 							nameAndSignature  = v.name;
 							if(v.signature != null)
-								nameAndSignature += ' ' + v.signature;
-							n.name = nameAndSignature;
+                            {
+                                nameAndSignature += ' ' + v.signature;
+                            }
+
+                            n.name = nameAndSignature;
 							n.incl = FormatSize((int)v.weight);
 							n.caller = v.incomingEdges;
 							n.callee = v.outgoingEdges;
@@ -554,8 +563,11 @@ namespace CLRProfiler
 			{
 				string nameAndSignature = edge.ToVertex.name;
 				if(edge.ToVertex.signature != null)
-					nameAndSignature += ' ' + edge.ToVertex.signature;
-				if(!n.calleeAlloc.ContainsKey(nameAndSignature))
+                {
+                    nameAndSignature += ' ' + edge.ToVertex.signature;
+                }
+
+                if (!n.calleeAlloc.ContainsKey(nameAndSignature))
 				{
 					n.calleeAlloc.Add(nameAndSignature, FormatSize((int)edge.weight));
 				}
@@ -564,8 +576,11 @@ namespace CLRProfiler
 			{
 				string nameAndSignature = edge.FromVertex.name;
 				if(edge.FromVertex.signature != null)
-					nameAndSignature += ' ' + edge.FromVertex.signature;
-				if(!n.callerAlloc.ContainsKey(nameAndSignature))
+                {
+                    nameAndSignature += ' ' + edge.FromVertex.signature;
+                }
+
+                if (!n.callerAlloc.ContainsKey(nameAndSignature))
 				{
 					n.callerAlloc.Add(nameAndSignature, FormatSize((int)edge.weight));
 				}
@@ -623,8 +638,10 @@ namespace CLRProfiler
 			}*/
 			DataRow tmpRow = tmptbl.NewRow();
 			if(pn.name != null)
-				tmpRow["id"] = pn.id;
-			else 
+            {
+                tmpRow["id"] = pn.id;
+            }
+            else 
 			{
 				tmpRow["id"] = cn.id;
 			}
@@ -760,8 +777,11 @@ namespace CLRProfiler
 			{
 				nameAndSignature = cv.name;
 				if(cv.signature != null)
-					nameAndSignature += ' ' + cv.signature;
-				if(iscaller)
+                {
+                    nameAndSignature += ' ' + cv.signature;
+                }
+
+                if (iscaller)
 				{
 					if( basedataId.ContainsKey(nameAndSignature))
 					{
@@ -788,10 +808,15 @@ namespace CLRProfiler
 			tmpRow = tmptbl.NewRow();
 			tmpRow["id"] = n.id;
 			if(iscaller)
-				tmpRow["callerid"] = n.callerid;
-			else
-				tmpRow["calleeid"] = n.calleeid;
-			tmptbl.Rows.Add(tmpRow);
+            {
+                tmpRow["callerid"] = n.callerid;
+            }
+            else
+            {
+                tmpRow["calleeid"] = n.calleeid;
+            }
+
+            tmptbl.Rows.Add(tmpRow);
 		}
 
 		private void MakeCallTables(DataTable tbl, bool iscaller)
@@ -949,8 +974,11 @@ namespace CLRProfiler
 							cn1 = new datanode();
 							string nameAndSignature1 = edge.FromVertex.name;
 							if(edge.FromVertex.signature != null)
-								nameAndSignature1 += ' ' + edge.FromVertex.signature;
-							if(this._prevbasedata.ContainsKey(nameAndSignature1))
+                            {
+                                nameAndSignature1 += ' ' + edge.FromVertex.signature;
+                            }
+
+                            if (this._prevbasedata.ContainsKey(nameAndSignature1))
 							{
 								pn1 = (datanode)_prevbasedata[nameAndSignature1];
 								pn1.id = id;
@@ -983,9 +1011,11 @@ namespace CLRProfiler
 								pn1 = new datanode();
 								string nameAndSignature1 = edgec.FromVertex.name;
 								if(edgec.FromVertex.signature != null)
-									nameAndSignature1 += ' ' + edgec.FromVertex.signature;
+                                {
+                                    nameAndSignature1 += ' ' + edgec.FromVertex.signature;
+                                }
 
-								if(!cnnew.ContainsKey(nameAndSignature1))
+                                if (!cnnew.ContainsKey(nameAndSignature1))
 								{
 									cn1 = (datanode)_currbasedata[nameAndSignature1];
 									cn1.id = id;
@@ -1007,8 +1037,11 @@ namespace CLRProfiler
 							{
 								string nameAndSignature1 = edge.FromVertex.name;
 								if(edge.FromVertex.signature != null)
-									nameAndSignature1 += ' ' + edge.FromVertex.signature;
-								if(this._currbasedata.ContainsKey(nameAndSignature1))
+                                {
+                                    nameAndSignature1 += ' ' + edge.FromVertex.signature;
+                                }
+
+                                if (this._currbasedata.ContainsKey(nameAndSignature1))
 								{
 									cn1 = (datanode)_currbasedata[nameAndSignature1];
 									cn1.id = id;
@@ -1862,10 +1895,16 @@ namespace CLRProfiler
 						}
 					}
 					while (c == ' ' || c == '\t')
-						c = ReadChar();
-					if (c == '\r')
-						c = ReadChar();
-					if (c == '\n')
+                    {
+                        c = ReadChar();
+                    }
+
+                    if (c == '\r')
+                    {
+                        c = ReadChar();
+                    }
+
+                    if (c == '\n')
 					{
 						c = ReadChar();
 						line++;
@@ -1915,9 +1954,11 @@ namespace CLRProfiler
 								typename = callTrace.LogResult.callstackHistogram.readNewLog.typeName[stacktrace[0]];
 							}
 							if(typename == null)
-								typename = "NATIVE FUNCTION ( UNKNOWN ARGUMENTS )";
-																											
-							if(TypeExcl.ContainsKey(typename))
+                            {
+                                typename = "NATIVE FUNCTION ( UNKNOWN ARGUMENTS )";
+                            }
+
+                            if (TypeExcl.ContainsKey(typename))
 							{
 								int alloc = (int)TypeExcl[(string)typename];
 								alloc += stacktrace[1];
@@ -1930,10 +1971,15 @@ namespace CLRProfiler
 							
 							// Type Allocated by Excl
 							if(name != "NATIVE FUNCTION ( UNKNOWN ARGUMENTS )")
-								key = typename + '|' + functionId;
-							else
-								key = typename + '|' + 0;
-							if( TypeAlloc.ContainsKey(key))
+                            {
+                                key = typename + '|' + functionId;
+                            }
+                            else
+                            {
+                                key = typename + '|' + 0;
+                            }
+
+                            if ( TypeAlloc.ContainsKey(key))
 							{
 								int alloc = (int)TypeAlloc[key];
 								alloc += stacktrace[1];
@@ -1970,23 +2016,32 @@ namespace CLRProfiler
 				progressForm.Visible = false;
 				progressForm.Dispose();
 				if (r != null)
-					r.Close();
-			}
+                {
+                    r.Close();
+                }
+            }
 		}
 		internal int ReadChar()
 		{
 			pos++;
 			if (bufPos < bufLevel)
-				return buffer[bufPos++];
-			else
-				return FillBuffer();
-		}
+            {
+                return buffer[bufPos++];
+            }
+            else
+            {
+                return FillBuffer();
+            }
+        }
 		
 		int ReadInt()
 		{
 			while (c == ' ' || c == '\t')
-				c = ReadChar();
-			bool negative = false;
+            {
+                c = ReadChar();
+            }
+
+            bool negative = false;
 			if (c == '-')
 			{
 				negative = true;
@@ -1999,8 +2054,10 @@ namespace CLRProfiler
 				{
 					c = ReadChar();
 					if (c == 'x' || c == 'X')
-						value = ReadHex();
-				}
+                    {
+                        value = ReadHex();
+                    }
+                }
 				while (c >= '0' && c <= '9')
 				{
 					value = value*10 + c - '0';
@@ -2008,8 +2065,11 @@ namespace CLRProfiler
 				}
 
 				if (negative)
-					value = -value;
-				return value;
+                {
+                    value = -value;
+                }
+
+                return value;
 			}
 			else
 			{
@@ -2021,10 +2081,14 @@ namespace CLRProfiler
 			bufPos = 0;
 			bufLevel = r.BaseStream.Read(buffer, 0, buffer.Length);
 			if (bufPos < bufLevel)
-				return buffer[bufPos++];
-			else
-				return -1;
-		}
+            {
+                return buffer[bufPos++];
+            }
+            else
+            {
+                return -1;
+            }
+        }
 		int ReadHex()
 		{
 			int value = 0;
@@ -2033,14 +2097,23 @@ namespace CLRProfiler
 				c = ReadChar();
 				int digit = c;
 				if (digit >= '0' && digit <= '9')
-					digit -= '0';
-				else if (digit >= 'a' && digit <= 'f')
-					digit -= 'a' - 10;
-				else if (digit >= 'A' && digit <= 'F')
-					digit -= 'A' - 10;
-				else
-					return value;
-				value = value*16 + digit;
+                {
+                    digit -= '0';
+                }
+                else if (digit >= 'a' && digit <= 'f')
+                {
+                    digit -= 'a' - 10;
+                }
+                else if (digit >= 'A' && digit <= 'F')
+                {
+                    digit -= 'A' - 10;
+                }
+                else
+                {
+                    return value;
+                }
+
+                value = value*16 + digit;
 			}
 		}
 

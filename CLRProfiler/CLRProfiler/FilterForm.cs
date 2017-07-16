@@ -43,7 +43,9 @@ namespace CLRProfiler
         internal bool IsInterestingName(string name, string[] typeFilters)
         {
             if (name == "<root>" || typeFilters.Length == 0)
+            {
                 return true;
+            }
 
             bool? isInteresting = null;
             foreach (string filter in typeFilters)
@@ -58,15 +60,21 @@ namespace CLRProfiler
 
                 // Skip empty filter, which handles accidental leading, trailing, or doubled semi-colons in the filter string
                 if (realFilter.Length == 0)
+                {
                     continue;
+                }
 
                 if (isInteresting == null || (isInteresting.Value ^ isInclusiveFilter))
                 {
                     bool isPrefixMatch = string.Compare(name, 0, realFilter, 0, realFilter.Length, caseInsensitive, CultureInfo.InvariantCulture) == 0;
                     if (isPrefixMatch)
+                    {
                         isInteresting = isInclusiveFilter;
+                    }
                     else if (isInteresting == null)
+                    {
                         isInteresting = !isInclusiveFilter;
+                    }
                 }
             }
             return isInteresting ?? true;
@@ -75,11 +83,16 @@ namespace CLRProfiler
         internal bool IsInterestingAddress(ulong thisAddress)
         {
             if (thisAddress == 0 || addressFilters.Length == 0)
+            {
                 return true;
+            }
+
             foreach (ulong address in addressFilters)
             {
                 if (address == thisAddress)
+                {
                     return true;
+                }
             }
             return false;
         }
@@ -87,14 +100,20 @@ namespace CLRProfiler
         private bool IsInterestingSignature(string signature, string[] signatureFilters)
         {
             if (signature == null || signature == "" || signatureFilters.Length == 0)
+            {
                 return true;
+            }
+
             return IsInterestingName(signature, signatureFilters);
         }
 
         internal bool IsInterestingTypeName(string typeName, string signature, bool typeIsFinalizable)
         {
             if (onlyFinalizableTypes && !typeIsFinalizable && typeName != "<root>")
+            {
                 return false;
+            }
+
             return IsInterestingName(typeName, typeFilters) && IsInterestingSignature(signature, signatureFilters);
         }
 
@@ -107,9 +126,15 @@ namespace CLRProfiler
         {
             InterestLevel interestLevel = InterestLevel.Ignore;
             if (showParents)
+            {
                 interestLevel |= InterestLevel.Parents;
+            }
+
             if (showChildren)
+            {
                 interestLevel |= InterestLevel.Children;
+            }
+
             return interestLevel;
         }
 
@@ -126,25 +151,39 @@ namespace CLRProfiler
         {
             typeFilter = typeFilter.Trim();
             if (typeFilter == "")
+            {
                 typeFilters = new string[0];
+            }
             else
+            {
                 typeFilters = typeFilter.Split(';');
-            
+            }
+
             methodFilter = methodFilter.Trim();
             if (methodFilter == "")
+            {
                 methodFilters = new string[0];
+            }
             else
+            {
                 methodFilters = methodFilter.Split(';');
-            
+            }
+
             signatureFilter = signatureFilter.Trim();
             if (signatureFilter == "")
+            {
                 signatureFilters = new string[0];
+            }
             else
+            {
                 signatureFilters = signatureFilter.Split(';');
+            }
 
             addressFilter = addressFilter.Trim();
             if (addressFilter == "")
+            {
                 addressFilters = new ulong[0];
+            }
             else
             {
                 string[] addressFilterStrings = addressFilter.Split(';');
@@ -155,9 +194,13 @@ namespace CLRProfiler
                     if (thisAddressFilter != "")
                     {
                         if (thisAddressFilter.StartsWith("0x") || thisAddressFilter.StartsWith("0X"))
+                        {
                             addressFilters[i] = ulong.Parse(thisAddressFilter.Substring(2), NumberStyles.HexNumber);
+                        }
                         else
+                        {
                             addressFilters[i] = ulong.Parse(thisAddressFilter, NumberStyles.HexNumber);
+                        }
                     }
                 }
             }
