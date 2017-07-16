@@ -629,34 +629,34 @@ namespace CLRProfiler
 		}
 		public void MakeBaseDataTable(DataTable tbl)
 		{
-			addTableRow(tbl, "System.Int32", "id");
-			addTableRow(tbl, "System.String", "name");
+			AddColumn(tbl, "System.Int32", "id");
+			AddColumn(tbl, "System.String", "name");
 		    string typeName
 #if (V_EXEC)
             = "System.Double";
 #else
             = "System.Int32";
 #endif
-            addTableRow(tbl, typeName, "prevIncl");
-			addTableRow(tbl, typeName, "currIncl");
-			addTableRow(tbl, typeName, "diffIncl");
-			addTableRow(tbl, typeName, "prevExcl");
-            addTableRow(tbl, typeName, "currExcl");
-            addTableRow(tbl, typeName, "diffExcl");
-            addTableRow(tbl, typeName, "prevChildIncl");
-			addTableRow(tbl, typeName, "currChildIncl");
-			addTableRow(tbl, typeName, "diffChildIncl");
-			addTableRow(tbl, "System.Int32", "prevTimesCalled");
-			addTableRow(tbl, "System.Int32", "currTimesCalled");
-			addTableRow(tbl, "System.Int32", "diffTimesCalled");
-			addTableRow(tbl, "System.Int32", "prevTimesMakecalls");
-			addTableRow(tbl, "System.Int32", "currTimesMakecalls");
-			addTableRow(tbl, "System.Int32", "diffTimesMakecalls");
+            AddColumn(tbl, typeName, "prevIncl");
+			AddColumn(tbl, typeName, "currIncl");
+			AddColumn(tbl, typeName, "diffIncl");
+			AddColumn(tbl, typeName, "prevExcl");
+            AddColumn(tbl, typeName, "currExcl");
+            AddColumn(tbl, typeName, "diffExcl");
+            AddColumn(tbl, typeName, "prevChildIncl");
+			AddColumn(tbl, typeName, "currChildIncl");
+			AddColumn(tbl, typeName, "diffChildIncl");
+			AddColumn(tbl, "System.Int32", "prevTimesCalled");
+			AddColumn(tbl, "System.Int32", "currTimesCalled");
+			AddColumn(tbl, "System.Int32", "diffTimesCalled");
+			AddColumn(tbl, "System.Int32", "prevTimesMakecalls");
+			AddColumn(tbl, "System.Int32", "currTimesMakecalls");
+			AddColumn(tbl, "System.Int32", "diffTimesMakecalls");
 
-			addTableRow(tbl, "System.Int32", "prevlevel");
-			addTableRow(tbl, "System.Int32", "currlevel");
-			addTableRow(tbl, "System.Int32", "prevcat");
-			addTableRow(tbl, "System.Int32", "currcat");
+			AddColumn(tbl, "System.Int32", "prevlevel");
+			AddColumn(tbl, "System.Int32", "currlevel");
+			AddColumn(tbl, "System.Int32", "prevcat");
+			AddColumn(tbl, "System.Int32", "currcat");
 						
 		/*	DataColumn[] pk = new DataColumn[1];
 			pk[0] = tbl.Columns["name"];
@@ -743,14 +743,14 @@ namespace CLRProfiler
 
 	    private void MakeCallerTables(DataTable tbl)
 	    {
-	        addTableRow(tbl, "System.Int32", "id");
-	        addTableRow(tbl, "System.Int32", "callerid");
+	        AddColumn(tbl, "System.Int32", "id");
+	        AddColumn(tbl, "System.Int32", "callerid");
         }
 
 	    private void MakeCalleeTables(DataTable tbl)
 	    {
-	        addTableRow(tbl, "System.Int32", "id");
-	        addTableRow(tbl, "System.Int32", "calleeid");
+	        AddColumn(tbl, "System.Int32", "id");
+	        AddColumn(tbl, "System.Int32", "calleeid");
         }
 	    #endregion
 
@@ -960,7 +960,7 @@ namespace CLRProfiler
 		#endregion
 
 		#region share used functions
-		private void addTableRow([NotNull] DataTable tbl, [NotNull] string colType, [NotNull] string colName)
+		private void AddColumn([NotNull] DataTable tbl, [NotNull] string colType, [NotNull] string colName)
 		{
             AddColumn(tbl, Type.GetType(colType), colName);
 		}
@@ -1601,22 +1601,22 @@ namespace CLRProfiler
 
 		private void MakeDiffTreceTable(DataTable tbl)
 		{
-			addTableRow(tbl, "System.Int32", "parentid");
-			addTableRow(tbl, "System.String", "parentname");
-			addTableRow(tbl, "System.Int32", "id");
-			addTableRow(tbl, "System.String", "name");
-			addTableRow(tbl, "System.String", "mapname");
+			AddColumn(tbl, "System.Int32", "parentid");
+			AddColumn(tbl, "System.String", "parentname");
+			AddColumn(tbl, "System.Int32", "id");
+			AddColumn(tbl, "System.String", "name");
+			AddColumn(tbl, "System.String", "mapname");
 			
-			addTableRow(tbl, "System.Int32", "prevIncl");
-			addTableRow(tbl, "System.Int32", "currIncl");
-			addTableRow(tbl, "System.Int32", "diffIncl");
-			addTableRow(tbl, "System.Int32", "prevCalls");
-			addTableRow(tbl, "System.Int32", "currCalls");
-			addTableRow(tbl, "System.Int32", "diffCalls");
-			addTableRow(tbl, "System.Int32", "prevFunId");
-			addTableRow(tbl, "System.Int32", "currFunId");
-			addTableRow(tbl, "System.Int32", "nodetype");
-			addTableRow(tbl, "System.Int32", "depth");
+			AddColumn(tbl, "System.Int32", "prevIncl");
+			AddColumn(tbl, "System.Int32", "currIncl");
+			AddColumn(tbl, "System.Int32", "diffIncl");
+			AddColumn(tbl, "System.Int32", "prevCalls");
+			AddColumn(tbl, "System.Int32", "currCalls");
+			AddColumn(tbl, "System.Int32", "diffCalls");
+			AddColumn(tbl, "System.Int32", "prevFunId");
+			AddColumn(tbl, "System.Int32", "currFunId");
+			AddColumn(tbl, "System.Int32", "nodetype");
+			AddColumn(tbl, "System.Int32", "depth");
 			
 			
 			
