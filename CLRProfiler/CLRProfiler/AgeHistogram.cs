@@ -143,7 +143,6 @@ namespace CLRProfiler
             internal ulong totalSize;
             internal Color color;
             internal Brush brush;
-            internal Pen pen;
             internal bool selected;
             internal Rectangle rect;
 
@@ -468,7 +467,6 @@ namespace CLRProfiler
                 }
 
                 t.brush = new SolidBrush(t.color);
-                t.pen = new Pen(t.brush);
                 count++;
             }
         }
