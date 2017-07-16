@@ -53,7 +53,7 @@ namespace CLRProfiler
     {
         private static bool s_isInitialized = false;
         private static bool s_isWindowsStoreAppSupported = false;
-        private static Type s_windowsStoreAppHelper = null;
+        private static Type s_windowsStoreAppHelper;
 
         public static void Init()
         {

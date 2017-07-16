@@ -24,11 +24,11 @@ namespace CLRProfiler
 
 		//
 		internal object TokenObject = null;
-		private readonly IDiffTreeOwner treeOwner = null;
+		private readonly IDiffTreeOwner treeOwner;
 
 		private int ContextSelection;
 
-		private TreeNodeBase root = null;
+		private TreeNodeBase root;
 		internal TreeNodeBase Root
 		{
 			set

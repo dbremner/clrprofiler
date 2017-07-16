@@ -75,7 +75,7 @@ namespace CLRProfiler
         private readonly bool trackCallStacks = true;
         private bool profilerConnected = false;
         private readonly CLRSKU targetCLRVersion = CLRSKU.V4DesktopCLR;
-        private string profilingURL = null;
+        private string profilingURL;
 
         private readonly bool help;
         internal string prevlogFileName;
@@ -86,8 +86,8 @@ namespace CLRProfiler
         internal bool exitProgram = false;
 
         private readonly ReportKind reportKind;
-        private readonly string startMarker = null;
-        private readonly string endMarker = null;
+        private readonly string startMarker;
+        private readonly string endMarker;
         private readonly string[] timeMarker = new string[0];
 
         private readonly uint maxWaitingTimeInMiliseconds = 10000;

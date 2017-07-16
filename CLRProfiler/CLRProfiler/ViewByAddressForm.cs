@@ -91,7 +91,7 @@ namespace CLRProfiler
 
         const int allowableGap = 1024*1024-1;
 
-        AddressRange rangeList = null;
+        AddressRange rangeList;
         int rangeCount = 0;
 
         class TypeDesc : IComparable

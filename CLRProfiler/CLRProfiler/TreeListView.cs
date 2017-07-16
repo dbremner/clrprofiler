@@ -34,12 +34,12 @@ namespace CLRProfiler
 		internal event EventHandler SelectedIndexChanged;
 
 		internal object TokenObject = null;
-		private readonly ITreeOwner treeOwner = null;
+		private readonly ITreeOwner treeOwner;
 
 		// item in treeListBox for current context menu
 		private int ContextSelection;
 
-		private TreeNodeBase root = null;
+		private TreeNodeBase root;
 		internal TreeNodeBase Root
 		{
 			set

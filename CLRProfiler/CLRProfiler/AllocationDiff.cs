@@ -275,7 +275,7 @@ namespace CLRProfiler
 			}
 		}
 
-		public string diffLogFileName { get; set; } = null;
+		public string diffLogFileName { get; set; }
 	    #endregion
 
 		#region public methods

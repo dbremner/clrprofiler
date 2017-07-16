@@ -85,7 +85,7 @@ namespace CLRProfiler
 
         const int allowableGap = 64*1024-1;
 
-        AddressRange rangeList = null;
+        AddressRange rangeList;
         int rangeCount = 0;
 
         string[] typeName;

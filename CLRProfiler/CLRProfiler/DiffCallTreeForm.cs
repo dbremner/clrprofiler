@@ -50,7 +50,7 @@ namespace CLRProfiler
 			}
 		};
 		
-		private readonly AllocationDiff	_allocDiff= null;
+		private readonly AllocationDiff	_allocDiff;
 		private ViewState viewState;
 		private Font defaultFont;
 		private readonly TreeNodeBase Root;

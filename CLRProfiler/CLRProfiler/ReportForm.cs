@@ -48,7 +48,7 @@ namespace CLRProfiler
 		private const int idx_diffIncl = 7;
 		private const int idx_depth = 14;
 
-		private DiffCallTreeForm diffcallTreeForm = null;
+		private DiffCallTreeForm diffcallTreeForm;
 		private AllocationDiff	_allocDiff;
 		private bool iscoarse = false;
 		private string strFilter;
@@ -56,8 +56,8 @@ namespace CLRProfiler
 		private readonly string CallerCaption = "Caller table";
 		private readonly string SelectedCaption = "Selected item";
 		private readonly string CalleeCaption = "Callee table";
-		private readonly Graph.GraphType graphtype = 0;
-		private readonly MainForm f = null;
+		private readonly Graph.GraphType graphtype;
+		private readonly MainForm f;
 		private readonly string [] columName = {"name", 
 								"prevIncl", "currIncl", "diffIncl", 
 								"prevExcl", "currExcl", "diffExcl", 

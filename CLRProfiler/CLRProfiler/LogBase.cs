@@ -11,11 +11,11 @@ namespace CLRProfiler
 		#region private data member
 		private readonly long logFileStartOffset;
 		private readonly long logFileEndOffset;
-	    private ReadNewLog log = null;
+	    private ReadNewLog log;
 		#endregion
 
 		#region public member
-		internal ReadLogResult logResult = null;
+		internal ReadLogResult logResult;
 		#endregion
 		
 		public LogBase()

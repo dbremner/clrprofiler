@@ -279,6 +279,6 @@ namespace CLRProfiler
             }
         }
 		#endregion
-		internal Graph basegraph { get; private set; } = null;
+		internal Graph basegraph { get; private set; }
 	}
 }
