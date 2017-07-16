@@ -14,13 +14,14 @@ namespace CLRProfiler
         /* stored */
         internal enum NodeType {Call = 0, Allocation, AssemblyLoad};
 
-        internal NodeType nodetype;
-        internal int stackid, nameId;
+        internal readonly NodeType nodetype;
+        internal readonly int stackid;
+        internal int nameId;
         internal long nodeOffset;       // Offset of this node in the trace log
 
         internal long prevOffset, kidOffset;
 
-        [NotNull] internal Statistics data;
+        [NotNull] internal readonly Statistics data;
 
         internal TreeNode(NodeType in_nodetype, int in_stackid) : base()
         {
@@ -46,7 +47,8 @@ namespace CLRProfiler
             data.Write(writer);
         }
 
-        internal void Read(BitReader reader)
+        /* initialize from the backing store */
+        internal TreeNode([NotNull] BitReader reader)
         {
             nodetype = (NodeType)reader.ReadBits(2);
             stackid = (int)Helpers.ReadNumber(reader);
@@ -58,12 +60,6 @@ namespace CLRProfiler
             prevOffset = Helpers.ReadNumber(reader) - 1;
             nodeOffset = Helpers.ReadNumber(reader);
             data = new Statistics(reader);
-        }
-
-        /* initialize from the backing store */
-        internal TreeNode(BitReader reader)
-        {
-            Read(reader);
         }
     };
 }
