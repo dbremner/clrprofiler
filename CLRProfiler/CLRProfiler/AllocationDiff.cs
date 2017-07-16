@@ -735,7 +735,7 @@ namespace CLRProfiler
 	            if (basedataId.ContainsKey(nameAndSignature))
 	            {
 	                int calleeid = (int)basedataId[nameAndSignature];
-	                AddCalleeTableRow(tbl, id, calleeid);
+	                AddNamedRow(tbl, id, "calleeid", calleeid);
 	            }
 	        }
 	    }
@@ -749,28 +749,20 @@ namespace CLRProfiler
                 if (basedataId.ContainsKey(nameAndSignature))
 	            {
 	                int callerid = (int)basedataId[nameAndSignature];
-	                AddCallerTableRow(tbl, id, callerid);
+	                AddNamedRow(tbl, id, "callerid", callerid);
 	            }
 	        }
 	    }
 
-        private void AddCallerTableRow(DataTable tmptbl, DoubleInt id, DoubleInt callerid)
+	    private void AddNamedRow(DataTable tmptbl, DoubleInt id, string name, DoubleInt value)
 	    {
 	        DataRow tmpRow = tmptbl.NewRow();
 	        tmpRow["id"] = id;
-	        tmpRow["callerid"] = callerid;
+	        tmpRow[name] = value;
 	        tmptbl.Rows.Add(tmpRow);
-	    }
+        }
 
-	    private void AddCalleeTableRow(DataTable tmptbl, DoubleInt id, DoubleInt calleeid)
-	    {
-	        DataRow tmpRow = tmptbl.NewRow();
-	        tmpRow["id"] = id;
-	        tmpRow["calleeid"] = calleeid;
-	        tmptbl.Rows.Add(tmpRow);
-	    }
-
-        private void MakeCallerTables(DataTable tbl)
+	    private void MakeCallerTables(DataTable tbl)
 	    {
 	        addTableRow(tbl, "System.Int32", "id");
 	        addTableRow(tbl, "System.Int32", "callerid");
