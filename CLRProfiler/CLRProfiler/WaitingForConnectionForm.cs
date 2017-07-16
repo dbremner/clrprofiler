@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Collections;
 using System.ComponentModel;
 using System.Windows.Forms;
+using JetBrains.Annotations;
 
 namespace CLRProfiler
 {
@@ -29,14 +30,15 @@ namespace CLRProfiler
             //
         }
 
+        public WaitingForConnectionForm([NotNull] string message)
+            : this()
+        {
+            messageTextBox.Text = message;
+        }
+
         public void addMessage(string message)
         {
             messageTextBox.Text += "\n" + message;
-        }
-
-        public void setMessage(string message)
-        {
-            messageTextBox.Text = message;
         }
     }
 }

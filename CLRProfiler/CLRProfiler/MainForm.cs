@@ -1990,9 +1990,7 @@ namespace CLRProfiler
                 }
                 else
                 {
-                    waitingForConnectionForm = new WaitingForConnectionForm();
-
-                    waitingForConnectionForm.setMessage(text);
+                    waitingForConnectionForm = new WaitingForConnectionForm(text);
                     waitingForConnectionForm.Visible = true;
                 }
             }
@@ -2096,9 +2094,7 @@ namespace CLRProfiler
                 }
                 else
                 {
-                    waitingForConnectionForm = new WaitingForConnectionForm();
-
-                    waitingForConnectionForm.setMessage(text);
+                    waitingForConnectionForm = new WaitingForConnectionForm(text);
                     waitingForConnectionForm.Visible = true;
                 }
             }
