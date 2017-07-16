@@ -20,7 +20,7 @@ namespace CLRProfiler
 
         internal event ControlEventHandler ControlEvent;
 
-        ControlEventHandler eventHandler;
+        readonly ControlEventHandler eventHandler;
 
         internal ConsoleCtrl()
         {

@@ -18,14 +18,14 @@ namespace CLRProfiler
                 this.funcModule = funcModule;
             }
 
-            internal int functionId;
-            internal int funcCallStack;
-            internal uint funcSize;
-            internal int funcModule;
+            internal readonly int functionId;
+            internal readonly int funcCallStack;
+            internal readonly uint funcSize;
+            internal readonly int funcModule;
         }
-    
-        ReadNewLog readNewLog;
-        ArrayList functionList;
+
+        readonly ReadNewLog readNewLog;
+        readonly ArrayList functionList;
 
         internal FunctionList(ReadNewLog readNewLog)
         {

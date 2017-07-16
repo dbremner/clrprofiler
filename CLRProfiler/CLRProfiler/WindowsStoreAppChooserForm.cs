@@ -24,7 +24,7 @@ namespace CLRProfiler
 {
     public partial class WindowsStoreAppChooserForm : Form
     {
-        private List<PackageInfo> packageInfos;
+        private readonly List<PackageInfo> packageInfos;
 
         public string SelectedAppUserModelId { get; private set; }
 

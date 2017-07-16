@@ -9,7 +9,7 @@ namespace CLRProfiler
     public struct IELAUNCHURLINFO
     {
         public int cbSize;
-        public int dwCreationFlags;
-        public int dwLaunchOptionFlags;
+        public readonly int dwCreationFlags;
+        public readonly int dwLaunchOptionFlags;
     }
 }

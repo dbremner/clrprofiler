@@ -6,7 +6,7 @@ namespace CLRProfiler
 {
     internal class DiffStatistics
     {
-        private DiffDataNode node;
+        private readonly DiffDataNode node;
         private readonly static string[] CounterNames =
         {
             "Prev (incl)",
@@ -50,7 +50,7 @@ namespace CLRProfiler
             return CounterNames[id];
         }
 
-        internal bool firstTimeBroughtIn;
+        internal readonly bool firstTimeBroughtIn;
 		
         internal DiffStatistics(DiffDataNode node)
         {

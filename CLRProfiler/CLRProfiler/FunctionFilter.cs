@@ -17,10 +17,10 @@ namespace CLRProfiler
 	internal partial class DlgFunctionFilter : System.Windows.Forms.Form
 	{
 
-		private ITreeOwner m_treeOwner;
+		private readonly ITreeOwner m_treeOwner;
 
-		private CallTreeForm.FnViewFilter[] includeFns;
-		private CallTreeForm.FnViewFilter[] excludeFns;
+		private readonly CallTreeForm.FnViewFilter[] includeFns;
+		private readonly CallTreeForm.FnViewFilter[] excludeFns;
 
 		private TreeNode node;
 

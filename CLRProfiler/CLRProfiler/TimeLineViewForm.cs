@@ -18,7 +18,8 @@ namespace CLRProfiler
     public partial class TimeLineViewForm : System.Windows.Forms.Form
     {
         private System.Timers.Timer versionTimer;
-        private int firstAllocTickIndex, lastAllocTickIndex;
+        private readonly int firstAllocTickIndex;
+        private readonly int lastAllocTickIndex;
 
         Font font;
 
@@ -64,9 +65,9 @@ namespace CLRProfiler
 
         class AddressRange
         {
-            internal ulong loAddr;
+            internal readonly ulong loAddr;
             internal ulong hiAddr;
-            internal AddressRange next;
+            internal readonly AddressRange next;
             internal int index;
 
             internal AddressRange(ulong loAddr, ulong hiAddr, AddressRange next, int index)
@@ -101,7 +102,7 @@ namespace CLRProfiler
 
         class TypeDesc : IComparable
         {
-            internal string typeName;
+            internal readonly string typeName;
             internal long totalSize;
             internal Color color;
             internal Brush brush;
@@ -191,7 +192,7 @@ namespace CLRProfiler
             sortedTypeTable.Sort();
         }
 
-        static Color[] firstColors =
+        static readonly Color[] firstColors =
         {
             Color.Red,
             Color.Yellow,

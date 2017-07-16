@@ -140,8 +140,8 @@ namespace CLRProfiler
         internal int internalTypeCount;
 
         internal int unknownTypeId;
-        internal ReadNewLog readNewLog;
-        internal int tickIndex;
+        internal readonly ReadNewLog readNewLog;
+        internal readonly int tickIndex;
 
         internal GcObject[] roots;
         internal ulong[] rootIDs;
@@ -149,7 +149,7 @@ namespace CLRProfiler
         internal int rootCount;
         const int initialRootCount = 100;
         internal bool empty;
-        IntEqualityComparer intEqualityComparer;
+        readonly IntEqualityComparer intEqualityComparer;
 
         internal void Neuter()
         {
@@ -406,7 +406,7 @@ namespace CLRProfiler
 
         class GcObjectWithManyReferences : GcObject
         {
-            GcObject[] references;
+            readonly GcObject[] references;
             internal GcObjectWithManyReferences(int numberOfReferences)
             {
                 references = new GcObject[numberOfReferences];
@@ -435,9 +435,9 @@ namespace CLRProfiler
                 this.referenceNumber = referenceNumber;
                 this.next = next;
             }
-            internal GcObject         source;            // the object having the forward reference
-            internal int              referenceNumber;   // the number of the reference within the object
-            internal ForwardReference next;              // next forward reference to the same address
+            internal readonly GcObject         source;            // the object having the forward reference
+            internal readonly int              referenceNumber;   // the number of the reference within the object
+            internal readonly ForwardReference next;              // next forward reference to the same address
         }
 
         Dictionary<ulong, ForwardReference> addressToForwardReferences;
@@ -470,10 +470,10 @@ namespace CLRProfiler
                 this.name = name;
                 this.typeID = typeID;
             }
-            internal string name;
+            internal readonly string name;
 
             internal int index;
-            internal int typeID;
+            internal readonly int typeID;
 
             internal InterestLevel interestLevel;
         }

@@ -12,11 +12,11 @@ namespace CLRProfiler
 	{
 		#region Data member
 		private int leftEdge;
-		private ArrayList columns;
-		private ListBox treeListBox;
-		private DiffResizeBarCapture resizeBar;
+		private readonly ArrayList columns;
+		private readonly ListBox treeListBox;
+		private readonly DiffResizeBarCapture resizeBar;
 		private object keepSelected;
-		private PlacedToolTip hoverPopup;
+		private readonly PlacedToolTip hoverPopup;
 
 		// events of interest
 		internal event EventHandler ColumnClick;
@@ -24,7 +24,7 @@ namespace CLRProfiler
 
 		//
 		internal object TokenObject = null;
-		private IDiffTreeOwner treeOwner = null;
+		private readonly IDiffTreeOwner treeOwner = null;
 
 		private int ContextSelection;
 

@@ -53,12 +53,12 @@ namespace CLRProfiler
 		private bool iscoarse = false;
 		private string strFilter = null;
 		private string strtypeFilter = null;
-		private string CallerCaption = "Caller table";
-		private string SelectedCaption = "Selected item";
-		private string CalleeCaption = "Callee table";
-		private Graph.GraphType graphtype = 0;
-		private MainForm f = null;
-		private string [] columName = {"name", 
+		private readonly string CallerCaption = "Caller table";
+		private readonly string SelectedCaption = "Selected item";
+		private readonly string CalleeCaption = "Callee table";
+		private readonly Graph.GraphType graphtype = 0;
+		private readonly MainForm f = null;
+		private readonly string [] columName = {"name", 
 								"prevIncl", "currIncl", "diffIncl", 
 								"prevExcl", "currExcl", "diffExcl", 
 								"prevChildIncl", "currChildIncl", "diffChildIncl",
@@ -70,7 +70,7 @@ namespace CLRProfiler
 										prevTimesCalled,currTimesCalled,diffTimesCalled,
 										prevTimesMakecalls,currTimesMakecalls,diffTimesMakecalls};
 
-		private string [] coarsecolumName = {"name", 
+		private readonly string [] coarsecolumName = {"name", 
 										  "diffIncl", 
 										  "diffExcl", 
 										  "diffTimesCalled",

@@ -10,9 +10,9 @@ namespace CLRProfiler
     // Implements the manual sorting of items by columns.
     class ListViewItemComparer : IComparer 
     {
-        private int sortCol;
-        private bool fReverseSort;
-        private int subtreeline;
+        private readonly int sortCol;
+        private readonly bool fReverseSort;
+        private readonly int subtreeline;
 
         internal ListViewItemComparer() 
         {

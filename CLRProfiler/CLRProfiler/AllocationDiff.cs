@@ -77,7 +77,7 @@ namespace CLRProfiler
 	{
 		class CompareIncl : IComparer
 		{
-			Hashtable inclOfNode;
+		    readonly Hashtable inclOfNode;
 
 			internal CompareIncl(Hashtable inclOfNode)
 			{
@@ -104,21 +104,21 @@ namespace CLRProfiler
 
 	    // holds all useful data from base
 		// for build all diff, call relations, and type allocation tables
-		internal Hashtable _prevbasedata = null;
-		internal Hashtable _currbasedata = null;
+		internal readonly Hashtable _prevbasedata = null;
+		internal readonly Hashtable _currbasedata = null;
 
 
 		// maps for match search
-		public Hashtable basedataId =null;
-		public Hashtable Idbasedata =null;
+		public readonly Hashtable basedataId =null;
+		public readonly Hashtable Idbasedata =null;
 		public Hashtable typeAllocdataId = null;
 
 		// hold log data		
-		private LogBase _prevLog = null;
-		private LogBase _currLog = null;
+		private readonly LogBase _prevLog = null;
+		private readonly LogBase _currLog = null;
 		// hold base graph related data
-		private GraphBase _prevG = null;
-		private GraphBase _currG = null;
+		private readonly GraphBase _prevG = null;
+		private readonly GraphBase _currG = null;
 
 		// hold base stacktrace info
 		internal CallTreeForm _prevcallTrace = null;
@@ -127,10 +127,10 @@ namespace CLRProfiler
 		internal DataTable diffTracetbl = null;
 		private static int nodeidx = 0;
 				
-		internal Hashtable prevFuncExcl = new Hashtable();
-		internal Hashtable currFuncExcl = new Hashtable();
-		internal Hashtable prevTypeExcl = new Hashtable();
-		internal Hashtable currTypeExcl = new Hashtable();
+		internal readonly Hashtable prevFuncExcl = new Hashtable();
+		internal readonly Hashtable currFuncExcl = new Hashtable();
+		internal readonly Hashtable prevTypeExcl = new Hashtable();
+		internal readonly Hashtable currTypeExcl = new Hashtable();
 
 
 		StreamReader r;
@@ -145,7 +145,7 @@ namespace CLRProfiler
 		private static int depth = 0;
 
 		internal DataTable summaryTracetbl = null;
-		internal Hashtable diffCallTreeNodes = new Hashtable();
+		internal readonly Hashtable diffCallTreeNodes = new Hashtable();
 				
 		private const int idx_parentid = 0;
 	//	private const int idx_parentname = 1;

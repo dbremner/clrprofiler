@@ -13,7 +13,7 @@ namespace CLRProfiler
             windowsStoreAppEventPrefix = String.Format("AppContainerNamedObjects\\{0}\\", acSidString);
         }
 
-        public string windowsStoreAppEventPrefix;
-        public string packageFullName;
+        public readonly string windowsStoreAppEventPrefix;
+        public readonly string packageFullName;
     }
 }

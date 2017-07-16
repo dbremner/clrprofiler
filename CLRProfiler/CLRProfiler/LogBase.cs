@@ -9,8 +9,8 @@ namespace CLRProfiler
 	public class LogBase
 	{
 		#region private data member
-		private long logFileStartOffset;
-		private long logFileEndOffset;
+		private readonly long logFileStartOffset;
+		private readonly long logFileEndOffset;
 	    private ReadNewLog log = null;
 		#endregion
 

@@ -59,36 +59,38 @@ namespace CLRProfiler
         private string workingDirectory = "";
         private string logDirectory;
         private int attachTargetPID;
-        private SafeFileHandle handshakingPipeHandle;
-        private SafeFileHandle loggingPipeHandle;
-        private FileStream handshakingPipe;
-        private FileStream loggingPipe;
+        private readonly SafeFileHandle handshakingPipeHandle;
+        private readonly SafeFileHandle loggingPipeHandle;
+        private readonly FileStream handshakingPipe;
+        private readonly FileStream loggingPipe;
         internal static MainForm instance;
         private bool saveNever;
         private bool gcOnLogFileComments;
 
         internal bool noUI = true;
-        private string nameToUse;
-        private bool profileAllocations, profileCalls, profilingActive;
-        private bool trackCallStacks = true;
+        private readonly string nameToUse;
+        private readonly bool profileAllocations;
+        private readonly bool profileCalls;
+        private readonly bool profilingActive;
+        private readonly bool trackCallStacks = true;
         private bool profilerConnected = false;
-        private CLRSKU targetCLRVersion = CLRSKU.V4DesktopCLR;
+        private readonly CLRSKU targetCLRVersion = CLRSKU.V4DesktopCLR;
         private string profilingURL = null;
 
-        private bool help;
+        private readonly bool help;
         internal string prevlogFileName;
         internal string currlogFileName;
-        internal string difflogFileName;
+        internal readonly string difflogFileName;
         internal Graph.GraphType graphtype = Graph.GraphType.Invalid;
-        internal bool viewdiff = false;
+        internal readonly bool viewdiff = false;
         internal bool exitProgram = false;
 
-        private ReportKind reportKind;
-        private string startMarker = null;
-        private string endMarker = null;
-        private string[] timeMarker = new string[0];
+        private readonly ReportKind reportKind;
+        private readonly string startMarker = null;
+        private readonly string endMarker = null;
+        private readonly string[] timeMarker = new string[0];
 
-        private uint maxWaitingTimeInMiliseconds = 10000;
+        private readonly uint maxWaitingTimeInMiliseconds = 10000;
 
         internal bool IsProfilingWindowsStoreApp()
         {

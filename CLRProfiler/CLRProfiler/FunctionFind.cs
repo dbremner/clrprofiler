@@ -17,7 +17,7 @@ namespace CLRProfiler
 	internal partial class FunctionFind : System.Windows.Forms.Form
 	{
 
-		private ITreeOwner TreeOwner;
+		private readonly ITreeOwner TreeOwner;
 		internal int SelectedFunctionId;
 		internal TreeNode.NodeType SelectedNodeType;
 

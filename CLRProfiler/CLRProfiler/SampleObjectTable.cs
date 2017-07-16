@@ -9,10 +9,10 @@ namespace CLRProfiler
     {
         internal class SampleObject
         {
-            internal int typeIndex;
-            internal int changeTickIndex;
-            internal int origAllocTickIndex;
-            internal SampleObject prev;
+            internal readonly int typeIndex;
+            internal readonly int changeTickIndex;
+            internal readonly int origAllocTickIndex;
+            internal readonly SampleObject prev;
 
             internal SampleObject(int typeIndex, int changeTickIndex, int origAllocTickIndex, SampleObject prev)
             {
@@ -24,7 +24,7 @@ namespace CLRProfiler
         }
 
         internal SampleObject[][] masterTable;
-        internal ReadNewLog readNewLog;
+        internal readonly ReadNewLog readNewLog;
 
         internal const int firstLevelShift = 25;
         internal const int initialFirstLevelLength = 1<<(31-firstLevelShift); // covering 2 GB of address space

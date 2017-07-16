@@ -15,7 +15,7 @@ namespace CLRProfiler
 		internal int parentId = -1;
 		internal int nodeId = -1;
 		internal string parentname = "";
-		internal string name = "";
+		internal readonly string name = "";
 		internal string mapname = "";
 		internal long prevIncl = 0;
 		internal long currIncl = 0;
@@ -31,7 +31,7 @@ namespace CLRProfiler
 		internal bool marked = false;
 
 		internal NodeType nodetype = 0;
-		internal DiffStatistics data;
+		internal readonly DiffStatistics data;
 		internal bool highlighted;
 		//internal ArrayList kids;
 		

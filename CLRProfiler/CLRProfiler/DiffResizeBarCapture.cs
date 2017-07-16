@@ -9,7 +9,7 @@ namespace CLRProfiler
     internal class DiffResizeBarCapture : Control
     {
         int track;
-        ArrayList columns;
+        readonly ArrayList columns;
 
         internal DiffResizeBarCapture(ArrayList in_columns) : base()
         {

@@ -8,7 +8,7 @@ namespace CLRProfiler
     internal class Histogram
     {
         internal int[] typeSizeStacktraceToCount;
-        internal ReadNewLog readNewLog;
+        internal readonly ReadNewLog readNewLog;
 
         internal Histogram(ReadNewLog readNewLog)
         {
@@ -17,7 +17,7 @@ namespace CLRProfiler
         }
 
         // Keep track of when this heapdump was taken
-        internal int tickIndex;
+        internal readonly int tickIndex;
 
         internal Histogram(ReadNewLog readNewLog, int tickindex)
         {

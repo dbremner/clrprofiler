@@ -25,9 +25,9 @@ namespace CLRProfiler
         int textX, textY;
         DateTime created;
 
-        Pen blackPen;
+        readonly Pen blackPen;
 
-        System.Timers.Timer timer;
+        readonly System.Timers.Timer timer;
 
         public string CurrentlyDisplayed()
         {

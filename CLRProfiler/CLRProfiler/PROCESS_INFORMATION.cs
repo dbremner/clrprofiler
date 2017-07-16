@@ -16,7 +16,7 @@ namespace CLRProfiler
         [SuppressMessage("Microsoft.Security","CA2111:PointersShouldNotBeVisible", Justification="CLRProfiler.exe is a stand-alone tool, not a library.")]
         public IntPtr hThread;
 
-        public int dwProcessId;
-        public int dwThreadId;
+        public readonly int dwProcessId;
+        public readonly int dwThreadId;
     }
 }

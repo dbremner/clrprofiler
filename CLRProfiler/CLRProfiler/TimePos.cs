@@ -6,8 +6,8 @@ namespace CLRProfiler
 {
     internal struct TimePos
     {
-        internal double time;
-        internal long pos;
+        internal readonly double time;
+        internal readonly long pos;
 
         internal TimePos(double time, long pos)
         {

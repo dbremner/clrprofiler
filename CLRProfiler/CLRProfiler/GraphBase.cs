@@ -12,10 +12,10 @@ namespace CLRProfiler
 	public class GraphBase
 	{
 		#region private data member
-		private bool placeVertices = true;
-		private bool placeEdges = true;
+		private readonly bool placeVertices = true;
+		private readonly bool placeEdges = true;
         private ulong totalWeight;
-		private int totalHeight = 100;
+		private readonly int totalHeight = 100;
 		private float scale = 1.0f;
 	    //private Graph callGraph = null;
 		#endregion

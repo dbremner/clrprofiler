@@ -28,9 +28,11 @@ namespace CLRProfiler
     internal partial class CallTreeForm : System.Windows.Forms.Form, IComparer, ITreeOwner
     {
         /* info given from the outside */
-        private string logFileName;
+        private readonly string logFileName;
 
-        internal string[] names, types, signatures;
+        internal readonly string[] names;
+        internal readonly string[] types;
+        internal readonly string[] signatures;
 
         /* everything about the backing store */
         private Stream backingStore;
@@ -53,7 +55,7 @@ namespace CLRProfiler
         private int contextSelection;
 
         /*flag for Compare view*/
-        internal bool forCompare = false;
+        internal readonly bool forCompare = false;
 
         /* various collections */
         internal struct GlobalCallStats

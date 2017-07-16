@@ -19,9 +19,9 @@ namespace CLRProfiler
 	{
 		private int position, incurr;
 
-		private BinaryWriter bw;
+		private readonly BinaryWriter bw;
 
-		private ulong[] buffer;
+		private readonly ulong[] buffer;
 
 		private long bitsRecorded;
 

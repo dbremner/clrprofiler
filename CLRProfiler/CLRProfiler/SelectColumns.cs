@@ -24,7 +24,7 @@ namespace CLRProfiler
     public partial class SelectColumns : System.Windows.Forms.Form
     {
 
-        private ArrayList checkBoxes;
+        private readonly ArrayList checkBoxes;
 
         public void Set(int id)
         {

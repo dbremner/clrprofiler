@@ -9,7 +9,7 @@ namespace CLRProfiler
     internal class ResizeBarCapture : Control
     {
         int track;
-        ArrayList columns;
+        readonly ArrayList columns;
 
         internal ResizeBarCapture(ArrayList in_columns) : base()
         {

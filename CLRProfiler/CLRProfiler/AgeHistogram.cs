@@ -127,7 +127,7 @@ namespace CLRProfiler
 
         class TypeDesc : IComparable
         {
-            internal string typeName;
+            internal readonly string typeName;
             internal ulong totalSize;
             internal Color color;
             internal Brush brush;
@@ -347,7 +347,7 @@ namespace CLRProfiler
             return GetScale(verticalScaleGroupBox, pixelsAvailable, rangeNeeded, firstTime);
         }
 
-        static Color[] firstColors =
+        static readonly Color[] firstColors =
         {
             Color.Red,
             Color.Yellow,
@@ -751,7 +751,7 @@ namespace CLRProfiler
             toolTip.SetToolTip(graphPanel, "");
         }
 
-        private bool autoUpdate;
+        private readonly bool autoUpdate;
 
         private void versionTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {

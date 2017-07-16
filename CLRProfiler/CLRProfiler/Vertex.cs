@@ -15,11 +15,11 @@ namespace CLRProfiler
     /// </summary>
     public class Vertex : IComparable
     {
-        internal string name;
-        internal string signature;
+        internal readonly string name;
+        internal readonly string signature;
         internal string weightString;
-        internal Dictionary<Vertex, Edge> incomingEdges;
-        internal Dictionary<Vertex, Edge> outgoingEdges;
+        internal readonly Dictionary<Vertex, Edge> incomingEdges;
+        internal readonly Dictionary<Vertex, Edge> outgoingEdges;
         internal int level;
         internal ulong weight;
         internal ulong incomingWeight;
@@ -28,7 +28,7 @@ namespace CLRProfiler
         internal Rectangle selectionRectangle;
         internal bool selected;
         internal bool visible;
-        internal string nameSpace;
+        internal readonly string nameSpace;
         internal string basicName;
         internal string basicSignature;
 // disable csharp compiler warning #0414: field assigned unused value
@@ -40,10 +40,10 @@ namespace CLRProfiler
         internal ulong[] weightHistory;
         private int hint;
         internal ulong basicWeight;
-        internal string moduleName;
+        internal readonly string moduleName;
         internal int count;
         internal InterestLevel interestLevel;
-        internal Graph containingGraph;
+        internal readonly Graph containingGraph;
         internal ulong id;
 
         string nameSpaceOf(string name, out string basicName)

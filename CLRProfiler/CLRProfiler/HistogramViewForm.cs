@@ -21,7 +21,7 @@ namespace CLRProfiler
     {
         private System.Timers.Timer versionTimer;
 
-        ReadLogResult lastLogResult;
+        readonly ReadLogResult lastLogResult;
 
         private Font font;
 
@@ -59,7 +59,7 @@ namespace CLRProfiler
 
         class TypeDesc : IComparable
         {
-            internal string typeName;
+            internal readonly string typeName;
             internal ulong totalSize;
             internal int count;
             internal Color color;
@@ -258,7 +258,7 @@ namespace CLRProfiler
             sortedTypeTable.Sort();
         }
 
-        static Color[] firstColors =
+        static readonly Color[] firstColors =
         {
             Color.Red,
             Color.Yellow,
@@ -692,7 +692,7 @@ namespace CLRProfiler
             toolTip.SetToolTip(graphPanel, "");
         }
 
-        private bool autoUpdate;
+        private readonly bool autoUpdate;
 
         private void versionTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {

@@ -9,8 +9,8 @@ namespace CLRProfiler
     internal class DiffColumn : Button
     {
         private bool pressed;
-        private ArrayList columnsRef;
-        private DiffResizeBarCapture resizeBar;
+        private readonly ArrayList columnsRef;
+        private readonly DiffResizeBarCapture resizeBar;
 
         internal ColumnInformation ColumnInformation { get; }
 

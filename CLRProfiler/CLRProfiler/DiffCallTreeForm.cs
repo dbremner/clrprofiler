@@ -33,22 +33,27 @@ namespace CLRProfiler
 		}
 		internal class ViewState
 		{
-			internal SortingBehaviour sort, highlight;
-			internal bool showCalls, showAllocs, showAssemblies;
+			internal SortingBehaviour sort;
+		    internal readonly SortingBehaviour highlight;
+		    internal bool showCalls;
+		    internal readonly bool showAllocs;
+		    internal readonly bool showAssemblies;
 
-			internal ViewState(SortingBehaviour in_sort, SortingBehaviour in_highlight)
+		    internal ViewState(SortingBehaviour in_sort, SortingBehaviour in_highlight)
 			{
 				sort = in_sort;
 				highlight = in_highlight;
 
-				showCalls = showAllocs = showAssemblies = true;
+			    showCalls = true;
+			    showAllocs = true;
+                showAssemblies = true;
 			}
 		};
 		
-		private AllocationDiff	_allocDiff= null;
+		private readonly AllocationDiff	_allocDiff= null;
 		private ViewState viewState;
 		private Font defaultFont;
-		private TreeNodeBase Root;
+		private readonly TreeNodeBase Root;
 		internal CLRProfiler.DiffTreeListView diffCallTreeView;
 		private Rectangle formRect = new Rectangle( -1, -1, -1, -1 );
 		

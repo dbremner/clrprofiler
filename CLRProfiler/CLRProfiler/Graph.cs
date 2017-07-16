@@ -17,7 +17,7 @@ namespace CLRProfiler
     internal class Graph
     {
         internal object graphSource;
-        internal Dictionary<string, Vertex> vertices;
+        internal readonly Dictionary<string, Vertex> vertices;
 
         internal enum GraphType
         {

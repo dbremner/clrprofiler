@@ -9,8 +9,8 @@ namespace CLRProfiler
     internal class Column : Button
     {
         private bool pressed;
-        private ArrayList columnsRef;
-        private ResizeBarCapture resizeBar;
+        private readonly ArrayList columnsRef;
+        private readonly ResizeBarCapture resizeBar;
 
         internal ColumnInformation ColumnInformation { get; }
 

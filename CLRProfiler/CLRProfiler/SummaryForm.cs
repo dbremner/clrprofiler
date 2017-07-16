@@ -13,9 +13,9 @@ namespace CLRProfiler
     public partial class SummaryForm : System.Windows.Forms.Form
     {
 
-        private ReadNewLog log;
-        private ReadLogResult logResult;
-        private string scenario = "";
+        private readonly ReadNewLog log;
+        private readonly ReadLogResult logResult;
+        private readonly string scenario = "";
 
         private string FormatNumber(double number)
         {

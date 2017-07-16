@@ -33,8 +33,8 @@ namespace CLRProfiler
         private ArrayList levelList;
         private ulong totalWeight;
         private Vertex selectedVertex;
-        private FilterForm filterForm;
-        private FindRoutineForm findForm;
+        private readonly FilterForm filterForm;
+        private readonly FindRoutineForm findForm;
 
 
         internal GraphViewForm(Graph graph, string title)
@@ -1131,7 +1131,7 @@ namespace CLRProfiler
 
         class CompareVerticesByScore : IComparer
         {
-            Dictionary<Vertex, double> scoreOfVertex;
+            readonly Dictionary<Vertex, double> scoreOfVertex;
 
             internal CompareVerticesByScore(Dictionary<Vertex, double> scoreOfVertex)
             {

@@ -22,19 +22,19 @@ namespace CLRProfiler
 	{
 		private int leftEdge;
 
-		private ArrayList columns;
-		private ListBox treeListBox;
-		private ResizeBarCapture resizeBar;
+		private readonly ArrayList columns;
+		private readonly ListBox treeListBox;
+		private readonly ResizeBarCapture resizeBar;
 
 		private object keepSelected;
-		private PlacedToolTip hoverPopup;
+		private readonly PlacedToolTip hoverPopup;
 
 		// events of interest
 		internal event EventHandler ColumnClick;
 		internal event EventHandler SelectedIndexChanged;
 
 		internal object TokenObject = null;
-		private ITreeOwner treeOwner = null;
+		private readonly ITreeOwner treeOwner = null;
 
 		// item in treeListBox for current context menu
 		private int ContextSelection;

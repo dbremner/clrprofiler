@@ -23,7 +23,7 @@ namespace CLRProfiler
             {
                 internal ulong loAddr;
                 internal ulong hiAddr;
-                internal int generation;
+                internal readonly int generation;
                 internal Interval next;
                 internal bool hadRelocations;
                 internal bool justHadGc;
@@ -44,7 +44,7 @@ namespace CLRProfiler
             Interval updateRoot;
             bool nullRelocationsSeen;
 
-            LiveObjectTable liveObjectTable;
+            readonly LiveObjectTable liveObjectTable;
 
             internal IntervalTable(LiveObjectTable liveObjectTable)
             {
@@ -305,8 +305,8 @@ namespace CLRProfiler
             }
         }
 
-        IntervalTable intervalTable;
-        internal ReadNewLog readNewLog;
+        readonly IntervalTable intervalTable;
+        internal readonly ReadNewLog readNewLog;
         internal int lastTickIndex;
         private long lastPos;
 

@@ -20,8 +20,8 @@ namespace CLRProfiler
     {
         private System.Timers.Timer versionTimer;
 
-        private bool autoUpdate;
-        private string baseTitle;
+        private readonly bool autoUpdate;
+        private readonly string baseTitle;
 
         Font font;
 
@@ -60,18 +60,18 @@ namespace CLRProfiler
             Text = title;
         }
 
-        Brush blackBrush = new SolidBrush(Color.Black);
+        readonly Brush blackBrush = new SolidBrush(Color.Black);
 
         const int generations = 4;
 
         class AddressRange
         {
-            internal ulong loAddr;
+            internal readonly ulong loAddr;
             internal ulong hiAddr;
-            internal AddressRange next;
-            internal int index;
-            internal ulong[] genLoAddr;
-            internal ulong[] genHiAddr;
+            internal readonly AddressRange next;
+            internal readonly int index;
+            internal readonly ulong[] genLoAddr;
+            internal readonly ulong[] genHiAddr;
 
             internal AddressRange(ulong loAddr, ulong hiAddr, AddressRange next, int index)
             {
@@ -96,8 +96,8 @@ namespace CLRProfiler
 
         class TypeDesc : IComparable
         {
-            internal string typeName;
-            internal int typeIndex;
+            internal readonly string typeName;
+            internal readonly int typeIndex;
             internal ulong totalSize;
             internal ulong selectedSize;
             internal double percentage;
@@ -308,7 +308,7 @@ namespace CLRProfiler
             return 128;
         }
 
-        static Color[] firstColors =
+        static readonly Color[] firstColors =
         {
             Color.Red,
             Color.Yellow,

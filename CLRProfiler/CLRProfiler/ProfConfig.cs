@@ -14,12 +14,12 @@ namespace CLRProfiler
         public OmvUsage usage;
         public int bOldFormat;
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
-        public string szPath;
+        public readonly string szPath;
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
         public string szFileName;
         public int bDynamic;
         public int bStack;
-        public uint dwFramesToPrint;
+        public readonly uint dwFramesToPrint;
         public uint dwSkipObjects;
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
         public string szClassToMonitor;

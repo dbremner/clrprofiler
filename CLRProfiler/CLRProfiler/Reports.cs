@@ -69,9 +69,9 @@ namespace CLRProfiler
 
         class TypeDescriptor : IComparable
         {
-            internal int[] size;
-            internal int[] count;
-            internal int typeIndex;
+            internal readonly int[] size;
+            internal readonly int[] count;
+            internal readonly int typeIndex;
 
             internal TypeDescriptor(int typeIndex, int slotCount)
             {
@@ -409,7 +409,7 @@ namespace CLRProfiler
             internal int bCount;
             internal int diffSize;
             internal int diffCount;
-            internal int typeIndex;
+            internal readonly int typeIndex;
 
             internal DiffTypeDescriptor(int typeIndex)
             {

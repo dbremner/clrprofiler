@@ -11,7 +11,7 @@ namespace CLRProfiler
         private int[] mappingTable;
         private int maxID = 0;
         // logs created by the debugger have lots of duplicate type id/size combinations
-        private Dictionary<long, int> allocHashtable;
+        private readonly Dictionary<long, int> allocHashtable;
 
         internal StacktraceTable()
         {

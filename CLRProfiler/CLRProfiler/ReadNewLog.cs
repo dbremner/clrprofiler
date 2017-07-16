@@ -93,26 +93,26 @@ namespace CLRProfiler
         int line;
         internal long pos;
         long lastLineStartPos;
-        internal Dictionary<int/*thread id*/, List<string>> assembliesJustLoaded;
-        internal Dictionary<string/*assembly name*/, int/*stack id*/> assemblies;
+        internal readonly Dictionary<int/*thread id*/, List<string>> assembliesJustLoaded;
+        internal readonly Dictionary<string/*assembly name*/, int/*stack id*/> assemblies;
         internal string[] typeName;
         internal string[] funcName;
         internal string[] funcSignature;
         internal int[] funcModule;
         internal string[] modBasicName;
         internal string[] modFullName;
-        internal Dictionary<int/*type id*/, bool> finalizableTypes;
-        internal Dictionary<string/*type name*/, int/*type id*/> typeSignatureIdHash;
-        internal Dictionary<string/*func name*/, int/*func id*/> funcSignatureIdHash;
+        internal readonly Dictionary<int/*type id*/, bool> finalizableTypes;
+        internal readonly Dictionary<string/*type name*/, int/*type id*/> typeSignatureIdHash;
+        internal readonly Dictionary<string/*func name*/, int/*func id*/> funcSignatureIdHash;
         internal int maxTickIndex;
-        bool progressFormVisible;
-        internal int[] inducedGcCount;
-        internal int[] gcCount;
-        internal ulong[] generationSize;
-        internal ulong[] cumulativeGenerationSize;
-        internal EventList commentEventList;
-        internal EventList gcEventList;
-        internal EventList heapDumpEventList;
+        readonly bool progressFormVisible;
+        internal readonly int[] inducedGcCount;
+        internal readonly int[] gcCount;
+        internal readonly ulong[] generationSize;
+        internal readonly ulong[] cumulativeGenerationSize;
+        internal readonly EventList commentEventList;
+        internal readonly EventList gcEventList;
+        internal readonly EventList heapDumpEventList;
 
         static void EnsureVertexCapacity(int id, ref Vertex[] vertexArray)
         {
