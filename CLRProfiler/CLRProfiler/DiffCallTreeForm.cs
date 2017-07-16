@@ -52,7 +52,7 @@ namespace CLRProfiler
 		
 		private readonly AllocationDiff	_allocDiff;
 		private ViewState viewState;
-		private Font defaultFont;
+		private readonly Font defaultFont;
 		private readonly TreeNodeBase Root;
 		internal CLRProfiler.DiffTreeListView diffCallTreeView;
 		private Rectangle formRect = new Rectangle( -1, -1, -1, -1 );
