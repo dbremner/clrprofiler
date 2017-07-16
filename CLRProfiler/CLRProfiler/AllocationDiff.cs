@@ -1720,6 +1720,7 @@ namespace CLRProfiler
 						{
 							found = true;
 							c = ReadChar();
+						    // ReSharper disable once RedundantAssignment
 							threadid = ReadInt();
 							ReadInt();
 							stackid = ReadInt();
@@ -1735,6 +1736,7 @@ namespace CLRProfiler
 							found = true;
 							c = ReadChar();
 							nodetype = TreeNode.NodeType.Call;
+						    // ReSharper disable once RedundantAssignment
 							threadid = ReadInt();
 							stackid = ReadInt();
 							if (c == -1)	{found = false;}
@@ -1748,6 +1750,7 @@ namespace CLRProfiler
 							found = true;
 							c = ReadChar();
 							nodetype = TreeNode.NodeType.AssemblyLoad;
+						    // ReSharper disable once RedundantAssignment
 							threadid = ReadInt();
 							/* int assemblyId = */ ReadInt();
 
@@ -1761,6 +1764,7 @@ namespace CLRProfiler
 								sb.Append((char)c);
 								c = ReadChar();
 							}
+						    // ReSharper disable once RedundantAssignment
 							assemblyName = sb.ToString();
 							break;
 						}
