@@ -1425,7 +1425,8 @@ namespace CLRProfiler
 		internal void RefreshCallTreeNodes([NotNull] DiffDataNode node)
 		{
 			node.IsExpanded = false;
-			for(int i = 0; i < node.allkids.Count; i++)
+		    Debug.Assert(node.allkids != null, "node.allkids != null");
+		    for(int i = 0; i < node.allkids.Count; i++)
 			{
 				RefreshCallTreeNodes((DiffDataNode) node.allkids[i]);
 			}
@@ -1439,10 +1440,11 @@ namespace CLRProfiler
 				root.HasKids = true;
 				root.depth = 0;
 			}
+			Debug.Assert(root.allkids != null, "root.allkids != null");
 			for(int i = 0; i < rKids.Length; i++)
 			{
 				DiffDataNode kidNode = Row2Node(rKids[i]);
-				root.allkids.Add(kidNode);
+			    root.allkids.Add(kidNode);
 				
 			}
 		}

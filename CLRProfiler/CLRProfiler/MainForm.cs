@@ -1615,6 +1615,7 @@ namespace CLRProfiler
                 for (int i = 0; i < elemList.Count; i++)
                 {
                     XmlAttributeCollection attributes = elemList[i].Attributes;
+                    Debug.Assert(attributes != null, "attributes != null");
                     XmlAttribute userNameAttribute = attributes["userName"];
                     if (userNameAttribute != null)
                     {

@@ -1622,6 +1622,7 @@ namespace CLRProfiler
         {
             //  Open or create the CLR Profiler registry key
             RegistryKey rkMsft = Registry.CurrentUser.OpenSubKey( "Software\\Microsoft", true);
+            Debug.Assert(rkMsft != null, "rkMsft != null");
             rkProfiler = rkMsft.OpenSubKey( "CLRProfiler", true );
             if (rkProfiler == null)
             {
@@ -1639,6 +1640,7 @@ namespace CLRProfiler
             {
                 //  Read the saved rectangle from the registry and restore
                 //  the app to that size.
+                Debug.Assert(rkProfiler != null, "rkProfiler != null");
                 var value = (String)rkProfiler.GetValue( "Rectangle" );
                 if (value != null)
                 {
