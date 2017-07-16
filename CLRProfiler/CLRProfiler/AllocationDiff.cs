@@ -1462,7 +1462,7 @@ namespace CLRProfiler
 				string name = sumNode.mapname;
 				if(kidSum.ContainsKey(name))
 				{
-					var updateNode = kidSum[name] as DiffDataNode;
+					var updateNode = (DiffDataNode) kidSum[name];
 					updateNode.prevIncl += sumNode.prevIncl;
 					updateNode.currIncl += sumNode.currIncl;
 					updateNode.diffIncl = updateNode.currIncl - updateNode.prevIncl;
