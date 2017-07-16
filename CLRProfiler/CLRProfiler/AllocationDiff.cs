@@ -111,21 +111,21 @@ namespace CLRProfiler
 
 	    // holds all useful data from base
 		// for build all diff, call relations, and type allocation tables
-		internal readonly Hashtable _prevbasedata;
-		internal readonly Hashtable _currbasedata;
+		internal readonly Hashtable _prevbasedata = new Hashtable();
+		internal readonly Hashtable _currbasedata = new Hashtable();
 
 
 		// maps for match search
-		public readonly Hashtable basedataId;
-		public readonly Hashtable Idbasedata;
-		public Hashtable typeAllocdataId;
+		public readonly Hashtable basedataId = new Hashtable();
+		public readonly Hashtable Idbasedata = new Hashtable();
+		public Hashtable typeAllocdataId = new Hashtable();
 
 		// hold log data		
-		private readonly LogBase _prevLog;
-		private readonly LogBase _currLog;
+		private readonly LogBase _prevLog = new LogBase();
+		private readonly LogBase _currLog = new LogBase();
 		// hold base graph related data
-		private readonly GraphBase _prevG;
-		private readonly GraphBase _currG;
+		private readonly GraphBase _prevG = new GraphBase();
+		private readonly GraphBase _currG = new GraphBase();
 
 		// hold base stacktrace info
 		internal CallTreeForm _prevcallTrace;
@@ -212,11 +212,11 @@ namespace CLRProfiler
             public DoubleInt allocmem { get; set; }
 			
 		}
-		public DataTable basedatatable { get; set; }
+		public DataTable basedatatable { get; set; } = new DataTable("basedatatbl");
 
-	    public DataTable ContriTocallertbl { get; set; }
+	    public DataTable ContriTocallertbl { get; set; } = new DataTable("ContriTocallertbl");
 
-	    public DataTable ContriTocalleetbl { get; set; }
+	    public DataTable ContriTocalleetbl { get; set; } = new DataTable("ContriTocalleetbl");
 
 	    // detailds for reportform details RadioButton
 		public struct DetailFilter
@@ -236,24 +236,6 @@ namespace CLRProfiler
 		#region constructor
 		public AllocationDiff()
 	    {
-	        _prevLog = new LogBase();
-	        _currLog = new LogBase();
-	        _prevG = new GraphBase();
-	        _currG = new GraphBase();
-
-	        ds = new DataSet();
-	        _prevbasedata = new Hashtable();
-	        _currbasedata = new Hashtable();
-
-
-	        basedataId = new Hashtable();
-	        Idbasedata = new Hashtable();
-	        basedatatable = new DataTable("basedatatbl");
-	        callertbl = new DataTable("caller");
-	        calleetbl = new DataTable("callee");
-	        typeAllocdataId = new Hashtable();
-	        ContriTocallertbl = new DataTable("ContriTocallertbl");
-	        ContriTocalleetbl = new DataTable("ContriTocalleetbl");
 	        MakeBaseDataTable(basedatatable);
             MakeCallerTables(callertbl);
             MakeCalleeTables(calleetbl);
@@ -270,11 +252,11 @@ namespace CLRProfiler
 		// DataSet used to collect tables and 
 		// build relations between table in the near future
 		// also it usded by DataViewManager in ReportForm
-		public DataSet ds { get; set; }
+		public DataSet ds { get; set; } = new DataSet();
 
-	    public DataTable callertbl { get; set; }
+	    public DataTable callertbl { get; set; } = new DataTable("caller");
 
-	    public DataTable calleetbl { get; set; }
+	    public DataTable calleetbl { get; set; } = new DataTable("callee");
 
 	    public string PrevLogFileName
 		{
