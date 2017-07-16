@@ -483,38 +483,31 @@ namespace CLRProfiler
                 }
             }
 
-            using (Brush blackBrush = new SolidBrush(Color.Black))
+            Brush blackBrush = Brushes.Black;
+            int x = leftMargin;
+            foreach (Bucket b in buckets)
             {
-                int x = leftMargin;
-                foreach (Bucket b in buckets)
+                string s = "< " + FormatSize((ulong) b.maxSize + 1);
+                int y = graphPanel.Height - bottomMargin;
+                g.DrawString(s, font, blackBrush, x, y + 3);
+                s = FormatSize(b.totalSize);
+                g.DrawString(s, font, blackBrush, x, y + 3 + font.Height);
+                s = string.Format("({0:f2}%)", 100.0 * b.totalSize / totalSize);
+                g.DrawString(s, font, blackBrush, x, y + 3 + font.Height * 2);
+                foreach (KeyValuePair<TypeDesc, SizeCount> d in b.typeDescToSizeCount)
                 {
-                    string s = "< " + FormatSize((ulong)b.maxSize+1);
-                    int y = graphPanel.Height - bottomMargin;
-                    g.DrawString(s, font, blackBrush, x, y + 3);
-                    s = FormatSize(b.totalSize);
-                    g.DrawString(s, font, blackBrush, x, y + 3 + font.Height);
-                    s = string.Format("({0:f2}%)", 100.0*b.totalSize/totalSize);
-                    g.DrawString(s, font, blackBrush, x, y + 3 + font.Height*2);
-                    foreach (KeyValuePair<TypeDesc, SizeCount> d in b.typeDescToSizeCount)
-                    {
-                        TypeDesc t = d.Key;
-                        SizeCount sizeCount = d.Value;
-                        ulong size = sizeCount.size;
-                        int height = (int)(size / (ulong)verticalScale);
+                    TypeDesc t = d.Key;
+                    SizeCount sizeCount = d.Value;
+                    ulong size = sizeCount.size;
+                    int height = (int) (size / (ulong) verticalScale);
 
-                        y -= height;
+                    y -= height;
 
-                        Brush brush = t.brush;
-                        if (t.selected && (b.selected || noBucketSelected))
-                        {
-                            brush = blackBrush;
-                        }
-
-                        g.FillRectangle(brush, x, y, bucketWidth, height);
-                    }
-
-                    x += bucketWidth + gap;
+                    bool cond = t.selected && (b.selected || noBucketSelected);
+                    g.FillRectangle(cond ? blackBrush : t.brush, x, y, bucketWidth, height);
                 }
+
+                x += bucketWidth + gap;
             }
         }
 
@@ -547,9 +540,8 @@ namespace CLRProfiler
             x = leftMargin;
             y = topMargin;
 
-            Brush blackBrush = new SolidBrush(Color.Black);
-
             string s = string.Format("Grand total: {0:n0} bytes - {1:n0} instances, {2:n0} bytes average size", totalSize, totalCount, totalSize/(ulong)totalCount);
+            Brush blackBrush = Brushes.Black;
             g.DrawString(s, font, blackBrush, x, y);
 
             y += font.Height + typeLegendSpacing*2;
@@ -557,13 +549,7 @@ namespace CLRProfiler
             int dotOffset = (font.Height - dotSize)/2;
             foreach (TypeDesc t in sortedTypeTable)
             {
-                Brush brush = t.brush;
-                if (t.selected)
-                {
-                    brush = blackBrush;
-                }
-
-                g.FillRectangle(brush, t.rect.Left, t.rect.Top+dotOffset, dotSize, dotSize);
+                g.FillRectangle(t.selected ? blackBrush : t.brush, t.rect.Left, t.rect.Top+ dotOffset, dotSize, dotSize);
                 g.DrawString(t.typeName, font, blackBrush, t.rect.Left + dotSize*2, t.rect.Top);
                 s = string.Format(" ({0:n0} bytes, {1:f2}% - {2:n0} instances, {3:n0} bytes average size)", t.totalSize, (double)t.totalSize/totalSize*100.0, t.count, t.totalSize/(ulong)t.count);
                 g.DrawString(s, font, blackBrush, t.rect.Left + dotSize*2, t.rect.Top + font.Height);

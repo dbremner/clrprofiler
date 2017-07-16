@@ -92,7 +92,7 @@ namespace CLRProfiler
             Graphics g = e.Graphics;
             var size = new Rectangle(new Point(0, 0), new Size(Size.Width - 1, Size.Height - 1));
             g.DrawRectangle(blackPen, size);
-            g.DrawString(text, font, new SolidBrush(Color.Black), new Point(textX, textY));
+            g.DrawString(text, font, Brushes.Black, new Point(textX, textY));
         }
 
         override protected void OnMouseLeave(EventArgs e)

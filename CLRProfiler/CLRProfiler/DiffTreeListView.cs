@@ -271,7 +271,7 @@ namespace CLRProfiler
 		    var node = (TreeNodeBase)Items[e.Index];
 
 			int crossover = (treeListBox.ItemHeight - 1) * (1 + node.depth);
-			g.FillRectangle(new SolidBrush(Color.White), position, e.Bounds.Top, crossover, e.Bounds.Height);
+			g.FillRectangle(Brushes.White, position, e.Bounds.Top, crossover, e.Bounds.Height);
 
 			var itemRect = new Rectangle(crossover, e.Bounds.Top, e.Bounds.Right - crossover, e.Bounds.Height);
 			g.FillRectangle(new SolidBrush(e.BackColor), itemRect);
@@ -281,7 +281,7 @@ namespace CLRProfiler
 				ControlPaint.DrawFocusRectangle(g, itemRect, e.ForeColor, e.BackColor);
 			}
 
-			var grayPen = new Pen(Color.LightGray);
+			var grayPen = Pens.LightGray;
 			g.DrawLine(grayPen, 0, e.Bounds.Bottom - 1, e.Bounds.Right, e.Bounds.Bottom - 1);
 
 			Font fontToUse = treeOwner.GetFont(TokenObject, node);
@@ -307,7 +307,7 @@ namespace CLRProfiler
 
 					if(node.HasKids)
 					{
-						var p = new Pen(Color.Gray);
+						var p = Pens.Gray;
 						int y0 = e.Bounds.Top;
 						int x0 = position + node.depth * (treeListBox.ItemHeight - 1);
 						g.DrawRectangle(p, x0 + 3, y0 + 3, (treeListBox.ItemHeight - 9), (treeListBox.ItemHeight - 9));

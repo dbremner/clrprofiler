@@ -95,10 +95,7 @@ namespace CLRProfiler
             g.DrawRectangle(pen, r);
             if (v.selected)
             {
-                using (var selectBrush = new SolidBrush(Color.Aqua))
-                {
-                    g.FillRectangle(selectBrush, r);
-                }
+                g.FillRectangle(Brushes.Aqua, r);
             }
 
             RectangleF stringRect;

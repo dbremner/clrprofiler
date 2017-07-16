@@ -488,8 +488,6 @@ namespace CLRProfiler
                 return;
             }
 
-            Brush brush = new SolidBrush(Color.Black);
-            var pen = new Pen(brush);
             const int minLabelPitchInPixels = 30;
             ulong minLabelPitch = (ulong)minLabelPitchInPixels * (ulong)verticalScale;
 
@@ -500,6 +498,8 @@ namespace CLRProfiler
             }
 
             int y = topMargin;
+            Brush brush = Brushes.Black;
+            var pen = Pens.Black;
             for (AddressRange r = rangeList; r != null; r = r.next)
             {
                 DrawAddressLabel(g, brush, pen, r, y, r.loAddr);
@@ -592,9 +592,9 @@ namespace CLRProfiler
             RectangleF clipRect = g.VisibleClipBounds;
             Brush[] brushes = new Brush[3];
             Pen[] pens = new Pen[3];
-            brushes[0] = new SolidBrush(Color.Red);
-            brushes[1] = new SolidBrush(Color.Green);
-            brushes[2] = new SolidBrush(Color.Blue);
+            brushes[0] = Brushes.Red;
+            brushes[1] = Brushes.Green;
+            brushes[2] = Brushes.Blue;
             for (int i = 0; i < 3; i++)
             {
                 pens[i] = new Pen(brushes[i]);
@@ -879,8 +879,6 @@ namespace CLRProfiler
             x = leftMargin;
             y = topMargin;
 
-            Brush blackBrush = new SolidBrush(Color.Black);
-
             long totalSize = 0;
             foreach (TypeDesc t in sortedTypeTable)
             {
@@ -906,6 +904,7 @@ namespace CLRProfiler
                     title = string.Format("Types - estimated sizes live at {0:f3} seconds:", startTime);
                 }
             }
+            Brush blackBrush = Brushes.Black;
             g.DrawString(title, font, blackBrush, leftMargin, topMargin);
             int dotOffset = (font.Height - dotSize)/2;
             foreach (TypeDesc t in sortedTypeTable)
@@ -1074,7 +1073,7 @@ namespace CLRProfiler
         private void DrawSelectionVerticalLine(Graphics g, int tickIndex)
         {
             int x = TimeToX(lastLog.TickIndexToTime(tickIndex));
-            var blackPen = new Pen(Color.Black);
+            var blackPen = Pens.Black;
             g.DrawLine(blackPen, x, selectionVerticalMargin+1, x, graphPanel.Height-selectionVerticalMargin-1);
         }
 
@@ -1094,7 +1093,7 @@ namespace CLRProfiler
 
         private void DrawSelectionHorizontalLines(Graphics g, int startTick, int endTick)
         {
-            var blackPen = new Pen(Color.Black);
+            var blackPen = Pens.Black;
             DrawSelectionHorizontalLines(g, blackPen, startTick, endTick);
         }
 

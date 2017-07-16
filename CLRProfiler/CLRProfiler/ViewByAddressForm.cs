@@ -663,8 +663,8 @@ namespace CLRProfiler
 
         private void DrawHeapLegend(Graphics g)
         {
-            Brush brush = new SolidBrush(Color.Black);
-            var pen = new Pen(brush);
+            Brush brush = Brushes.Black;
+            var pen = Pens.Black;
 
             for (AddressRange r = rangeList; r != null; r = r.next)
             {
@@ -684,11 +684,11 @@ namespace CLRProfiler
         private void DrawGenerationLimits(Graphics g)
         {
             Brush[] brush = new Brush[generations];
+            brush[0] = Brushes.Red;
+            brush[1] = Brushes.Green;
+            brush[2] = Brushes.Blue;
+            brush[3] = Brushes.Magenta;
             Pen[] pen = new Pen[generations];
-            brush[0] = new SolidBrush(Color.Red);
-            brush[1] = new SolidBrush(Color.Green);
-            brush[2] = new SolidBrush(Color.Blue);
-            brush[3] = new SolidBrush(Color.Magenta);
             for (int gen = 0; gen < generations; gen++)
             {
                 pen[gen] = new Pen(brush[gen], 3);
@@ -1276,7 +1276,7 @@ namespace CLRProfiler
             DrawTypeDescription(typeLegendPanel.CreateGraphics(), t);
             Graphics g = graphPanel.CreateGraphics();
             DrawLiveObjects(g, t, 0, ulong.MaxValue);
-            var pen = new Pen(Color.Black);
+            var pen = Pens.Black;
             DrawSelectionHorizontalLine(g, pen, selectedHighAddr);
             DrawSelectionHorizontalLine(g, pen, selectedLowAddr);
         }
