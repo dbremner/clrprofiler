@@ -654,7 +654,7 @@ namespace CLRProfiler
             }
 
             Histogram[] heapDumpHistograms = entireLogResult.heapDumpHistograms;
-            string[] timeMarkers = new String[2];
+            string[] timeMarkers;
             if (startIndex < endIndex)
             {
                 heapDumpHistograms = new Histogram[endIndex - startIndex + 1];

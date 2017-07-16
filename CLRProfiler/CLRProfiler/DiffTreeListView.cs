@@ -608,7 +608,7 @@ namespace CLRProfiler
 			{
 				index++;
 				int upTo = index;
-				TreeNodeBase kid = null;
+				TreeNodeBase kid;
 				// eh, hopefully item access is cheap
 
 				ListBox.ObjectCollection items = treeListBox.Items;

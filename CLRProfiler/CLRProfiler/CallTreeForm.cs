@@ -795,7 +795,6 @@ namespace CLRProfiler
                 return "STUB FUNCTION (for calls before profiling was enabled)";
             }
 
-            string res = "";
             string name = names[functionId];
             string signature = signatures[functionId];
             if (name == null)
@@ -803,6 +802,7 @@ namespace CLRProfiler
                 return null;
             }
 
+            string res;
             if(name == "NATIVE")
             {
                 /* transition into the unmanaged code */

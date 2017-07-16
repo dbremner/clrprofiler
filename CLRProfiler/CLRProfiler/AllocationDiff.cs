@@ -746,7 +746,7 @@ namespace CLRProfiler
 			{
 				foreach(DictionaryEntry de in basedataId)
 				{
-					var pn= new datanode();
+					datanode pn;
 					var cn= new datanode();
 					var nameAndSignature = (string)de.Key;
 					
@@ -767,8 +767,7 @@ namespace CLRProfiler
 						var cnnew = new Hashtable();
 						foreach(string nameAndSignature1 in pn.calleeAlloc.Keys)
 						{
-							pn1 = new datanode();
-							cn1 = new datanode();
+						    cn1 = new datanode();
 						    
 							if(this._prevbasedata.ContainsKey(nameAndSignature1))
 							{
@@ -847,7 +846,7 @@ namespace CLRProfiler
 			{
 				foreach(DictionaryEntry de in basedataId)
 				{
-					var pn= new datanode();
+					datanode pn;
 					var cn= new datanode();
 					var nameAndSignature = (string)de.Key;
 					var id = (int)basedataId[nameAndSignature];
@@ -862,8 +861,7 @@ namespace CLRProfiler
 						var cnnew = new Hashtable();
 						foreach(Edge edge in pn.caller.Values)
 						{
-							pn1 = new datanode();
-							cn1 = new datanode();
+						    cn1 = new datanode();
 						    string key = edge.FromVertex.GetNameAndSignature();
 
                             if (this._prevbasedata.ContainsKey(key))
@@ -1007,24 +1005,22 @@ namespace CLRProfiler
         #region CallTrace - MakeDiffTreceTable, BuildDiffTraceTable
 		private void BuildDiffTraceTable(DiffDataNode parent, [CanBeNull] TreeNode currRoot, [CanBeNull] TreeNode prevRoot)
 		{
-			var currKids = new ArrayList();
-		    var prevKids = new ArrayList();
 		    var currDKids = new ArrayList();
 		    var prevDKids = new ArrayList();
 
 			//get kids
 			if(currRoot != null)
 			{
-				currKids = _currcallTrace.FetchKids(null, currRoot);
-				if(currKids.Count >0)
+			    ArrayList currKids = _currcallTrace.FetchKids(null, currRoot);
+			    if(currKids.Count >0)
 				{
 					currDKids = TransCurrTree(currKids);
 				}
 			}
 			if(prevRoot != null)
 			{
-				prevKids = _prevcallTrace.FetchKids(null, prevRoot);
-				if(prevKids.Count > 0)
+			    ArrayList prevKids = _prevcallTrace.FetchKids(null, prevRoot);
+			    if(prevKids.Count > 0)
 				{
 					prevDKids = TransPrevTree(prevKids);
 				}
