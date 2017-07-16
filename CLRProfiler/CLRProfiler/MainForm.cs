@@ -1269,10 +1269,10 @@ namespace CLRProfiler
         private string[] GetServicesEnvironment()
         {
             Process[] servicesProcesses = Process.GetProcessesByName("services");
-            if (servicesProcesses == null || servicesProcesses.Length != 1)
+            if (servicesProcesses.Length != 1)
             {
                 servicesProcesses = Process.GetProcessesByName("services.exe");
-                if (servicesProcesses == null || servicesProcesses.Length != 1)
+                if (servicesProcesses.Length != 1)
                 {
                     return new string[0];
                 }
@@ -1990,10 +1990,7 @@ namespace CLRProfiler
                 }
                 else
                 {
-                    if (waitingForConnectionForm == null)
-                    {
-                        waitingForConnectionForm = new WaitingForConnectionForm();
-                    }
+                    waitingForConnectionForm = new WaitingForConnectionForm();
 
                     waitingForConnectionForm.setMessage(text);
                     waitingForConnectionForm.Visible = true;
@@ -2099,10 +2096,7 @@ namespace CLRProfiler
                 }
                 else
                 {
-                    if (waitingForConnectionForm == null)
-                    {
-                        waitingForConnectionForm = new WaitingForConnectionForm();
-                    }
+                    waitingForConnectionForm = new WaitingForConnectionForm();
 
                     waitingForConnectionForm.setMessage(text);
                     waitingForConnectionForm.Visible = true;
