@@ -318,10 +318,10 @@ namespace CLRProfiler
 
 				if(res != null)
 				{
-					int characters, lines;
+					int characters;
 
 					SizeF layoutArea = new SizeF(rect.Width, rect.Height);
-					SizeF stringSize = g.MeasureString(res, fontToUse, layoutArea, sf, out characters, out lines);
+					SizeF stringSize = g.MeasureString(res, fontToUse, layoutArea, sf, out characters, out _);
 
 					g.DrawString(res.Substring(0, characters) + (characters < res.Length ? "..." : ""), fontToUse, brush, rect.Location, sf);
 					g.DrawLine(grayPen, rect.Right - 1, e.Bounds.Top, rect.Right - 1, e.Bounds.Bottom - 1);
