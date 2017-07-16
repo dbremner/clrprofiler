@@ -16,7 +16,7 @@ namespace CLRProfiler
 
         Color GetColor(object obj, [NotNull] TreeNodeBase node, bool positive);
 
-        object GetInfo(object obj, [NotNull] TreeNodeBase node, [NotNull] ColumnInformation info);
+        object GetInfo(object obj, [NotNull] TreeNodeBase node, [CanBeNull] ColumnInformation info);
 
         [NotNull]
         ArrayList FetchKids(object obj, [NotNull] TreeNodeBase node);
