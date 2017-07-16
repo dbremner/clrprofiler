@@ -154,7 +154,7 @@ namespace CLRProfiler
                 }
                 liveRoot = new Interval(id, id + size, -1, liveRoot);
                 Debug.Assert(OverlappingInterval(liveRoot) == null);
-                return emptySpace;
+                return false;
             }
 
             internal void GenerationInterval(ulong rangeStart, ulong rangeLength, int generation)
