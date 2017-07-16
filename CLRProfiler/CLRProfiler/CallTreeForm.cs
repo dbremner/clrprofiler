@@ -545,6 +545,7 @@ namespace CLRProfiler
             {
                 SetcallTreeView();
             }
+            Debug.Assert(callTreeView != null, "callTreeView != null");
             var node = (TreeNode)callTreeView.SelectedItem;
             if(node == null)
             {
@@ -1694,6 +1695,7 @@ namespace CLRProfiler
                 viewState.sort.counterId = (int)ci.Token;
                 viewState.sort.sortingOrder = (viewState.sort.counterId == -1 ? -1 : 1);
             }
+            Debug.Assert(callTreeView != null, "callTreeView != null");
             callTreeView.Resort();
         }
 
@@ -1933,6 +1935,7 @@ namespace CLRProfiler
                 viewState = (ViewState)callTreeView.TokenObject;
 
                 CallTreeForm_Resize(null, null);
+                Debug.Assert(callTreeView != null, "callTreeView != null");
                 callTreeView.Visible = true;
                 ShowCurrentStack(null, null);
             }
@@ -2015,6 +2018,7 @@ namespace CLRProfiler
                 {
                     viewState.sort = ss;
                     viewState.highlight = hh;
+                    Debug.Assert(callTreeView != null, "callTreeView != null");
                     callTreeView.Resort();
                 }
             }
@@ -2033,6 +2037,7 @@ namespace CLRProfiler
                     viewState.showCalls = vf.callsCheckbox.Checked;
                     viewState.showAllocs = vf.allocationsCheckbox.Checked;
                     viewState.showAssemblies = vf.assembliesCheckbox.Checked;
+                    Debug.Assert(callTreeView != null, "callTreeView != null");
                     callTreeView.Resort();
                 }
             }
@@ -2114,6 +2119,7 @@ namespace CLRProfiler
             {
                 SetcallTreeView();
             }
+            Debug.Assert(callTreeView != null, "callTreeView != null");
             var columns = callTreeView.GetColumns();
             var callTreeColumn = (Column) columns[0];
             int violations = 0, newWidth = callTreeColumn.Width + splitter.Location.X - previousSplitterLocation;

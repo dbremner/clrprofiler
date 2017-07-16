@@ -804,6 +804,7 @@ namespace CLRProfiler
             {
                 if (autoUpdate)
                 {
+                    Debug.Assert(MainForm.instance.lastLogResult != null, "MainForm.instance.lastLogResult != null");
                     liveObjectTable = MainForm.instance.lastLogResult.liveObjectTable;
                 }
 

@@ -1180,6 +1180,7 @@ namespace CLRProfiler
             }
 
             var process = Process.Start(processStartInfo);
+            Debug.Assert(process != null, "process != null");
             while (!process.HasExited)
             {
                 Text += ".";
@@ -1203,6 +1204,7 @@ namespace CLRProfiler
             var processStartInfo = new ProcessStartInfo("cmd.exe");
             processStartInfo.Arguments = "/c net start w3svc";
             var process = Process.Start(processStartInfo);
+            Debug.Assert(process != null, "process != null");
             while (!process.HasExited)
             {
                 Text += ".";
@@ -1226,6 +1228,7 @@ namespace CLRProfiler
             var processStartInfo = new ProcessStartInfo("cmd.exe");
             processStartInfo.Arguments = "/c " + stopCommand;
             var process = Process.Start(processStartInfo);
+            Debug.Assert(process != null, "process != null");
             while (!process.HasExited)
             {
                 Text += ".";
@@ -2169,6 +2172,7 @@ namespace CLRProfiler
 
                     if (attachMode == false && noUI == false)
                     {
+                        Debug.Assert(waitingForConnectionForm != null, "waitingForConnectionForm != null");
                         waitingForConnectionForm.addMessage(message);
                     }
                     else

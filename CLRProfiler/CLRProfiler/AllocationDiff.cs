@@ -1450,7 +1450,8 @@ namespace CLRProfiler
 		{
 			depth++;
 			parent.depth = depth;
-			parent.allkids.Clear();
+		    Debug.Assert(parent.allkids != null, "parent.allkids != null");
+		    parent.allkids.Clear();
 			parent.HasKids = false;
 			var kidSum = new Hashtable();
 
@@ -1474,7 +1475,8 @@ namespace CLRProfiler
 						updateNode.currCalls++;
 					}
 					updateNode.diffCalls = updateNode.currCalls - updateNode.prevCalls;
-					updateNode.allkids.Add(sumNode.nodeId);
+				    Debug.Assert(updateNode.allkids != null, "updateNode.allkids != null");
+				    updateNode.allkids.Add(sumNode.nodeId);
 					updateNode.HasKids = true;
 					
 				}
@@ -1489,7 +1491,8 @@ namespace CLRProfiler
 						sumNode.currCalls = 1;
 					}
 					sumNode.parentId = parentId;
-					sumNode.allkids.Add(sumNode.nodeId);
+				    Debug.Assert(sumNode.allkids != null, "sumNode.allkids != null");
+				    sumNode.allkids.Add(sumNode.nodeId);
 					sumNode.diffIncl = sumNode.currIncl - sumNode.prevIncl;
 					sumNode.diffCalls = sumNode.currCalls - sumNode.prevCalls;
 					kidSum.Add(name, sumNode);

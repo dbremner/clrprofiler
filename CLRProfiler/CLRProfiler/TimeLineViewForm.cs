@@ -40,6 +40,7 @@ namespace CLRProfiler
 
             font = MainForm.instance.font;
 
+            Debug.Assert(MainForm.instance.lastLogResult != null, "MainForm.instance.lastLogResult != null");
             sampleObjectTable = MainForm.instance.lastLogResult.sampleObjectTable;
             lastLog = sampleObjectTable.readNewLog;
             typeName = lastLog.typeName;

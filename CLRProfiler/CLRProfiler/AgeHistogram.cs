@@ -195,6 +195,7 @@ namespace CLRProfiler
 
         private ulong BuildBuckets(double timeScale, double maxAge)
         {
+            Debug.Assert(liveObjectTable != null, "liveObjectTable != null");
             ReadNewLog log = liveObjectTable.readNewLog;
             bool useMarkers = markersRadioButton.Checked;
             if (this.useMarkers != useMarkers)
@@ -617,6 +618,7 @@ namespace CLRProfiler
         {
             bucketWidth = BucketWidth(g);
             bottomMargin = BottomMargin();
+            Debug.Assert(liveObjectTable != null, "liveObjectTable != null");
             double maxAge = liveObjectTable.readNewLog.TickIndexToTime(liveObjectTable.lastTickIndex);
             int barsVisible = (graphOuterPanel.Width - leftMargin - rightMargin)/(bucketWidth + gap);
 
@@ -648,6 +650,7 @@ namespace CLRProfiler
 
             verticalScale = GetVerticalScale(pixelsForBars, maxBucketSize/1024, verticalScale == 0)*1024;
 
+            Debug.Assert(bucketTable != null, "bucketTable != null");
             int bucketCount = bucketTable.Length;
             int width = leftMargin + bucketWidth*bucketCount + gap*(bucketCount-1) + rightMargin;
             graphPanel.Width = width;
@@ -669,6 +672,7 @@ namespace CLRProfiler
             int maxWidth = 0;
             int x = leftMargin;
             int y = topMargin;
+            Debug.Assert(sortedTypeTable != null, "sortedTypeTable != null");
             foreach (TypeDesc t in sortedTypeTable)
             {
                 int typeNameWidth = (int)g.MeasureString(t.typeName, font).Width;
@@ -739,6 +743,7 @@ namespace CLRProfiler
 
             if ((e.Button & MouseButtons.Left) != MouseButtons.None)
             {
+                Debug.Assert(bucketTable != null, "bucketTable != null");
                 for (int i = 0; i < bucketTable.Length; i++)
                 {
                     if (bucketTable[i].selected)
@@ -829,6 +834,7 @@ namespace CLRProfiler
             if (Form.ActiveForm == this)
             {
                 int x = leftMargin;
+                Debug.Assert(bucketTable != null, "bucketTable != null");
                 foreach (Bucket b in bucketTable)
                 {
                     int y = graphPanel.Height - bottomMargin;
@@ -905,6 +911,7 @@ namespace CLRProfiler
                 w.WriteLine("{0},{1},{2},{3},{4}", "Min Age", "Max Age", "# Instances", "Total Size", "Type");
 
                 bool noBucketSelected = true;
+                Debug.Assert(bucketTable != null, "bucketTable != null");
                 foreach (Bucket b in bucketTable)
                 {
                     if (b.selected)
@@ -939,6 +946,7 @@ namespace CLRProfiler
             TypeDesc selectedType = FindSelectedType();
             double minAge = 0;
             double maxAge = double.PositiveInfinity;
+            Debug.Assert(bucketTable != null, "bucketTable != null");
             foreach (Bucket b in bucketTable)
             {
                 if (b.selected)
@@ -958,9 +966,11 @@ namespace CLRProfiler
                 title += string.Format(" of age between {0} and {1} seconds", FormatTime(minAge), FormatTime(maxAge));
             }
 
+            Debug.Assert(liveObjectTable != null, "liveObjectTable != null");
             var selectedHistogram = new Histogram(liveObjectTable.readNewLog);
             LiveObjectTable.LiveObject o;
             double nowTime = liveObjectTable.readNewLog.TickIndexToTime(liveObjectTable.lastTickIndex);
+            Debug.Assert(typeIndexToTypeDesc != null, "typeIndexToTypeDesc != null");
             for (liveObjectTable.GetNextObject(0, ulong.MaxValue, out o); o.id < ulong.MaxValue; liveObjectTable.GetNextObject(o.id + o.size, uint.MaxValue, out o))
             {
                 double age = nowTime - liveObjectTable.readNewLog.TickIndexToTime(o.allocTickIndex);
