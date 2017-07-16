@@ -235,36 +235,36 @@ namespace CLRProfiler
 
 		#region constructor
 		public AllocationDiff()
-		{
-			_prevLog = new LogBase();
-			_currLog = new LogBase();
-			_prevG = new GraphBase();
-			_currG = new GraphBase();
+	    {
+	        _prevLog = new LogBase();
+	        _currLog = new LogBase();
+	        _prevG = new GraphBase();
+	        _currG = new GraphBase();
 
-			ds = new DataSet();
-			_prevbasedata = new Hashtable();
-			_currbasedata = new Hashtable();
-			
+	        ds = new DataSet();
+	        _prevbasedata = new Hashtable();
+	        _currbasedata = new Hashtable();
 
-			basedataId = new Hashtable();
-			Idbasedata = new Hashtable();
-			basedatatable = new DataTable("basedatatbl");
-			callertbl = new DataTable("caller");
-			calleetbl = new DataTable("callee");
-			typeAllocdataId = new Hashtable();
-			ContriTocallertbl = new DataTable("ContriTocallertbl");
-			ContriTocalleetbl = new DataTable("ContriTocalleetbl");
-			MakeBaseDataTable(basedatatable);
-			MakeCallTables(callertbl, true);
-			MakeCallTables(calleetbl, false);
-			MakeBaseDataTable(ContriTocallertbl);
-			MakeBaseDataTable(ContriTocalleetbl);
-			prevFilter = new DetailFilter();
-			currFilter = new DetailFilter();
-			prevTypedeFilter = new DetailFilter();
-			currTypedeFilter = new DetailFilter();
-		}
-		#endregion
+
+	        basedataId = new Hashtable();
+	        Idbasedata = new Hashtable();
+	        basedatatable = new DataTable("basedatatbl");
+	        callertbl = new DataTable("caller");
+	        calleetbl = new DataTable("callee");
+	        typeAllocdataId = new Hashtable();
+	        ContriTocallertbl = new DataTable("ContriTocallertbl");
+	        ContriTocalleetbl = new DataTable("ContriTocalleetbl");
+	        MakeBaseDataTable(basedatatable);
+            MakeCallerTables(callertbl);
+            MakeCalleeTables(calleetbl);
+	        MakeBaseDataTable(ContriTocallertbl);
+	        MakeBaseDataTable(ContriTocalleetbl);
+	        prevFilter = new DetailFilter();
+	        currFilter = new DetailFilter();
+	        prevTypedeFilter = new DetailFilter();
+	        currTypedeFilter = new DetailFilter();
+	    }
+	    #endregion
 
 		#region public property methods
 		// DataSet used to collect tables and 
@@ -756,7 +756,7 @@ namespace CLRProfiler
 					if( basedataId.ContainsKey(nameAndSignature))
 					{
 						cn.callerid = (int)basedataId[nameAndSignature];
-						AddCallTableRow(tbl, cn, iscaller);
+					    AddCallerTableRow(tbl, cn);
 					}
 				}
 				else
@@ -764,43 +764,41 @@ namespace CLRProfiler
 					if( basedataId.ContainsKey(nameAndSignature))
 					{
 						cn.calleeid = (int)basedataId[nameAndSignature];
-						AddCallTableRow(tbl, cn, iscaller);
+					    AddCalleeTableRow(tbl, cn);
 					}
 
 				}
 			}
 		}
 
-		private void AddCallTableRow(DataTable tmptbl, callnode n, bool iscaller)
-		{
-		    DataRow tmpRow = tmptbl.NewRow();
-			tmpRow["id"] = n.id;
-			if(iscaller)
-            {
-                tmpRow["callerid"] = n.callerid;
-            }
-            else
-            {
-                tmpRow["calleeid"] = n.calleeid;
-            }
+	    private void AddCallerTableRow(DataTable tmptbl, callnode n)
+	    {
+	        DataRow tmpRow = tmptbl.NewRow();
+	        tmpRow["id"] = n.id;
+	        tmpRow["callerid"] = n.callerid;
+	        tmptbl.Rows.Add(tmpRow);
+        }
 
-            tmptbl.Rows.Add(tmpRow);
-		}
+	    private void AddCalleeTableRow(DataTable tmptbl, callnode n)
+	    {
+	        DataRow tmpRow = tmptbl.NewRow();
+	        tmpRow["id"] = n.id;
+	        tmpRow["calleeid"] = n.calleeid;
+	        tmptbl.Rows.Add(tmpRow);
+	    }
 
-		private void MakeCallTables(DataTable tbl, bool iscaller)
-		{
-			addTableRow(tbl, "System.Int32", "id");
-			if(iscaller)
-			{
-				addTableRow(tbl, "System.Int32", "callerid");
-			}
-			else
-			{
-				addTableRow(tbl, "System.Int32", "calleeid");
-			}
-		}
+	    private void MakeCallerTables(DataTable tbl)
+	    {
+	        addTableRow(tbl, "System.Int32", "id");
+	        addTableRow(tbl, "System.Int32", "callerid");
+        }
 
-		#endregion
+	    private void MakeCalleeTables(DataTable tbl)
+	    {
+	        addTableRow(tbl, "System.Int32", "id");
+	        addTableRow(tbl, "System.Int32", "calleeid");
+        }
+	    #endregion
 
 		#region build Caller and callee Contribution table
 		private void BuildContributionCalleeTable()
