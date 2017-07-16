@@ -640,17 +640,17 @@ namespace CLRProfiler
             AddColumn(tbl, typeof(DoubleInt), "prevChildIncl");
 			AddColumn(tbl, typeof(DoubleInt), "currChildIncl");
 			AddColumn(tbl, typeof(DoubleInt), "diffChildIncl");
-			AddColumn(tbl, "System.Int32", "prevTimesCalled");
-			AddColumn(tbl, "System.Int32", "currTimesCalled");
-			AddColumn(tbl, "System.Int32", "diffTimesCalled");
-			AddColumn(tbl, "System.Int32", "prevTimesMakecalls");
-			AddColumn(tbl, "System.Int32", "currTimesMakecalls");
-			AddColumn(tbl, "System.Int32", "diffTimesMakecalls");
+			AddColumn(tbl, typeof(int), "prevTimesCalled");
+			AddColumn(tbl, typeof(int), "currTimesCalled");
+			AddColumn(tbl, typeof(int), "diffTimesCalled");
+			AddColumn(tbl, typeof(int), "prevTimesMakecalls");
+			AddColumn(tbl, typeof(int), "currTimesMakecalls");
+			AddColumn(tbl, typeof(int), "diffTimesMakecalls");
 
-			AddColumn(tbl, "System.Int32", "prevlevel");
-			AddColumn(tbl, "System.Int32", "currlevel");
-			AddColumn(tbl, "System.Int32", "prevcat");
-			AddColumn(tbl, "System.Int32", "currcat");
+			AddColumn(tbl, typeof(int), "prevlevel");
+			AddColumn(tbl, typeof(int), "currlevel");
+			AddColumn(tbl, typeof(int), "prevcat");
+			AddColumn(tbl, typeof(int), "currcat");
 						
 		/*	DataColumn[] pk = new DataColumn[1];
 			pk[0] = tbl.Columns["name"];
@@ -738,13 +738,13 @@ namespace CLRProfiler
 	    private void MakeCallerTables(DataTable tbl)
 	    {
 	        AddColumn(tbl, typeof(int), "id");
-	        AddColumn(tbl, "System.Int32", "callerid");
+	        AddColumn(tbl, typeof(int), "callerid");
         }
 
 	    private void MakeCalleeTables(DataTable tbl)
 	    {
 	        AddColumn(tbl, typeof(int), "id");
-	        AddColumn(tbl, "System.Int32", "calleeid");
+	        AddColumn(tbl, typeof(int), "calleeid");
         }
 	    #endregion
 
@@ -954,10 +954,6 @@ namespace CLRProfiler
 		#endregion
 
 		#region share used functions
-		private void AddColumn([NotNull] DataTable tbl, [NotNull] string colType, [NotNull] string colName)
-		{
-            AddColumn(tbl, Type.GetType(colType), colName);
-		}
 
 	    private void AddColumn([NotNull] DataTable tbl, [NotNull] Type type, [NotNull] string name)
 	    {
@@ -1595,22 +1591,22 @@ namespace CLRProfiler
 
 		private void MakeDiffTreceTable(DataTable tbl)
 		{
-			AddColumn(tbl, "System.Int32", "parentid");
+			AddColumn(tbl, typeof(int), "parentid");
 			AddColumn(tbl, typeof(string), "parentname");
 			AddColumn(tbl, typeof(int), "id");
 			AddColumn(tbl, typeof(string), "name");
 			AddColumn(tbl, typeof(string), "mapname");
 			
-			AddColumn(tbl, "System.Int32", "prevIncl");
-			AddColumn(tbl, "System.Int32", "currIncl");
-			AddColumn(tbl, "System.Int32", "diffIncl");
-			AddColumn(tbl, "System.Int32", "prevCalls");
-			AddColumn(tbl, "System.Int32", "currCalls");
-			AddColumn(tbl, "System.Int32", "diffCalls");
-			AddColumn(tbl, "System.Int32", "prevFunId");
-			AddColumn(tbl, "System.Int32", "currFunId");
-			AddColumn(tbl, "System.Int32", "nodetype");
-			AddColumn(tbl, "System.Int32", "depth");
+			AddColumn(tbl, typeof(int), "prevIncl");
+			AddColumn(tbl, typeof(int), "currIncl");
+			AddColumn(tbl, typeof(int), "diffIncl");
+			AddColumn(tbl, typeof(int), "prevCalls");
+			AddColumn(tbl, typeof(int), "currCalls");
+			AddColumn(tbl, typeof(int), "diffCalls");
+			AddColumn(tbl, typeof(int), "prevFunId");
+			AddColumn(tbl, typeof(int), "currFunId");
+			AddColumn(tbl, typeof(int), "nodetype");
+			AddColumn(tbl, typeof(int), "depth");
 			
 			
 			
