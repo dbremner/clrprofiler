@@ -53,7 +53,7 @@ namespace CLRProfiler
 	    public DiffDataNode([NotNull] String name, NodeType nodeType)
             : this(name)
 	    {
-	        
+            nodetype = nodeType;
 	    }
 	}
 }
