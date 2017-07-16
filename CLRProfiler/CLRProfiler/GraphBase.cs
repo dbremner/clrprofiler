@@ -63,7 +63,7 @@ namespace CLRProfiler
 		#region private methods
 		private ArrayList BuildLevels(Graph g)
 		{
-			ArrayList al = new ArrayList();
+			var al = new ArrayList();
 			for (int level = 0; level <= g.BottomVertex.level; level++)
 			{
 				al.Add(new ArrayList());
@@ -72,7 +72,7 @@ namespace CLRProfiler
 			{
 				if (v.level <= g.BottomVertex.level)
 				{
-					ArrayList all = (ArrayList)al[v.level];
+					var all = (ArrayList)al[v.level];
 					all.Add(v);
 				}
 				else
@@ -150,7 +150,7 @@ namespace CLRProfiler
 		}
 		private void PlaceEdges(ICollection edgeCollection, bool isIncoming, float scale)
 		{
-			ArrayList edgeList = new ArrayList(edgeCollection);
+			var edgeList = new ArrayList(edgeCollection);
 			edgeList.Sort();
 			foreach (Edge e in edgeList)
 			{
@@ -188,7 +188,7 @@ namespace CLRProfiler
 				totalWeight = 1;
 			}
 
-			ArrayList al = levelList = BuildLevels(basegraph);
+			var al = levelList = BuildLevels(basegraph);
 			scale = (float)totalHeight/totalWeight;
 			if (placeVertices)
 			{
@@ -196,7 +196,7 @@ namespace CLRProfiler
 					level <= basegraph.BottomVertex.level;
 					level++)
 				{
-					ArrayList all = (ArrayList)al[level];
+					var all = (ArrayList)al[level];
 					foreach (Vertex v in all)
 					{
 						if (basegraph.graphType == Graph.GraphType.CallGraph)

@@ -167,7 +167,7 @@ namespace CLRProfiler
 
         ArrayList BuildLevels(Graph g)
         {
-            ArrayList al = new ArrayList();
+            var al = new ArrayList();
             for (int level = 0; level <= g.BottomVertex.level; level++)
             {
                 al.Add(new ArrayList());
@@ -176,7 +176,7 @@ namespace CLRProfiler
             {
                 if (v.level <= g.BottomVertex.level)
                 {
-                    ArrayList all = (ArrayList)al[v.level];
+                    var all = (ArrayList)al[v.level];
                     all.Add(v);
                 }
                 else
@@ -193,7 +193,7 @@ namespace CLRProfiler
 
         void PlaceEdges(ICollection edgeCollection, bool isIncoming, int x, int y, float scale)
         {
-            ArrayList edgeList = new ArrayList(edgeCollection);
+            var edgeList = new ArrayList(edgeCollection);
             edgeList.Sort();
             float fy = y;
             foreach (Edge e in edgeList)
@@ -419,7 +419,7 @@ namespace CLRProfiler
                 totalWeight = 1;
             }
 
-            ArrayList al = levelList = BuildLevels(graph);
+            var al = levelList = BuildLevels(graph);
             scale = (float)totalHeight/totalWeight;
             if (placeVertices)
             {
@@ -429,7 +429,7 @@ namespace CLRProfiler
                     level <= graph.BottomVertex.level;
                     level++)
                 {
-                    ArrayList all = (ArrayList)al[level];
+                    var all = (ArrayList)al[level];
                     int drawnVertexCount = 0;
                     int maxWidth = 0;
                     foreach (Vertex v in all)
@@ -977,7 +977,7 @@ namespace CLRProfiler
                     sb.Append("\r\nContributions from callers:\r\n");
                 }
 
-                ArrayList callers = new ArrayList();
+                var callers = new ArrayList();
                 foreach (Edge edge in v.incomingEdges.Values)
                 {
                     callers.Add(edge);
@@ -1225,7 +1225,7 @@ namespace CLRProfiler
 
         private void FindVertex(string name, string signature, bool again)
         {
-            ArrayList foundVertices = new ArrayList();
+            var foundVertices = new ArrayList();
             foreach (Vertex v in graph.vertices.Values)
             {
                 if (  v.name.IndexOf(name) >= 0
@@ -1355,7 +1355,7 @@ namespace CLRProfiler
         private void findInterestingNodesMenuItem_Click(object sender, System.EventArgs e)
         {
             Dictionary<Vertex, double> scoreOfVertex = new Dictionary<Vertex, double>();
-            ArrayList verticesSortedByScore = new ArrayList();
+            var verticesSortedByScore = new ArrayList();
             foreach (Vertex v in graph.vertices.Values)
             {
                 double score = Score(v);
@@ -1680,7 +1680,7 @@ namespace CLRProfiler
             StringBuilder signatures = new StringBuilder();
             StringBuilder addresses = new StringBuilder();
 
-            ArrayList selectedVertices = new ArrayList();
+            var selectedVertices = new ArrayList();
             foreach (Vertex v in graph.vertices.Values)
             {
                 if (v.selected)

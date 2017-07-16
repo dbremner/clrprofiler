@@ -673,7 +673,7 @@ namespace CLRProfiler
 
             try
             {
-                ArrayList kids = FetchKids( null, node );
+                var kids = FetchKids( null, node );
                 foreach( TreeNode kidNode in kids )
                 {
                     bool fAddNode = false;
@@ -990,7 +990,7 @@ namespace CLRProfiler
         public ArrayList FetchKids(object tokenObject, TreeNodeBase nodebase)
         {
             TreeNode node = (TreeNode)nodebase;
-            ArrayList kids = new ArrayList();
+            var kids = new ArrayList();
 
             for(long offset = node.kidOffset; offset != -1; offset = node.prevOffset)
             {
@@ -1790,7 +1790,7 @@ namespace CLRProfiler
         public ArrayList ProcessNodes(object obj, ArrayList nodes)
         {
             bool add = false;
-            ArrayList nodesAtOneLevel = new ArrayList();
+            var nodesAtOneLevel = new ArrayList();
             foreach(TreeNode node in nodes)
             {
                 switch(node.nodetype)
@@ -1825,7 +1825,7 @@ namespace CLRProfiler
             SortingBehaviour ss = viewState.sort;
             /* this is needed to use the default Compare method */
             viewState.sort = viewState.highlight;
-            ArrayList nodesToHighlight = new ArrayList();
+            var nodesToHighlight = new ArrayList();
             TreeNode currentBest = (TreeNode)nodesAtOneLevel[0];
 
             currentBest.highlighted = false;
@@ -1972,7 +1972,7 @@ namespace CLRProfiler
             SelectColumns f = new SelectColumns();
 
             /* 0 is "function name", it's irrelevant */
-            ArrayList l = callTreeView.GetColumns();
+            var l = callTreeView.GetColumns();
             for(int i = 1; i < l.Count; i++)
             {
                 f.Set((int)((Column)l[i]).ColumnInformation.Token);
@@ -1987,7 +1987,7 @@ namespace CLRProfiler
                     l.RemoveAt(i);
                 }
 
-                ArrayList ids = f.GetCheckedColumns();
+                var ids = f.GetCheckedColumns();
                 ids.Sort();
                 foreach(int id in ids)
                 {
@@ -2111,8 +2111,8 @@ namespace CLRProfiler
             {
                 SetcallTreeView();
             }
-            ArrayList columns = callTreeView.GetColumns();
-            Column callTreeColumn = callTreeView.GetColumns()[0] as Column;
+            var columns = callTreeView.GetColumns();
+            Column callTreeColumn = (Column) columns[0];
             int violations = 0, newWidth = callTreeColumn.Width + splitter.Location.X - previousSplitterLocation;
             if(newWidth < 20)
             {

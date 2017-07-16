@@ -1221,8 +1221,8 @@ namespace CLRProfiler
             // Display the reference list and stack trace for 0th object
 
             // Find Culprit here.
-            ArrayList mismatchedObjects = new ArrayList();
-            ArrayList differentCulprits = new ArrayList();
+            var mismatchedObjects = new ArrayList();
+            var differentCulprits = new ArrayList();
             for (int j = 1; j < idsFromRoot.Length; j++)
             {
                 for (int i = 0; i < idsFromRoot[0].Length; i++)

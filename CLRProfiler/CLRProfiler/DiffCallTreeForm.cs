@@ -190,7 +190,7 @@ namespace CLRProfiler
 		public ArrayList ProcessNodes(object obj, ArrayList nodes)
 		{
 			bool add = false;
-			ArrayList nodesAtOneLevel = new ArrayList();
+			var nodesAtOneLevel = new ArrayList();
 			//###foreach(TreeNode node in nodes)
 			foreach(DiffDataNode node in nodes)
 			{
@@ -226,7 +226,7 @@ namespace CLRProfiler
 			SortingBehaviour ss = viewState.sort;
 			/* this is needed to use the default Compare method */
 			viewState.sort = viewState.highlight;
-			ArrayList nodesToHighlight = new ArrayList();
+			var nodesToHighlight = new ArrayList();
 			DiffDataNode currentBest = (DiffDataNode)nodesAtOneLevel[0];
 
 			currentBest.highlighted = false;

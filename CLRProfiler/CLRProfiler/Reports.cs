@@ -144,7 +144,7 @@ namespace CLRProfiler
                 }
             }
 
-            ArrayList al = new ArrayList();
+            var al = new ArrayList();
             for (int i = 0; i < typeIndexToTypeDescriptor.Length; i++)
             {
                 if (typeIndexToTypeDescriptor[i] == null)
@@ -226,7 +226,7 @@ namespace CLRProfiler
                 }
             }
 
-            ArrayList al = new ArrayList();
+            var al = new ArrayList();
             for (int i = 0; i < typeIndexToTypeDescriptor.Length; i++)
             {
                 if (typeIndexToTypeDescriptor[i] == null)
@@ -548,7 +548,7 @@ namespace CLRProfiler
             }
             FillHistogramIntoDiffTypeDescriptor(bHistogram, typeIndexToDiffTypeDescriptor);
 
-            ArrayList al = new ArrayList();
+            var al = new ArrayList();
             DiffTypeDescriptor totalTd = new DiffTypeDescriptor(0);
             for (int i = 0; i < typeIndexToDiffTypeDescriptor.Length; i++)
             {

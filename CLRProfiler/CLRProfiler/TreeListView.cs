@@ -77,7 +77,7 @@ namespace CLRProfiler
 			treeListBox.Items.Add(root);
 			if(root.allkids != null && root.IsExpanded)
 			{
-				ArrayList nodes = treeOwner.ProcessNodes(TokenObject, root.allkids);
+				var nodes = treeOwner.ProcessNodes(TokenObject, root.allkids);
 				for(int i = 0; i < nodes.Count; i++)
 				{
 					Resort(1 + depth, (TreeNodeBase)nodes[i]);
@@ -116,7 +116,7 @@ namespace CLRProfiler
 			{
 				root.allkids = treeOwner.FetchKids(TokenObject, root);
 			}
-			ArrayList nodes = treeOwner.ProcessNodes(TokenObject, root.allkids);
+			var nodes = treeOwner.ProcessNodes(TokenObject, root.allkids);
 
 			int numNodes = nodes.Count, nodesInList = treeListBox.Items.Count;
 			int costOfRebuilding = 3 * (numNodes + nodesInList);

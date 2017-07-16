@@ -33,7 +33,7 @@ namespace CLRProfiler
 
         public ArrayList GetCheckedColumns()
         {
-            ArrayList r = new ArrayList();
+            var r = new ArrayList();
             for(int i = 0; i < checkBoxes.Count; i++)
             {
                 if(((CheckBox)checkBoxes[i]).Checked)
@@ -57,7 +57,7 @@ namespace CLRProfiler
 
             checkBoxes = new ArrayList();
 
-            Hashtable underscored = new Hashtable();
+            var underscored = new Hashtable();
 
             int numCounters = Statistics.GetNumberOfCounters();
             for(int i = 0; i < numCounters; i++)

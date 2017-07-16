@@ -683,8 +683,8 @@ namespace CLRProfiler
 					long sum = 0;
 					string depth = null;
 					long diffincl = 0;
-					Hashtable depLst = new Hashtable();
-					Hashtable depSum = new Hashtable();
+					var depLst = new Hashtable();
+					var depSum = new Hashtable();
 					for(int i = 0; i < rRoot.Length; i++)
 					{
 						depth = rRoot[i][idx_depth].ToString();
@@ -692,14 +692,14 @@ namespace CLRProfiler
 						sum += diffincl;
 						if(depLst.Contains(depth))
 						{
-							ArrayList alst = (ArrayList)depLst[depth];
+							var alst = (ArrayList)depLst[depth];
 							alst.Add(rRoot[i]);
 							depLst[depth] = alst;
 							diffincl += (long)depSum[depth];
 						}
 						else
 						{
-							ArrayList alst = new ArrayList();
+							var alst = new ArrayList();
 							alst.Add(rRoot[i]);							
 							depLst.Add(depth, alst);
 							depSum.Add(depth, diffincl);

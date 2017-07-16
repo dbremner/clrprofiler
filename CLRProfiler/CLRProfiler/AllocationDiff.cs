@@ -1018,10 +1018,10 @@ namespace CLRProfiler
         #region CallTrace - MakeDiffTreceTable, BuildDiffTraceTable
 		private void BuildDiffTraceTable(DiffDataNode parent, TreeNode currRoot, TreeNode prevRoot)
 		{
-			ArrayList currKids = new ArrayList();
-			ArrayList prevKids = new ArrayList();
-			ArrayList currDKids = new ArrayList();
-			ArrayList prevDKids = new ArrayList();
+			var currKids = new ArrayList();
+		    var prevKids = new ArrayList();
+		    var currDKids = new ArrayList();
+		    var prevDKids = new ArrayList();
 
 			//get kids
 			if(currRoot != null)
@@ -1042,7 +1042,7 @@ namespace CLRProfiler
 			}
           
 			// get diff node
-			ArrayList diffKids = GetDiffKids(parent, currDKids, prevDKids);
+			var diffKids = GetDiffKids(parent, currDKids, prevDKids);
 
 			// recursive for each diff node
 			for(int i = 0; i < diffKids.Count; i++)
@@ -1056,7 +1056,7 @@ namespace CLRProfiler
 	
 		private ArrayList TransCurrTree(ArrayList treeNode)
 		{
-			ArrayList diffnodes = new ArrayList();
+			var diffnodes = new ArrayList();
 			int functionId = 0;
 
 		    for( int i = 0; i < treeNode.Count; i++)
@@ -1112,7 +1112,7 @@ namespace CLRProfiler
 
 		private ArrayList TransPrevTree(ArrayList treeNode)
 		{
-			ArrayList diffnodes = new ArrayList();
+			var diffnodes = new ArrayList();
 			int functionId = 0;
 
 		    for( int i = 0; i < treeNode.Count; i++)
@@ -1168,12 +1168,12 @@ namespace CLRProfiler
 		
 		private ArrayList GetDiffKids(DiffDataNode parent, ArrayList currKids, ArrayList prevKids)
 		{
-			ArrayList curr = new ArrayList();
-			Hashtable curr_inclOfNode = new Hashtable();
-			ArrayList prev = new ArrayList();
-			Hashtable prev_inclOfNode = new Hashtable();
+			var curr = new ArrayList();
+			var curr_inclOfNode = new Hashtable();
+			var prev = new ArrayList();
+			var prev_inclOfNode = new Hashtable();
 
-			ArrayList diffnodes = new ArrayList();
+			var diffnodes = new ArrayList();
 			for(int i = 0; i < currKids.Count; i++)
 			{
 				if( !((DiffDataNode)currKids[i]).marked)
@@ -1470,7 +1470,7 @@ namespace CLRProfiler
 			parent.depth = depth;
 			parent.allkids.Clear();
 			parent.HasKids = false;
-			Hashtable kidSum = new Hashtable();
+			var kidSum = new Hashtable();
 
 		    DataRow[] kidsRows = diffTracetbl.Select(filter);
 			for(int i = 0; i < kidsRows.Length; i++)
@@ -1684,8 +1684,8 @@ namespace CLRProfiler
 		#region EXCLUSIVE
 		private void ReadFile(CallTreeForm callTrace, string fileName, Hashtable FuncExcl, Hashtable TypeExcl)
 		{
-			Hashtable funcCalled = new Hashtable();
-			Hashtable TypeAlloc = new Hashtable();
+			var funcCalled = new Hashtable();
+			var TypeAlloc = new Hashtable();
 		    ProgressForm progressForm = null;
 			try
 			{
