@@ -14,6 +14,7 @@ using System.IO;
 using System.Text;
 using JetBrains.Annotations;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 
 namespace CLRProfiler
 {
@@ -581,7 +582,9 @@ namespace CLRProfiler
 			if(name != "<root>")
 			{
 				dgCaller.CaptionText = CallerCaption;
-				dvm_caller.DataViewSettings[_allocDiff.ContriTocallertbl.TableName].RowFilter = "id = " + id;
+			    // FIXME
+			    // ReSharper disable once PossibleNullReferenceException
+                dvm_caller.DataViewSettings[_allocDiff.ContriTocallertbl.TableName].RowFilter = "id = " + id;
 				dgCaller.SetDataBinding(dvm_caller ,_allocDiff.ContriTocallertbl.TableName);
 			}
 			else
@@ -593,6 +596,8 @@ namespace CLRProfiler
 
 			//========= selected table ==========
 			dgSelected.CaptionText = SelectedCaption;
+		    // FIXME
+            // ReSharper disable once PossibleNullReferenceException
 			dvm.DataViewSettings[_allocDiff.basedatatable.TableName].RowFilter = "id" + '=' + id;
 			dgSelected.SetDataBinding(dvm,_allocDiff.basedatatable.TableName);
 			dgSelected.Visible = true;
@@ -601,7 +606,9 @@ namespace CLRProfiler
 			if(name != "<bottom>")
 			{
 				dgCallee.CaptionText = CalleeCaption;
-				dvm_callee.DataViewSettings[_allocDiff.ContriTocalleetbl.TableName].RowFilter = "id = " + id;
+			    // FIXME
+			    // ReSharper disable once PossibleNullReferenceException
+                dvm_callee.DataViewSettings[_allocDiff.ContriTocalleetbl.TableName].RowFilter = "id = " + id;
 				dgCallee.SetDataBinding(dvm_callee ,_allocDiff.ContriTocalleetbl.TableName);
 			}
 			else
@@ -762,6 +769,8 @@ namespace CLRProfiler
 
 		#region Aligement -- DataGrid columns 
 		// DataGrid alignment been controlled by datagrid column width
+        //FIXME what causes this?
+		[SuppressMessage("ReSharper", "PossibleNullReferenceException")]
 		private void InitDataGridBinding()
 		{
 			dvm = new DataViewManager(_allocDiff.ds);
@@ -816,9 +825,10 @@ namespace CLRProfiler
 				
 			}
 		}
-	
 
-		private void aligEverythingDataGrid(DataGridTableStyle sty, columnIdx idx)
+	    //FIXME what causes this?
+        [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
+		private void aligEverythingDataGrid([NotNull] DataGridTableStyle sty, columnIdx idx)
 		{
 			string colName = columName[(int)idx];
 			styleBase.GridColumnStyles[colName].Width = sty.GridColumnStyles[colName].Width;
@@ -827,7 +837,9 @@ namespace CLRProfiler
 			styleSelected.GridColumnStyles[colName].Width = sty.GridColumnStyles[colName].Width;
 		}
 
-		private void aligcoarseDataGrid(DataGridTableStyle sty, coarsecolumnIdx idx)
+        //FIXME what causes this?
+		[SuppressMessage("ReSharper", "PossibleNullReferenceException")]
+		private void aligcoarseDataGrid([NotNull] DataGridTableStyle sty, coarsecolumnIdx idx)
 		{
 			string colName = coarsecolumName[(int)idx];
 			styleBase.GridColumnStyles[colName].Width = sty.GridColumnStyles[colName].Width;

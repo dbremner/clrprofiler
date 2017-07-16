@@ -442,6 +442,7 @@ namespace CLRProfiler
             }
 
             Debug.Assert(false);
+            // ReSharper disable once HeuristicUnreachableCode
             rangeList = new AddressRange(o.id, o.id + o.size, rangeList, rangeCount++);
 
             return rangeList;
