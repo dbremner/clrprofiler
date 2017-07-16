@@ -19,63 +19,37 @@ using DoubleUInt64 = System.UInt64;
 
 namespace CLRProfiler
 {
-	/// <summary>
-	/// Code organize:
-	///		AllocationDiff reads two log files one from previous build and one from current build. 
-	///			see region - get base data methods
-	///		also it builds three tables,
-	///			see region - build Base table
-	///			see region - build Caller and callee table
-	///			see region - build Type Allocation table
-	///			
-	///	internal data structure:
-	///		prevLog and currLog object hold base log data from log files
-	///		prevG and currG object hold base Graph data, the main purpose was keep the call relations
-	///		4 hash table (prevbasedata, currbasedata, prevtypeAllocdata, currtypeAllocdata) holds all useful data from base log/graph
-	///		been used for build all diff, call relations, and type allocation tables. 
-	///		
-	///	Table Definitions:
-	///		basedatatable contains all basic data: inclusive, exclusive, diff, childinclusive, childexclusive, timesBeenCalled, timesmakescalls.
-	///		caller table contains function Id and its caller Ids 
-	///		callee table contains function Id and its callee Ids
-	///		typeAlloction table contains type exclusive and diff info
-	///	
-	///	Detail Definitions:
-	///		Memory allocation report can show 9 different details based on allocated memory size
-	///		detail0 - all size
-	///		detail01 = max(prevIncl) / 8
-	///		detail02 = max(prevIncl) /7
-	///		...
-	///		
-	/// </summary>
-	
-	struct datanode
-	{
-	    public int level { get; set; }
+    /// <summary>
+    /// Code organize:
+    ///		AllocationDiff reads two log files one from previous build and one from current build. 
+    ///			see region - get base data methods
+    ///		also it builds three tables,
+    ///			see region - build Base table
+    ///			see region - build Caller and callee table
+    ///			see region - build Type Allocation table
+    ///			
+    ///	internal data structure:
+    ///		prevLog and currLog object hold base log data from log files
+    ///		prevG and currG object hold base Graph data, the main purpose was keep the call relations
+    ///		4 hash table (prevbasedata, currbasedata, prevtypeAllocdata, currtypeAllocdata) holds all useful data from base log/graph
+    ///		been used for build all diff, call relations, and type allocation tables. 
+    ///		
+    ///	Table Definitions:
+    ///		basedatatable contains all basic data: inclusive, exclusive, diff, childinclusive, childexclusive, timesBeenCalled, timesmakescalls.
+    ///		caller table contains function Id and its caller Ids 
+    ///		callee table contains function Id and its callee Ids
+    ///		typeAlloction table contains type exclusive and diff info
+    ///	
+    ///	Detail Definitions:
+    ///		Memory allocation report can show 9 different details based on allocated memory size
+    ///		detail0 - all size
+    ///		detail01 = max(prevIncl) / 8
+    ///		detail02 = max(prevIncl) /7
+    ///		...
+    ///		
+    /// </summary>
 
-	    public int id { get; set; }
-
-	    public string name { get; set; }
-        
-        public DoubleInt incl { get; set; }
-
-	    public DoubleInt excl { get; set; }
-
-		public int timesBeenCalled { get; set; }
-
-	    public int timesMakeCalls { get; set; }
-
-	    public int category { get; set; }
-
-	    public Dictionary<Vertex, Edge> caller { get; set; }
-
-	    public Dictionary<Vertex, Edge> callee { get; set; }
-
-	    public Hashtable callerAlloc { get; set; }
-
-	    public Hashtable calleeAlloc { get; set; }
-	}
-	public class AllocationDiff 
+    public class AllocationDiff 
 	{
 		class CompareIncl : IComparer
 		{
@@ -413,7 +387,7 @@ namespace CLRProfiler
 			Vertex selectedVertex;
 			int selectedVertexCount = gb.SelectedVertexCount(out selectedVertex);
 
-		    datanode n = new datanode();
+		    var n = new datanode();
 
 
 			try
@@ -544,7 +518,7 @@ namespace CLRProfiler
 			{
 				foreach(string nameAndSignature in _prevbasedata.Keys)
 				{
-				    datanode cn= new datanode();
+				    var cn= new datanode();
 					var pn = (datanode)_prevbasedata[nameAndSignature];
 					pn.id = id;
 					if(_currbasedata.ContainsKey(nameAndSignature))
@@ -560,7 +534,7 @@ namespace CLRProfiler
 				{
 					if(! _prevbasedata.ContainsKey(CnameAndSignature))
 					{
-						datanode pn= new datanode();
+						var pn= new datanode();
 					    var cn = (datanode)_currbasedata[CnameAndSignature];
 						cn.id = id;
 						AddBaseTableRow(this.basedatatable, CnameAndSignature, pn, cn);
@@ -757,8 +731,8 @@ namespace CLRProfiler
 			{
 				foreach(DictionaryEntry de in basedataId)
 				{
-					datanode pn= new datanode();
-					datanode cn= new datanode();
+					var pn= new datanode();
+					var cn= new datanode();
 					var nameAndSignature = (string)de.Key;
 					
 					var id = (int)basedataId[nameAndSignature];
@@ -858,8 +832,8 @@ namespace CLRProfiler
 			{
 				foreach(DictionaryEntry de in basedataId)
 				{
-					datanode pn= new datanode();
-					datanode cn= new datanode();
+					var pn= new datanode();
+					var cn= new datanode();
 					var nameAndSignature = (string)de.Key;
 					var id = (int)basedataId[nameAndSignature];
 					if(this._prevbasedata.ContainsKey(nameAndSignature))
