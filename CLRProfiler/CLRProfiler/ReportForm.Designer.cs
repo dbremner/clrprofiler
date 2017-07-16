@@ -14,11 +14,6 @@ namespace CLRProfiler
 		private DataViewManager dvm;
 		private DataViewManager dvm_caller;
 		private DataViewManager dvm_callee;
-		private DataGridTableStyle styleBase = new DataGridTableStyle();
-		private DataGridTableStyle styleCaller = new DataGridTableStyle();
-		private DataGridTableStyle styleCallee = new DataGridTableStyle();
-		private DataGridTableStyle styleSelected = new DataGridTableStyle();
-
 		
 		private System.Windows.Forms.TabPage tabpallocdiff;
 		private System.Windows.Forms.DataGridTableStyle dataGridTableStyle1;

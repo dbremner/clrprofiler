@@ -49,7 +49,12 @@ namespace CLRProfiler
 		private const int idx_diffIncl = 7;
 		private const int idx_depth = 14;
 
-		private DiffCallTreeForm diffcallTreeForm;
+	    private readonly DataGridTableStyle styleBase = new DataGridTableStyle();
+	    private readonly DataGridTableStyle styleCaller = new DataGridTableStyle();
+	    private readonly DataGridTableStyle styleCallee = new DataGridTableStyle();
+	    private readonly DataGridTableStyle styleSelected = new DataGridTableStyle();
+
+        private DiffCallTreeForm diffcallTreeForm;
 		private AllocationDiff	_allocDiff;
 		private bool iscoarse = false;
 		private string strFilter;
