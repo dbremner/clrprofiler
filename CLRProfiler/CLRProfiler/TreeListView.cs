@@ -610,19 +610,13 @@ namespace CLRProfiler
 
 		private void treeListBox_SelectedIndexChanged(object sender, System.EventArgs e)
 		{
-			if(SelectedIndexChanged != null)
-			{
-				SelectedIndexChanged(sender, e);
-			}
-		}
+            SelectedIndexChanged?.Invoke(sender, e);
+        }
 
 		private void Column_Click(object sender, EventArgs e)
 		{
-			if(ColumnClick != null)
-			{
-				ColumnClick(sender, e);
-			}
-		}
+            ColumnClick?.Invoke(sender, e);
+        }
 
 		internal ArrayList GetColumns()
 		{

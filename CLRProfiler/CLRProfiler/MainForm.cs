@@ -1058,7 +1058,7 @@ namespace CLRProfiler
 
         private bool CheckFileSave()
         {
-            if (saveAsMenuItem != null && saveAsMenuItem.Enabled)
+            if (saveAsMenuItem?.Enabled == true)
             {
                 if (saveNever)
                 {
@@ -1107,7 +1107,7 @@ namespace CLRProfiler
 
         private bool CheckProcessTerminate()
         {
-            if (killApplicationButton != null && killApplicationButton.Enabled)
+            if (killApplicationButton?.Enabled == true)
             {
                 KillProcessForm killProcessForm = new KillProcessForm();
                 killProcessForm.processFileNameLabel.Text = processFileName;
@@ -1360,19 +1360,13 @@ namespace CLRProfiler
         private void SetEnvironmentVariables(string serviceName, string[] environment)
         {
             Microsoft.Win32.RegistryKey key = GetServiceKey(serviceName);
-            if (key != null)
-            {
-                key.SetValue("Environment", environment);
-            }
+            key?.SetValue("Environment", environment);
         }
 
         private void DeleteEnvironmentVariables(string serviceName)
         {
             Microsoft.Win32.RegistryKey key = GetServiceKey(serviceName);
-            if (key != null)
-            {
-                key.DeleteValue("Environment");
-            }
+            key?.DeleteValue("Environment");
         }
 
         private string EnvKey(string envVariable)
@@ -1904,11 +1898,7 @@ namespace CLRProfiler
                 tempDir = Environment.GetEnvironmentVariable("TEMP");
                 if (tempDir == null)
                 {
-                    tempDir = Environment.GetEnvironmentVariable("TMP");
-                    if (tempDir == null)
-                    {
-                        tempDir = @"C:\TEMP";
-                    }
+                    tempDir = Environment.GetEnvironmentVariable("TMP") ?? @"C:\TEMP";
                 }
             }
             return tempDir;
@@ -2471,11 +2461,7 @@ namespace CLRProfiler
 
         private ReadLogResult GetLogResult()
         {
-            ReadLogResult readLogResult = lastLogResult;
-            if (readLogResult == null)
-            {
-                readLogResult = new ReadLogResult();
-            }
+            ReadLogResult readLogResult = lastLogResult ?? new ReadLogResult();
             readLogResult.liveObjectTable = new LiveObjectTable(log);
             readLogResult.sampleObjectTable = new SampleObjectTable(log);
             readLogResult.allocatedHistogram = new Histogram(log);

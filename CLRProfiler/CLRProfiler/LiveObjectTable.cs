@@ -687,20 +687,14 @@ namespace CLRProfiler
 
                 Debug.Assert(CanReadObjectBackCorrectly(id, size, typeSizeStacktraceIndex, allocTickIndex));
             }
-            if (sampleObjectTable != null)
-            {
-                sampleObjectTable.Insert(id, id + size, nowTickIndex, allocTickIndex, typeIndex);
-            }
+            sampleObjectTable?.Insert(id, id + size, nowTickIndex, allocTickIndex, typeIndex);
         }
 
         void RemoveObjectRange(ulong firstId, ulong length, int tickIndex, SampleObjectTable sampleObjectTable)
         {
             ulong lastId = firstId + length;
 
-            if (sampleObjectTable != null)
-            {
-                sampleObjectTable.Delete(firstId, lastId, tickIndex);
-            }
+            sampleObjectTable?.Delete(firstId, lastId, tickIndex);
 
             Zero(firstId, length);
         }
@@ -768,17 +762,11 @@ namespace CLRProfiler
             {
                 nextId = o.id + o.size;
                 ulong offset = o.id - oldId;
-                if (sampleObjectTable != null)
-                {
-                    sampleObjectTable.Delete(o.id, o.id + o.size, tickIndex);
-                }
+                sampleObjectTable?.Delete(o.id, o.id + o.size, tickIndex);
 
                 Zero(o.id, o.size);
                 InsertObject(newId + offset, o.typeSizeStacktraceIndex, o.allocTickIndex, tickIndex, false, sampleObjectTable);
-                if (relocatedHistogram != null)
-                {
-                    relocatedHistogram.AddObject(o.typeSizeStacktraceIndex, 1);
-                }
+                relocatedHistogram?.AddObject(o.typeSizeStacktraceIndex, 1);
             }
         }
 
@@ -793,10 +781,7 @@ namespace CLRProfiler
         {
             lastTickIndex = tickIndex;
 
-            if (sampleObjectTable != null)
-            {
-                sampleObjectTable.AddGcTick(tickIndex, gen);
-            }
+            sampleObjectTable?.AddGcTick(tickIndex, gen);
 
             intervalTable.RecordGc(tickIndex, sampleObjectTable, simpleForm);
 

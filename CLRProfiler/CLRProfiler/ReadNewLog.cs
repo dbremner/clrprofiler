@@ -1001,10 +1001,7 @@ namespace CLRProfiler
                             if ((c != -1) && (threadIndex != -1) && (stackTraceIndex != -1))
                             {
                                 stackTraceIndex = stacktraceTable.MapTypeSizeStacktraceId(stackTraceIndex);
-                                if (readLogResult.callstackHistogram != null)
-                                {
-                                    readLogResult.callstackHistogram.AddObject(stackTraceIndex, 1);
-                                }
+                                readLogResult.callstackHistogram?.AddObject(stackTraceIndex, 1);
                                 List<string> prev;
                                 if (assembliesJustLoaded.TryGetValue(threadIndex, out prev) && prev.Count != 0)
                                 {
@@ -1037,7 +1034,7 @@ namespace CLRProfiler
                             if (!previousWasR)
                             {
                                 heapDumpEventList.AddEvent(lastTickIndex, null);
-                                if (readLogResult.objectGraph != null && !readLogResult.objectGraph.empty)
+                                if (!readLogResult.objectGraph?.empty == true)
                                 {
                                     readLogResult.objectGraph.BuildTypeGraph(new FilterForm());
                                     readLogResult.objectGraph.Neuter();
@@ -1118,19 +1115,16 @@ namespace CLRProfiler
                                     }
 
                                     Histogram[] h = readLogResult.heapDumpHistograms;
-                                if (h != null)
+                                if (h?.Length == requestedIndex)
                                 {
-                                    if (h.Length == requestedIndex)
-                                        {
-                                            readLogResult.requestedObjectGraph = readLogResult.objectGraph;
-                                        }
-                                    }
+                                    readLogResult.requestedObjectGraph = readLogResult.objectGraph;
+                                }
                                 break;
                             }
                             if (!previousWasR)
                             {
                                 heapDumpEventList.AddEvent(lastTickIndex, null);
-                                if (readLogResult.objectGraph != null && !readLogResult.objectGraph.empty)
+                                if (!readLogResult.objectGraph?.empty == true)
                                 {
                                     readLogResult.objectGraph.BuildTypeGraph(new FilterForm());
                                     readLogResult.objectGraph.Neuter();
@@ -1169,11 +1163,8 @@ namespace CLRProfiler
                             }
                             if (c != -1)
                             {
-                                if (readLogResult.objectGraph != null)
-                                    {
-                                        readLogResult.objectGraph.AddRoots(stackPtr, ulongStack);
-                                    }
-                                }
+                                readLogResult.objectGraph?.AddRoots(stackPtr, ulongStack);
+                            }
                             break;
                         }
 

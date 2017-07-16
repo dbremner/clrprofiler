@@ -362,10 +362,7 @@ namespace CLRProfiler
         private void InitForm( bool fFirstTime )
         {
             Controls.Clear();
-            if (controlCollection != null)
-            {
-                controlCollection.Controls.Clear();
-            }
+            controlCollection?.Controls.Clear();
             InitializeComponent();
             if(!forCompare)
             {

@@ -917,7 +917,7 @@ namespace CLRProfiler
                 sb.Append(" ");
             }
 
-            string signature = v.signature != null ? v.signature : "";
+            string signature = v.signature ?? "";
             sb.AppendFormat("{0} {1}:\t{2}\r\n", v.name, signature, v.weightString);
             if (NonEmptyWeightHistory(v))
             {
@@ -987,7 +987,7 @@ namespace CLRProfiler
                 foreach (Edge edge in callers)
                 {
                     Vertex vv = edge.FromVertex;
-                    string signature1 = vv.signature != null ? vv.signature : "";
+                    string signature1 = vv.signature ?? "";
                     string explain = "from";
                     if (graph.graphType == Graph.GraphType.CallGraph)
                     {
@@ -1016,7 +1016,7 @@ namespace CLRProfiler
                 foreach (Edge edge in callees)
                 {
                     Vertex vv = edge.ToVertex;
-                    string signature2 = vv.signature != null ? vv.signature : "";
+                    string signature2 = vv.signature ?? "";
                     string explain = "to";
                     if (graph.graphType == Graph.GraphType.CallGraph)
                     {
@@ -1448,7 +1448,7 @@ namespace CLRProfiler
                 titlePrefix = "Zoom to: ";
             }
 
-            string title = titlePrefix + v.name + " " + (v.signature != null? v.signature : "");
+            string title = titlePrefix + v.name + " " + (v.signature ?? "");
             GraphViewForm graphViewForm = new GraphViewForm(g, title);
             graphViewForm.Visible = true;
         }

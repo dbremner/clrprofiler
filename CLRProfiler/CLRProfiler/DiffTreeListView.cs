@@ -545,22 +545,16 @@ namespace CLRProfiler
 
 		private void treeListBox_SelectedIndexChanged(object sender, System.EventArgs e)
 		{
-			if(SelectedIndexChanged != null)
-			{
-				SelectedIndexChanged(sender, e);
-			}
-		}
+            SelectedIndexChanged?.Invoke(sender, e);
+        }
 
 		#endregion
 
 		#region Event -- Column button
 		private void DiffColumn_Click(object sender, EventArgs e)
 		{
-			if(ColumnClick != null)
-			{
-				ColumnClick(sender, e);
-			}
-		}
+            ColumnClick?.Invoke(sender, e);
+        }
 
 		internal ArrayList GetColumns()
 		{

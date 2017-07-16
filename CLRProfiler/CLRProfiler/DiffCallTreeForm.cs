@@ -69,11 +69,8 @@ namespace CLRProfiler
 		private void InitForm()
 		{
 			Controls.Clear();
-			if (controlCollection != null)
-			{
-				controlCollection.Controls.Clear();
-			}
-			InitializeComponent();
+		    controlCollection?.Controls.Clear();
+		    InitializeComponent();
 			defaultFont = new Font(new FontFamily("Tahoma"), 8);
 			
 			DiffTreeListView treeView = new DiffTreeListView(this);
