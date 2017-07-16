@@ -62,7 +62,8 @@ namespace CLRProfiler
         public int Compare(object x, object y)
         {
             int res;
-            ListViewItem a = x as ListViewItem, b = y as ListViewItem;
+            var a = (ListViewItem) x;
+            var b = (ListViewItem) y;
             string aa = a.SubItems[sortColumn].Text, bb = b.SubItems[sortColumn].Text;
             if(sortColumn != 0)
             {
