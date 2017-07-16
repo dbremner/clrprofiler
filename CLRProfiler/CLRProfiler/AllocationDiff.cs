@@ -540,20 +540,20 @@ namespace CLRProfiler
 			n.callerAlloc = new Hashtable();
 			foreach(Edge edge in v.outgoingEdges.Values)
 			{
-			    string nameAndSignature = edge.ToVertex.GetNameAndSignature();
+			    string key = edge.ToVertex.GetNameAndSignature();
 
-                if (!n.calleeAlloc.ContainsKey(nameAndSignature))
+                if (!n.calleeAlloc.ContainsKey(key))
 				{
-					n.calleeAlloc.Add(nameAndSignature, FormatSize((int)edge.weight));
+					n.calleeAlloc.Add(key, FormatSize((int)edge.weight));
 				}
 			}
 			foreach(Edge edge in v.incomingEdges.Values)
 			{
-				string nameAndSignature = edge.FromVertex.GetNameAndSignature();
+				string key = edge.FromVertex.GetNameAndSignature();
 
-                if (!n.callerAlloc.ContainsKey(nameAndSignature))
+                if (!n.callerAlloc.ContainsKey(key))
 				{
-					n.callerAlloc.Add(nameAndSignature, FormatSize((int)edge.weight));
+					n.callerAlloc.Add(key, FormatSize((int)edge.weight));
 				}
 			}
 		}
@@ -696,20 +696,20 @@ namespace CLRProfiler
 			{
 				foreach(DictionaryEntry de in basedataId)
 				{
-				    var nameAndSignature = (string)de.Key;
-					var id = (int)basedataId[nameAndSignature];
-					if(this._prevbasedata.ContainsKey(nameAndSignature))
+				    var key = (string)de.Key;
+					var id = (int)basedataId[key];
+					if(this._prevbasedata.ContainsKey(key))
 					{
-					    var pn = (datanode) _prevbasedata[nameAndSignature];
+					    var pn = (datanode) _prevbasedata[key];
 					    pn.id = id;
                         BuildCalleerTables(callertbl, id, pn.caller);
                         BuildCalleeTables(calleetbl, id, pn.callee);
 					}
 					else
 					{
-						if(_currbasedata.ContainsKey(nameAndSignature))
+						if(_currbasedata.ContainsKey(key))
 					    {
-					        var cn = (datanode) _currbasedata[nameAndSignature];
+					        var cn = (datanode) _currbasedata[key];
 					        cn.id = id;
                             BuildCalleerTables(callertbl, id, cn.caller);
                             BuildCalleeTables(calleetbl, id, cn.callee);
@@ -730,11 +730,11 @@ namespace CLRProfiler
 	    {
 	        foreach (Vertex cv in callhash.Keys)
 	        {
-	            string nameAndSignature = cv.GetNameAndSignature();
+	            string key = cv.GetNameAndSignature();
 
-	            if (basedataId.ContainsKey(nameAndSignature))
+	            if (basedataId.ContainsKey(key))
 	            {
-	                int calleeid = (int)basedataId[nameAndSignature];
+	                int calleeid = (int)basedataId[key];
 	                AddNamedRow(tbl, id, "calleeid", calleeid);
 	            }
 	        }
@@ -744,11 +744,11 @@ namespace CLRProfiler
 	    {
             foreach (Vertex cv in callhash.Keys)
 	        {
-	            string nameAndSignature = cv.GetNameAndSignature();
+	            string key = cv.GetNameAndSignature();
 
-                if (basedataId.ContainsKey(nameAndSignature))
+                if (basedataId.ContainsKey(key))
 	            {
-	                int callerid = (int)basedataId[nameAndSignature];
+	                int callerid = (int)basedataId[key];
 	                AddNamedRow(tbl, id, "callerid", callerid);
 	            }
 	        }
@@ -902,11 +902,11 @@ namespace CLRProfiler
 						{
 							pn1 = new datanode();
 							cn1 = new datanode();
-						    string nameAndSignature1 = edge.FromVertex.GetNameAndSignature();
+						    string key = edge.FromVertex.GetNameAndSignature();
 
-                            if (this._prevbasedata.ContainsKey(nameAndSignature1))
+                            if (this._prevbasedata.ContainsKey(key))
 							{
-								pn1 = (datanode)_prevbasedata[nameAndSignature1];
+								pn1 = (datanode)_prevbasedata[key];
 								pn1.id = id;
 								pn1.incl = FormatSize((int)edge.weight);
 								if(exist)
@@ -915,17 +915,17 @@ namespace CLRProfiler
 									{
 										if(edgec.FromVertex.name == edge.FromVertex.name && edgec.FromVertex.signature == edge.FromVertex.signature)
 										{
-											if(this._currbasedata.ContainsKey(nameAndSignature1))
+											if(this._currbasedata.ContainsKey(key))
 											{
-												cn1 = (datanode)_currbasedata[nameAndSignature1];
+												cn1 = (datanode)_currbasedata[key];
 												cn1.id = id;
 												cn1.incl = FormatSize((int)edgec.weight);
-												cnnew[nameAndSignature1] = 1;
+												cnnew[key] = 1;
 											}
 										}
 									}
 								}
-								AddBaseTableRow(this.ContriTocallertbl, nameAndSignature1, pn1, cn1);
+								AddBaseTableRow(this.ContriTocallertbl, key, pn1, cn1);
 								
 							}
 						}
@@ -935,14 +935,14 @@ namespace CLRProfiler
 							foreach(Edge edgec in cn.caller.Values)
 							{
 								pn1 = new datanode();
-								string nameAndSignature1 = edgec.FromVertex.GetNameAndSignature();
+								string key = edgec.FromVertex.GetNameAndSignature();
 
-                                if (!cnnew.ContainsKey(nameAndSignature1))
+                                if (!cnnew.ContainsKey(key))
 								{
-									cn1 = (datanode)_currbasedata[nameAndSignature1];
+									cn1 = (datanode)_currbasedata[key];
 									cn1.id = id;
 									cn1.incl = FormatSize((int)edgec.weight);
-									AddBaseTableRow(this.ContriTocallertbl, nameAndSignature1, pn1, cn1);
+									AddBaseTableRow(this.ContriTocallertbl, key, pn1, cn1);
 								}
 							}
 						}
@@ -957,14 +957,14 @@ namespace CLRProfiler
 							cn1 = (datanode)_currbasedata[nameAndSignature];
 							foreach(Edge edge in cn.caller.Values)
 							{
-								string nameAndSignature1 = edge.FromVertex.GetNameAndSignature();
+								string key = edge.FromVertex.GetNameAndSignature();
 
-                                if (this._currbasedata.ContainsKey(nameAndSignature1))
+                                if (this._currbasedata.ContainsKey(key))
 								{
-									cn1 = (datanode)_currbasedata[nameAndSignature1];
+									cn1 = (datanode)_currbasedata[key];
 									cn1.id = id;
 									cn1.incl = FormatSize((int)edge.weight);
-									AddBaseTableRow(this.ContriTocallertbl, nameAndSignature1, pn1, cn1);
+									AddBaseTableRow(this.ContriTocallertbl, key, pn1, cn1);
 								}
 								
 							}
