@@ -594,7 +594,7 @@ namespace CLRProfiler
                     //  Add a separator
                     string functionName;
 
-                    if (stacktrace == null || stacktrace.Length == 0)
+                    if (stacktrace.Length == 0)
                     {
                         functionName = "All";
                     }
