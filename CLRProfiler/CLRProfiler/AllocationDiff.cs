@@ -106,32 +106,32 @@ namespace CLRProfiler
 
 		#region data member
 		// log file names
-		private string _prevFile = null;
-		private string _currFile = null;
+		private string _prevFile;
+		private string _currFile;
 
 	    // holds all useful data from base
 		// for build all diff, call relations, and type allocation tables
-		internal readonly Hashtable _prevbasedata = null;
-		internal readonly Hashtable _currbasedata = null;
+		internal readonly Hashtable _prevbasedata;
+		internal readonly Hashtable _currbasedata;
 
 
 		// maps for match search
-		public readonly Hashtable basedataId =null;
-		public readonly Hashtable Idbasedata =null;
-		public Hashtable typeAllocdataId = null;
+		public readonly Hashtable basedataId;
+		public readonly Hashtable Idbasedata;
+		public Hashtable typeAllocdataId;
 
 		// hold log data		
-		private readonly LogBase _prevLog = null;
-		private readonly LogBase _currLog = null;
+		private readonly LogBase _prevLog;
+		private readonly LogBase _currLog;
 		// hold base graph related data
-		private readonly GraphBase _prevG = null;
-		private readonly GraphBase _currG = null;
+		private readonly GraphBase _prevG;
+		private readonly GraphBase _currG;
 
 		// hold base stacktrace info
-		internal CallTreeForm _prevcallTrace = null;
-		internal CallTreeForm _currcallTrace = null;
-		internal DiffDataNode Root = null;
-		internal DataTable diffTracetbl = null;
+		internal CallTreeForm _prevcallTrace;
+		internal CallTreeForm _currcallTrace;
+		internal DiffDataNode Root;
+		internal DataTable diffTracetbl;
 		private static int nodeidx = 0;
 				
 		internal readonly Hashtable prevFuncExcl = new Hashtable();
@@ -151,7 +151,7 @@ namespace CLRProfiler
 		private static int sumnodeidx = 0;
 		private static int depth = 0;
 
-		internal DataTable summaryTracetbl = null;
+		internal DataTable summaryTracetbl;
 		internal readonly Hashtable diffCallTreeNodes = new Hashtable();
 				
 		private const int idx_parentid = 0;
@@ -212,11 +212,11 @@ namespace CLRProfiler
             public DoubleInt allocmem { get; set; }
 			
 		}
-		public DataTable basedatatable { get; set; } = null;
+		public DataTable basedatatable { get; set; }
 
-	    public DataTable ContriTocallertbl { get; set; } = null;
+	    public DataTable ContriTocallertbl { get; set; }
 
-	    public DataTable ContriTocalleetbl { get; set; } = null;
+	    public DataTable ContriTocalleetbl { get; set; }
 
 	    // detailds for reportform details RadioButton
 		public struct DetailFilter
@@ -270,11 +270,11 @@ namespace CLRProfiler
 		// DataSet used to collect tables and 
 		// build relations between table in the near future
 		// also it usded by DataViewManager in ReportForm
-		public DataSet ds { get; set; } = null;
+		public DataSet ds { get; set; }
 
-	    public DataTable callertbl { get; set; } = null;
+	    public DataTable callertbl { get; set; }
 
-	    public DataTable calleetbl { get; set; } = null;
+	    public DataTable calleetbl { get; set; }
 
 	    public string PrevLogFileName
 		{
