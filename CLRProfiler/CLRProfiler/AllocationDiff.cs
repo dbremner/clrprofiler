@@ -708,26 +708,24 @@ namespace CLRProfiler
 			{
 				foreach(DictionaryEntry de in basedataId)
 				{
-					datanode pn= new datanode();
-					datanode cn= new datanode();
-					var nameAndSignature = (string)de.Key;
+				    var nameAndSignature = (string)de.Key;
 					var id = (int)basedataId[nameAndSignature];
 					if(this._prevbasedata.ContainsKey(nameAndSignature))
 					{
-						pn = (datanode)_prevbasedata[nameAndSignature];
-						pn.id = id;
-						BuildCallTables(this.callertbl, id, pn.caller, true);
-						BuildCallTables(this.calleetbl, id, pn.callee, false);
+					    var pn = (datanode) _prevbasedata[nameAndSignature];
+					    pn.id = id;
+                        BuildCalleerTables(callertbl, id, pn.caller);
+                        BuildCalleeTables(calleetbl, id, pn.callee);
 					}
 					else
 					{
 						if(_currbasedata.ContainsKey(nameAndSignature))
-						{
-							cn = (datanode)_currbasedata[nameAndSignature];
-							cn.id = id;
-							BuildCallTables(this.callertbl, id, cn.caller, true);
-							BuildCallTables(this.calleetbl, id, cn.callee, false);
-						}
+					    {
+					        var cn = (datanode) _currbasedata[nameAndSignature];
+					        cn.id = id;
+                            BuildCalleerTables(callertbl, id, cn.caller);
+                            BuildCalleeTables(calleetbl, id, cn.callee);
+					    }
 					}
 				
 				}
@@ -739,37 +737,44 @@ namespace CLRProfiler
 				throw new Exception("Faild on build caller/callee data Tables \n");
 			}
 		}
-		private void BuildCallTables(DataTable tbl, int id, Dictionary<Vertex, Edge> callhash, bool iscaller)
-		{
-		    foreach(Vertex cv in  callhash.Keys)
-			{
-				string nameAndSignature = cv.name;
-				if(cv.signature != null)
-                {
-                    nameAndSignature += ' ' + cv.signature;
-                }
 
-                if (iscaller)
-				{
-					if( basedataId.ContainsKey(nameAndSignature))
-					{
-						int callerid = (int)basedataId[nameAndSignature];
-					    AddCallerTableRow(tbl, id, callerid);
-					}
-				}
-				else
-				{
-					if( basedataId.ContainsKey(nameAndSignature))
-					{
-						int calleeid = (int)basedataId[nameAndSignature];
-					    AddCalleeTableRow(tbl, id, calleeid);
-					}
+	    private void BuildCalleeTables(DataTable tbl, int id, Dictionary<Vertex, Edge> callhash)
+	    {
+	        foreach (Vertex cv in callhash.Keys)
+	        {
+	            string nameAndSignature = cv.name;
+	            if (cv.signature != null)
+	            {
+	                nameAndSignature += ' ' + cv.signature;
+	            }
 
-				}
-			}
-		}
+	            if (basedataId.ContainsKey(nameAndSignature))
+	            {
+	                int calleeid = (int)basedataId[nameAndSignature];
+	                AddCalleeTableRow(tbl, id, calleeid);
+	            }
+	        }
+	    }
 
-	    private void AddCallerTableRow(DataTable tmptbl, DoubleInt id, DoubleInt callerid)
+        private void BuildCalleerTables(DataTable tbl, int id, Dictionary<Vertex, Edge> callhash)
+	    {
+            foreach (Vertex cv in callhash.Keys)
+	        {
+	            string nameAndSignature = cv.name;
+	            if (cv.signature != null)
+	            {
+	                nameAndSignature += ' ' + cv.signature;
+	            }
+
+	            if (basedataId.ContainsKey(nameAndSignature))
+	            {
+	                int callerid = (int)basedataId[nameAndSignature];
+	                AddCallerTableRow(tbl, id, callerid);
+	            }
+	        }
+	    }
+
+        private void AddCallerTableRow(DataTable tmptbl, DoubleInt id, DoubleInt callerid)
 	    {
 	        DataRow tmpRow = tmptbl.NewRow();
 	        tmpRow["id"] = id;
