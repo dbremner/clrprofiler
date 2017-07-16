@@ -841,19 +841,16 @@ namespace CLRProfiler
             {
                 case Graph.GraphType.CallGraph:
                     graph = logResult.callstackHistogram.BuildCallGraph(new FilterForm());
-                    graph.graphType = Graph.GraphType.CallGraph;
                     title = "Call Graph for: ";
                     break;
 
                 case Graph.GraphType.AssemblyGraph:
                     graph = logResult.callstackHistogram.BuildAssemblyGraph(new FilterForm());
-                    graph.graphType = Graph.GraphType.AssemblyGraph;
                     title = "Assembly Graph for: ";
                     break;
 
                 case Graph.GraphType.AllocationGraph:
                     graph = logResult.allocatedHistogram.BuildAllocationGraph(new FilterForm());
-                    graph.graphType = Graph.GraphType.AllocationGraph;
                     title = "Allocation Graph for: ";
                     break;
 
@@ -864,19 +861,16 @@ namespace CLRProfiler
 
                 case Graph.GraphType.FunctionGraph:
                     graph = logResult.functionList.BuildFunctionGraph(new FilterForm());
-                    graph.graphType = Graph.GraphType.FunctionGraph;
                     title = "Function Graph for: ";
                     break;
 
                 case Graph.GraphType.ModuleGraph:
                     graph = logResult.functionList.BuildModuleGraph(new FilterForm());
-                    graph.graphType = Graph.GraphType.ModuleGraph;
                     title = "Module Graph for: ";
                     break;
 
                 case Graph.GraphType.ClassGraph:
                     graph = logResult.functionList.BuildClassGraph(new FilterForm());
-                    graph.graphType = Graph.GraphType.ClassGraph;
                     title = "Class Graph for: ";
                     break;
 

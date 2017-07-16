@@ -1171,27 +1171,22 @@ namespace CLRProfiler
             {
                 case Graph.GraphType.CallGraph:
                     graph = ((Histogram)orgGraph.graphSource).BuildCallGraph(filterForm);
-                    graph.graphType = Graph.GraphType.CallGraph;
                     break;
 
                 case Graph.GraphType.AllocationGraph:
                     graph = ((Histogram)orgGraph.graphSource).BuildAllocationGraph(filterForm);
-                    graph.graphType = Graph.GraphType.AllocationGraph;
                     break;
 
                 case Graph.GraphType.AssemblyGraph:
                     graph = ((Histogram)orgGraph.graphSource).BuildAssemblyGraph(filterForm);
-                    graph.graphType = Graph.GraphType.AssemblyGraph;
                     break;
 
                 case Graph.GraphType.HeapGraph:
                     graph = ((ObjectGraph)orgGraph.graphSource).BuildTypeGraph(orgGraph.allocatedAfterTickIndex, orgGraph.allocatedBeforeTickIndex, orgGraph.typeGraphOptions, filterForm);
-                    graph.graphType = Graph.GraphType.HeapGraph;
                     break;
 
                 case Graph.GraphType.HandleAllocationGraph:
                     graph = ((Histogram)orgGraph.graphSource).BuildHandleAllocationGraph(filterForm);
-                    graph.graphType = Graph.GraphType.HandleAllocationGraph;
                     break;
             }
             placeVertices = placeEdges = true;
@@ -1388,16 +1383,17 @@ namespace CLRProfiler
         private void ZoomVertex(Vertex v, string titlePrefix)
         {
             toolTip.Active = false;
+            var type = graph.graphType;
             Graph g;
             if (graph.graphSource is Graph)
             {
                 Graph orgGraph = (Graph)graph.graphSource;
-                g = new Graph(orgGraph);
+                g = new Graph(orgGraph, type);
                 v = orgGraph.FindOrCreateVertex(v.name, v.signature, v.moduleName);
             }
             else
             {
-                g = new Graph(graph);
+                g = new Graph(graph, type);
             }
 
             g.allocatedAfterTickIndex = graph.allocatedAfterTickIndex;
@@ -1443,7 +1439,6 @@ namespace CLRProfiler
                 }
             }
             g.BottomVertex.active = false;
-            g.graphType = graph.graphType;
             g.typeGraphOptions = graph.typeGraphOptions;
             if (titlePrefix == null)
             {

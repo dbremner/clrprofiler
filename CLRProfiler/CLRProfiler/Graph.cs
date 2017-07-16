@@ -19,7 +19,7 @@ namespace CLRProfiler
     /// </summary>
     internal class Graph
     {
-        internal object graphSource;
+        internal readonly object graphSource;
         internal readonly Dictionary<string, Vertex> vertices;
 
         internal enum GraphType
@@ -35,7 +35,7 @@ namespace CLRProfiler
             ReferenceGraph,
     	    Invalid
         };
-        internal GraphType graphType;
+        internal readonly GraphType graphType;
         internal ObjectGraph.BuildTypeGraphOptions typeGraphOptions;
         internal int allocatedAfterTickIndex;
         internal int allocatedBeforeTickIndex;
@@ -46,16 +46,12 @@ namespace CLRProfiler
 
         internal Vertex BottomVertex { get; }
 
-        internal Graph(object graphSource)
+        internal Graph([NotNull] object graphSource, GraphType type)
         {
             this.graphSource = graphSource;
             vertices = new Dictionary<string, Vertex>();
             TopVertex = FindOrCreateVertex("<root>", null, null);
             BottomVertex = FindOrCreateVertex("<bottom>", null, null);
-        }
-
-        internal Graph([NotNull] object graphSource, GraphType type) : this(graphSource)
-        {
             graphType = type;
         }
 

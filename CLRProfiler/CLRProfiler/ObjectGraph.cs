@@ -912,7 +912,6 @@ namespace CLRProfiler
                 }
 
                 cachedGraph = graph = new Graph(this, Graph.GraphType.HeapGraph);
-                graph.graphSource = this;
                 if (previousGraph != null)
                 {
                     graph.previousGraphTickIndex = ((ObjectGraph)previousGraph.graphSource).tickIndex;

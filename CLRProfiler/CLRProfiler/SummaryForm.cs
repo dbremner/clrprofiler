@@ -187,7 +187,6 @@ namespace CLRProfiler
         private void allocationGraphButton_Click(object sender, System.EventArgs e)
         {
             Graph graph = logResult.allocatedHistogram.BuildAllocationGraph(new FilterForm());
-            graph.graphType = Graph.GraphType.AllocationGraph;
             string title = "Allocation Graph for: " + scenario;
             GraphViewForm graphViewForm = new GraphViewForm(graph, title);
             graphViewForm.Show();
@@ -257,7 +256,6 @@ namespace CLRProfiler
         private void CreateHandleAllocationGraph(Histogram histogram, string title)
         {
             Graph graph = histogram.BuildHandleAllocationGraph(new FilterForm());
-            graph.graphType = Graph.GraphType.HandleAllocationGraph;
             GraphViewForm graphViewForm = new GraphViewForm(graph, title);
             graphViewForm.Show();        
         }
