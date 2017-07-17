@@ -133,7 +133,7 @@ namespace CLRProfiler
                         // create formats
                         for(i = 0; i < columns; i++)
                         {
-                            formats[i] = "{0," + (i == 0 ? "-" : "") + widths[i] + '}' + (i == columns - 1 ? '\n' : ' ');
+                            formats[i] = "{0," + (i == 0 ? "-" : "") + widths[i] + "}" + (i == columns - 1 ? "\n" : " ");
                         }
                     }
                     else

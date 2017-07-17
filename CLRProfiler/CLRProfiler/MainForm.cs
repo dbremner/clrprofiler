@@ -580,7 +580,7 @@ namespace CLRProfiler
                     /* treat everything after the exe name to profile as arguments */
                     for (; i < arguments.Length; i++)
                     {
-                        commandLine += arguments[i] + ' ';
+                        commandLine += arguments[i] + " ";
                     }
                 }
                 /* basic initialization stuff */
@@ -653,7 +653,7 @@ namespace CLRProfiler
                     }
                     catch (Exception e)
                     {
-                        throw new Exception(e.Message + '\n' + e.StackTrace);
+                        throw new Exception(e.Message + "\n" + e.StackTrace);
                         // Console.WriteLine("There was a problem profiling {0}", processFileName);
                     }
                 }

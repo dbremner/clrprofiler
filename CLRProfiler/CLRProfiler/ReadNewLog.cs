@@ -881,7 +881,7 @@ namespace CLRProfiler
                                 string nameAndSignature = name;
                                 if (signature != null)
                                     {
-                                        nameAndSignature = name + ' '+signature;
+                                        nameAndSignature = name + " " +signature;
                                     }
 
                                     if (stackIndex >= 0 && readLogResult.functionList != null)

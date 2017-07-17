@@ -1079,7 +1079,7 @@ namespace CLRProfiler
 							string sig = _currcallTrace.signatures[functionId];
 							if(sig != null)
 							{
-								node.mapname += ' ' + sig;
+								node.mapname += " " + sig;
 							}
 							break;
 					}
@@ -1132,7 +1132,7 @@ namespace CLRProfiler
 							string sig = _prevcallTrace.signatures[functionId];
 							if(sig != null)
 							{
-								node.mapname += ' ' + sig;
+								node.mapname += " " + sig;
 							}
 							break;
 					}
@@ -1541,7 +1541,7 @@ namespace CLRProfiler
 			{
 				for(int i = 0; i < kids.Count-1; i++)
 				{
-					filter += kids[i].ToString() + ',';
+					filter += kids[i].ToString() + ",";
 				}
 				filter += kids[kids.Count-1].ToString();
 			}
@@ -1814,7 +1814,7 @@ namespace CLRProfiler
 					        {
 					            if (callTrace.LogResult.callstackHistogram.readNewLog.funcSignature[functionId] != null)
 					            {
-					                name += ' ' + callTrace.LogResult.callstackHistogram.readNewLog.funcSignature[functionId];
+					                name += " " + callTrace.LogResult.callstackHistogram.readNewLog.funcSignature[functionId];
 					            }
 					        }
 					        else
@@ -1860,11 +1860,11 @@ namespace CLRProfiler
 					        // Type Allocated by Excl
 					        if (name != "NATIVE FUNCTION ( UNKNOWN ARGUMENTS )")
 					        {
-					            key = typename + '|' + functionId;
+					            key = typename + "|" + functionId;
 					        }
 					        else
 					        {
-					            key = typename + '|' + 0;
+					            key = typename + "|" + 0;
 					        }
 
 					        if (TypeAlloc.ContainsKey(key))

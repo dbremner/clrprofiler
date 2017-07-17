@@ -598,7 +598,7 @@ namespace CLRProfiler
 			dgSelected.CaptionText = SelectedCaption;
 		    // FIXME
             // ReSharper disable once PossibleNullReferenceException
-			dvm.DataViewSettings[_allocDiff.basedatatable.TableName].RowFilter = "id" + '=' + id;
+			dvm.DataViewSettings[_allocDiff.basedatatable.TableName].RowFilter = "id=" + id;
 			dgSelected.SetDataBinding(dvm,_allocDiff.basedatatable.TableName);
 			dgSelected.Visible = true;
 

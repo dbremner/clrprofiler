@@ -119,7 +119,7 @@ namespace CLRProfiler
             string nameAndSignature = name;
             if (signature != null)
             {
-                nameAndSignature += ' ' + signature;
+                nameAndSignature += " " + signature;
             }
             return nameAndSignature;
         }

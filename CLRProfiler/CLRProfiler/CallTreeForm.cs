@@ -806,7 +806,7 @@ namespace CLRProfiler
             if(name == "NATIVE")
             {
                 /* transition into the unmanaged code */
-                return name + ' ' + signature;
+                return name + " " + signature;
             }
             else
             {
@@ -818,7 +818,7 @@ namespace CLRProfiler
                     string arguments = signature.Substring(argumentsStart).Trim();
                     string[] argv = arguments.Split(" ".ToCharArray());
 
-                    res = signature.Substring(0, argumentsStart).Trim() + ' ' + name.Trim();
+                    res = signature.Substring(0, argumentsStart).Trim() + " " + name.Trim();
                     for(int i = 0; i < argv.Length; i++)
                     {
                         if(i != 0)
@@ -830,7 +830,7 @@ namespace CLRProfiler
                 }
                 else
                 {
-                    res = name + ' ' + signature;
+                    res = name + " " + signature;
                 }
             }
 
