@@ -26,6 +26,7 @@ using System.Security.Principal;
 using System.Globalization;
 using System.Xml;
 using JetBrains.Annotations;
+using Microsoft.Win32;
 using Microsoft.Win32.SafeHandles;
 
 namespace CLRProfiler
@@ -606,7 +607,7 @@ namespace CLRProfiler
                     // Set V4 Desktop CLR to be the default value
                     targetCLRVersioncomboBox.SelectedIndex = 0;
 
-                    font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(204)));
+                    font = new Font("Tahoma", 8.25F, FontStyle.Regular, GraphicsUnit.Point, ((Byte)(204)));
 
                     if (logFileName != "" && File.Exists(logFileName))
                     {
@@ -986,7 +987,7 @@ namespace CLRProfiler
             viewSummaryMenuItem_Click(null, null);
         }
 
-        private void fileOpenMenuItem_Click(object sender, System.EventArgs e)
+        private void fileOpenMenuItem_Click(object sender, EventArgs e)
         {
             if (!CheckProcessTerminate() || !CheckFileSave())
             {
@@ -1061,7 +1062,7 @@ namespace CLRProfiler
                     {
                         File.Delete(logFileName);
                     }
-                    catch (System.IO.IOException e)
+                    catch (IOException e)
                     {
                         MessageBox.Show(e.Message + "\n" + e.StackTrace, "Error");
                     }
@@ -1081,7 +1082,7 @@ namespace CLRProfiler
                             {
                                 File.Delete(logFileName);
                             }
-                            catch (System.IO.IOException e)
+                            catch (IOException e)
                             {
                                 MessageBox.Show(e.Message + "\n" + e.StackTrace, "Error");
                             }
@@ -1127,7 +1128,7 @@ namespace CLRProfiler
             return true;
         }
 
-        private void exitMenuItem_Click(object sender, System.EventArgs e)
+        private void exitMenuItem_Click(object sender, EventArgs e)
         {
             if (CheckProcessTerminate() && CheckFileSave())
             {
@@ -1135,7 +1136,7 @@ namespace CLRProfiler
             }
         }
 
-        private void fontMenuItem_Click(object sender, System.EventArgs e)
+        private void fontMenuItem_Click(object sender, EventArgs e)
         {
             if (fontDialog.ShowDialog() == DialogResult.OK)
             {
@@ -1143,7 +1144,7 @@ namespace CLRProfiler
             }
         }
 
-        private void profileApplicationMenuItem_Click(object sender, System.EventArgs e)
+        private void profileApplicationMenuItem_Click(object sender, EventArgs e)
         {
             if (!CheckProcessTerminate() || !CheckFileSave())
             {
@@ -1351,22 +1352,22 @@ namespace CLRProfiler
         }
 
         [CanBeNull]
-        private Microsoft.Win32.RegistryKey GetServiceKey([NotNull] string serviceName)
+        private RegistryKey GetServiceKey([NotNull] string serviceName)
         {
-            Microsoft.Win32.RegistryKey localMachine = Microsoft.Win32.Registry.LocalMachine;
-            Microsoft.Win32.RegistryKey key = localMachine.OpenSubKey("SYSTEM\\CurrentControlSet\\Services\\" + serviceName, true);
+            RegistryKey localMachine = Microsoft.Win32.Registry.LocalMachine;
+            RegistryKey key = localMachine.OpenSubKey("SYSTEM\\CurrentControlSet\\Services\\" + serviceName, true);
             return key;
         }
 
         private void SetEnvironmentVariables([NotNull] string serviceName, [NotNull] string[] environment)
         {
-            Microsoft.Win32.RegistryKey key = GetServiceKey(serviceName);
+            RegistryKey key = GetServiceKey(serviceName);
             key?.SetValue("Environment", environment);
         }
 
         private void DeleteEnvironmentVariables([NotNull] string serviceName)
         {
-            Microsoft.Win32.RegistryKey key = GetServiceKey(serviceName);
+            RegistryKey key = GetServiceKey(serviceName);
             key?.DeleteValue("Environment");
         }
 
@@ -1387,15 +1388,15 @@ namespace CLRProfiler
         }
 
         [CanBeNull]
-        private Microsoft.Win32.RegistryKey GetAccountEnvironmentKey([NotNull] string serviceAccountSid)
+        private RegistryKey GetAccountEnvironmentKey([NotNull] string serviceAccountSid)
         {
-            Microsoft.Win32.RegistryKey users = Microsoft.Win32.Registry.Users;
+            RegistryKey users = Registry.Users;
             return users.OpenSubKey(serviceAccountSid + @"\Environment", true);
         }
 
         private void SetAccountEnvironment([NotNull] string serviceAccountSid, [NotNull] string[] profilerEnvironment)
         {
-            Microsoft.Win32.RegistryKey key = GetAccountEnvironmentKey(serviceAccountSid);
+            RegistryKey key = GetAccountEnvironmentKey(serviceAccountSid);
             if (key != null)
             {
                 foreach (string envVariable in profilerEnvironment)
@@ -1407,7 +1408,7 @@ namespace CLRProfiler
 
         private void ResetAccountEnvironment([NotNull] string serviceAccountSid, [NotNull] string[] profilerEnvironment)
         {
-            Microsoft.Win32.RegistryKey key = GetAccountEnvironmentKey(serviceAccountSid);
+            RegistryKey key = GetAccountEnvironmentKey(serviceAccountSid);
             if (key != null)
             {
                 foreach (string envVariable in profilerEnvironment)
@@ -1472,7 +1473,7 @@ namespace CLRProfiler
         [CanBeNull]
         private string GetServiceAccountName([NotNull] string serviceName)
         {
-            Microsoft.Win32.RegistryKey key = GetServiceKey(serviceName);
+            RegistryKey key = GetServiceKey(serviceName);
             if (key != null)
             {
                 return key.GetValue("ObjectName") as string;
@@ -1645,7 +1646,7 @@ namespace CLRProfiler
         }
 
         [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands", Justification = "CLRProfiler.exe is a stand-alone tool, not a library.")]
-        private void profileASP_NETmenuItem_Click(object sender, System.EventArgs e)
+        private void profileASP_NETmenuItem_Click(object sender, EventArgs e)
         {
             if (!CheckProcessTerminate() || !CheckFileSave())
             {
@@ -2126,7 +2127,7 @@ namespace CLRProfiler
                 {
                     handshakingReadBytes += handshakingPipe.Read(handshakingBuffer, handshakingReadBytes, 9 - handshakingReadBytes);
                 }
-                catch (System.IO.IOException)
+                catch (IOException)
                 {
                 }
                 
@@ -2158,7 +2159,7 @@ namespace CLRProfiler
                 {
                     loggingReadBytes += loggingPipe.Read(loggingBuffer, loggingReadBytes, maxloggingBufferSize - loggingReadBytes);
                 }
-                catch (System.IO.IOException)
+                catch (IOException)
                 {
                 }
 
@@ -2195,7 +2196,7 @@ namespace CLRProfiler
                                 break;
                             }
                         }
-                        catch (System.IO.IOException)
+                        catch (IOException)
                         {
                             DisconnectNamedPipe(loggingPipeHandle);
                             ConnectNamedPipe(loggingPipeHandle, IntPtr.Zero);
@@ -2266,7 +2267,7 @@ namespace CLRProfiler
                             break;
                         }
                     }
-                    catch (System.IO.IOException)
+                    catch (IOException)
                     {
                         DisconnectNamedPipe(handshakingPipeHandle);
                         ConnectNamedPipe(handshakingPipeHandle, IntPtr.Zero);
@@ -2379,7 +2380,7 @@ namespace CLRProfiler
 
 
         [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands", Justification = "CLRProfiler.exe is a stand-alone tool, not a library.")]
-        private void startApplicationButton_Click(object sender, System.EventArgs e)
+        private void startApplicationButton_Click(object sender, EventArgs e)
         {
             if (!CheckProcessTerminate() || !CheckFileSave())
             {
@@ -2507,7 +2508,7 @@ namespace CLRProfiler
             }
         }
 
-        private void profilingActiveCheckBox_CheckedChanged(object sender, System.EventArgs e)
+        private void profilingActiveCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             if (allocationsCheckBox.Checked)
             {
@@ -2565,7 +2566,7 @@ namespace CLRProfiler
             }
         }
 
-        private void allocationsCheckBox_CheckedChanged(object sender, System.EventArgs e)
+        private void allocationsCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             if (profilerConnected && (allocationsCheckBox.Checked || !callsCheckBox.Checked))
             {
@@ -2580,7 +2581,7 @@ namespace CLRProfiler
             enableDisableAttachProcessButtonAndMenuItem();
         }
 
-        private void callsCheckBox_CheckedChanged(object sender, System.EventArgs e)
+        private void callsCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             if (profilerConnected && (allocationsCheckBox.Checked || !callsCheckBox.Checked))
             {
@@ -2619,7 +2620,7 @@ namespace CLRProfiler
             enableDisableAttachProcessButtonAndMenuItem();
         }
 
-        private void checkProcessTimer_Tick(object sender, System.EventArgs e)
+        private void checkProcessTimer_Tick(object sender, EventArgs e)
         {
             if (profiledProcess != null && ProfiledProcessHasExited())
             {
@@ -2642,7 +2643,7 @@ namespace CLRProfiler
         }
                 
         [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands", Justification = "CLRProfiler.exe is a stand-alone tool, not a library.")]
-        private void killApplicationButton_Click(object sender, System.EventArgs e)
+        private void killApplicationButton_Click(object sender, EventArgs e)
         {
             if (profiledProcess != null)
             {
@@ -2664,7 +2665,7 @@ namespace CLRProfiler
             }
         }
 
-        private void setCommandLineMenuItem_Click(object sender, System.EventArgs e)
+        private void setCommandLineMenuItem_Click(object sender, EventArgs e)
         {
             var setCommandLineForm = new SetParameterForm();
             setCommandLineForm.commandLineTextBox.Text = commandLine;
@@ -2689,7 +2690,7 @@ namespace CLRProfiler
             return offset;
         }
 
-        private void showHeapButton_Click(object sender, System.EventArgs e)
+        private void showHeapButton_Click(object sender, EventArgs e)
         {
             forceGcCompletedEvent.Wait(1);
             forceGcCompletedEvent.Reset();
@@ -2726,25 +2727,25 @@ namespace CLRProfiler
             }
         }
 
-        private void viewByAddressMenuItem_Click(object sender, System.EventArgs e)
+        private void viewByAddressMenuItem_Click(object sender, EventArgs e)
         {
             var viewByAddressForm = new ViewByAddressForm();
             viewByAddressForm.Visible = true;
         }
 
-        private void viewTimeLineMenuItem_Click(object sender, System.EventArgs e)
+        private void viewTimeLineMenuItem_Click(object sender, EventArgs e)
         {
             var timeLineViewForm = new TimeLineViewForm();
             timeLineViewForm.Visible = true;
         }
 
-        private void viewHistogram_Click(object sender, System.EventArgs e)
+        private void viewHistogram_Click(object sender, EventArgs e)
         {
             var histogramViewForm = new HistogramViewForm();
             histogramViewForm.Visible = true;
         }
 
-        private void saveAsMenuItem_Click(object sender, System.EventArgs e)
+        private void saveAsMenuItem_Click(object sender, EventArgs e)
         {
             SaveFile();
         }
@@ -2754,7 +2755,7 @@ namespace CLRProfiler
             e.Cancel = !CheckProcessTerminate() || !CheckFileSave();
         }
 
-        private void viewHistogramRelocatedMenuItem_Click(object sender, System.EventArgs e)
+        private void viewHistogramRelocatedMenuItem_Click(object sender, EventArgs e)
         {
             if (lastLogResult != null)
             {
@@ -2764,7 +2765,7 @@ namespace CLRProfiler
             }
         }
 
-        private void viewHistogramFinalizerMenuItem_Click(object sender, System.EventArgs e)
+        private void viewHistogramFinalizerMenuItem_Click(object sender, EventArgs e)
         {
             if (lastLogResult != null)
             {
@@ -2774,7 +2775,7 @@ namespace CLRProfiler
             }
         }
 
-        private void viewHistogramCriticalFinalizerMenuItem_Click(object sender, System.EventArgs e)
+        private void viewHistogramCriticalFinalizerMenuItem_Click(object sender, EventArgs e)
         {
             if (lastLogResult != null)
             {
@@ -2784,7 +2785,7 @@ namespace CLRProfiler
             }
         }
 
-        private void viewAgeHistogram_Click(object sender, System.EventArgs e)
+        private void viewAgeHistogram_Click(object sender, EventArgs e)
         {
             if (lastLogResult != null)
             {
@@ -2794,7 +2795,7 @@ namespace CLRProfiler
             }
         }
 
-        private void viewAllocationGraphmenuItem_Click(object sender, System.EventArgs e)
+        private void viewAllocationGraphmenuItem_Click(object sender, EventArgs e)
         {
             if (lastLogResult != null)
             {
@@ -2802,7 +2803,7 @@ namespace CLRProfiler
             }
         }
 
-        private void viewAssemblyGraphmenuItem_Click(object sender, System.EventArgs e)
+        private void viewAssemblyGraphmenuItem_Click(object sender, EventArgs e)
         {
             if (lastLogResult != null)
             {
@@ -2810,7 +2811,7 @@ namespace CLRProfiler
             }
         }
 
-        private void viewHeapGraphMenuItem_Click(object sender, System.EventArgs e)
+        private void viewHeapGraphMenuItem_Click(object sender, EventArgs e)
         {
             if (lastLogResult != null)
             {
@@ -2818,7 +2819,7 @@ namespace CLRProfiler
             }
         }
 
-        private void viewCallGraphMenuItem_Click(object sender, System.EventArgs e)
+        private void viewCallGraphMenuItem_Click(object sender, EventArgs e)
         {
             if (lastLogResult != null)
             {
@@ -2826,7 +2827,7 @@ namespace CLRProfiler
             }
         }
 
-        private void Form1_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.F5)
             {
@@ -2834,7 +2835,7 @@ namespace CLRProfiler
             }
         }
 
-        private void profileServiceMenuItem_Click(object sender, System.EventArgs e)
+        private void profileServiceMenuItem_Click(object sender, EventArgs e)
         {
             var profileServiceForm = new ProfileServiceForm();
             if (profileServiceForm.ShowDialog() == DialogResult.OK)
@@ -2847,7 +2848,7 @@ namespace CLRProfiler
             }
         }
 
-        private void viewFunctionGraphMenuItem_Click(object sender, System.EventArgs e)
+        private void viewFunctionGraphMenuItem_Click(object sender, EventArgs e)
         {
             if (lastLogResult != null)
             {
@@ -2855,7 +2856,7 @@ namespace CLRProfiler
             }
         }
 
-        private void viewModuleGraphMenuItem_Click(object sender, System.EventArgs e)
+        private void viewModuleGraphMenuItem_Click(object sender, EventArgs e)
         {
             if (lastLogResult != null)
             {
@@ -2863,7 +2864,7 @@ namespace CLRProfiler
             }
         }
 
-        private void viewClassGraphMenuItem_Click(object sender, System.EventArgs e)
+        private void viewClassGraphMenuItem_Click(object sender, EventArgs e)
         {
             if (lastLogResult != null)
             {
@@ -2871,7 +2872,7 @@ namespace CLRProfiler
             }
         }
 
-        private void viewCommentsMenuItem_Click(object sender, System.EventArgs e)
+        private void viewCommentsMenuItem_Click(object sender, EventArgs e)
         {
             if (log != null && log.commentEventList.count != 0)
             {
@@ -2880,7 +2881,7 @@ namespace CLRProfiler
             }
         }
 
-        private void viewCallTreeMenuItem_Click(object sender, System.EventArgs e)
+        private void viewCallTreeMenuItem_Click(object sender, EventArgs e)
         {
             if (lastLogResult != null && lastLogResult.hadCallInfo)
             {
@@ -2888,7 +2889,7 @@ namespace CLRProfiler
             }
         }
 
-        private void viewComparisonMenuItem_Click(object sender, System.EventArgs e)
+        private void viewComparisonMenuItem_Click(object sender, EventArgs e)
         {
             currlogFileName = this.logFileName;
 
@@ -2912,7 +2913,7 @@ namespace CLRProfiler
             }
         }
 
-        private void viewSummaryMenuItem_Click(object sender, System.EventArgs e)
+        private void viewSummaryMenuItem_Click(object sender, EventArgs e)
         {
             if (lastLogResult != null)
             {
