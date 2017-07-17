@@ -1331,7 +1331,9 @@ namespace CLRProfiler
             }
         }
 
-        private string[] CombineEnvironmentVariables([NotNull] string[] a, [NotNull] string[] b)
+        [ItemNotNull]
+        [NotNull]
+        private string[] CombineEnvironmentVariables([ItemNotNull] [NotNull] string[] a, [ItemNotNull] [NotNull] string[] b)
         {
             string[] c = new string[a.Length + b.Length];
             int i = 0;
