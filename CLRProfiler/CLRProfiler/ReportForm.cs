@@ -75,7 +75,7 @@ namespace CLRProfiler
 										prevExcl,currExcl,diffExcl, 
 										prevChildIncl,currChildIncl,diffChildIncl,
 										prevTimesCalled,currTimesCalled,diffTimesCalled,
-										prevTimesMakecalls,currTimesMakecalls,diffTimesMakecalls};
+										prevTimesMakecalls,currTimesMakecalls,diffTimesMakecalls}
 
 		private readonly string [] coarsecolumName = {"name", 
 										  "diffIncl", 
@@ -83,7 +83,7 @@ namespace CLRProfiler
 										  "diffTimesCalled",
 										  "diffTimesMakecalls"};
 	
-		private enum coarsecolumnIdx {name, diffIncl,diffExcl,diffTimesCalled,diffTimesMakecalls};
+		private enum coarsecolumnIdx {name, diffIncl,diffExcl,diffTimesCalled,diffTimesMakecalls}
 
 		#region Report -- Entrance
 		internal ReportForm([NotNull] MainForm f)

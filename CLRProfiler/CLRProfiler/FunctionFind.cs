@@ -31,7 +31,7 @@ namespace CLRProfiler
 			{
 				return Name;
 			}
-		};
+		}
 
 		internal FunctionFind( ITreeOwner treeOwner, string SearchString )
 		{

@@ -48,7 +48,7 @@ namespace CLRProfiler
 			    showAllocs = true;
                 showAssemblies = true;
 			}
-		};
+		}
 		
 		private readonly AllocationDiff	_allocDiff;
 		private ViewState viewState;

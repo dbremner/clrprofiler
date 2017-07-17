@@ -12,7 +12,7 @@ namespace CLRProfiler
         internal bool highlighted;
 
         /* stored */
-        internal enum NodeType {Call = 0, Allocation, AssemblyLoad};
+        internal enum NodeType {Call = 0, Allocation, AssemblyLoad}
 
         internal readonly NodeType nodetype;
         internal readonly int stackid;
@@ -61,5 +61,5 @@ namespace CLRProfiler
             nodeOffset = Helpers.ReadNumber(reader);
             data = new Statistics(reader);
         }
-    };
+    }
 }

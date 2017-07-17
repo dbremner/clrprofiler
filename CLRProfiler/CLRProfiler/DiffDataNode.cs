@@ -10,7 +10,7 @@ namespace CLRProfiler
 	/// </summary>
 	internal class DiffDataNode : TreeNodeBase
 	{
-		internal enum NodeType {Call = 0, Allocation, AssemblyLoad};
+		internal enum NodeType {Call = 0, Allocation, AssemblyLoad}
 
 		//internal int parenttreeIdx = -1;
 		//internal int treeIdx = -1;

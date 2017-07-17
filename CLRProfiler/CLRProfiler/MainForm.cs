@@ -606,7 +606,7 @@ namespace CLRProfiler
                     // Set V4 Desktop CLR to be the default value
                     targetCLRVersioncomboBox.SelectedIndex = 0;
 
-                    font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(204))); ;
+                    font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(204)));
 
                     if (logFileName != "" && File.Exists(logFileName))
                     {
@@ -1259,7 +1259,7 @@ namespace CLRProfiler
             char* e;
             for (e = s; *e != '\0'; e++)
             {
-                ;
+                
             }
 
             return (int)(e - s);

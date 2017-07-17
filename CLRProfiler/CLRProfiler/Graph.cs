@@ -37,7 +37,7 @@ namespace CLRProfiler
             HandleAllocationGraph,
             ReferenceGraph,
     	    Invalid
-        };
+        }
         internal readonly GraphType graphType;
         internal ObjectGraph.BuildTypeGraphOptions typeGraphOptions;
         internal int allocatedAfterTickIndex;

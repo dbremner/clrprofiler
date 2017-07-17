@@ -6,7 +6,7 @@ namespace CLRProfiler
 {
     internal class ColumnInformation
     {
-        internal enum ColumnTypes {Tree, String, OwnerDraw};
+        internal enum ColumnTypes {Tree, String, OwnerDraw}
 
         internal readonly string Text;
         internal readonly int Token;

@@ -1885,7 +1885,6 @@ namespace CLRProfiler
 					        if (funcCalled.ContainsKey(functionId))
 					        {
 					            int calls = (int) funcCalled[functionId] + 1;
-					            ;
 					            funcCalled[functionId] = calls;
 					        }
 					        else

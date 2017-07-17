@@ -20,5 +20,5 @@ namespace CLRProfiler
         internal ulong initialObjectId;
         internal int allocTickIndex;
         internal readonly int allocStacktraceId;
-    };
+    }
 }

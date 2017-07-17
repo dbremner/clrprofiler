@@ -16,5 +16,5 @@ namespace CLRProfiler
         FinalizerReport,
         CriticalFinalizerReport,
         CommentReport,
-    };
+    }
 }

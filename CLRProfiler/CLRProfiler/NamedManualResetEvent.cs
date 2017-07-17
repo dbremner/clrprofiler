@@ -71,7 +71,7 @@ namespace CLRProfiler
 #pragma warning disable 414
             public int    bInheritHandle; 
 #pragma warning restore 414
-        }; 
+        } 
 
         public NamedManualResetEvent(string eventName, bool initialState, bool createEvent)
         {

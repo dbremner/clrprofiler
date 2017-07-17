@@ -9,5 +9,5 @@ namespace CLRProfiler
         V4DesktopCLR,
         V4CoreCLR,
         V2DesktopCLR,
-    };
+    }
 }

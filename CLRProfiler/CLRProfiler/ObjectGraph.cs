@@ -698,7 +698,7 @@ namespace CLRProfiler
                                 GcType refType = refObject.Type(this);
                                 if (typeHintTable[refType.index] < i && references[typeHintTable[refType.index]].Type(this) == refType)
                                 {
-                                    ;   // we already found this type - ignore further occurrences
+                                       // we already found this type - ignore further occurrences
                                 }
                                 else
                                 {

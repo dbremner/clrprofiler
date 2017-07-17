@@ -739,7 +739,7 @@ namespace CLRProfiler
             Stack = 0x1,
             Finalizer = 0x2,
             Handle = 0x3,
-        };
+        }
 
         [Flags]
         enum GcRootFlags
@@ -748,7 +748,7 @@ namespace CLRProfiler
             WeakRef = 0x2,
             Interior = 0x4,
             Refcounted = 0x8,
-        };
+        }
 
         internal void ReadFile(long startFileOffset, long endFileOffset, ReadLogResult readLogResult)
         {

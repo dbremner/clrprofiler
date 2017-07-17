@@ -103,7 +103,7 @@ namespace CLRProfiler
             internal ulong totalSize;
             internal Dictionary<TypeDesc, SizeCount> typeDescToSizeCount;
             internal bool selected;
-        };
+        }
 
         Bucket[] buckets;
         double currentScaleFactor;

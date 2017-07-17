@@ -89,7 +89,7 @@ namespace CLRProfiler
             internal ArrayList queuedNodes;
             internal SortedList functions;
             [NotNull] internal TreeListView callTreeView;
-        };
+        }
 
         internal class ViewState
         {
@@ -103,7 +103,7 @@ namespace CLRProfiler
 
                 showCalls = showAllocs = showAssemblies = true;
             }
-        };
+        }
 
         internal struct FnViewFilter
         {
@@ -115,7 +115,7 @@ namespace CLRProfiler
                 nodetype = Nodetype;
                 functionId = FunctionId;
             }
-        };
+        }
 
         /* threads */
         private int firstThread;

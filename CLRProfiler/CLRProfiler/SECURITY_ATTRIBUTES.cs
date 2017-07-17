@@ -14,5 +14,5 @@ namespace CLRProfiler
 #pragma warning disable 414
         public int bInheritHandle;
 #pragma warning restore 414
-    };
+    }
 }
