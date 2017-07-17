@@ -1072,8 +1072,7 @@ namespace CLRProfiler
         private void DrawSelectionVerticalLine(Graphics g, int tickIndex)
         {
             int x = TimeToX(lastLog.TickIndexToTime(tickIndex));
-            var blackPen = Pens.Black;
-            g.DrawLine(blackPen, x, selectionVerticalMargin+1, x, graphPanel.Height-selectionVerticalMargin-1);
+            g.DrawLine(Pens.Black, x, selectionVerticalMargin + 1, x, graphPanel.Height - selectionVerticalMargin - 1);
         }
 
         private void DrawSelectionHorizontalLines(Graphics g, Pen pen, int startTickIndex, int endTickIndex)
@@ -1092,8 +1091,7 @@ namespace CLRProfiler
 
         private void DrawSelectionHorizontalLines(Graphics g, int startTick, int endTick)
         {
-            var blackPen = Pens.Black;
-            DrawSelectionHorizontalLines(g, blackPen, startTick, endTick);
+            DrawSelectionHorizontalLines(g, Pens.Black, startTick, endTick);
         }
 
         private int selectedStartTickIndex, selectedEndTickIndex, selectionAnchorTickIndex;
