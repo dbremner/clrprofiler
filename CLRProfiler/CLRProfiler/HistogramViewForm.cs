@@ -59,51 +59,9 @@ namespace CLRProfiler
             Text = title;
         }
 
-        class TypeDesc : IComparable
-        {
-            internal readonly string typeName;
-            internal ulong totalSize;
-            internal int count;
-            internal Color color;
-            internal Brush brush;
-            internal bool selected;
-            internal Rectangle rect;
-
-            internal TypeDesc(string typeName)
-            {
-                this.typeName = typeName;
-            }
-
-            public int CompareTo(Object o)
-            {
-                var t = (TypeDesc)o;
-                if (t.totalSize < this.totalSize)
-                {
-                    return -1;
-                }
-                else if (t.totalSize > this.totalSize)
-                {
-                    return 1;
-                }
-                else
-                {
-                    return 0;
-                }
-            }
-        }
-
         TypeDesc[] typeIndexToTypeDesc;
 
         ArrayList sortedTypeTable;
-
-        struct Bucket
-        {
-            internal int minSize;
-            internal int maxSize;
-            internal ulong totalSize;
-            internal Dictionary<TypeDesc, SizeCount> typeDescToSizeCount;
-            internal bool selected;
-        }
 
         Bucket[] buckets;
         double currentScaleFactor;
@@ -158,12 +116,6 @@ namespace CLRProfiler
                 buckets[i].typeDescToSizeCount = new Dictionary<TypeDesc, SizeCount>();
                 buckets[i].selected = false;
             }
-        }
-
-        private class SizeCount
-        {
-            internal ulong size;
-            internal int count;
         }
 
         void AddToBuckets(TypeDesc t, int size, int count)

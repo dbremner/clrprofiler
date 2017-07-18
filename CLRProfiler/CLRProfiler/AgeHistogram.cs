@@ -137,56 +137,7 @@ namespace CLRProfiler
             }
         }
 
-        class TypeDesc : IComparable
-        {
-            internal readonly string typeName;
-            internal ulong totalSize;
-            internal Color color;
-            internal Brush brush;
-            internal bool selected;
-            internal Rectangle rect;
-
-            internal TypeDesc(string typeName)
-            {
-                this.typeName = typeName;
-            }
-
-            public int CompareTo(Object o)
-            {
-                var t = (TypeDesc)o;
-                if (t.totalSize < this.totalSize)
-                {
-                    return -1;
-                }
-                else if (t.totalSize > this.totalSize)
-                {
-                    return 1;
-                }
-                else
-                {
-                    return 0;
-                }
-            }
-        }
-
         [CanBeNull] TypeDesc[] typeIndexToTypeDesc;
-
-        struct Bucket
-        {
-            internal ulong totalSize;
-            internal Dictionary<TypeDesc, SizeCount> typeDescToSizeCount;
-            internal bool selected;
-            internal double minAge;
-            internal double maxAge;
-            internal string minComment;
-            internal string maxComment;
-        }
-
-        private class SizeCount
-        {
-            internal ulong size;
-            internal uint count;
-        }
 
         [CanBeNull] private Bucket[] bucketTable;
 

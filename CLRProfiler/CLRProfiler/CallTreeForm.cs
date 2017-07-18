@@ -58,45 +58,6 @@ namespace CLRProfiler
         /*flag for Compare view*/
         internal readonly bool forCompare = false;
 
-        /* various collections */
-        internal struct GlobalCallStats
-        {
-            internal bool calledAlready;
-            internal int timesCalled;
-            internal int totalBytesAllocated;
-            internal int totalFunctionsCalled;
-            internal int totalNewFunctionsBroughtIn;
-        }
-
-        internal struct GlobalAllocStats
-        {
-            internal int timesAllocated;
-            internal int totalBytesAllocated;
-        }
-
-        internal class ThreadState
-        {
-            internal int[] prevStackTrace;
-            internal int prevStackLen;
-            internal int prevDepth;
-            internal ArrayList stack;
-            internal ArrayList queuedNodes;
-            internal SortedList functions;
-            [NotNull] internal TreeListView callTreeView;
-        }
-
-        internal struct FnViewFilter
-        {
-            internal TreeNode.NodeType nodetype;
-            internal int functionId;
-
-            internal FnViewFilter( TreeNode.NodeType Nodetype, int FunctionId)
-            {
-                nodetype = Nodetype;
-                functionId = FunctionId;
-            }
-        }
-
         /* threads */
         private int firstThread;
         private Dictionary<int, ThreadState> threads;

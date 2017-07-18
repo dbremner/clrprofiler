@@ -50,36 +50,8 @@ namespace CLRProfiler
     ///		
     /// </summary>
 
-    public class AllocationDiff 
+    public partial class AllocationDiff 
 	{
-		class CompareIncl : IComparer
-		{
-		    [NotNull] readonly Hashtable inclOfNode;
-
-			internal CompareIncl([NotNull] Hashtable inclOfNode)
-			{
-				this.inclOfNode = inclOfNode;
-			}
-
-			int IComparer.Compare(object x, object y)
-			{
-				long inclX = (long)inclOfNode[x];
-				long inclY = (long)inclOfNode[y];
-				if (inclX < inclY)
-                {
-                    return 1;
-                }
-                else if (inclX > inclY)
-                {
-                    return -1;
-                }
-                else
-                {
-                    return 0;
-                }
-            }
-		}
-
 		#region data member
 		// log file names
 		private string _prevFile;
@@ -165,35 +137,12 @@ namespace CLRProfiler
 		public DetailFilter currFilter;
 		public DetailFilter prevTypedeFilter;
 		public DetailFilter currTypedeFilter;
-		
-		// dataset and tables
+
+	    // dataset and tables
 
 	    //private DataTable _typeAlloctable = null;
-	    #endregion
-		
-		#region struct data methods
-		
-		// caller and callee tables node
-		struct callnode
-		{
-		    public int id { get; set; }
 
-		    public int callerid { get; set; }
-
-		    public int calleeid { get; set; }
-		}
-		// typeAllocation table node
-		struct typeAllocnode
-		{
-			public int typeid { get; set; }
-
-		    public int funcid { get; set; }
-            
-            public DoubleInt allocmem { get; set; }
-			
-		}
-
-	    [NotNull]
+        [NotNull]
 	    public DataTable basedatatable { get; } = new DataTable("basedatatbl");
 
 	    [NotNull]
@@ -201,19 +150,6 @@ namespace CLRProfiler
 
 	    [NotNull]
 	    public DataTable ContriTocalleetbl { get; } = new DataTable("ContriTocalleetbl");
-
-	    // detailds for reportform details RadioButton
-		public struct DetailFilter
-		{
-            internal DoubleUInt64 detail01 { get; set; }
-		    internal DoubleUInt64 detail02 { get; set; }
-		    internal DoubleUInt64 detail05 { get; set; }
-            internal DoubleUInt64 detail1 { get; set; }
-            internal DoubleUInt64 detail2 { get; set; }
-            internal DoubleUInt64 detail5 { get; set; }
-            internal DoubleUInt64 detail10 { get; set; }
-            internal ulong max { get; set; }
-        }
 		
 		#endregion
 

@@ -132,12 +132,25 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AgeHistogram.Bucket.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="AgeHistogram.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="AgeHistogram.SizeCount.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AgeHistogram.TypeDesc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AllocationDiff.callnode.cs" />
+    <Compile Include="AllocationDiff.CompareIncl.cs" />
     <Compile Include="AllocationDiff.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="AllocationDiff.DetailFilter.cs" />
+    <Compile Include="AllocationDiff.typeAllocnode.cs" />
     <Compile Include="AppInfo.cs" />
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -152,6 +165,18 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="CallTreeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CallTreeForm.FnViewFilter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CallTreeForm.GlobalAllocStats.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CallTreeForm.GlobalCallStats.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CallTreeForm.ThreadState.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="CLRSKU.cs" />
@@ -192,7 +217,14 @@
     <Compile Include="FilterForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="FunctionFind.LineItem.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="FunctionList.cs" />
+    <Compile Include="FunctionList.FunctionDescriptor.cs" />
+    <Compile Include="GraphViewForm.CompareVerticesByScore.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="HandleInfo.cs" />
     <Compile Include="HelpForm.cs">
       <SubType>Form</SubType>
@@ -201,21 +233,47 @@
       <DependentUpon>HelpForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Histogram.cs" />
+    <Compile Include="HistogramViewForm.Bucket.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HistogramViewForm.SizeCount.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HistogramViewForm.TypeDesc.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="IDiffTreeOwner.cs" />
     <Compile Include="IELAUNCHURLINFO.cs" />
     <Compile Include="InterestLevel.cs" />
     <Compile Include="ITreeOwner.cs" />
     <Compile Include="ListViewItemComparer.cs" />
     <Compile Include="LiveObjectTable.cs" />
+    <Compile Include="LiveObjectTable.IntervalTable.cs" />
+    <Compile Include="LiveObjectTable.IntervalTable.Interval.cs" />
+    <Compile Include="LiveObjectTable.LiveObject.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="ObjectGraph.ForwardReference.cs" />
+    <Compile Include="ObjectGraph.GcObject.cs" />
+    <Compile Include="ObjectGraph.GcObjectWith1Reference.cs" />
+    <Compile Include="ObjectGraph.GcObjectWith2References.cs" />
+    <Compile Include="ObjectGraph.GcObjectWith3References.cs" />
+    <Compile Include="ObjectGraph.GcObjectWith4References.cs" />
+    <Compile Include="ObjectGraph.GcObjectWith5References.cs" />
+    <Compile Include="ObjectGraph.GcObjectWithManyReferences.cs" />
+    <Compile Include="ObjectGraph.GcType.cs" />
+    <Compile Include="ObjectGraph.IdToObject.cs" />
+    <Compile Include="ObjectGraph.IntEqualityComparer.cs" />
     <Compile Include="OmvUsage.cs" />
     <Compile Include="PackageInfo.cs" />
     <Compile Include="PROCESS_INFORMATION.cs" />
     <Compile Include="ProfConfig.cs" />
     <Compile Include="ReadLogResult.cs" />
+    <Compile Include="ReadNewLog.EventList.cs" />
     <Compile Include="ReportKind.cs" />
+    <Compile Include="Reports.DiffTypeDescriptor.cs" />
+    <Compile Include="Reports.TypeDescriptor.cs" />
     <Compile Include="ResizeBarCapture.cs">
       <SubType>Component</SubType>
     </Compile>

@@ -11,27 +11,15 @@ using System.Windows.Forms;
 
 namespace CLRProfiler
 {
-	/// <summary>
-	/// Summary description for FunctionFind.
-	/// </summary>
-	internal partial class FunctionFind : System.Windows.Forms.Form
+    /// <summary>
+    /// Summary description for FunctionFind.
+    /// </summary>
+    internal partial class FunctionFind : System.Windows.Forms.Form
 	{
 
 		private readonly ITreeOwner TreeOwner;
 		internal int SelectedFunctionId;
 		internal TreeNode.NodeType SelectedNodeType;
-
-		class LineItem 
-		{
-			internal TreeNode.NodeType nodeType;
-			internal int id;
-			internal string Name;
-
-			public override string ToString()
-			{
-				return Name;
-			}
-		}
 
 		internal FunctionFind( ITreeOwner treeOwner, string SearchString )
 		{
