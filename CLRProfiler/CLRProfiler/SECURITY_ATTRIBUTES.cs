@@ -8,7 +8,7 @@ namespace CLRProfiler
     struct SECURITY_ATTRIBUTES
     {
 #pragma warning disable 414
-        public uint nLength;
+        public int nLength;
 #pragma warning restore 414
         public IntPtr lpSecurityDescriptor;
 #pragma warning disable 414
