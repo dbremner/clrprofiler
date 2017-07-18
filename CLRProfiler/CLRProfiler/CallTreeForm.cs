@@ -1746,21 +1746,21 @@ namespace CLRProfiler
             return (fs == FontStyle.Regular ? defaultFont : new Font(defaultFont, fs));
         }
 
+        private readonly Color[] colors =
+        {
+            Color.Black,
+            Color.Green,
+            Color.BlueViolet,
+            Color.White,
+            Color.Yellow,
+            Color.Beige
+        };
+
         /* returns color used to display the item (part of the ITreeOwner interface) */
         public Color GetColor(object obj, TreeNodeBase root, bool positive)
         {
             var node = (TreeNode)root;
             int idx = (int)node.nodetype + (positive ? 0 : 3);
-            //FIXME
-            Color[] colors = new Color[]
-            {
-                Color.Black,
-                Color.Green,
-                Color.BlueViolet,
-                Color.White,
-                Color.Yellow,
-                Color.Beige
-            };
             return colors[idx];
         }
 

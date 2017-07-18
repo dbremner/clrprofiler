@@ -142,23 +142,21 @@ namespace CLRProfiler
 			Debug.Fail("Cannot find tree view on the tab page");
 		}
 	
+		private readonly Color[] colors =
+        {
+		    Color.Black,
+		    Color.Green,
+		    Color.BlueViolet,
+		    Color.White,
+		    Color.Yellow,
+		    Color.Beige
+		};
 		
 		public Color GetColor(object obj, TreeNodeBase root, bool positive)
 		{
 			//###TreeNode node = (TreeNode)root;
 			var node = (DiffDataNode)root;
 			int idx = (int)node.nodetype + (positive ? 0 : 3);
-            //FIXME
-		    Color[] colors = new Color[]
-		    {
-		        Color.Black,
-		        Color.Green,
-		        Color.BlueViolet,
-		        Color.White,
-		        Color.Yellow,
-		        Color.Beige
-		    };
-
             return colors[idx];
 		}
 

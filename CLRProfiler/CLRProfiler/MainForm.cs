@@ -1974,18 +1974,7 @@ namespace CLRProfiler
             return false;
         }
 
-        //FIXME
-        private int WaitForWindowsStoreAppProcessToConnect(uint pid, string text)
-        {
-            return WaitForWindowsStoreAppProcessToConnect(pid, text, false);
-        }
-
-        private int WaitForWindowsStoreAppProcessToConnect(uint pid, string text, bool attachMode)
-        {
-            return WaitForWindowsStoreAppProcessToConnect(pid, text, attachMode, 0);
-        }
-
-        private int WaitForWindowsStoreAppProcessToConnect(uint pid, string text, bool attachMode, uint result)
+        private int WaitForWindowsStoreAppProcessToConnect(uint pid, string text, bool attachMode = false, uint result = 0)
         {
             if (!VerifyCorrectBitness(Process.GetProcessById((int) pid)))
             {
@@ -2060,19 +2049,8 @@ namespace CLRProfiler
 
             return (int) pid;
         }
-
-        //FIXME
-        private int WaitForProcessToConnect(string tempDir, string text)
-        {
-            return WaitForProcessToConnect(tempDir, text, false);
-        }
-
-        private int WaitForProcessToConnect(string tempDir, string text, bool attachMode)
-        {
-            return WaitForProcessToConnect(tempDir, text, attachMode, 0);
-        }
-
-        private int WaitForProcessToConnect(string tempDir, string text, bool attachMode, uint result)
+        
+        private int WaitForProcessToConnect(string tempDir, string text, bool attachMode = false, uint result = 0)
         {
             bool fProfiledProcessInitialized = profiledProcess != null;
             if (fProfiledProcessInitialized)
