@@ -1716,7 +1716,7 @@ namespace CLRProfiler
             serviceName = null;
         }
 
-        [DllImport("Kernel32.dll", CharSet = CharSet.Auto)]
+        [DllImport("Kernel32.dll", CharSet = CharSet.Unicode)]
         private static extern SafeFileHandle CreateNamedPipe(
             string lpName,         // pointer to pipe name
             uint dwOpenMode,       // pipe open mode

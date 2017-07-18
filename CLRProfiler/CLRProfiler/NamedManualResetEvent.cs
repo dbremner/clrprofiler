@@ -137,10 +137,10 @@ namespace CLRProfiler
         [DllImport("Kernel32.dll")]
         private static extern bool LocalFree(IntPtr ptr);
 
-        [DllImport("Kernel32.dll", CharSet=CharSet.Auto)]
+        [DllImport("Kernel32.dll", CharSet=CharSet.Unicode)]
         private static extern IntPtr CreateEvent(ref SECURITY_ATTRIBUTES eventAttributes, bool manualReset, bool initialState, string eventName);
 
-        [DllImport("Kernel32.dll", CharSet=CharSet.Auto)]
+        [DllImport("Kernel32.dll", CharSet=CharSet.Unicode)]
         private static extern IntPtr OpenEvent(uint desiredAccess, bool inheritHandle, string eventName);
 
         [DllImport("Kernel32.dll")]
