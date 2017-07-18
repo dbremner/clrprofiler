@@ -677,7 +677,7 @@ namespace CLRProfiler
 
             try
             {
-                var kids = FetchKids( null, node );
+                var kids = FetchKids(node );
                 foreach( TreeNode kidNode in kids )
                 {
                     bool fAddNode = false;
@@ -991,7 +991,7 @@ namespace CLRProfiler
         }
 
         /* read kids of a node from the backing store */
-        public ArrayList FetchKids(object tokenObject, TreeNodeBase nodebase)
+        public ArrayList FetchKids(TreeNodeBase nodebase)
         {
             var node = (TreeNode)nodebase;
             var kids = new ArrayList();
@@ -1731,7 +1731,7 @@ namespace CLRProfiler
         }
 
         /* returns font used to display the item (part of the ITreeOwner interface) */
-        public Font GetFont(object obj, TreeNodeBase in_node)
+        public Font GetFont(TreeNodeBase in_node)
         {
             var node = (TreeNode)in_node;
             FontStyle fs = FontStyle.Regular;
@@ -1757,7 +1757,7 @@ namespace CLRProfiler
         };
 
         /* returns color used to display the item (part of the ITreeOwner interface) */
-        public Color GetColor(object obj, TreeNodeBase root, bool positive)
+        public Color GetColor(TreeNodeBase root, bool positive)
         {
             var node = (TreeNode)root;
             int idx = (int)node.nodetype + (positive ? 0 : 3);
@@ -1794,7 +1794,7 @@ namespace CLRProfiler
         }
 
         /* sort nodes at the branch level */
-        public ArrayList ProcessNodes(object obj, ArrayList nodes)
+        public ArrayList ProcessNodes(ArrayList nodes)
         {
             bool add = false;
             var nodesAtOneLevel = new ArrayList();

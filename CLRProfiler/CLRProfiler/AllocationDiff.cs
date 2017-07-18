@@ -1011,7 +1011,7 @@ namespace CLRProfiler
 			//get kids
 			if(currRoot != null)
 			{
-			    ArrayList currKids = _currcallTrace.FetchKids(null, currRoot);
+			    ArrayList currKids = _currcallTrace.FetchKids(currRoot);
 			    if(currKids.Count >0)
 				{
 					currDKids = TransCurrTree(currKids);
@@ -1019,7 +1019,7 @@ namespace CLRProfiler
 			}
 			if(prevRoot != null)
 			{
-			    ArrayList prevKids = _prevcallTrace.FetchKids(null, prevRoot);
+			    ArrayList prevKids = _prevcallTrace.FetchKids(prevRoot);
 			    if(prevKids.Count > 0)
 				{
 					prevDKids = TransPrevTree(prevKids);

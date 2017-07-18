@@ -10,16 +10,16 @@ namespace CLRProfiler
     internal interface IDiffTreeOwner
     {
         [NotNull]
-        ArrayList ProcessNodes(object obj, [NotNull] ArrayList nodesAtOneLevel);
+        ArrayList ProcessNodes([NotNull] ArrayList nodesAtOneLevel);
 
-        Font GetFont(object obj, [NotNull] TreeNodeBase node);
+        Font GetFont([NotNull] TreeNodeBase node);
 
-        Color GetColor(object obj, [NotNull] TreeNodeBase node, bool positive);
+        Color GetColor([NotNull] TreeNodeBase node, bool positive);
 
         object GetInfo(object obj, [NotNull] TreeNodeBase node, [CanBeNull] ColumnInformation info);
 
         [NotNull]
-        ArrayList FetchKids(object obj, [NotNull] TreeNodeBase node);
+        ArrayList FetchKids([NotNull] TreeNodeBase node);
 		
     }
 }

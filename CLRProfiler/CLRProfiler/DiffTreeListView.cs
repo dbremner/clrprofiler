@@ -71,7 +71,7 @@ namespace CLRProfiler
 			treeListBox.Items.Add(root);
 			if(root.allkids != null && root.IsExpanded)
 			{
-				var nodes = treeOwner.ProcessNodes(TokenObject, root.allkids);
+				var nodes = treeOwner.ProcessNodes(root.allkids);
 				for(int i = 0; i < nodes.Count; i++)
 				{
 					Resort(1 + depth, (TreeNodeBase)nodes[i]);
@@ -108,9 +108,9 @@ namespace CLRProfiler
 		{
 			if(root.allkids == null)
 			{
-				root.allkids = treeOwner.FetchKids(TokenObject, root);
+				root.allkids = treeOwner.FetchKids(root);
 			}
-			var nodes = treeOwner.ProcessNodes(TokenObject, root.allkids);
+			var nodes = treeOwner.ProcessNodes(root.allkids);
 
 			int numNodes = nodes.Count, nodesInList = treeListBox.Items.Count;
 			int costOfRebuilding = 3 * (numNodes + nodesInList);
@@ -284,10 +284,10 @@ namespace CLRProfiler
 			var grayPen = Pens.LightGray;
 			g.DrawLine(grayPen, 0, e.Bounds.Bottom - 1, e.Bounds.Right, e.Bounds.Bottom - 1);
 
-			Font fontToUse = treeOwner.GetFont(TokenObject, node);
+			Font fontToUse = treeOwner.GetFont(node);
 			
 
-			Color color = treeOwner.GetColor(TokenObject, node, (e.State & DrawItemState.Selected) != DrawItemState.Selected);
+			Color color = treeOwner.GetColor(node, (e.State & DrawItemState.Selected) != DrawItemState.Selected);
 
 			Brush brush = new SolidBrush(color);
 
@@ -358,7 +358,7 @@ namespace CLRProfiler
 			string textToDisplay = treeOwner.GetInfo(TokenObject, node, null).ToString();
 			if(textToDisplay != hoverPopup.CurrentlyDisplayed())
 			{
-				hoverPopup.Display(controlPoint, treeOwner.GetFont(TokenObject, node), rect.Height, textToDisplay);
+				hoverPopup.Display(controlPoint, treeOwner.GetFont(node), rect.Height, textToDisplay);
 			}
 		}
 

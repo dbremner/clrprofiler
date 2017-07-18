@@ -99,7 +99,7 @@ namespace CLRProfiler
 		}
 
 
-	    public ArrayList FetchKids(object tokenObject, TreeNodeBase nodebase)
+	    public ArrayList FetchKids(TreeNodeBase nodebase)
 		{
             Debug.Assert(nodebase.allkids != null);
 			return nodebase.allkids;
@@ -152,7 +152,7 @@ namespace CLRProfiler
 		    Color.Beige
 		};
 		
-		public Color GetColor(object obj, TreeNodeBase root, bool positive)
+		public Color GetColor(TreeNodeBase root, bool positive)
 		{
 			var node = (DiffDataNode)root;
 			int idx = (int)node.nodetype + (positive ? 0 : 3);
@@ -161,7 +161,7 @@ namespace CLRProfiler
 
 		
 		/* returns font used to display the item (part of the ITreeOwner interface) */
-		public Font GetFont(object obj, TreeNodeBase in_node)
+		public Font GetFont(TreeNodeBase in_node)
 		{
 			var node = (DiffDataNode)in_node;
 			FontStyle fs = FontStyle.Regular;
@@ -179,7 +179,7 @@ namespace CLRProfiler
 		}
 
 		/* sort nodes at the branch level */
-		public ArrayList ProcessNodes(object obj, ArrayList nodes)
+		public ArrayList ProcessNodes(ArrayList nodes)
 		{
 			bool add = false;
 			var nodesAtOneLevel = new ArrayList();
