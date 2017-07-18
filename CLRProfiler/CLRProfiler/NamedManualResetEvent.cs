@@ -62,17 +62,6 @@ namespace CLRProfiler
 
         private IntPtr eventHandle;
 
-        struct SECURITY_ATTRIBUTES
-        {
-#pragma warning disable 414
-            public uint   nLength; 
-#pragma warning restore 414
-            public IntPtr lpSecurityDescriptor; 
-#pragma warning disable 414
-            public int    bInheritHandle; 
-#pragma warning restore 414
-        } 
-
         public NamedManualResetEvent(string eventName, bool initialState, bool createEvent)
         {
             SECURITY_ATTRIBUTES sa;
