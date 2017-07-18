@@ -64,9 +64,9 @@ namespace CLRProfiler
 
         public NamedManualResetEvent(string eventName, bool initialState, bool createEvent)
         {
-            SECURITY_ATTRIBUTES sa;
-            sa.nLength = 12;
-            sa.bInheritHandle = 0;
+            var sa = new SECURITY_ATTRIBUTES();
+            sa.bInheritHandle = false;
+            sa.nLength = Marshal.SizeOf(sa);
             if (!ConvertStringSecurityDescriptorToSecurityDescriptor("D: (A;OICI;GRGWGXSDWDWO;;;AU)", 1, out sa.lpSecurityDescriptor, IntPtr.Zero))
             {
                 throw new Exception("ConvertStringSecurityDescriptorToSecurityDescriptor returned error");

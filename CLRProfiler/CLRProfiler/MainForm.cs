@@ -1798,9 +1798,9 @@ namespace CLRProfiler
 
         private bool CreatePipe([NotNull] string pipeName, bool blockingPipe, ref SafeFileHandle pipeHandle, ref FileStream pipe)
         {
-            SECURITY_ATTRIBUTES sa;
-            sa.nLength = 12;
-            sa.bInheritHandle = 0;
+            var sa = new SECURITY_ATTRIBUTES();
+            sa.nLength = Marshal.SizeOf(sa);
+            sa.bInheritHandle = false;
             if (!ConvertStringSecurityDescriptorToSecurityDescriptor("D: (A;OICI;GRGW;;;AU)", 1, out sa.lpSecurityDescriptor, IntPtr.Zero))
             {
                 return false;
