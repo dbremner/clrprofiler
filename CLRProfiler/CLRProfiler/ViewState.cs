@@ -17,7 +17,9 @@ namespace CLRProfiler
             sort = in_sort;
             highlight = in_highlight;
 
-            showCalls = showAllocs = showAssemblies = true;
+            showCalls = true;
+            showAllocs = true;
+            showAssemblies = true;
         }
     }
 }
