@@ -297,7 +297,7 @@ namespace CLRProfiler
 				var rect = new Rectangle(position, e.Bounds.Top, c.Width, e.Bounds.Height);
 				g.Clip = new Region(rect);
 
-				string res = treeOwner.GetInfo(TokenObject, node, current).ToString();
+				string res = treeOwner.GetInfo(node, current).ToString();
 
 				if(current.ColumnType == ColumnInformation.ColumnTypes.Tree)
 				{
@@ -354,7 +354,7 @@ namespace CLRProfiler
 		    Debug.Assert(hoverPopup.Parent != null);
             Point controlPoint = hoverPopup.Parent.PointToClient(screenPoint);
 
-			string textToDisplay = treeOwner.GetInfo(TokenObject, node, null).ToString();
+			string textToDisplay = treeOwner.GetInfo(node, null).ToString();
 			if(textToDisplay != hoverPopup.CurrentlyDisplayed())
 			{
 				hoverPopup.Display(controlPoint, treeOwner.GetFont(node), rect.Height, textToDisplay);
@@ -383,7 +383,7 @@ namespace CLRProfiler
 				//  Customize the context menu
 				ContextMenu contextMenu = this.ContextMenu;
 				ColumnInformation ci = ((Column)columns[0]).ColumnInformation;
-				string fnName = treeOwner.GetInfo(TokenObject, node, ci).ToString();
+				string fnName = treeOwner.GetInfo(node, ci).ToString();
 				String strFn;
 
 			    ContextSelection = index;

@@ -1788,7 +1788,7 @@ namespace CLRProfiler
 
         /* returns data about the item for a given counter.
          * object's ToString() is used to display that data */
-        public object GetInfo(object obj, TreeNodeBase node, ColumnInformation info)
+        public object GetInfo(TreeNodeBase node, ColumnInformation info)
         {
             return GetInfo(node, info == null ? -1 : info.Token);
         }
