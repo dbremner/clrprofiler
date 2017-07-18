@@ -267,8 +267,8 @@ namespace CLRProfiler
 				return a.nodeId.CompareTo(b.nodeId);
 			}
 
-			var aa = (IComparable)GetInfo(null, a, viewState.sort.counterId);
-			var bb = (IComparable)GetInfo(null, b, viewState.sort.counterId);
+			var aa = (IComparable)GetInfo(a, viewState.sort.counterId);
+			var bb = (IComparable)GetInfo(b, viewState.sort.counterId);
 			try
 			{
 				return aa.CompareTo(bb);
@@ -284,7 +284,7 @@ namespace CLRProfiler
 		
 		/* returns data about the item for a given counter.
 		 * object's ToString() is used to display that data */
-		private object GetInfo(object obj, TreeNodeBase node, int counterId)
+		private object GetInfo(TreeNodeBase node, int counterId)
 		{
 			long number;
 			var root = (DiffDataNode)node;
@@ -309,7 +309,7 @@ namespace CLRProfiler
 		 * object's ToString() is used to display that data */
 		public object GetInfo(object obj, TreeNodeBase node, ColumnInformation info)
 		{
-			return GetInfo(obj, node, info == null ? -1 : info.Token);
+			return GetInfo(node, info == null ? -1 : info.Token);
 		}
 
 		#region GUI function
