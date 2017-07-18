@@ -40,25 +40,25 @@ namespace CLRProfiler
             {
                 sortCounter.Items.Add("by " + Statistics.GetCounterName(i).ToLower());
             }
-            sortCounter.SelectedIndex = 1 + sort.counterId;
-            sortOrder.SelectedIndex = (1 + sort.sortingOrder) / 2;
+            sortCounter.SelectedIndex = 1 + sort.CounterId;
+            sortOrder.SelectedIndex = (1 + sort.SortingOrder) / 2;
 
             for(i = 0; i < numCounters; i++)
             {
                 highlightCounter.Items.Add(Statistics.GetCounterName(i).ToLower());
             }
-            highlightCounter.SelectedIndex = highlight.counterId;
-            highlightOrder.SelectedIndex = (1 + highlight.sortingOrder) / 2;
+            highlightCounter.SelectedIndex = highlight.CounterId;
+            highlightOrder.SelectedIndex = (1 + highlight.SortingOrder) / 2;
         }
 
         internal void GetSortResults([NotNull] SortingBehaviour s,
                                      [NotNull] SortingBehaviour h)
         {
-            s.counterId = sortCounter.SelectedIndex - 1;
-            s.sortingOrder = sortOrder.SelectedIndex * 2 - 1;
+            s.CounterId = sortCounter.SelectedIndex - 1;
+            s.SortingOrder = sortOrder.SelectedIndex * 2 - 1;
 
-            h.counterId = highlightCounter.SelectedIndex;
-            h.sortingOrder = highlightOrder.SelectedIndex * 2 - 1;
+            h.CounterId = highlightCounter.SelectedIndex;
+            h.SortingOrder = highlightOrder.SelectedIndex * 2 - 1;
         }
     }
 }

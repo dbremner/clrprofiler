@@ -424,11 +424,11 @@ namespace CLRProfiler
                     * 1) sort in order of execution,
                     * 2) highlight the one that allocated the most */
                 var sort = new SortingBehaviour();
-                sort.sortingOrder = -1;
-                sort.counterId = -1;
+                sort.SortingOrder = -1;
+                sort.CounterId = -1;
                 var highlight = new SortingBehaviour();
-                highlight.sortingOrder = -1;
-                highlight.counterId = 2;
+                highlight.SortingOrder = -1;
+                highlight.CounterId = 2;
 
                 /* add columns */
                 treeView.AddColumn(new ColumnInformation(-1, "Function name", ColumnInformation.ColumnTypes.Tree), 250);
@@ -1670,14 +1670,14 @@ namespace CLRProfiler
         private void SortOn(object obj, EventArgs e)
         {
             ColumnInformation ci = ((Column)obj).ColumnInformation;
-            if(viewState.sort.counterId == ci.Token)
+            if(viewState.sort.CounterId == ci.Token)
             {
-                viewState.sort.sortingOrder *= -1;
+                viewState.sort.SortingOrder *= -1;
             }
             else
             {
-                viewState.sort.counterId = ci.Token;
-                viewState.sort.sortingOrder = (viewState.sort.counterId == -1 ? -1 : 1);
+                viewState.sort.CounterId = ci.Token;
+                viewState.sort.SortingOrder = (viewState.sort.CounterId == -1 ? -1 : 1);
             }
             Debug.Assert(callTreeView != null, "callTreeView != null");
             callTreeView.Resort();
@@ -1689,14 +1689,14 @@ namespace CLRProfiler
             var a = (TreeNode)x;
             var b = (TreeNode)y;
 
-            if(viewState.sort.counterId == -1)
+            if(viewState.sort.CounterId == -1)
             {
                 // compare based on the invokation order
                 return a.prevOffset.CompareTo(b.prevOffset);
             }
 
-            var aa = (IComparable)GetInfo(a, viewState.sort.counterId);
-            var bb = (IComparable)GetInfo(b, viewState.sort.counterId);
+            var aa = (IComparable)GetInfo(a, viewState.sort.CounterId);
+            var bb = (IComparable)GetInfo(b, viewState.sort.CounterId);
             try
             {
                 return aa.CompareTo(bb);
@@ -1822,7 +1822,7 @@ namespace CLRProfiler
                 var n = (TreeNode)nodesAtOneLevel[i];
                 n.highlighted = false;
 
-                int res = Compare(currentBest, n) * viewState.highlight.sortingOrder;
+                int res = Compare(currentBest, n) * viewState.highlight.SortingOrder;
                 if(res == 0)
                 {
                     nodesToHighlight.Add(n);
@@ -1842,7 +1842,7 @@ namespace CLRProfiler
             }
 
             /* reverse order if required */
-            if(viewState.sort.sortingOrder > 0)
+            if(viewState.sort.SortingOrder > 0)
             {
                 nodesAtOneLevel.Reverse();
             }
@@ -1997,8 +1997,8 @@ namespace CLRProfiler
                 var hh = new SortingBehaviour();
                 s.GetSortResults(ss, hh);
 
-                if(ss.sortingOrder != viewState.sort.sortingOrder || ss.counterId != viewState.sort.counterId ||
-                    hh.sortingOrder != viewState.highlight.sortingOrder || hh.counterId != viewState.highlight.counterId)
+                if(ss.SortingOrder != viewState.sort.SortingOrder || ss.CounterId != viewState.sort.CounterId ||
+                    hh.SortingOrder != viewState.highlight.SortingOrder || hh.CounterId != viewState.highlight.CounterId)
                 {
                     viewState.sort = ss;
                     viewState.highlight = hh;
