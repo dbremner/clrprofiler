@@ -154,7 +154,6 @@ namespace CLRProfiler
 		
 		public Color GetColor(object obj, TreeNodeBase root, bool positive)
 		{
-			//###TreeNode node = (TreeNode)root;
 			var node = (DiffDataNode)root;
 			int idx = (int)node.nodetype + (positive ? 0 : 3);
             return colors[idx];
@@ -164,7 +163,6 @@ namespace CLRProfiler
 		/* returns font used to display the item (part of the ITreeOwner interface) */
 		public Font GetFont(object obj, TreeNodeBase in_node)
 		{
-			 //###TreeNode node = (TreeNode)in_node;
 			var node = (DiffDataNode)in_node;
 			FontStyle fs = FontStyle.Regular;
 			if(node.data.firstTimeBroughtIn)
@@ -185,7 +183,6 @@ namespace CLRProfiler
 		{
 			bool add = false;
 			var nodesAtOneLevel = new ArrayList();
-			//###foreach(TreeNode node in nodes)
 			foreach(DiffDataNode node in nodes)
 			{
 				switch(node.nodetype)
@@ -290,7 +287,6 @@ namespace CLRProfiler
 		private object GetInfo(object obj, TreeNodeBase node, int counterId)
 		{
 			long number;
-			//###TreeNode root = (TreeNode)node;
 			var root = (DiffDataNode)node;
 			if(counterId < 0)
 			{
