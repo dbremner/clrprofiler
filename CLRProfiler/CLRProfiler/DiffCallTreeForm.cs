@@ -46,12 +46,8 @@ namespace CLRProfiler
 		    treeView.Dock = DockStyle.Fill;
 		    treeView.Font = defaultFont;
 
-		    var sort = new SortingBehaviour();
-		    sort.SortingOrder = -1;
-		    sort.CounterId = -1;
-		    var highlight = new SortingBehaviour();
-            highlight.SortingOrder = -1;
-		    highlight.CounterId = 2;
+		    var sort = new SortingBehaviour(sortingOrder: -1, counterId: -1);
+		    var highlight = new SortingBehaviour(sortingOrder: -1, counterId: 2);
 
 		    /* add columns */
 		    treeView.AddColumn(new ColumnInformation(-1, "Function name", ColumnInformation.ColumnTypes.Tree), 250);

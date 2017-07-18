@@ -423,12 +423,8 @@ namespace CLRProfiler
                 /* initial sorting and highlighting behaviour:
                     * 1) sort in order of execution,
                     * 2) highlight the one that allocated the most */
-                var sort = new SortingBehaviour();
-                sort.SortingOrder = -1;
-                sort.CounterId = -1;
-                var highlight = new SortingBehaviour();
-                highlight.SortingOrder = -1;
-                highlight.CounterId = 2;
+                var sort = new SortingBehaviour(sortingOrder: -1, counterId: -1);
+                var highlight = new SortingBehaviour(sortingOrder: -1, counterId: 2);
 
                 /* add columns */
                 treeView.AddColumn(new ColumnInformation(-1, "Function name", ColumnInformation.ColumnTypes.Tree), 250);
@@ -1993,9 +1989,9 @@ namespace CLRProfiler
             DialogResult res = s.ShowDialog(this);
             if(res == DialogResult.OK)
             {
-                var ss = new SortingBehaviour();
-                var hh = new SortingBehaviour();
-                s.GetSortResults(ss, hh);
+                var results = s.GetSortResults();
+                SortingBehaviour ss = results.Item1;
+                SortingBehaviour hh = results.Item2;
 
                 if(ss.SortingOrder != viewState.sort.SortingOrder || ss.CounterId != viewState.sort.CounterId ||
                     hh.SortingOrder != viewState.highlight.SortingOrder || hh.CounterId != viewState.highlight.CounterId)

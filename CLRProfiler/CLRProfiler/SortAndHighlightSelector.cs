@@ -14,7 +14,6 @@ using System.Drawing;
 using System.Collections;
 using System.ComponentModel;
 using System.Windows.Forms;
-using JetBrains.Annotations;
 
 namespace CLRProfiler
 {
@@ -51,14 +50,17 @@ namespace CLRProfiler
             highlightOrder.SelectedIndex = (1 + highlight.SortingOrder) / 2;
         }
 
-        internal void GetSortResults([NotNull] SortingBehaviour s,
-                                     [NotNull] SortingBehaviour h)
+        internal Tuple<SortingBehaviour, SortingBehaviour> GetSortResults()
         {
-            s.CounterId = sortCounter.SelectedIndex - 1;
-            s.SortingOrder = sortOrder.SelectedIndex * 2 - 1;
+            var sSortingOrder = sortOrder.SelectedIndex * 2 - 1;
+            var sCounterId = sortCounter.SelectedIndex - 1;
 
-            h.CounterId = highlightCounter.SelectedIndex;
-            h.SortingOrder = highlightOrder.SelectedIndex * 2 - 1;
+            var s = new SortingBehaviour(sortingOrder: sSortingOrder, counterId: sCounterId);
+
+            var hSortingOrder = highlightOrder.SelectedIndex * 2 - 1;
+            var hCounterId = highlightCounter.SelectedIndex;
+            var h = new SortingBehaviour(sortingOrder: hSortingOrder, counterId: hCounterId);
+            return Tuple.Create(s, h);
         }
     }
 }
