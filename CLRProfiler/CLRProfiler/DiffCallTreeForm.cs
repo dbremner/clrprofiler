@@ -24,32 +24,7 @@ namespace CLRProfiler
 	/// Summary description for DiffCallTreeForm.
 	/// </summary>
 	internal partial class DiffCallTreeForm : System.Windows.Forms.Form, IComparer, IDiffTreeOwner
-	{
-		
-		internal class SortingBehaviour
-		{
-			internal int sortingOrder;
-			internal int counterId;
-		}
-		internal class ViewState
-		{
-			internal SortingBehaviour sort;
-		    internal readonly SortingBehaviour highlight;
-		    internal bool showCalls;
-		    internal readonly bool showAllocs;
-		    internal readonly bool showAssemblies;
-
-		    internal ViewState(SortingBehaviour in_sort, SortingBehaviour in_highlight)
-			{
-				sort = in_sort;
-				highlight = in_highlight;
-
-			    showCalls = true;
-			    showAllocs = true;
-                showAssemblies = true;
-			}
-		}
-		
+	{	
 		private readonly AllocationDiff	_allocDiff;
 		private ViewState viewState;
 		private readonly Font defaultFont;

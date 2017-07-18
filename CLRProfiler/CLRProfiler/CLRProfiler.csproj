@@ -221,11 +221,13 @@
     </Compile>
     <Compile Include="SampleObjectTable.cs" />
     <Compile Include="SECURITY_ATTRIBUTES.cs" />
+    <Compile Include="SortingBehaviour.cs" />
     <Compile Include="StacktraceTable.cs" />
     <Compile Include="Statistics.cs" />
     <Compile Include="TimePos.cs" />
     <Compile Include="TreeNode.cs" />
     <Compile Include="TreeNodeBase.cs" />
+    <Compile Include="ViewState.cs" />
     <Compile Include="WindowsStoreAppHelperWrapper.cs" />
     <Compile Include="WindowsStoreAppChooserForm.cs">
       <SubType>Form</SubType>

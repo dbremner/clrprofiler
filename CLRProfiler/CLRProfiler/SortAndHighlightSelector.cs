@@ -24,7 +24,7 @@ namespace CLRProfiler
     internal partial class SortAndHighlightSelector : System.Windows.Forms.Form
     {
 
-        internal SortAndHighlightSelector(CallTreeForm.SortingBehaviour sort, CallTreeForm.SortingBehaviour highlight)
+        internal SortAndHighlightSelector(SortingBehaviour sort, SortingBehaviour highlight)
         {
             //
             // Required for Windows Form Designer support
@@ -51,8 +51,8 @@ namespace CLRProfiler
             highlightOrder.SelectedIndex = (1 + highlight.sortingOrder) / 2;
         }
 
-        internal void GetSortResults([NotNull] CallTreeForm.SortingBehaviour s,
-                                     [NotNull] CallTreeForm.SortingBehaviour h)
+        internal void GetSortResults([NotNull] SortingBehaviour s,
+                                     [NotNull] SortingBehaviour h)
         {
             s.counterId = sortCounter.SelectedIndex - 1;
             s.sortingOrder = sortOrder.SelectedIndex * 2 - 1;

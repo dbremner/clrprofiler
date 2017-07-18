@@ -74,12 +74,6 @@ namespace CLRProfiler
             internal int totalBytesAllocated;
         }
 
-        internal class SortingBehaviour
-        {
-            internal int sortingOrder;
-            internal int counterId;
-        }
-
         internal class ThreadState
         {
             internal int[] prevStackTrace;
@@ -89,20 +83,6 @@ namespace CLRProfiler
             internal ArrayList queuedNodes;
             internal SortedList functions;
             [NotNull] internal TreeListView callTreeView;
-        }
-
-        internal class ViewState
-        {
-            internal SortingBehaviour sort, highlight;
-            internal bool showCalls, showAllocs, showAssemblies;
-
-            internal ViewState(SortingBehaviour in_sort, SortingBehaviour in_highlight)
-            {
-                sort = in_sort;
-                highlight = in_highlight;
-
-                showCalls = showAllocs = showAssemblies = true;
-            }
         }
 
         internal struct FnViewFilter
