@@ -285,9 +285,13 @@
     <Compile Include="SortingBehaviour.cs" />
     <Compile Include="StacktraceTable.cs" />
     <Compile Include="Statistics.cs" />
+    <Compile Include="TimeLineViewForm.TypeDesc.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="TimePos.cs" />
     <Compile Include="TreeNode.cs" />
     <Compile Include="TreeNodeBase.cs" />
+    <Compile Include="ViewByAddressForm.TypeDesc.cs" />
     <Compile Include="ViewState.cs" />
     <Compile Include="WindowsStoreAppHelperWrapper.cs" />
     <Compile Include="WindowsStoreAppChooserForm.cs">
