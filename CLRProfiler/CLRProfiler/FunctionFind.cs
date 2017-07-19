@@ -53,10 +53,7 @@ namespace CLRProfiler
 
 				if ( fn.IndexOf( matchString ) != -1 )
 				{
-					lineItem = new LineItem();
-					lineItem.id = i;
-					lineItem.Name = fn;
-					lineItem.nodeType = TreeNode.NodeType.Call;
+					lineItem = new LineItem(i, fn, TreeNode.NodeType.Call);
 
 					lbFunctions.Items.Add( lineItem );
 				}
@@ -73,10 +70,7 @@ namespace CLRProfiler
 
 				if ( fn.IndexOf( matchString ) != -1 )
 				{
-					lineItem = new LineItem();
-					lineItem.id = i;
-					lineItem.Name = fn;
-					lineItem.nodeType = TreeNode.NodeType.Allocation;
+					lineItem = new LineItem(i, fn, TreeNode.NodeType.Allocation);
 
 					lbFunctions.Items.Add( lineItem );
 				}
@@ -99,8 +93,8 @@ namespace CLRProfiler
 				return;
 			}
 
-			SelectedFunctionId = ((LineItem)lbFunctions.SelectedItem).id;
-			SelectedNodeType = ((LineItem)lbFunctions.SelectedItem).nodeType;
+			SelectedFunctionId = ((LineItem)lbFunctions.SelectedItem).Id;
+			SelectedNodeType = ((LineItem)lbFunctions.SelectedItem).NodeType;
 			DialogResult = DialogResult.OK;
 			Close();
 		}
