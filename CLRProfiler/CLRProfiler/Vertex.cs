@@ -49,7 +49,7 @@ namespace CLRProfiler
         [NotNull] internal readonly Graph containingGraph;
         internal ulong id;
 
-        string nameSpaceOf(string name, out string basicName)
+        (string nameSpace, string basicName) nameSpaceOf(string name)
         {
             int prevSeparatorPos = -1;
             int thisSeparatorPos = -1;
@@ -81,13 +81,13 @@ namespace CLRProfiler
             }
             if (prevSeparatorPos >= 0)
             {
-                basicName = name.Substring(prevSeparatorPos+1);
-                return name.Substring(0, prevSeparatorPos+1);
+                string basicName = name.Substring(prevSeparatorPos + 1);
+                return (name.Substring(0, prevSeparatorPos + 1), basicName);
             }
             else
             {
-                basicName = name;
-                return "";
+                string basicName = name;
+                return ("", basicName);
             }
         }
 
@@ -101,7 +101,7 @@ namespace CLRProfiler
             this.containingGraph = containingGraph;
             this.moduleName = module;
 
-            nameSpace = nameSpaceOf(name, out basicName);
+            (nameSpace, basicName) = nameSpaceOf(name);
             this.name = name;
             basicSignature = signature;
             if (nameSpace.Length > 0 && signature != null)
