@@ -457,23 +457,16 @@ namespace CLRProfiler
 
             foreach (Control c in tabs.SelectedTab.Controls)
             {
-                TreeListView v = null;
-                try
-                {
-                    v = (TreeListView)c;
-                }
-                catch
-                {
-                    /* not interested in exceptions */
-                }
+                var v = c as TreeListView;
 
-                if(v != null)
+                if (v == null)
                 {
-                    callTreeView = v;
-                    viewState = v.ViewState;
-                    ShowCurrentStack(null, null);
-                    return;
+                    continue;
                 }
+                callTreeView = v;
+                viewState = v.ViewState;
+                ShowCurrentStack(null, null);
+                return;
             }
             Debug.Fail("Cannot find tree view on the tab page");
         }

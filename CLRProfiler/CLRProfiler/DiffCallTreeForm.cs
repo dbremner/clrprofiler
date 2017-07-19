@@ -93,22 +93,15 @@ namespace CLRProfiler
 		{
 			foreach(Control c in controlCollection.Controls)
 			{
-				DiffTreeListView v = null;
-				try
-				{
-					v = (DiffTreeListView)c;
-				}
-				catch
-				{
-					/* not interested in exceptions */
-				}
+			    var v = c as DiffTreeListView;
 
-				if(v != null)
-				{
-					diffCallTreeView = v;
-					viewState = v.ViewState;
-					return;
-				}
+			    if (v == null)
+			    {
+			        continue;
+			    }
+			    diffCallTreeView = v;
+			    viewState = v.ViewState;
+			    return;
 			}
 			Debug.Fail("Cannot find tree view on the tab page");
 		}
