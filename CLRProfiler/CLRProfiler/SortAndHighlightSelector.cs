@@ -50,7 +50,7 @@ namespace CLRProfiler
             highlightOrder.SelectedIndex = (1 + highlight.SortingOrder) / 2;
         }
 
-        internal Tuple<SortingBehaviour, SortingBehaviour> GetSortResults()
+        internal (SortingBehaviour s, SortingBehaviour h) GetSortResults()
         {
             var sSortingOrder = sortOrder.SelectedIndex * 2 - 1;
             var sCounterId = sortCounter.SelectedIndex - 1;
@@ -60,7 +60,7 @@ namespace CLRProfiler
             var hSortingOrder = highlightOrder.SelectedIndex * 2 - 1;
             var hCounterId = highlightCounter.SelectedIndex;
             var h = new SortingBehaviour(sortingOrder: hSortingOrder, counterId: hCounterId);
-            return Tuple.Create(s, h);
+            return (s, h);
         }
     }
 }
