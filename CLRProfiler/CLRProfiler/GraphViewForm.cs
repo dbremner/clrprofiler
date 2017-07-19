@@ -935,10 +935,10 @@ namespace CLRProfiler
             }
         }
 
-        private int SelectedVertexCount(out Vertex selectedVertex)
+        private (int count, Vertex vertex) SelectedVertexInfo()
         {
             int selectedCount = 0;
-            selectedVertex = null;
+            Vertex selectedVertex = null;
             foreach (Vertex v in graph.vertices.Values)
             {
                 if (v.selected)
@@ -947,14 +947,13 @@ namespace CLRProfiler
                     selectedVertex = v;
                 }
             }
-            return selectedCount;
+            return (selectedCount, selectedVertex);
         }
 
         private void copyMenuItem_Click(object sender, System.EventArgs e)
         {
             var sb = new StringBuilder();
-            Vertex selectedVertex;
-            int selectedVertexCount = SelectedVertexCount(out selectedVertex);
+            var (selectedVertexCount, selectedVertex) = SelectedVertexInfo();
 
             if (selectedVertexCount == 1)
             {
