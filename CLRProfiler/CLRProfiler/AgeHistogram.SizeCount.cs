@@ -12,6 +12,10 @@ namespace CLRProfiler
         {
             internal ulong size;
             internal uint count;
+
+            public SizeCount()
+            {
+            }
         }
     }
 }
