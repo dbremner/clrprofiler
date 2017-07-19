@@ -75,7 +75,7 @@ namespace CLRProfiler
             showWhoAllocatedObjectsBetweenMenuItem.Enabled = isHeapGraph;
             showInstancesMenuItem.Enabled = isHeapGraph;
             showHistogramMenuItem.Enabled = isHeapGraph;
-            showReferencesMenuItem.Enabled = isHeapGraph && SelectedVertexCount() != 0;
+            showReferencesMenuItem.Enabled = isHeapGraph && graph.SelectedVertexCount() != 0;
 
             if (isHeapGraph && graph.typeGraphOptions == ObjectGraph.BuildTypeGraphOptions.IndividualObjects)
             {
@@ -950,12 +950,6 @@ namespace CLRProfiler
             return selectedCount;
         }
 
-        private int SelectedVertexCount()
-        {
-            Vertex selectedVertex;
-            return SelectedVertexCount(out selectedVertex);
-        }
-
         private void copyMenuItem_Click(object sender, System.EventArgs e)
         {
             var sb = new StringBuilder();
@@ -1469,7 +1463,7 @@ namespace CLRProfiler
             Graph originalGraph = GetOriginalGraph();
             ObjectGraph objectGraph = GetObjectGraph();
             var histogram = new Histogram(objectGraph.readNewLog);
-            bool anyVertexSelected = SelectedVertexCount() != 0;
+            bool anyVertexSelected = graph.SelectedVertexCount() != 0;
             foreach (KeyValuePair<ulong, ObjectGraph.GcObject> keyValuePair in objectGraph.idToObject)
             {
                 ulong id = keyValuePair.Key;
@@ -1544,7 +1538,7 @@ namespace CLRProfiler
 
         private void zoomToNodeMenuItem_Click(object sender, System.EventArgs e)
         {
-            int selectedVertexCount = SelectedVertexCount();
+            int selectedVertexCount = graph.SelectedVertexCount();
             if (selectedVertexCount == 0)
             {
                 MessageBox.Show("Please select a node first by clicking on it");
@@ -1629,7 +1623,7 @@ namespace CLRProfiler
 
         private void showReferencesMenuItem_Click(object sender, System.EventArgs e)
         {
-            if (graph.graphType == Graph.GraphType.HeapGraph && SelectedVertexCount() != 0)
+            if (graph.graphType == Graph.GraphType.HeapGraph && graph.SelectedVertexCount() != 0)
             {
                 ObjectGraph objectGraph = GetObjectGraph();
                 Graph g = objectGraph.BuildReferenceGraph(graph);

@@ -45,18 +45,7 @@ namespace CLRProfiler
 			PlaceVertices();
 		}*/
 
-	    public int SelectedVertexCount()
-	    {
-	        int selectedCount = 0;
-	        foreach (Vertex v in basegraph.vertices.Values)
-	        {
-	            if (v.selected)
-	            {
-	                selectedCount++;
-	            }
-	        }
-	        return selectedCount;
-	    }
+	    public int SelectedVertexCount() => basegraph.SelectedVertexCount();
 	    #endregion
 		#region private methods
 		private ArrayList BuildLevels(Graph g)

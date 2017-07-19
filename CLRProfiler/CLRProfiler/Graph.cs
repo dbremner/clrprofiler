@@ -399,5 +399,18 @@ namespace CLRProfiler
             }
         }
 #endif
+
+        public int SelectedVertexCount()
+        {
+            int selectedCount = 0;
+            foreach (Vertex v in vertices.Values)
+            {
+                if (v.selected)
+                {
+                    selectedCount++;
+                }
+            }
+            return selectedCount;
+        }
     }
 }
