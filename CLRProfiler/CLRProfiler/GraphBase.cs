@@ -33,7 +33,7 @@ namespace CLRProfiler
 			PlaceVertices();
 		}
 
-		/*public void GetCallGraph(ReadLogResult readLogResult)
+        /*public void GetCallGraph(ReadLogResult readLogResult)
 		{
 			callGraph = readLogResult.callstackHistogram.BuildCallGraph();
 			PlaceVertices();
@@ -44,22 +44,20 @@ namespace CLRProfiler
 			graph = readLogResult.functionList.BuildFunctionGraph();
 			PlaceVertices();
 		}*/
-		
-		public int SelectedVertexCount(out Vertex selectedVertex)
-		{
-			int selectedCount = 0;
-			selectedVertex = null;
-			foreach (Vertex v in basegraph.vertices.Values)
-			{
-				if (v.selected)
-				{
-					selectedCount++;
-					selectedVertex = v;
-				}
-			}
-			return selectedCount;
-		}
-		#endregion
+
+	    public int SelectedVertexCount()
+	    {
+	        int selectedCount = 0;
+	        foreach (Vertex v in basegraph.vertices.Values)
+	        {
+	            if (v.selected)
+	            {
+	                selectedCount++;
+	            }
+	        }
+	        return selectedCount;
+	    }
+	    #endregion
 		#region private methods
 		private ArrayList BuildLevels(Graph g)
 		{
