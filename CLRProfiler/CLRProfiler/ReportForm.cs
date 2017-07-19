@@ -6,6 +6,7 @@
 using System;
 using System.Drawing;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
 using System.Reflection;
@@ -705,14 +706,14 @@ namespace CLRProfiler
 						sum += diffincl;
 						if(depLst.Contains(depth))
 						{
-							var alst = (ArrayList)depLst[depth];
+							var alst = (List<DataRow>)depLst[depth];
 							alst.Add(rRoot[i]);
 							depLst[depth] = alst;
 							diffincl += (long)depSum[depth];
 						}
 						else
 						{
-							var alst = new ArrayList();
+							var alst = new List<DataRow>();
 							alst.Add(rRoot[i]);							
 							depLst.Add(depth, alst);
 							depSum.Add(depth, diffincl);
@@ -729,10 +730,10 @@ namespace CLRProfiler
                         Debug.Assert(depth != null);
 						if(depLst.ContainsKey(depth))
 						{
-							var lst = (ArrayList)depLst[depth];
+							var lst = (List<DataRow>)depLst[depth];
 							for(int i = 0; i < lst.Count; i++)
 							{
-								var r = (DataRow)lst[i];
+								var r = lst[i];
 								tmproot = _allocDiff.Row2Node(r);
 								diffkey = tmproot.mapname + tmproot.prevIncl + tmproot.currIncl + tmproot.diffIncl + tmproot.prevFunId + tmproot.currFunId;
 								var subRoot =  (DiffDataNode) _allocDiff.diffCallTreeNodes[diffkey];

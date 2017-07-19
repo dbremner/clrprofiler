@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using JetBrains.Annotations;
 
 namespace CLRProfiler
@@ -115,7 +116,7 @@ namespace CLRProfiler
                 }
             }
 
-            var al = new ArrayList();
+            var al = new List<TypeDescriptor>();
             for (int i = 0; i < typeIndexToTypeDescriptor.Length; i++)
             {
                 if (typeIndexToTypeDescriptor[i] == null)
@@ -197,7 +198,7 @@ namespace CLRProfiler
                 }
             }
 
-            var al = new ArrayList();
+            var al = new List<TypeDescriptor>();
             for (int i = 0; i < typeIndexToTypeDescriptor.Length; i++)
             {
                 if (typeIndexToTypeDescriptor[i] == null)
@@ -486,7 +487,7 @@ namespace CLRProfiler
             }
             FillHistogramIntoDiffTypeDescriptor(bHistogram, typeIndexToDiffTypeDescriptor);
 
-            var al = new ArrayList();
+            var al = new List<DiffTypeDescriptor>();
             var totalTd = new DiffTypeDescriptor(0);
             for (int i = 0; i < typeIndexToDiffTypeDescriptor.Length; i++)
             {

@@ -10,13 +10,13 @@ namespace CLRProfiler
     internal class Column : Button
     {
         private bool pressed;
-        [NotNull] private readonly ArrayList columnsRef;
+        [NotNull] private readonly List<Column> columnsRef;
         [NotNull] private readonly ResizeBarCapture resizeBar;
 
         [NotNull]
         internal ColumnInformation ColumnInformation { get; }
 
-        internal Column([NotNull] ColumnInformation in_ci, [NotNull] ResizeBarCapture in_resizeBar, [NotNull] ArrayList in_columnsRef) : base()
+        internal Column([NotNull] ColumnInformation in_ci, [NotNull] ResizeBarCapture in_resizeBar, [NotNull] List<Column> in_columnsRef) : base()
         {
             pressed = false;
 

@@ -10,9 +10,9 @@ namespace CLRProfiler
     internal class ResizeBarCapture : Control
     {
         int track;
-        [NotNull] readonly ArrayList columns;
+        [NotNull] readonly List<Column> columns;
 
-        internal ResizeBarCapture([NotNull] [ItemNotNull] ArrayList in_columns) : base()
+        internal ResizeBarCapture([NotNull] [ItemNotNull] List<Column> in_columns) : base()
         {
             track = -1;
             columns = in_columns;
@@ -28,7 +28,7 @@ namespace CLRProfiler
         {
             if(track != -1)
             {
-                var left = (Column)columns[track];
+                var left = columns[track];
 
                 int ll = left.Left;
                 if(e.X < ll + 15)

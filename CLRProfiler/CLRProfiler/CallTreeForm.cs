@@ -1921,7 +1921,7 @@ namespace CLRProfiler
             var l = callTreeView.GetColumns();
             for(int i = 1; i < l.Count; i++)
             {
-                f.Set(((Column)l[i]).ColumnInformation.Token);
+                f.Set(l[i].ColumnInformation.Token);
             }
 
             DialogResult res = f.ShowDialog(this);
@@ -1929,7 +1929,7 @@ namespace CLRProfiler
             {
                 for(int i = l.Count; i-- > 1;)
                 {
-                    ((Control)l[i]).Dispose();
+                    l[i].Dispose();
                     l.RemoveAt(i);
                 }
 
@@ -2062,7 +2062,7 @@ namespace CLRProfiler
             }
             Debug.Assert(callTreeView != null, "callTreeView != null");
             var columns = callTreeView.GetColumns();
-            var callTreeColumn = (Column) columns[0];
+            var callTreeColumn = columns[0];
             int violations = 0, newWidth = callTreeColumn.Width + splitter.Location.X - previousSplitterLocation;
             if(newWidth < 20)
             {

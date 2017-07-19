@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Drawing;
 using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
@@ -14,7 +15,7 @@ namespace CLRProfiler
 	{
 		#region Data member
 		private int leftEdge;
-	    [NotNull] private readonly ArrayList columns;
+	    [NotNull] private readonly List<DiffColumn> columns;
 	    [NotNull] private readonly ListBox treeListBox;
 	    [NotNull] private readonly DiffResizeBarCapture resizeBar;
 		private object keepSelected;
@@ -181,7 +182,7 @@ namespace CLRProfiler
 			treeListBox.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.treeListBox_DrawItem);
 			treeListBox.SelectedIndexChanged += new System.EventHandler(this.treeListBox_SelectedIndexChanged);
 
-			columns = new ArrayList();
+			columns = new List<DiffColumn>();
 
 			// must be created before calling `AddColumn`
 			resizeBar = new DiffResizeBarCapture(columns);
@@ -383,7 +384,7 @@ namespace CLRProfiler
 			{
 				//  Customize the context menu
 				ContextMenu contextMenu = this.ContextMenu;
-				ColumnInformation ci = ((DiffColumn)columns[0]).ColumnInformation;
+				ColumnInformation ci = columns[0].ColumnInformation;
 				string fnName = treeOwner.GetInfo(node, ci).ToString();
 				
 				
@@ -563,7 +564,7 @@ namespace CLRProfiler
             ColumnClick?.Invoke(sender, e);
         }
 
-		internal ArrayList GetColumns()
+		internal List<DiffColumn> GetColumns()
 		{
 			return columns;
 		}

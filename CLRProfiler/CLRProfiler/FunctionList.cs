@@ -9,12 +9,12 @@ namespace CLRProfiler
     internal partial class FunctionList
     {
         readonly ReadNewLog readNewLog;
-        readonly ArrayList functionList;
+        readonly List<FunctionDescriptor> functionList;
 
         internal FunctionList(ReadNewLog readNewLog)
         {
             this.readNewLog = readNewLog;
-            this.functionList = new ArrayList();
+            this.functionList = new List<FunctionDescriptor>();
         }
 
         internal void Add(int functionId, int funcCallStack, uint funcSize, int funcModule)
@@ -91,7 +91,7 @@ namespace CLRProfiler
 
             BuildFuncVertices(graph, ref funcVertex, filterForm);
 
-            foreach (FunctionDescriptor fd in functionList)
+            foreach (var fd in functionList)
             {
                 BuildFunctionTrace(graph, fd.funcCallStack, fd.functionId, fd.funcSize, funcVertex, ref vertexStack, filterForm);
             }
@@ -179,7 +179,7 @@ namespace CLRProfiler
             BuildFuncVertices(graph, ref funcVertex, filterForm);
             BuildModVertices(graph, ref modVertex, filterForm);
 
-            foreach (FunctionDescriptor fd in functionList)
+            foreach (var fd in functionList)
             {
                 BuildModuleTrace(graph, fd.funcCallStack, fd.funcModule, fd.funcSize, funcVertex, modVertex, ref vertexStack, filterForm);
             }
@@ -271,7 +271,7 @@ namespace CLRProfiler
 
             BuildFuncVertices(graph, ref funcVertex, filterForm);
 
-            foreach (FunctionDescriptor fd in functionList)
+            foreach (var fd in functionList)
             {
                 BuildClassTrace(graph, fd.funcCallStack, fd.functionId, fd.funcSize, funcVertex, ref vertexStack, filterForm);
             }
@@ -291,7 +291,7 @@ namespace CLRProfiler
             uint[] callCount = new uint[readNewLog.funcName.Length];
             callstackHistogram.CalculateCallCounts(callCount);
             Console.WriteLine("{0},{1},{2} {3}", "# Calls", "Function Size", "Function Name", "Function Signature");
-            foreach (FunctionDescriptor fd in functionList)
+            foreach (var fd in functionList)
             {
                 Console.WriteLine("{0},{1},{2} {3}", callCount[fd.functionId], fd.funcSize, readNewLog.funcName[fd.functionId], readNewLog.funcSignature[fd.functionId]);
             }

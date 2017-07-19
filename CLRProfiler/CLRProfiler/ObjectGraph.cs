@@ -798,8 +798,8 @@ namespace CLRProfiler
             // Display the reference list and stack trace for 0th object
 
             // Find Culprit here.
-            var mismatchedObjects = new ArrayList();
-            var differentCulprits = new ArrayList();
+            var mismatchedObjects = new List<int>();
+            var differentCulprits = new List<string>();
             for (int j = 1; j < idsFromRoot.Length; j++)
             {
                 for (int i = 0; i < idsFromRoot[0].Length; i++)
@@ -840,8 +840,8 @@ namespace CLRProfiler
                 for (int i = 0; i < limit; i++)
                 {
                     Console.WriteLine("<Object>");
-                    PrintGCRoot(idsFromRoot[(int)mismatchedObjects[i]]);
-                    PrintStackTrace(idsFromRoot[(int)mismatchedObjects[i]]);
+                    PrintGCRoot(idsFromRoot[mismatchedObjects[i]]);
+                    PrintStackTrace(idsFromRoot[mismatchedObjects[i]]);
                     Console.WriteLine("</Object>");
                 }
             }

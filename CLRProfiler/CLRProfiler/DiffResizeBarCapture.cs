@@ -10,9 +10,9 @@ namespace CLRProfiler
     internal class DiffResizeBarCapture : Control
     {
         int track;
-        readonly ArrayList columns;
+        readonly List<DiffColumn> columns;
 
-        internal DiffResizeBarCapture([NotNull] [ItemNotNull] ArrayList in_columns) : base()
+        internal DiffResizeBarCapture([NotNull] [ItemNotNull] List<DiffColumn> in_columns) : base()
         {
             track = -1;
             columns = in_columns;
@@ -28,7 +28,7 @@ namespace CLRProfiler
         {
             if(track != -1)
             {
-                var left = (DiffColumn)columns[track];
+                var left = columns[track];
 
                 int ll = left.Left;
                 if(e.X < ll + 15)

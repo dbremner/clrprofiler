@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics;
 using System.Drawing;
@@ -20,7 +21,7 @@ namespace CLRProfiler
 	    //private Graph callGraph = null;
 		#endregion
 		#region public data member
-		public ArrayList levelList;
+		public List<ArrayList> levelList;
 		#endregion
 		public GraphBase()
 		{
@@ -48,9 +49,9 @@ namespace CLRProfiler
 	    public int SelectedVertexCount() => basegraph.SelectedVertexCount();
 	    #endregion
 		#region private methods
-		private ArrayList BuildLevels(Graph g)
+		private List<ArrayList> BuildLevels(Graph g)
 		{
-			var al = new ArrayList();
+			var al = new List<ArrayList>();
 			for (int level = 0; level <= g.BottomVertex.level; level++)
 			{
 				al.Add(new ArrayList());
@@ -59,7 +60,7 @@ namespace CLRProfiler
 			{
 				if (v.level <= g.BottomVertex.level)
 				{
-					var all = (ArrayList)al[v.level];
+					var all = al[v.level];
 					all.Add(v);
 				}
 				else
@@ -67,7 +68,7 @@ namespace CLRProfiler
 					Debug.Assert(v.level == int.MaxValue);
 				}
 			}
-			foreach (ArrayList all in al)
+			foreach (var all in al)
 			{
 				all.Sort();
 			}
@@ -175,7 +176,8 @@ namespace CLRProfiler
 				totalWeight = 1;
 			}
 
-			var al = levelList = BuildLevels(basegraph);
+			var al = BuildLevels(basegraph);
+		    levelList = al;
 			scale = (float)totalHeight/totalWeight;
 			if (placeVertices)
 			{
@@ -183,7 +185,7 @@ namespace CLRProfiler
 					level <= basegraph.BottomVertex.level;
 					level++)
 				{
-					var all = (ArrayList)al[level];
+					var all = al[level];
 					foreach (Vertex v in all)
 					{
 						if (basegraph.graphType == Graph.GraphType.CallGraph)

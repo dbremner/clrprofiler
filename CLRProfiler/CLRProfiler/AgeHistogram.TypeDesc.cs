@@ -10,7 +10,7 @@ namespace CLRProfiler
 {
     public partial class AgeHistogram : System.Windows.Forms.Form
     {
-        class TypeDesc : IComparable
+        class TypeDesc : IComparable, IComparable<TypeDesc>
         {
             internal readonly string typeName;
             internal ulong totalSize;
@@ -27,6 +27,23 @@ namespace CLRProfiler
             public int CompareTo(Object o)
             {
                 var t = (TypeDesc)o;
+                if (t.totalSize < this.totalSize)
+                {
+                    return -1;
+                }
+                else if (t.totalSize > this.totalSize)
+                {
+                    return 1;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+
+            public int CompareTo(TypeDesc other)
+            {
+                var t = (TypeDesc)other;
                 if (t.totalSize < this.totalSize)
                 {
                     return -1;

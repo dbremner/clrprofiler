@@ -30,7 +30,7 @@ namespace CLRProfiler
         private bool placeEdges = true;
         private Point lastMouseDownPoint;
         private Point lastMousePoint;
-        private ArrayList levelList;
+        private List<ArrayList> levelList;
         private ulong totalWeight;
         private Vertex selectedVertex;
         private readonly FilterForm filterForm;
@@ -164,9 +164,9 @@ namespace CLRProfiler
             g.DrawString(v.weightString, font, penBrush, stringRect);
         }
 
-        ArrayList BuildLevels(Graph g)
+        List<ArrayList> BuildLevels(Graph g)
         {
-            var al = new ArrayList();
+            var al = new List<ArrayList>();
             for (int level = 0; level <= g.BottomVertex.level; level++)
             {
                 al.Add(new ArrayList());
@@ -175,7 +175,7 @@ namespace CLRProfiler
             {
                 if (v.level <= g.BottomVertex.level)
                 {
-                    var all = (ArrayList)al[v.level];
+                    var all = al[v.level];
                     all.Add(v);
                 }
                 else
@@ -183,7 +183,7 @@ namespace CLRProfiler
                     Debug.Assert(v.level == int.MaxValue);
                 }
             }
-            foreach (ArrayList all in al)
+            foreach (var all in al)
             {
                 all.Sort();
             }
@@ -418,7 +418,8 @@ namespace CLRProfiler
                 totalWeight = 1;
             }
 
-            var al = levelList = BuildLevels(graph);
+            var al = BuildLevels(graph);
+            levelList = al;
             scale = (float)totalHeight/totalWeight;
             if (placeVertices)
             {
@@ -428,7 +429,7 @@ namespace CLRProfiler
                     level <= graph.BottomVertex.level;
                     level++)
                 {
-                    var all = (ArrayList)al[level];
+                    var all = al[level];
                     int drawnVertexCount = 0;
                     int maxWidth = 0;
                     foreach (Vertex v in all)
@@ -1020,7 +1021,7 @@ namespace CLRProfiler
             }
             else
             {
-                foreach (ArrayList al in levelList)
+                foreach (var al in levelList)
                 {
                     foreach (Vertex v in al)
                     {

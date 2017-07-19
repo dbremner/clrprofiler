@@ -4,7 +4,7 @@ namespace CLRProfiler
 {
     public partial class Reports
 	{
-        class TypeDescriptor : IComparable
+        class TypeDescriptor : IComparable, IComparable<TypeDescriptor>
         {
             internal readonly int[] size;
             internal readonly int[] count;
@@ -20,6 +20,23 @@ namespace CLRProfiler
             public int CompareTo(Object o)
             {
                 var that = (TypeDescriptor)o;
+                if (that.size[0] < this.size[0])
+                {
+                    return -1;
+                }
+                else if (that.size[0] > this.size[0])
+                {
+                    return 1;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+
+            public int CompareTo(TypeDescriptor other)
+            {
+                var that = other;
                 if (that.size[0] < this.size[0])
                 {
                     return -1;

@@ -13,6 +13,7 @@ using System;
 using System.IO;
 using System.Drawing;
 using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
@@ -24,7 +25,7 @@ namespace CLRProfiler
 	{
 		private int leftEdge;
 
-	    [NotNull] private readonly ArrayList columns;
+	    [NotNull] private readonly List<Column> columns;
 	    [NotNull] private readonly ListBox treeListBox;
 	    [NotNull] private readonly ResizeBarCapture resizeBar;
 
@@ -184,7 +185,7 @@ namespace CLRProfiler
 			treeListBox.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.treeListBox_DrawItem);
 			treeListBox.SelectedIndexChanged += new System.EventHandler(this.treeListBox_SelectedIndexChanged);
 
-			columns = new ArrayList();
+			columns = new List<Column>();
 
 			// must be created before calling `AddColumn`
 			resizeBar = new ResizeBarCapture(columns);
@@ -220,9 +221,9 @@ namespace CLRProfiler
 		{
 			int position = -leftEdge;
 			int height = Font.Height + 5;
-			for(IEnumerator e = columns.GetEnumerator(); e.MoveNext();)
+			for(var e = columns.GetEnumerator(); e.MoveNext();)
 			{
-				var current = (Column)e.Current;
+				var current = e.Current;
 				current.SuspendLayout();
 				current.Location = new Point(position, 0);
 				if(height > 0)
@@ -382,7 +383,7 @@ namespace CLRProfiler
 			{
 				//  Customize the context menu
 				ContextMenu contextMenu = this.ContextMenu;
-				ColumnInformation ci = ((Column)columns[0]).ColumnInformation;
+				ColumnInformation ci = columns[0].ColumnInformation;
 				string fnName = treeOwner.GetInfo(node, ci).ToString();
 				String strFn;
 
@@ -624,7 +625,7 @@ namespace CLRProfiler
         }
 
 	    [NotNull]
-	    internal ArrayList GetColumns()
+	    internal List<Column> GetColumns()
 		{
 			return columns;
 		}

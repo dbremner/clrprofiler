@@ -141,7 +141,7 @@ namespace CLRProfiler
 
         [CanBeNull] private Bucket[] bucketTable;
 
-        [CanBeNull] private ArrayList sortedTypeTable;
+        [CanBeNull] private List<TypeDesc> sortedTypeTable;
         ulong totalSize;
 
         private ulong BuildBuckets(double timeScale, double maxAge)
@@ -275,7 +275,7 @@ namespace CLRProfiler
             }
 
             totalSize = 0;
-            sortedTypeTable = new ArrayList();
+            sortedTypeTable = new List<TypeDesc>();
             Debug.Assert(typeIndexToTypeDesc != null);
             foreach (TypeDesc t in typeIndexToTypeDesc)
             {

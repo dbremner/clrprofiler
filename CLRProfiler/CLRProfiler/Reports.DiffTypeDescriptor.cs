@@ -4,7 +4,7 @@ namespace CLRProfiler
 {
     public partial class Reports
 	{
-        class DiffTypeDescriptor : IComparable
+        class DiffTypeDescriptor : IComparable, IComparable<DiffTypeDescriptor>
         {
             internal int aSize;
             internal int aCount;
@@ -22,6 +22,23 @@ namespace CLRProfiler
             public int CompareTo(Object o)
             {
                 var that = (DiffTypeDescriptor)o;
+                if (that.diffSize < this.diffSize)
+                {
+                    return -1;
+                }
+                else if (that.diffSize > this.diffSize)
+                {
+                    return 1;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+
+            public int CompareTo(DiffTypeDescriptor other)
+            {
+                var that = other;
                 if (that.diffSize < this.diffSize)
                 {
                     return -1;
