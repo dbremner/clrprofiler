@@ -26,7 +26,7 @@ namespace CLRProfiler
 		internal event EventHandler SelectedIndexChanged;
 
 		//
-		internal object TokenObject { get; set; }
+		internal ViewState ViewState { get; set; }
 
 	    [NotNull] private readonly IDiffTreeOwner treeOwner;
 

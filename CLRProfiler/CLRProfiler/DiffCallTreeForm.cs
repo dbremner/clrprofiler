@@ -58,7 +58,7 @@ namespace CLRProfiler
 
 		    treeView.ColumnClick += new EventHandler(SortOn);
 			
-		    treeView.TokenObject = new ViewState(sort, highlight);
+		    treeView.ViewState = new ViewState(sort, highlight);
 		    treeView.Root = Root;
 			
 			
@@ -106,7 +106,7 @@ namespace CLRProfiler
 				if(v != null)
 				{
 					diffCallTreeView = v;
-					viewState = (ViewState)v.TokenObject;
+					viewState = v.ViewState;
 					return;
 				}
 			}

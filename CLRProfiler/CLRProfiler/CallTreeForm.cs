@@ -397,7 +397,7 @@ namespace CLRProfiler
                 treeView.ColumnClick += new EventHandler(SortOn);
                 treeView.SelectedIndexChanged += new EventHandler(ShowCurrentStack);
 
-                treeView.TokenObject = new ViewState(sort, highlight);
+                treeView.ViewState = new ViewState(sort, highlight);
                 treeView.Root = (TreeNode)((ThreadState)threads[e]).stack[0];
 
                 if(manyThreads)
@@ -470,7 +470,7 @@ namespace CLRProfiler
                 if(v != null)
                 {
                     callTreeView = v;
-                    viewState = (ViewState)v.TokenObject;
+                    viewState = v.ViewState;
                     ShowCurrentStack(null, null);
                     return;
                 }
@@ -1873,7 +1873,7 @@ namespace CLRProfiler
                 {
                     callTreeView.Size = oldTreeView.Size;
                 }
-                viewState = (ViewState)callTreeView.TokenObject;
+                viewState = callTreeView.ViewState;
 
                 CallTreeForm_Resize(null, null);
                 Debug.Assert(callTreeView != null, "callTreeView != null");
@@ -1904,7 +1904,7 @@ namespace CLRProfiler
                 if(v != null)
                 {
                     callTreeView = v;
-                    viewState = (ViewState)v.TokenObject;
+                    viewState = v.ViewState;
                     ShowCurrentStack(null, null);
                     return;
                 }

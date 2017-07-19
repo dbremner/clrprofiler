@@ -36,7 +36,8 @@ namespace CLRProfiler
 		internal event EventHandler ColumnClick;
 		internal event EventHandler SelectedIndexChanged;
 
-		internal object TokenObject { get; set; }
+        internal ViewState ViewState { get; set; }
+
         [NotNull] private readonly ITreeOwner treeOwner;
 
 		// item in treeListBox for current context menu
