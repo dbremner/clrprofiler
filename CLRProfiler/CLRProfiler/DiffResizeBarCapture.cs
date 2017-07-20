@@ -9,8 +9,8 @@ namespace CLRProfiler
 {
     internal class DiffResizeBarCapture : Control
     {
-        int track;
-        readonly List<DiffColumn> columns;
+        private int track;
+        private readonly List<DiffColumn> columns;
 
         internal DiffResizeBarCapture([NotNull] [ItemNotNull] List<DiffColumn> in_columns) : base()
         {

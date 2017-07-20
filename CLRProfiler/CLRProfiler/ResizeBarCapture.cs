@@ -9,8 +9,8 @@ namespace CLRProfiler
 {
     internal class ResizeBarCapture : Control
     {
-        int track;
-        [NotNull] readonly List<Column> columns;
+        private int track;
+        [NotNull] private readonly List<Column> columns;
 
         internal ResizeBarCapture([NotNull] [ItemNotNull] List<Column> in_columns) : base()
         {

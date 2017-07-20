@@ -8,7 +8,7 @@ using System.Windows.Forms;
 namespace CLRProfiler
 {
     // Implements the manual sorting of items by columns.
-    class ListViewItemComparer : IComparer 
+    internal class ListViewItemComparer : IComparer 
     {
         private readonly int sortCol;
         private readonly bool fReverseSort;

@@ -20,7 +20,7 @@ namespace CLRProfiler
             internal const int idBits = bucketBits - alignBits; // therefore only 7 bits have to be stored in the object
             internal const int idMask = (1 << idBits) - 1;
 
-            GcObject[][] masterTable;
+            private GcObject[][] masterTable;
 
             internal IdToObject()
             {

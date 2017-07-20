@@ -29,9 +29,9 @@ namespace CLRProfiler
         internal ulong[] rootIDs;
 
         internal int rootCount;
-        const int initialRootCount = 100;
+        private const int initialRootCount = 100;
         internal bool empty;
-        readonly IntEqualityComparer intEqualityComparer;
+        private readonly IntEqualityComparer intEqualityComparer;
 
         internal void Neuter()
         {
@@ -59,16 +59,16 @@ namespace CLRProfiler
             empty = true;
         }
 
-        Dictionary<ulong, ForwardReference> addressToForwardReferences;
+        private Dictionary<ulong, ForwardReference> addressToForwardReferences;
 
-        void CreateForwardReference(ulong targetAddress, GcObject source, int referenceNumber)
+        private void CreateForwardReference(ulong targetAddress, GcObject source, int referenceNumber)
         {
             ForwardReference nextForwardReference;
             addressToForwardReferences.TryGetValue(targetAddress, out nextForwardReference);
             addressToForwardReferences[targetAddress] = new ForwardReference(source, referenceNumber, nextForwardReference);
         }
 
-        void FillInForwardReferences(ulong address, GcObject target)
+        private void FillInForwardReferences(ulong address, GcObject target)
         {
             ForwardReference forwardReference;
             if (addressToForwardReferences.TryGetValue(address, out forwardReference))
@@ -190,7 +190,7 @@ namespace CLRProfiler
             rootCount++;
         }
 
-        void AssignParents(GcObject rootObject)
+        private void AssignParents(GcObject rootObject)
         {
             // We use a breadth first traversal of the object graph.
             // To do this, we make use of a queue of objects still to process.
@@ -214,7 +214,7 @@ namespace CLRProfiler
             }
         }
 
-        int[] typeHintTable;
+        private int[] typeHintTable;
 
         private string FormatAddress(ulong addr)
         {
@@ -338,7 +338,7 @@ namespace CLRProfiler
 
         internal static Graph cachedGraph;
 
-        const int historyDepth = 3;
+        private const int historyDepth = 3;
 
         private void MarkDescendants(GcObject gcObject)
         {
@@ -713,7 +713,7 @@ namespace CLRProfiler
             System.Console.WriteLine("</StackTrace>");
         }
 
-        Dictionary<GcObject, ulong> objectToId;        // reverse mapping from gc objects to their addresses
+        private Dictionary<GcObject, ulong> objectToId;        // reverse mapping from gc objects to their addresses
 
 		internal void WriteVertexPaths(int allocatedAfterTickIndex, int allocatedBeforeTickIndex, string typeName)
 		{
@@ -985,7 +985,7 @@ namespace CLRProfiler
             return graph;
         }
 
-        GcObject CreateRootObject()
+        private GcObject CreateRootObject()
         {
             var rootObject = GcObject.CreateGcObject(rootCount);
             rootObject.TypeSizeStackTraceId = GetOrCreateGcType("<root>");

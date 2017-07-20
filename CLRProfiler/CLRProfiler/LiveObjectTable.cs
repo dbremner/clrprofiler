@@ -7,20 +7,20 @@ namespace CLRProfiler
 {
     internal partial class LiveObjectTable
     {
-        readonly IntervalTable intervalTable;
+        private readonly IntervalTable intervalTable;
         internal readonly ReadNewLog readNewLog;
         internal int lastTickIndex;
         private long lastPos;
 
-        const int alignShift = 2;
-        const int firstLevelShift = 20;
-        const int initialFirstLevelLength = 1 << (31 - alignShift - firstLevelShift);  // covering 2 GB of address space
-        const int secondLevelLength = 1<<firstLevelShift;
-        const int secondLevelMask = secondLevelLength-1;
+        private const int alignShift = 2;
+        private const int firstLevelShift = 20;
+        private const int initialFirstLevelLength = 1 << (31 - alignShift - firstLevelShift);  // covering 2 GB of address space
+        private const int secondLevelLength = 1<<firstLevelShift;
+        private const int secondLevelMask = secondLevelLength-1;
 
-        ushort[][] firstLevelTable;
+        private ushort[][] firstLevelTable;
 
-        void GrowFirstLevelTable()
+        private void GrowFirstLevelTable()
         {
             ushort[][] newFirstLevelTable = new ushort[firstLevelTable.Length*2][];
             for (int i = 0; i < firstLevelTable.Length; i++)
@@ -85,7 +85,7 @@ namespace CLRProfiler
             }
         }
 
-        ulong FindObjectForward(ulong startId, ulong endId)
+        private ulong FindObjectForward(ulong startId, ulong endId)
         {
             startId >>= alignShift;
             endId >>= alignShift;
@@ -181,7 +181,7 @@ namespace CLRProfiler
             o.allocTickIndex = o.typeIndex = o.typeSizeStacktraceIndex = 0;
         }
 
-        void Write3WordsAt(ulong id, ushort u1, ushort u2, ushort u3)
+        private void Write3WordsAt(ulong id, ushort u1, ushort u2, ushort u3)
         {
             id >>= alignShift;
             uint i = (uint)(id >> firstLevelShift);
@@ -346,7 +346,7 @@ namespace CLRProfiler
             sampleObjectTable?.Insert(id, id + size, nowTickIndex, allocTickIndex, typeIndex);
         }
 
-        void RemoveObjectRange(ulong firstId, ulong length, int tickIndex, SampleObjectTable sampleObjectTable)
+        private void RemoveObjectRange(ulong firstId, ulong length, int tickIndex, SampleObjectTable sampleObjectTable)
         {
             ulong lastId = firstId + length;
 

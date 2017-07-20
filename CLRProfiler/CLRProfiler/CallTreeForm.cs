@@ -90,14 +90,15 @@ namespace CLRProfiler
         // StreamWriter log;
 
         /* parsing code (straight from the ReadNewLog.cs) */
-        StreamReader r;
-        byte[] buffer;
-        int c;
-        int line;
-        long pos;
-        long lastLineStartPos;
-        int bufPos;
-        int bufLevel;
+        private StreamReader r;
+
+        private byte[] buffer;
+        private int c;
+        private int line;
+        private long pos;
+        private long lastLineStartPos;
+        private int bufPos;
+        private int bufLevel;
 
         /* <parsers> */
         internal int ReadChar()
@@ -113,7 +114,7 @@ namespace CLRProfiler
             }
         }
 
-        int FillBuffer()
+        private int FillBuffer()
         {
             bufPos = 0;
             bufLevel = r.BaseStream.Read(buffer, 0, buffer.Length);
@@ -127,7 +128,7 @@ namespace CLRProfiler
             }
         }
 
-        int ReadHex()
+        private int ReadHex()
         {
             int value = 0;
             while (true)
@@ -155,7 +156,7 @@ namespace CLRProfiler
             }
         }
 
-        int ReadInt()
+        private int ReadInt()
         {
             while (c == ' ' || c == '\t')
             {
@@ -198,7 +199,7 @@ namespace CLRProfiler
             }
         }
 
-        int ForcePosInt()
+        private int ForcePosInt()
         {
             int value = ReadInt();
             if (value >= 0)
@@ -866,7 +867,7 @@ namespace CLRProfiler
         }
 
         /* record call to a function */
-        void EnterFunction(SortedList functions, int functionId)
+        private void EnterFunction(SortedList functions, int functionId)
         {
             int index = functions.IndexOfKey(functionId);
             if(index == -1)
@@ -881,7 +882,7 @@ namespace CLRProfiler
         }
 
         /* record leaving of a function */
-        void LeaveFunction(SortedList functions, int functionId)
+        private void LeaveFunction(SortedList functions, int functionId)
         {
             int index = functions.IndexOfKey(functionId);
             if(index != -1)
@@ -899,7 +900,7 @@ namespace CLRProfiler
         }
 
         /* incorporate the information computed about the kid (k) into its parent (r) */
-        void UpdateStats(object r, object k)
+        private void UpdateStats(object r, object k)
         {
             var root = (TreeNode)r;
             var kid = (TreeNode)k;
@@ -939,7 +940,7 @@ namespace CLRProfiler
         
 
         /* record node to the backing store and return its starting location */
-        long Dump(object node)
+        private long Dump(object node)
         {
             long retValue = (long)writer.Position;
             ((TreeNode)node).Write(writer);
@@ -948,7 +949,7 @@ namespace CLRProfiler
     
         
         /* compute the tree and all the counters and write all that to the backing store */
-        bool BuildTreeAndComputeStats()
+        private bool BuildTreeAndComputeStats()
         {
             /* id of the previous thread */
             int prevThreadId = -1;

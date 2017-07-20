@@ -58,14 +58,14 @@ namespace CLRProfiler
         internal StacktraceTable stacktraceTable;
         internal string fileName;
 
-        StreamReader r;
-        byte[] buffer;
-        int bufPos;
-        int bufLevel;
-        int c;
-        int line;
+        private StreamReader r;
+        private byte[] buffer;
+        private int bufPos;
+        private int bufLevel;
+        private int c;
+        private int line;
         internal long pos;
-        long lastLineStartPos;
+        private long lastLineStartPos;
         internal readonly Dictionary<int/*thread id*/, List<string>> assembliesJustLoaded;
         internal readonly Dictionary<string/*assembly name*/, int/*stack id*/> assemblies;
         internal string[] typeName;
@@ -78,7 +78,7 @@ namespace CLRProfiler
         internal readonly Dictionary<string/*type name*/, int/*type id*/> typeSignatureIdHash;
         internal readonly Dictionary<string/*func name*/, int/*func id*/> funcSignatureIdHash;
         internal int maxTickIndex;
-        readonly bool progressFormVisible;
+        private readonly bool progressFormVisible;
         internal readonly int[] inducedGcCount;
         internal readonly int[] gcCount;
         internal readonly ulong[] generationSize;
@@ -87,7 +87,7 @@ namespace CLRProfiler
         internal readonly EventList gcEventList;
         internal readonly EventList heapDumpEventList;
 
-        static void EnsureVertexCapacity(int id, ref Vertex[] vertexArray)
+        private static void EnsureVertexCapacity(int id, ref Vertex[] vertexArray)
         {
             Debug.Assert(id >= 0);
             if (id < vertexArray.Length)
@@ -106,7 +106,7 @@ namespace CLRProfiler
             vertexArray = newVertexArray;
         }
 
-        static void EnsureStringCapacity(int id, ref string[] stringArray)
+        private static void EnsureStringCapacity(int id, ref string[] stringArray)
         {
             Debug.Assert(id >= 0);
             if (id < stringArray.Length)
@@ -125,7 +125,7 @@ namespace CLRProfiler
             stringArray = newStringArray;
         }
 
-        static void EnsureIntCapacity(int id, ref int[] intArray)
+        private static void EnsureIntCapacity(int id, ref int[] intArray)
         {
             Debug.Assert(id >= 0);
             if (id < intArray.Length)
@@ -167,14 +167,14 @@ namespace CLRProfiler
                 ? InterestLevel.Interesting | filterForm.InterestLevelForParentsAndChildren() : InterestLevel.Ignore;
         }
 
-        void AddTypeName(int typeId, string typeName)
+        private void AddTypeName(int typeId, string typeName)
         {
             EnsureStringCapacity(typeId, ref this.typeName);
             this.typeName[typeId] = typeName;
             typeSignatureIdHash[typeName] = typeId;
         }
 
-        int FillBuffer()
+        private int FillBuffer()
         {
             bufPos = 0;
             bufLevel = r.BaseStream.Read(buffer, 0, buffer.Length);
@@ -201,7 +201,7 @@ namespace CLRProfiler
             }
         }
 
-        int ReadHex()
+        private int ReadHex()
         {
             int value = 0;
             while (true)
@@ -229,7 +229,7 @@ namespace CLRProfiler
             }
         }
 
-        int ReadInt()
+        private int ReadInt()
         {
             while (c == ' ' || c == '\t')
             {
@@ -272,12 +272,12 @@ namespace CLRProfiler
             }
         }
 
-        uint ReadUInt()
+        private uint ReadUInt()
         {
             return (uint)ReadInt();
         }
 
-        long ReadLongHex()
+        private long ReadLongHex()
         {
             long value = 0;
             while (true)
@@ -305,7 +305,7 @@ namespace CLRProfiler
             }
         }
 
-        long ReadLong()
+        private long ReadLong()
         {
             while (c == ' ' || c == '\t')
             {
@@ -348,12 +348,12 @@ namespace CLRProfiler
             }
         }
 
-        ulong ReadULong()
+        private ulong ReadULong()
         {
             return (ulong)ReadLong();
         }
 
-        string ReadString(StringBuilder sb, char delimiter, bool stopAfterRightParen, int maxLength)
+        private string ReadString(StringBuilder sb, char delimiter, bool stopAfterRightParen, int maxLength)
         {
             // Name may contain spaces if they are in angle brackets.
             // Example: <Module>::std_less<unsigned void>.()
@@ -412,7 +412,7 @@ namespace CLRProfiler
             return sb.ToString();
         }
 
-        int ForcePosInt()
+        private int ForcePosInt()
         {
             int value = ReadInt();
             if (value >= 0)
@@ -537,11 +537,11 @@ namespace CLRProfiler
             return newStackPtr;
         }
 
-        TimePos[] timePos;
-        int timePosCount, timePosIndex;
-        const int maxTimePosCount = (1<<23)-1; // ~8,000,000 entries
+        private TimePos[] timePos;
+        private int timePosCount, timePosIndex;
+        private const int maxTimePosCount = (1<<23)-1; // ~8,000,000 entries
 
-        void GrowTimePos()
+        private void GrowTimePos()
         {
             TimePos[] newTimePos = new TimePos[2*timePos.Length];
             for (int i = 0; i < timePos.Length; i++)
@@ -552,7 +552,7 @@ namespace CLRProfiler
             timePos = newTimePos;
         }
 
-        int AddTimePos(int tick, long pos)
+        private int AddTimePos(int tick, long pos)
         {
             double time = tick*0.001;
             
@@ -615,7 +615,7 @@ namespace CLRProfiler
         }
 
         // variant of above to give comments their own tick index
-        int AddTimePos(long pos)
+        private int AddTimePos(long pos)
         {
             double lastTime = 0.0;
             if (timePosIndex > 0)
@@ -703,7 +703,7 @@ namespace CLRProfiler
             }
         }
 
-        enum GcRootKind
+        private enum GcRootKind
         {
             Other = 0x0,
             Stack = 0x1,
@@ -712,7 +712,7 @@ namespace CLRProfiler
         }
 
         [Flags]
-        enum GcRootFlags
+        private enum GcRootFlags
         {
             Pinning = 0x1,
             WeakRef = 0x2,

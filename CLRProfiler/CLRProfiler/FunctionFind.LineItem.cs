@@ -8,7 +8,7 @@ namespace CLRProfiler
 {
     internal partial class FunctionFind : System.Windows.Forms.Form
 	{
-        class LineItem 
+	    private class LineItem 
 		{
 		    internal TreeNode.NodeType NodeType { get; }
 		    internal int Id { get; }

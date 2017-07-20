@@ -2,9 +2,9 @@
 {
     internal partial class LiveObjectTable
     {
-        partial class IntervalTable
+        private partial class IntervalTable
         {
-            class Interval
+            private class Interval
             {
                 internal ulong loAddr;
                 internal ulong hiAddr;

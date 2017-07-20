@@ -34,7 +34,7 @@ namespace CLRProfiler
         internal int lastTickIndex;
         internal SampleObject gcTickList;
 
-        void GrowMasterTable()
+        private void GrowMasterTable()
         {
             SampleObject[][] newMasterTable = new SampleObject[masterTable.Length * 2][];
             for (int i = 0; i < masterTable.Length; i++)
@@ -53,7 +53,7 @@ namespace CLRProfiler
             gcTickList = null;
         }
 
-        bool IsGoodSample(ulong start, ulong end)
+        private bool IsGoodSample(ulong start, ulong end)
         {
             // We want it as a sample if and only if it crosses a boundary
             return (start >> secondLevelShift) != (end >> secondLevelShift);

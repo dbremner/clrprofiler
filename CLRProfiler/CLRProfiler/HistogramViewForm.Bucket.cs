@@ -9,7 +9,7 @@ namespace CLRProfiler
 {
     public partial class HistogramViewForm : System.Windows.Forms.Form
     {
-        struct Bucket
+        private struct Bucket
         {
             internal int minSize;
             internal int maxSize;

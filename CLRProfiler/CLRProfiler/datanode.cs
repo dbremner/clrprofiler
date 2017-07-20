@@ -3,8 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 
 namespace CLRProfiler
-{	
-    struct datanode
+{
+    internal struct datanode
     {
         public int level { get; set; }
 

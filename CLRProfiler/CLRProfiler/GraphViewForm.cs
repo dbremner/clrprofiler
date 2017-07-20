@@ -65,7 +65,7 @@ namespace CLRProfiler
             findForm = new FindRoutineForm();
         }
 
-        void EnableDisableMenuItems()
+        private void EnableDisableMenuItems()
         {
             bool isHeapGraph = graph.graphType == Graph.GraphType.HeapGraph;
             showWhoAllocatedMenuItem.Enabled = isHeapGraph;
@@ -88,7 +88,7 @@ namespace CLRProfiler
 
         }
 
-        void PaintVertex(Vertex v, Graphics g, Brush penBrush, Pen pen)
+        private void PaintVertex(Vertex v, Graphics g, Brush penBrush, Pen pen)
         {
             Rectangle r = v.rectangle;
             v.selectionRectangle = r;
@@ -164,7 +164,7 @@ namespace CLRProfiler
             g.DrawString(v.weightString, font, penBrush, stringRect);
         }
 
-        List<ArrayList> BuildLevels(Graph g)
+        private List<ArrayList> BuildLevels(Graph g)
         {
             var al = new List<ArrayList>();
             for (int level = 0; level <= g.BottomVertex.level; level++)
@@ -190,7 +190,7 @@ namespace CLRProfiler
             return al;
         }
 
-        void PlaceEdges(ICollection edgeCollection, bool isIncoming, int x, int y, float scale)
+        private void PlaceEdges(ICollection edgeCollection, bool isIncoming, int x, int y, float scale)
         {
             var edgeList = new ArrayList(edgeCollection);
             edgeList.Sort();
@@ -211,7 +211,7 @@ namespace CLRProfiler
             }
         }
 
-        void PlaceEdges(float scale)
+        private void PlaceEdges(float scale)
         {
             foreach (Vertex v in graph.vertices.Values)
             {
@@ -221,13 +221,13 @@ namespace CLRProfiler
             }
         }
 
-        int totalHeight = 100;
-        const int boxWidth = 300;
-        int gapWidth = 100;
-        float minHeight = 1.0f;
-        float minWidth = 1.0f;
+        private int totalHeight = 100;
+        private const int boxWidth = 300;
+        private int gapWidth = 100;
+        private float minHeight = 1.0f;
+        private float minWidth = 1.0f;
 
-        void DrawEdges(Graphics g, float scale)
+        private void DrawEdges(Graphics g, float scale)
         {
             var r = new Random(0);
             Point[] points = new Point[4];
@@ -324,7 +324,7 @@ namespace CLRProfiler
             }
         }
 
-        string formatWeight(ulong weight)
+        private string formatWeight(ulong weight)
         {
             if (graph.graphType == Graph.GraphType.CallGraph)
             {
@@ -388,7 +388,7 @@ namespace CLRProfiler
             }
         }
 
-        void PlaceVertices(Graphics g)
+        private void PlaceVertices(Graphics g)
         {
             graph.AssignLevelsToVertices();
             totalWeight = 0;

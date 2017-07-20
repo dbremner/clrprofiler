@@ -10,9 +10,9 @@ namespace CLRProfiler
 {
     internal partial class GraphViewForm : System.Windows.Forms.Form
     {
-        class CompareVerticesByScore : IComparer
+        private class CompareVerticesByScore : IComparer
         {
-            readonly Dictionary<Vertex, double> scoreOfVertex;
+            private readonly Dictionary<Vertex, double> scoreOfVertex;
 
             internal CompareVerticesByScore(Dictionary<Vertex, double> scoreOfVertex)
             {

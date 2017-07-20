@@ -9,9 +9,9 @@ namespace CLRProfiler
 {
     public partial class ObjectGraph
     {
-        class GcObjectWithManyReferences : GcObject
+        private class GcObjectWithManyReferences : GcObject
         {
-            readonly GcObject[] references;
+            private readonly GcObject[] references;
             internal GcObjectWithManyReferences(int numberOfReferences)
             {
                 references = new GcObject[numberOfReferences];

@@ -19,15 +19,15 @@ namespace CLRProfiler
 {
     public class PlacedToolTip : Control
     {
-        Font font;
-        int height;
-        string text;
-        int textX, textY;
-        DateTime created;
+        private Font font;
+        private int height;
+        private string text;
+        private int textX, textY;
+        private DateTime created;
 
-        readonly Pen blackPen;
+        private readonly Pen blackPen;
 
-        readonly System.Timers.Timer timer;
+        private readonly System.Timers.Timer timer;
 
         public string CurrentlyDisplayed()
         {

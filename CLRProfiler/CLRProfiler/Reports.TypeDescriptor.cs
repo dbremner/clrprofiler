@@ -4,7 +4,7 @@ namespace CLRProfiler
 {
     public partial class Reports
 	{
-        class TypeDescriptor : IComparable, IComparable<TypeDescriptor>
+	    private class TypeDescriptor : IComparable, IComparable<TypeDescriptor>
         {
             internal readonly int[] size;
             internal readonly int[] count;

@@ -10,7 +10,7 @@ namespace CLRProfiler
 {
     public partial class ObjectGraph
     {
-        class GcObjectWith3References : GcObjectWith2References
+        private class GcObjectWith3References : GcObjectWith2References
         {
             protected GcObject reference2;
             internal override IEnumerable<GcObject> References

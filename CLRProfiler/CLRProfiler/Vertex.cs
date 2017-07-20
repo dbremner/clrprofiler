@@ -49,7 +49,7 @@ namespace CLRProfiler
         [NotNull] internal readonly Graph containingGraph;
         internal ulong id;
 
-        (string nameSpace, string basicName) nameSpaceOf(string name)
+        private (string nameSpace, string basicName) nameSpaceOf(string name)
         {
             int prevSeparatorPos = -1;
             int thisSeparatorPos = -1;
@@ -172,7 +172,7 @@ namespace CLRProfiler
             }
         }
 
-        static bool IdenticalSequence(Vertex[] path, int i, int j, int length)
+        private static bool IdenticalSequence(Vertex[] path, int i, int j, int length)
         {
             for (int k = 0; k < length; k++)
             {
@@ -185,7 +185,7 @@ namespace CLRProfiler
             return true;
         }
 
-        static int LargestRepetition(Vertex[] path, int i, int j, int length)
+        private static int LargestRepetition(Vertex[] path, int i, int j, int length)
         {
             int len = i;
             if (len > length - j)
@@ -209,7 +209,7 @@ namespace CLRProfiler
             return 0;
         }
 
-        static bool RepeatedElementsPresent(Vertex[] path, int length)
+        private static bool RepeatedElementsPresent(Vertex[] path, int length)
         {
             for (int i = 0; i < length; i++)
             {

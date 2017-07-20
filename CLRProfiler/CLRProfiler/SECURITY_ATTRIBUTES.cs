@@ -7,7 +7,7 @@ using JetBrains.Annotations;
 
 namespace CLRProfiler
 {
-    struct SECURITY_ATTRIBUTES
+    internal struct SECURITY_ATTRIBUTES
     {
 #pragma warning disable 414
         [UsedImplicitly]

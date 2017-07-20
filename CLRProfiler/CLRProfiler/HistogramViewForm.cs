@@ -21,7 +21,7 @@ namespace CLRProfiler
     {
         private System.Timers.Timer versionTimer;
 
-        readonly ReadLogResult lastLogResult;
+        private readonly ReadLogResult lastLogResult;
 
         private Font font;
 
@@ -59,14 +59,14 @@ namespace CLRProfiler
             Text = title;
         }
 
-        TypeDesc[] typeIndexToTypeDesc;
+        private TypeDesc[] typeIndexToTypeDesc;
 
-        ArrayList sortedTypeTable;
+        private ArrayList sortedTypeTable;
 
-        Bucket[] buckets;
-        double currentScaleFactor;
+        private Bucket[] buckets;
+        private double currentScaleFactor;
 
-        void BuildBuckets()
+        private void BuildBuckets()
         {
             double scaleFactor = 2.0;
             if (coarseRadioButton.Checked)
@@ -118,7 +118,7 @@ namespace CLRProfiler
             }
         }
 
-        void AddToBuckets(TypeDesc t, int size, int count)
+        private void AddToBuckets(TypeDesc t, int size, int count)
         {
             for (int i = 0; i < buckets.Length; i++)
             {
@@ -139,7 +139,7 @@ namespace CLRProfiler
             }
         }
 
-        void TrimEmptyBuckets()
+        private void TrimEmptyBuckets()
         {
             int lo = 0;
             for (int i = 0; i < buckets.Length-1; i++)
@@ -173,10 +173,10 @@ namespace CLRProfiler
             }
         }
 
-        ulong totalSize;
-        int totalCount;
+        private ulong totalSize;
+        private int totalCount;
 
-        void BuildSizeRangesAndTypeTable(int[] typeSizeStacktraceToCount)
+        private void BuildSizeRangesAndTypeTable(int[] typeSizeStacktraceToCount)
         {
             BuildBuckets();
 
@@ -250,7 +250,7 @@ namespace CLRProfiler
             sortedTypeTable.Sort();
         }
 
-        static readonly Color[] firstColors =
+        private static readonly Color[] firstColors =
         {
             Color.Red,
             Color.Yellow,
@@ -260,9 +260,9 @@ namespace CLRProfiler
             Color.Magenta,
         };
 
-        static Color[] colors = new Color[16];
+        private static Color[] colors = new Color[16];
 
-        Color MixColor(Color a, Color b)
+        private Color MixColor(Color a, Color b)
         {
             int R = (a.R + b.R)/2;
             int G = (a.G + b.G)/2;
@@ -271,7 +271,7 @@ namespace CLRProfiler
             return Color.FromArgb(R, G, B);
         }
 
-        static void GrowColors()
+        private static void GrowColors()
         {
             Color[] newColors = new Color[2*colors.Length];
             for (int i = 0; i < colors.Length; i++)
@@ -328,7 +328,7 @@ namespace CLRProfiler
             }
         }
 
-        int Scale(GroupBox groupBox, int pixelsAvailable, int rangeNeeded, bool firstTime)
+        private int Scale(GroupBox groupBox, int pixelsAvailable, int rangeNeeded, bool firstTime)
         {
             if (!firstTime)
             {
@@ -378,23 +378,23 @@ namespace CLRProfiler
             }
         }
 
-        int verticalScale = 0;
+        private int verticalScale = 0;
 
-        int VerticalScale(int pixelsAvailable, ulong rangeNeeded, bool firstTime)
+        private int VerticalScale(int pixelsAvailable, ulong rangeNeeded, bool firstTime)
         {
             return Scale(verticalScaleGroupBox, pixelsAvailable, (int)(rangeNeeded/1024), firstTime)*1024;
         }
 
-        const int leftMargin = 30;
-        int bottomMargin = 50;
-        const int gap = 20;
-        int bucketWidth = 50;
-        const int topMargin = 30;
-        const int rightMargin = 30;
-        const int minHeight = 400;
-        int dotSize = 8;
+        private const int leftMargin = 30;
+        private int bottomMargin = 50;
+        private const int gap = 20;
+        private int bucketWidth = 50;
+        private const int topMargin = 30;
+        private const int rightMargin = 30;
+        private const int minHeight = 400;
+        private int dotSize = 8;
 
-        string FormatSize(ulong size)
+        private string FormatSize(ulong size)
         {
             double w = size;
             string byteString = "bytes";
@@ -463,7 +463,7 @@ namespace CLRProfiler
             }
         }
 
-        const int typeLegendSpacing = 3;
+        private const int typeLegendSpacing = 3;
 
         private void DrawTypeLegend(Graphics g)
         {
@@ -509,7 +509,7 @@ namespace CLRProfiler
             }
         }
 
-        bool initialized = false;
+        private bool initialized = false;
 
         private Histogram histogram;
         private string[] typeName;

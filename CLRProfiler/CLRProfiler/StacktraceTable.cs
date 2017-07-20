@@ -20,7 +20,7 @@ namespace CLRProfiler
             allocHashtable = new Dictionary<long, int>();
         }
 
-        int LookupAlloc(int typeId, int size)
+        private int LookupAlloc(int typeId, int size)
         {
             long key = typeId + ((long)size << 32);
             int data;
@@ -41,7 +41,7 @@ namespace CLRProfiler
             return id;
         }
 
-        void EnterAlloc(int id, int typeId, int size)
+        private void EnterAlloc(int id, int typeId, int size)
         {
             long key = typeId + ((long)size << 32);
             allocHashtable[key] = id;
@@ -52,7 +52,7 @@ namespace CLRProfiler
             Add( id, stack, 0, length, isAllocStack );
         }
 
-        void CreateMappingTable()
+        private void CreateMappingTable()
         {
             mappingTable = new int[stacktraceTable.Length];
             for (int i = 0; i < mappingTable.Length; i++)
@@ -61,7 +61,7 @@ namespace CLRProfiler
             }
         }
 
-        void GrowMappingTable()
+        private void GrowMappingTable()
         {
             int[] newMappingTable = new int[mappingTable.Length*2];
             for (int i = 0; i < mappingTable.Length; i++)

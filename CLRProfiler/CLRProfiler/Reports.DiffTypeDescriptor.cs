@@ -4,7 +4,7 @@ namespace CLRProfiler
 {
     public partial class Reports
 	{
-        class DiffTypeDescriptor : IComparable, IComparable<DiffTypeDescriptor>
+	    private class DiffTypeDescriptor : IComparable, IComparable<DiffTypeDescriptor>
         {
             internal int aSize;
             internal int aCount;

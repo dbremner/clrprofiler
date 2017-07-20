@@ -10,7 +10,7 @@ namespace CLRProfiler
 {
     public partial class ViewByAddressForm : System.Windows.Forms.Form
     {
-        class TypeDesc : IComparable
+        private class TypeDesc : IComparable
         {
             internal readonly string typeName;
             internal readonly int typeIndex;

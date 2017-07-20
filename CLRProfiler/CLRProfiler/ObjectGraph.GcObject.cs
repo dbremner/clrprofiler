@@ -16,9 +16,9 @@ namespace CLRProfiler
             internal GcObject parent;
             internal Vertex vertex;
             internal int idTypeSizeStackTraceId;
-            const int idBits = IdToObject.idBits;
-            const int idMask = IdToObject.idMask;
-            const int typeSizeStackTraceIdBits = 32 - idBits;
+            private const int idBits = IdToObject.idBits;
+            private const int idMask = IdToObject.idMask;
+            private const int typeSizeStackTraceIdBits = 32 - idBits;
             internal int Id
             {
                 get => idTypeSizeStackTraceId & idMask;

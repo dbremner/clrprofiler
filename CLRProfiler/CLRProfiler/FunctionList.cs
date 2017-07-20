@@ -8,8 +8,8 @@ namespace CLRProfiler
 {
     internal partial class FunctionList
     {
-        readonly ReadNewLog readNewLog;
-        readonly List<FunctionDescriptor> functionList;
+        private readonly ReadNewLog readNewLog;
+        private readonly List<FunctionDescriptor> functionList;
 
         internal FunctionList(ReadNewLog readNewLog)
         {
@@ -24,7 +24,7 @@ namespace CLRProfiler
 
         internal bool Empty => functionList.Count == 0;
 
-        void BuildFuncVertices(Graph graph, ref Vertex[] funcVertex, FilterForm filterForm)
+        private void BuildFuncVertices(Graph graph, ref Vertex[] funcVertex, FilterForm filterForm)
         {
             for (int i = 0; i < readNewLog.funcName.Length; i++)
             {
@@ -37,7 +37,7 @@ namespace CLRProfiler
             }
         }
 
-        int BuildVertexStack(int stackTraceIndex, Vertex[] funcVertex, ref Vertex[] vertexStack, int skipCount)
+        private int BuildVertexStack(int stackTraceIndex, Vertex[] funcVertex, ref Vertex[] vertexStack, int skipCount)
         {
             int[] stackTrace = readNewLog.stacktraceTable.IndexToStacktrace(stackTraceIndex);
                 
@@ -54,7 +54,7 @@ namespace CLRProfiler
             return stackTrace.Length - skipCount;
         }
 
-        void BuildFunctionTrace(Graph graph, int stackTraceIndex, int funcIndex, ulong size, Vertex[] funcVertex, ref Vertex[] vertexStack, FilterForm filterForm)
+        private void BuildFunctionTrace(Graph graph, int stackTraceIndex, int funcIndex, ulong size, Vertex[] funcVertex, ref Vertex[] vertexStack, FilterForm filterForm)
         {
             int stackPtr = BuildVertexStack(stackTraceIndex, funcVertex, ref vertexStack, 0);
 
@@ -106,7 +106,7 @@ namespace CLRProfiler
             return graph;
         }
 
-        void BuildModVertices(Graph graph, ref Vertex[] modVertex, FilterForm filterForm)
+        private void BuildModVertices(Graph graph, ref Vertex[] modVertex, FilterForm filterForm)
         {
             for (int i = 0; i < readNewLog.modBasicName.Length; i++)
             {
@@ -121,7 +121,7 @@ namespace CLRProfiler
             }
         }
 
-        int FunctionsInSameModule(int modIndex, int stackTraceIndex)
+        private int FunctionsInSameModule(int modIndex, int stackTraceIndex)
         {
             int[] stackTrace = readNewLog.stacktraceTable.IndexToStacktrace(stackTraceIndex);
             int result = 0;
@@ -140,7 +140,7 @@ namespace CLRProfiler
             return result;
         }
 
-        void BuildModuleTrace(Graph graph, int stackTraceIndex, int modIndex, ulong size, Vertex[] funcVertex, Vertex[] modVertex, ref Vertex[] vertexStack, FilterForm filterForm)
+        private void BuildModuleTrace(Graph graph, int stackTraceIndex, int modIndex, ulong size, Vertex[] funcVertex, Vertex[] modVertex, ref Vertex[] vertexStack, FilterForm filterForm)
         {
             int functionsToSkip = FunctionsInSameModule(modIndex, stackTraceIndex);
             int stackPtr = BuildVertexStack(stackTraceIndex, funcVertex, ref vertexStack, 0) - functionsToSkip;
@@ -194,7 +194,7 @@ namespace CLRProfiler
             return graph;
         }
 
-        string ClassNameOfFunc(int funcIndex)
+        private string ClassNameOfFunc(int funcIndex)
         {
             string funcName = readNewLog.funcName[funcIndex];
             int colonColonIndex = funcName.IndexOf("::");
@@ -208,7 +208,7 @@ namespace CLRProfiler
             }
         }
 
-        int FunctionsInSameClass(string className, int stackTraceIndex)
+        private int FunctionsInSameClass(string className, int stackTraceIndex)
         {
             int[] stackTrace = readNewLog.stacktraceTable.IndexToStacktrace(stackTraceIndex);
             int result = 0;
@@ -227,7 +227,7 @@ namespace CLRProfiler
             return result;
         }
 
-        void BuildClassTrace(Graph graph, int stackTraceIndex, int funcIndex, ulong size, Vertex[] funcVertex, ref Vertex[] vertexStack, FilterForm filterForm)
+        private void BuildClassTrace(Graph graph, int stackTraceIndex, int funcIndex, ulong size, Vertex[] funcVertex, ref Vertex[] vertexStack, FilterForm filterForm)
         {
             string className = ClassNameOfFunc(funcIndex);
             int functionsToSkip = FunctionsInSameClass(className, stackTraceIndex);

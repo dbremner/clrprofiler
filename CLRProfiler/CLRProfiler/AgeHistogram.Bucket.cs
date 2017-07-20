@@ -9,7 +9,7 @@ namespace CLRProfiler
 {
     public partial class AgeHistogram : System.Windows.Forms.Form
     {
-        struct Bucket
+        private struct Bucket
         {
             internal ulong totalSize;
             internal Dictionary<TypeDesc, SizeCount> typeDescToSizeCount;

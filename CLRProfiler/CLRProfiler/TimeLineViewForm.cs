@@ -21,7 +21,7 @@ namespace CLRProfiler
         private readonly int firstAllocTickIndex;
         private readonly int lastAllocTickIndex;
 
-        Font font;
+        private Font font;
 
         public TimeLineViewForm()
         {
@@ -70,7 +70,7 @@ namespace CLRProfiler
             this.Text = Title();
         }
 
-        class AddressRange
+        private class AddressRange
         {
             internal readonly ulong loAddr;
             internal ulong hiAddr;
@@ -86,12 +86,12 @@ namespace CLRProfiler
             }
         }
 
-        const int allowableGap = 64*1024-1;
+        private const int allowableGap = 64*1024-1;
 
-        AddressRange rangeList;
-        int rangeCount = 0;
+        private AddressRange rangeList;
+        private int rangeCount = 0;
 
-        string[] typeName;
+        private string[] typeName;
 
         private void AddAddress(ulong addr)
         {
@@ -107,9 +107,9 @@ namespace CLRProfiler
 
         }
 
-        TypeDesc[] typeIndexToTypeDesc;
+        private TypeDesc[] typeIndexToTypeDesc;
 
-        ArrayList sortedTypeTable;
+        private ArrayList sortedTypeTable;
 
         private void AddToTypeTable(int typeIndex, int lifeTime)
         {
@@ -181,7 +181,7 @@ namespace CLRProfiler
             sortedTypeTable.Sort();
         }
 
-        static readonly Color[] firstColors =
+        private static readonly Color[] firstColors =
         {
             Color.Red,
             Color.Yellow,
@@ -191,9 +191,9 @@ namespace CLRProfiler
             Color.Magenta,
         };
 
-        static Color[] colors = new Color[16];
+        private static Color[] colors = new Color[16];
 
-        Color MixColor(Color a, Color b)
+        private Color MixColor(Color a, Color b)
         {
             int R = (a.R + b.R)/2;
             int G = (a.G + b.G)/2;
@@ -202,7 +202,7 @@ namespace CLRProfiler
             return Color.FromArgb(R, G, B);
         }
 
-        static void GrowColors()
+        private static void GrowColors()
         {
             Color[] newColors = new Color[2*colors.Length];
             for (int i = 0; i < colors.Length; i++)
@@ -270,7 +270,7 @@ namespace CLRProfiler
             }
         }
 
-        int Scale(GroupBox groupBox, int pixelsAvailable, int rangeNeeded, bool firstTime)
+        private int Scale(GroupBox groupBox, int pixelsAvailable, int rangeNeeded, bool firstTime)
         {
             if (!firstTime)
             {
@@ -320,17 +320,17 @@ namespace CLRProfiler
             }
         }
 
-        int verticalScale;
-        int horizontalScale;
+        private int verticalScale;
+        private int horizontalScale;
 
-        const int leftMargin = 30;
-        const int bottomMargin = 30;
-        const int gap = 10;
-        const int clickMargin = 20;
-        const int topMargin = 30;
-        int rightMargin = 80;
-        const int minHeight = 400;
-        int dotSize = 8;
+        private const int leftMargin = 30;
+        private const int bottomMargin = 30;
+        private const int gap = 10;
+        private const int clickMargin = 20;
+        private const int topMargin = 30;
+        private int rightMargin = 80;
+        private const int minHeight = 400;
+        private int dotSize = 8;
 
         private int TimeToX(double time)
         {
@@ -353,7 +353,7 @@ namespace CLRProfiler
             return y;
         }
 
-        void IntersectIntervals(int aLow, int aHigh, ref int bLow, ref int bHigh)
+        private void IntersectIntervals(int aLow, int aHigh, ref int bLow, ref int bHigh)
         {
             bLow = Math.Max(aLow, bLow);
             bHigh = Math.Min(aHigh, bHigh);
@@ -424,7 +424,7 @@ namespace CLRProfiler
             }
         }
 
-        int addressLabelWidth;
+        private int addressLabelWidth;
 
         private string FormatAddress(ulong addr)
         {
@@ -480,7 +480,7 @@ namespace CLRProfiler
             }
         }
 
-        int timeLabelHeight;
+        private int timeLabelHeight;
 
         private void DrawTimeLabels(Graphics g, double lastTime)
         {
@@ -651,10 +651,10 @@ namespace CLRProfiler
             }
         }
 
-        SampleObjectTable sampleObjectTable;
-        ReadNewLog lastLog;
-        int lastTickIndex;
-        bool initialized;
+        private SampleObjectTable sampleObjectTable;
+        private ReadNewLog lastLog;
+        private int lastTickIndex;
+        private bool initialized;
 
         private int RightMargin(Graphics g)
         {
@@ -768,7 +768,7 @@ namespace CLRProfiler
             graphPanel.Invalidate();
         }
 
-        const int typeLegendSpacing = 3;
+        private const int typeLegendSpacing = 3;
 
         private void CalculateAllocatedObjectSizes(int startTickIndex, int endTickIndex, ulong addr)
         {
@@ -1023,8 +1023,8 @@ namespace CLRProfiler
             }
         }
 
-        const int selectionVerticalMargin = 5;
-        const int commentVerticalMargin = 7;
+        private const int selectionVerticalMargin = 5;
+        private const int commentVerticalMargin = 7;
 
         private void EraseSelectionVerticalLine(Graphics g, int tickIndex)
         {
@@ -1208,7 +1208,7 @@ namespace CLRProfiler
             }
         }
 
-        SampleObjectTable.SampleObject FindSampleObject(int tickIndex, ulong addr)
+        private SampleObjectTable.SampleObject FindSampleObject(int tickIndex, ulong addr)
         {
             uint index = (uint)(addr >> SampleObjectTable.firstLevelShift);
             SampleObjectTable.SampleObject[] sot = sampleObjectTable.masterTable[index];

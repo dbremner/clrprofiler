@@ -4,7 +4,7 @@
 	{
 
         // caller and callee tables node
-        struct callnode
+	    private struct callnode
 		{
 		    public int id { get; set; }
 

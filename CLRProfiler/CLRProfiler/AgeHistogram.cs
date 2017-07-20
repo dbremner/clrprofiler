@@ -58,18 +58,18 @@ namespace CLRProfiler
             autoUpdate = false;
         }
 
-        [CanBeNull] LiveObjectTable liveObjectTable;
+        [CanBeNull] private LiveObjectTable liveObjectTable;
 
-        const int leftMargin = 30;
-        int bottomMargin = 50;
-        const int gap = 20;
-        int bucketWidth = 50;
-        const int topMargin = 30;
-        const int rightMargin = 30;
-        const int minHeight = 400;
+        private const int leftMargin = 30;
+        private int bottomMargin = 50;
+        private const int gap = 20;
+        private int bucketWidth = 50;
+        private const int topMargin = 30;
+        private const int rightMargin = 30;
+        private const int minHeight = 400;
 
-        double timeScale = 1;
-        uint verticalScale = 0;
+        private double timeScale = 1;
+        private uint verticalScale = 0;
 
         private double GetTimeScale(double suggestedScale, bool firstTime)
         {
@@ -137,12 +137,12 @@ namespace CLRProfiler
             }
         }
 
-        [CanBeNull] TypeDesc[] typeIndexToTypeDesc;
+        [CanBeNull] private TypeDesc[] typeIndexToTypeDesc;
 
         [CanBeNull] private Bucket[] bucketTable;
 
         [CanBeNull] private List<TypeDesc> sortedTypeTable;
-        ulong totalSize;
+        private ulong totalSize;
 
         private ulong BuildBuckets(double timeScale, double maxAge)
         {
@@ -291,7 +291,7 @@ namespace CLRProfiler
             return maxBucketSize;
         }
 
-        uint GetScale(GroupBox groupBox, int pixelsAvailable, ulong rangeNeeded, bool firstTime)
+        private uint GetScale(GroupBox groupBox, int pixelsAvailable, ulong rangeNeeded, bool firstTime)
         {
             if (!firstTime)
             {
@@ -341,12 +341,12 @@ namespace CLRProfiler
             }
         }
 
-        uint GetVerticalScale(int pixelsAvailable, ulong rangeNeeded, bool firstTime)
+        private uint GetVerticalScale(int pixelsAvailable, ulong rangeNeeded, bool firstTime)
         {
             return GetScale(verticalScaleGroupBox, pixelsAvailable, rangeNeeded, firstTime);
         }
 
-        static readonly Color[] firstColors =
+        private static readonly Color[] firstColors =
         {
             Color.Red,
             Color.Yellow,
@@ -356,9 +356,9 @@ namespace CLRProfiler
             Color.Magenta,
         };
 
-        static Color[] colors = new Color[16];
+        private static Color[] colors = new Color[16];
 
-        Color MixColor(Color a, Color b)
+        private Color MixColor(Color a, Color b)
         {
             int R = (a.R + b.R)/2;
             int G = (a.G + b.G)/2;
@@ -367,7 +367,7 @@ namespace CLRProfiler
             return Color.FromArgb(R, G, B);
         }
 
-        static void GrowColors()
+        private static void GrowColors()
         {
             Color[] newColors = new Color[2*colors.Length];
             for (int i = 0; i < colors.Length; i++)
@@ -427,7 +427,7 @@ namespace CLRProfiler
             }
         }
 
-        string FormatSize(ulong size)
+        private string FormatSize(ulong size)
         {
             double w = size;
             string byteString = "bytes";
@@ -609,8 +609,8 @@ namespace CLRProfiler
             initialized = true;
         }
 
-        const int typeLegendSpacing = 3;
-        int dotSize = 8;
+        private const int typeLegendSpacing = 3;
+        private int dotSize = 8;
 
         private void DrawTypeLegend([NotNull] Graphics g)
         {
@@ -817,7 +817,7 @@ namespace CLRProfiler
             }       
         }
 
-        string FormatAge(double age, [CanBeNull] string ageComment)
+        private string FormatAge(double age, [CanBeNull] string ageComment)
         {
             if (ageComment == null)
             {

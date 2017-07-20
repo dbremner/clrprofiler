@@ -5,9 +5,9 @@ namespace CLRProfiler
 {
     public partial class AllocationDiff 
 	{
-        class CompareIncl : IComparer
+	    private class CompareIncl : IComparer
 		{
-		    [NotNull] readonly Hashtable inclOfNode;
+		    [NotNull] private readonly Hashtable inclOfNode;
 
 			internal CompareIncl([NotNull] Hashtable inclOfNode)
 			{

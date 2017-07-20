@@ -10,7 +10,7 @@ namespace CLRProfiler
 {
     public partial class AgeHistogram : System.Windows.Forms.Form
     {
-        class TypeDesc : IComparable, IComparable<TypeDesc>
+        private class TypeDesc : IComparable, IComparable<TypeDesc>
         {
             internal readonly string typeName;
             internal ulong totalSize;

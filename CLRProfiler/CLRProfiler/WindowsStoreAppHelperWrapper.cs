@@ -30,7 +30,7 @@ namespace CLRProfiler
 
     // Warning: Not multi-thread aware.  Designed to be used serially, primarily from main
     // UI thread (MainForm.cs)
-    class WindowsStoreAppHelperWrapper
+    internal class WindowsStoreAppHelperWrapper
     {
         private static bool s_isInitialized = false;
         private static bool s_isWindowsStoreAppSupported = false;

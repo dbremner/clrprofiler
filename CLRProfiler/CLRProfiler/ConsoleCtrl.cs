@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CLRProfiler
 {
-    class ConsoleCtrl
+    internal class ConsoleCtrl
     {
         internal enum ConsoleEvent
         {
@@ -20,7 +20,7 @@ namespace CLRProfiler
 
         internal event ControlEventHandler ControlEvent;
 
-        readonly ControlEventHandler eventHandler;
+        private readonly ControlEventHandler eventHandler;
 
         internal ConsoleCtrl()
         {
@@ -40,6 +40,6 @@ namespace CLRProfiler
         }
 
         [DllImport("kernel32.dll")]
-        static extern bool SetConsoleCtrlHandler(ControlEventHandler e, bool add);
+        private static extern bool SetConsoleCtrlHandler(ControlEventHandler e, bool add);
     }
 }

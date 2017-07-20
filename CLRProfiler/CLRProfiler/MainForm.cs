@@ -784,7 +784,7 @@ namespace CLRProfiler
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main(string[] arguments)
+        private static void Main(string[] arguments)
         {
             consoleCtrl = new ConsoleCtrl();
             consoleCtrl.ControlEvent += new ConsoleCtrl.ControlEventHandler(ConsoleEventHandler);
@@ -816,9 +816,9 @@ namespace CLRProfiler
             }
         }
 
-        static ConsoleCtrl consoleCtrl;
+        private static ConsoleCtrl consoleCtrl;
 
-        static bool ConsoleEventHandler(ConsoleCtrl.ConsoleEvent consoleEvent)
+        private static bool ConsoleEventHandler(ConsoleCtrl.ConsoleEvent consoleEvent)
         {
             MainForm instance = MainForm.instance;
             if (instance == null || (instance.CheckProcessTerminate() && instance.CheckFileSave()))

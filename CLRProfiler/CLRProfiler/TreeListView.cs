@@ -61,7 +61,7 @@ namespace CLRProfiler
 			}
 		}
 
-		enum Direction
+	    private enum Direction
 		{
 			Forward,
 			Backward
@@ -218,7 +218,7 @@ namespace CLRProfiler
 			base.Dispose( disposing );
 		}
 
-		void RedoColumnLayout()
+	    private void RedoColumnLayout()
 		{
 			int position = -leftEdge;
 			int height = Font.Height + 5;
@@ -652,7 +652,7 @@ namespace CLRProfiler
 			return c;
 		}
 
-		void ToggleBranch(int index)
+	    private void ToggleBranch(int index)
 		{
 			var node = (TreeNodeBase)Items[index];
 			if(!node.HasKids)

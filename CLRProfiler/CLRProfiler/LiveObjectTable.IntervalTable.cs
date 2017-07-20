@@ -5,16 +5,16 @@ namespace CLRProfiler
 {
     internal partial class LiveObjectTable
     {
-        partial class IntervalTable
+        private partial class IntervalTable
         {
-            const int allowableGap = 1024*1024;
+            private const int allowableGap = 1024*1024;
 
-            Interval liveRoot;
-            Interval newLiveRoot;
-            Interval updateRoot;
-            bool nullRelocationsSeen;
+            private Interval liveRoot;
+            private Interval newLiveRoot;
+            private Interval updateRoot;
+            private bool nullRelocationsSeen;
 
-            readonly LiveObjectTable liveObjectTable;
+            private readonly LiveObjectTable liveObjectTable;
 
             internal IntervalTable(LiveObjectTable liveObjectTable)
             {

@@ -92,14 +92,14 @@ namespace CLRProfiler
 	    [NotNull] internal readonly Hashtable currTypeExcl = new Hashtable();
 
 
-		StreamReader r;
-		byte[] buffer;
-		int c;
-		int line;
-		long pos;
-		long lastLineStartPos;
-		int bufPos;
-		int bufLevel;
+	    private StreamReader r;
+	    private byte[] buffer;
+	    private int c;
+	    private int line;
+	    private long pos;
+	    private long lastLineStartPos;
+	    private int bufPos;
+	    private int bufLevel;
 		private static int sumnodeidx = 0;
 		private static int depth = 0;
 
@@ -925,7 +925,7 @@ namespace CLRProfiler
 #endif
 		}
 
-		DoubleInt FormatSize(DoubleInt size)
+	    private DoubleInt FormatSize(DoubleInt size)
 		{
 #if (V_EXEC)
             double w = size;
@@ -1859,8 +1859,8 @@ namespace CLRProfiler
                 return FillBuffer();
             }
         }
-		
-		int ReadInt()
+
+	    private int ReadInt()
 		{
 			while (c == ' ' || c == '\t')
             {
@@ -1902,7 +1902,8 @@ namespace CLRProfiler
 				return Int32.MinValue;
 			}
 		}
-		int FillBuffer()
+
+	    private int FillBuffer()
 		{
 			bufPos = 0;
 			bufLevel = r.BaseStream.Read(buffer, 0, buffer.Length);
@@ -1915,7 +1916,8 @@ namespace CLRProfiler
                 return -1;
             }
         }
-		int ReadHex()
+
+	    private int ReadHex()
 		{
 			int value = 0;
 			while (true)

@@ -10,7 +10,7 @@ namespace CLRProfiler
     public partial class AllocationDiff 
 	{
         // typeAllocation table node
-        struct typeAllocnode
+	    private struct typeAllocnode
 		{
 			public int typeid { get; set; }
 

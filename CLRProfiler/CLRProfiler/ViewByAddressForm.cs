@@ -23,7 +23,7 @@ namespace CLRProfiler
         private readonly bool autoUpdate;
         private readonly string baseTitle;
 
-        Font font;
+        private Font font;
 
         internal ViewByAddressForm()
         {
@@ -62,11 +62,11 @@ namespace CLRProfiler
             Text = title;
         }
 
-        readonly Brush blackBrush = new SolidBrush(Color.Black);
+        private readonly Brush blackBrush = new SolidBrush(Color.Black);
 
-        const int generations = 4;
+        private const int generations = 4;
 
-        class AddressRange
+        private class AddressRange
         {
             internal readonly ulong loAddr;
             internal ulong hiAddr;
@@ -91,17 +91,17 @@ namespace CLRProfiler
             }
         }
 
-        const int allowableGap = 1024*1024-1;
+        private const int allowableGap = 1024*1024-1;
 
-        AddressRange rangeList;
-        int rangeCount = 0;
+        private AddressRange rangeList;
+        private int rangeCount = 0;
 
-        TypeDesc[] typeIndexToTypeDesc;
-        string[] typeName;
+        private TypeDesc[] typeIndexToTypeDesc;
+        private string[] typeName;
 
-        ArrayList sortedTypeTable;
+        private ArrayList sortedTypeTable;
 
-        void BuildAddressRangesTypeTable()
+        private void BuildAddressRangesTypeTable()
         {
             rangeList = null;
             rangeCount = 0;
@@ -202,23 +202,23 @@ namespace CLRProfiler
             }
         }
 
-        const int typeLegendLeftMargin = 20;
-        int leftMargin = 70;
-        const int bottomMargin = 40;
-        const int clickMargin = 20;
-        const int topMargin = 30;
-        const int rightMargin = 30;
-        const int minHeight = 400;
+        private const int typeLegendLeftMargin = 20;
+        private int leftMargin = 70;
+        private const int bottomMargin = 40;
+        private const int clickMargin = 20;
+        private const int topMargin = 30;
+        private const int rightMargin = 30;
+        private const int minHeight = 400;
         private int gap = 50;
-        int dotSize = 8;
-        const int typeLegendSpacing = 3;
+        private int dotSize = 8;
+        private const int typeLegendSpacing = 3;
 
         private int LeftMargin(Graphics g)
         {
             return 20 + (int)g.MeasureString("00.0123.4567", font).Width;
         }
 
-        int Scale(GroupBox groupBox, int pixelsAvailable, int rangeNeeded, bool firstTime)
+        private int Scale(GroupBox groupBox, int pixelsAvailable, int rangeNeeded, bool firstTime)
         {
             if (!firstTime)
             {
@@ -268,12 +268,12 @@ namespace CLRProfiler
             }
         }
 
-        uint BytesPerPixel(int availablePixels, int neededRange, bool firstTime)
+        private uint BytesPerPixel(int availablePixels, int neededRange, bool firstTime)
         {
             return (uint)Scale(bytesPerPixelgroupBox, availablePixels, neededRange, firstTime);
         }
 
-        int HeapWidth(int rangeCount)
+        private int HeapWidth(int rangeCount)
         {
             foreach (RadioButton rb in heapWidthGroupBox.Controls)
             {
@@ -295,7 +295,7 @@ namespace CLRProfiler
             return 128;
         }
 
-        static readonly Color[] firstColors =
+        private static readonly Color[] firstColors =
         {
             Color.Red,
             Color.Yellow,
@@ -305,9 +305,9 @@ namespace CLRProfiler
             Color.Magenta,
         };
 
-        static Color[] colors = new Color[16];
+        private static Color[] colors = new Color[16];
 
-        Color MixColor(Color a, Color b)
+        private Color MixColor(Color a, Color b)
         {
             int R = (a.R + b.R)/2;
             int G = (a.G + b.G)/2;
@@ -316,7 +316,7 @@ namespace CLRProfiler
             return Color.FromArgb(R, G, B);
         }
 
-        static void GrowColors()
+        private static void GrowColors()
         {
             Color[] newColors = new Color[2*colors.Length];
             for (int i = 0; i < colors.Length; i++)
@@ -490,15 +490,15 @@ namespace CLRProfiler
             }
         }
 
-        const int align = 4;
-        
-        void IntersectIntervals(int aLow, int aHigh, ref int bLow, ref int bHigh)
+        private const int align = 4;
+
+        private void IntersectIntervals(int aLow, int aHigh, ref int bLow, ref int bHigh)
         {
             bLow = Math.Max(aLow, bLow);
             bHigh = Math.Min(aHigh, bHigh);
         }
 
-        void IntersectIntervals(ulong aLow, ulong aHigh, ref ulong bLow, ref ulong bHigh)
+        private void IntersectIntervals(ulong aLow, ulong aHigh, ref ulong bLow, ref ulong bHigh)
         {
             bLow = Math.Max(aLow, bLow);
             bHigh = Math.Min(aHigh, bHigh);
@@ -576,8 +576,8 @@ namespace CLRProfiler
             }
         }
 
-        uint bytesPerPixel;
-        int heapWidth;
+        private uint bytesPerPixel;
+        private int heapWidth;
 
         private string FormatAddress(ulong addr)
         {
@@ -744,9 +744,9 @@ namespace CLRProfiler
             }
         }
 
-        bool initialized = false;
+        private bool initialized = false;
 
-        LiveObjectTable liveObjectTable;
+        private LiveObjectTable liveObjectTable;
 
         private void graphPanel_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
         {
@@ -828,8 +828,8 @@ namespace CLRProfiler
             }
         }
 
-        ulong selectedStartAddr, selectedEndAddr;
-        ulong selectedLowAddr, selectedHighAddr;
+        private ulong selectedStartAddr, selectedEndAddr;
+        private ulong selectedLowAddr, selectedHighAddr;
 
         private ulong PixelCoordinatesToAddress(int x, int y)
         {
@@ -1101,7 +1101,7 @@ namespace CLRProfiler
             return o.id <= addr && addr < o.id + o.size;
         }
 
-        string FormatSize(ulong size)
+        private string FormatSize(ulong size)
         {
             double w = size;
             string byteString = "bytes";
