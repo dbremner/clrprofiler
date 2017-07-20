@@ -15,6 +15,7 @@ using System.IO;
 using System.Text;
 using System.Diagnostics;
 using Microsoft.Win32;
+// ReSharper disable ArgumentsStyleLiteral
 
 
 namespace CLRProfiler

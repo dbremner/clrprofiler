@@ -14,6 +14,7 @@ using System.Drawing;
 using System.Collections;
 using System.ComponentModel;
 using System.Windows.Forms;
+// ReSharper disable ArgumentsStyleNamedExpression
 
 namespace CLRProfiler
 {
