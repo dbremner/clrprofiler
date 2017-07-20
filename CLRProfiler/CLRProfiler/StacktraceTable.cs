@@ -190,12 +190,6 @@ namespace CLRProfiler
             maxID = firstIndex;
         }
 
-        internal int Length 
-        {
-            get 
-            { 
-                return maxID + 1;
-            }
-        }
+        internal int Length => maxID + 1;
     }
 }

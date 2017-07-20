@@ -21,10 +21,7 @@ namespace CLRProfiler
             const int typeSizeStackTraceIdBits = 32 - idBits;
             internal int Id
             {
-                get
-                {
-                    return idTypeSizeStackTraceId & idMask;
-                }
+                get => idTypeSizeStackTraceId & idMask;
                 set
                 {
                     idTypeSizeStackTraceId = (idTypeSizeStackTraceId & ~idMask) | (value & idMask);
@@ -32,10 +29,7 @@ namespace CLRProfiler
             }
             internal int TypeSizeStackTraceId
             {
-                get
-                {
-                    return idTypeSizeStackTraceId >> idBits;
-                }
+                get => idTypeSizeStackTraceId >> idBits;
                 set
                 {
                     idTypeSizeStackTraceId = (idTypeSizeStackTraceId & idMask) | (value << idBits);
@@ -71,10 +65,7 @@ namespace CLRProfiler
             internal int interestLevelAllocTickIndex; // high 8 bits for interest level, low 24 bits for allocTickIndex;
             internal InterestLevel InterestLevel
             {
-                get
-                {
-                    return (InterestLevel)(interestLevelAllocTickIndex >> 24);
-                }
+                get => (InterestLevel)(interestLevelAllocTickIndex >> 24);
                 set
                 {
                     interestLevelAllocTickIndex &= 0x00ffffff;
@@ -83,10 +74,7 @@ namespace CLRProfiler
             }
             internal int AllocTickIndex
             {
-                get
-                {
-                    return interestLevelAllocTickIndex & 0x00ffffff;
-                }
+                get => interestLevelAllocTickIndex & 0x00ffffff;
                 set
                 {
                     interestLevelAllocTickIndex &= unchecked((int)0xff000000);
