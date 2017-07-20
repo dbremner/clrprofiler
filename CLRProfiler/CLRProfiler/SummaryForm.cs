@@ -133,11 +133,7 @@ namespace CLRProfiler
             {
                 handlesCreatedValueLabel.Text = CalculateTotalCount(logResult.createdHandlesHistogram);
                 handlesDestroyedValueLabel.Text = CalculateTotalCount(logResult.destroyedHandlesHistogram);
-                int count = 0;
-                foreach (HandleInfo handleInfo in logResult.handleHash.Values)
-                {
-                    count++;
-                }
+                int count = logResult.handleHash.Values.Count;
 
                 handlesSurvivingValueLabel.Text = FormatNumber(count);
             }
