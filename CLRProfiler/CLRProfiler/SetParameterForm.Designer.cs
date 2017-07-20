@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 namespace CLRProfiler
 {
-	public partial class SetParameterForm : System.Windows.Forms.Form
+	public sealed partial class SetParameterForm : System.Windows.Forms.Form
 	{
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button okButton;

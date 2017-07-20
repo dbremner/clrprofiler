@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 namespace CLRProfiler
 {
-	internal partial class FunctionFind : System.Windows.Forms.Form
+	internal sealed partial class FunctionFind : System.Windows.Forms.Form
 	{
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.TextBox tbSearchString;

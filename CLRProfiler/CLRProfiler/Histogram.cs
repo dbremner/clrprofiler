@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CLRProfiler
 {
-    internal class Histogram
+    internal sealed class Histogram
     {
         internal int[] typeSizeStacktraceToCount;
         internal readonly ReadNewLog readNewLog;

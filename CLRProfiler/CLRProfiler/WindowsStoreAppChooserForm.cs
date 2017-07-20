@@ -22,7 +22,7 @@ using System.Windows.Forms;
 
 namespace CLRProfiler
 {
-    public partial class WindowsStoreAppChooserForm : Form
+    public sealed partial class WindowsStoreAppChooserForm : Form
     {
         private readonly List<PackageInfo> packageInfos;
 

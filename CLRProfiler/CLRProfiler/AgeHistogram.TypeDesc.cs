@@ -8,9 +8,9 @@ using System.Drawing;
 
 namespace CLRProfiler
 {
-    public partial class AgeHistogram : System.Windows.Forms.Form
+    public sealed partial class AgeHistogram : System.Windows.Forms.Form
     {
-        private class TypeDesc : IComparable, IComparable<TypeDesc>
+        private sealed class TypeDesc : IComparable, IComparable<TypeDesc>
         {
             internal readonly string typeName;
             internal ulong totalSize;

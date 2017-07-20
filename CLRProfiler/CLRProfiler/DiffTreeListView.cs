@@ -11,7 +11,7 @@ using JetBrains.Annotations;
 
 namespace CLRProfiler
 {
-    internal partial class DiffTreeListView : Control
+    internal sealed partial class DiffTreeListView : Control
 	{
 		#region Data member
 		private int leftEdge;

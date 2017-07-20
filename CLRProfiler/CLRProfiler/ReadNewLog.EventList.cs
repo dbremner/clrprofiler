@@ -12,10 +12,10 @@
 
 namespace CLRProfiler
 {
-    internal partial class ReadNewLog
+    internal sealed partial class ReadNewLog
     {
         // helper class to keep track of events like log file comments, garbage collections, and heap dumps
-        internal class EventList
+        internal sealed class EventList
         {
             internal int count;
             internal int[] eventTickIndex;

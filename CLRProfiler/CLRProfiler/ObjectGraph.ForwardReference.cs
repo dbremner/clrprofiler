@@ -6,9 +6,9 @@
 
 namespace CLRProfiler
 {
-    public partial class ObjectGraph
+    public sealed partial class ObjectGraph
     {
-        private class ForwardReference
+        private sealed class ForwardReference
         {
             internal ForwardReference(GcObject source, int referenceNumber, ForwardReference next)
             {

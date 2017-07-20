@@ -21,7 +21,7 @@ namespace CLRProfiler
     /// <summary>
     /// Summary description for SortAndHighlightSelector.
     /// </summary>
-    internal partial class SortAndHighlightSelector : System.Windows.Forms.Form
+    internal sealed partial class SortAndHighlightSelector : System.Windows.Forms.Form
     {
 
         internal SortAndHighlightSelector(SortingBehaviour sort, SortingBehaviour highlight)

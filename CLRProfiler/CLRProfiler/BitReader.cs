@@ -14,7 +14,7 @@ using System.IO;
 
 namespace CLRProfiler
 {
-	internal class BitReader
+	internal sealed class BitReader
 	{
 		private BinaryReader fp;
 

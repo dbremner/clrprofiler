@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CLRProfiler
 {
-    internal class Statistics
+    internal sealed class Statistics
     {
         private readonly static string[] CounterNames =
         {

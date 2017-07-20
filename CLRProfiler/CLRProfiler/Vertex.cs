@@ -16,7 +16,7 @@ namespace CLRProfiler
     /// <summary>
     ///    Summary description for Vertex.
     /// </summary>
-    public class Vertex : IComparable
+    public sealed class Vertex : IComparable
     {
         [NotNull] internal readonly string name;
         [CanBeNull] internal readonly string signature;

@@ -6,7 +6,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 namespace CLRProfiler
 {
-	public partial class SummaryForm : System.Windows.Forms.Form
+	public sealed partial class SummaryForm : System.Windows.Forms.Form
 	{
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;

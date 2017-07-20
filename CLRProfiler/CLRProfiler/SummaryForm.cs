@@ -10,7 +10,7 @@ namespace CLRProfiler
 	/// <summary>
 	/// Summary description for SummaryForm.
 	/// </summary>
-    public partial class SummaryForm : System.Windows.Forms.Form
+    public sealed partial class SummaryForm : System.Windows.Forms.Form
     {
 
         private readonly ReadNewLog log;

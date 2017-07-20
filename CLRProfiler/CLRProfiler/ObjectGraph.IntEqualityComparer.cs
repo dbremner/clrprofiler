@@ -7,9 +7,9 @@ using System.Collections.Generic;
 
 namespace CLRProfiler
 {
-    public partial class ObjectGraph
+    public sealed partial class ObjectGraph
     {
-        internal class IntEqualityComparer : IEqualityComparer<int>
+        internal sealed class IntEqualityComparer : IEqualityComparer<int>
         {
             public bool Equals(int a, int b)
             {

@@ -15,7 +15,7 @@ namespace CLRProfiler
     /// <summary>
     /// Summary description for FilterForm.
     /// </summary>
-    public partial class FilterForm : System.Windows.Forms.Form
+    public sealed partial class FilterForm : System.Windows.Forms.Form
     {
 
         private string[] typeFilters = new string[0];

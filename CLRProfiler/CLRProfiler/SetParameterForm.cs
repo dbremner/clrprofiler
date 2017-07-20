@@ -14,7 +14,7 @@ namespace CLRProfiler
     /// <summary>
     /// Summary description for Form3.
     /// </summary>
-    public partial class SetParameterForm : System.Windows.Forms.Form
+    public sealed partial class SetParameterForm : System.Windows.Forms.Form
     {
 
         public SetParameterForm()

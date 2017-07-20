@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace CLRProfiler
 {
-    public partial class AgeHistogram : System.Windows.Forms.Form
+    public sealed partial class AgeHistogram : System.Windows.Forms.Form
     {
         private struct Bucket
         {

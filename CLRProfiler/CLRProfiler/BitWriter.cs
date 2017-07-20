@@ -15,7 +15,7 @@ using System.IO;
 
 namespace CLRProfiler
 {
-	internal class BitWriter
+	internal sealed class BitWriter
 	{
 		private int position, incurr;
 

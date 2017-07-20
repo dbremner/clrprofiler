@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CLRProfiler
 {
-    internal class ViewState
+    internal sealed class ViewState
     {
         internal SortingBehaviour sort;
         internal SortingBehaviour highlight;

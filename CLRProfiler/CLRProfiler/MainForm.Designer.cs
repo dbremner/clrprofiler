@@ -18,7 +18,7 @@ using System.Xml;
 using Microsoft.Win32.SafeHandles;
 namespace CLRProfiler
 {
-	public partial class MainForm : System.Windows.Forms.Form
+	public sealed partial class MainForm : System.Windows.Forms.Form
 	{
         private System.Windows.Forms.MenuItem menuItem1;
         private System.Windows.Forms.MenuItem menuItem3;

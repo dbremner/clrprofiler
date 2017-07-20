@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace CLRProfiler
 {
-    public partial class ObjectGraph
+    public sealed partial class ObjectGraph
     {
         // this is optimized for space at the expense of programming convenience
         // heap dumps can contain many millions of objects

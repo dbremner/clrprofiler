@@ -8,7 +8,7 @@ using System.Text;
 
 namespace CLRProfiler
 {
-    internal partial class DiffTreeListView : Control
+    internal sealed partial class DiffTreeListView : Control
 	{
 		/// <summary>
 		/// Required designer variable.

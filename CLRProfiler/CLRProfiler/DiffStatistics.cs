@@ -5,7 +5,7 @@ using JetBrains.Annotations;
 
 namespace CLRProfiler
 {
-    internal class DiffStatistics
+    internal sealed class DiffStatistics
     {
         private readonly DiffDataNode node;
         private readonly static string[] CounterNames =

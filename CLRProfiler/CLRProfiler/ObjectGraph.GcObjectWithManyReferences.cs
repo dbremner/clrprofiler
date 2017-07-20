@@ -7,9 +7,9 @@ using System.Collections.Generic;
 
 namespace CLRProfiler
 {
-    public partial class ObjectGraph
+    public sealed partial class ObjectGraph
     {
-        private class GcObjectWithManyReferences : GcObject
+        private sealed class GcObjectWithManyReferences : GcObject
         {
             private readonly GcObject[] references;
             internal GcObjectWithManyReferences(int numberOfReferences)

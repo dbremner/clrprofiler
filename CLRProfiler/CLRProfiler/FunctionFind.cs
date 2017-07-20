@@ -14,7 +14,7 @@ namespace CLRProfiler
     /// <summary>
     /// Summary description for FunctionFind.
     /// </summary>
-    internal partial class FunctionFind : System.Windows.Forms.Form
+    internal sealed partial class FunctionFind : System.Windows.Forms.Form
 	{
 
 		private readonly ITreeOwner TreeOwner;

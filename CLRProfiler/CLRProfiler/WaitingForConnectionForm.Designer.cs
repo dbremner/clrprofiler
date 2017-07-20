@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 namespace CLRProfiler
 {
-	public partial class WaitingForConnectionForm : System.Windows.Forms.Form
+	public sealed partial class WaitingForConnectionForm : System.Windows.Forms.Form
 	{
         private System.Windows.Forms.Button cancelButton;
         private RichTextBox messageTextBox;

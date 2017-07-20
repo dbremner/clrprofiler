@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CLRProfiler
 {
-    internal class ReadLogResult
+    internal sealed class ReadLogResult
     {
         internal Histogram allocatedHistogram;
         internal Histogram relocatedHistogram;

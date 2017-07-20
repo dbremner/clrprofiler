@@ -7,9 +7,9 @@ using System.Collections.Generic;
 
 namespace CLRProfiler
 {
-    public partial class ObjectGraph
+    public sealed partial class ObjectGraph
     {
-        internal class IdToObject
+        internal sealed class IdToObject
         {
             internal const int lowAddressBits = 25; // one subtable for 32 MB of address space
             internal const int lowAddressMask = (1 << lowAddressBits) - 1;

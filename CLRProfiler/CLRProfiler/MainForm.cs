@@ -34,7 +34,7 @@ namespace CLRProfiler
     /// <summary>
     /// Summary description for Form1.
     /// </summary>
-    public partial class MainForm : System.Windows.Forms.Form
+    public sealed partial class MainForm : System.Windows.Forms.Form
     {
 
         internal Font font;

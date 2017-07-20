@@ -21,7 +21,7 @@ namespace CLRProfiler
     /// <summary>
     /// Summary description for ViewFilter.
     /// </summary>
-    public partial class ViewFilter : System.Windows.Forms.Form
+    public sealed partial class ViewFilter : System.Windows.Forms.Form
     {
 
         public ViewFilter(bool in_calls, bool in_allocs, bool in_assemblies)

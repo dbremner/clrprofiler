@@ -6,7 +6,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 namespace CLRProfiler
 {
-	public partial class ListViewer : System.Windows.Forms.Form, IComparer
+	public sealed partial class ListViewer : System.Windows.Forms.Form, IComparer
 	{
         private System.Windows.Forms.MainMenu mainMenu1;
         private System.Windows.Forms.MenuItem menuItem1;

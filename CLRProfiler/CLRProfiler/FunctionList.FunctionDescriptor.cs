@@ -1,8 +1,8 @@
 ﻿namespace CLRProfiler
 {
-    internal partial class FunctionList
+    internal sealed partial class FunctionList
     {
-        internal class FunctionDescriptor
+        internal sealed class FunctionDescriptor
         {
             internal FunctionDescriptor(int functionId, int funcCallStack, uint funcSize, int funcModule)
             {

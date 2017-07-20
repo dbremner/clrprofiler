@@ -14,7 +14,7 @@ namespace CLRProfiler
     /// <summary>
     /// Summary description for ViewCommentsForm.
     /// </summary>
-    public partial class ViewCommentsForm : System.Windows.Forms.Form
+    public sealed partial class ViewCommentsForm : System.Windows.Forms.Form
     {
 
         internal ViewCommentsForm(ReadNewLog log)

@@ -17,7 +17,7 @@ namespace CLRProfiler
     /// <summary>
     /// Summary description for HistogramViewForm.
     /// </summary>
-    public partial class HistogramViewForm : System.Windows.Forms.Form
+    public sealed partial class HistogramViewForm : System.Windows.Forms.Form
     {
         private System.Timers.Timer versionTimer;
 

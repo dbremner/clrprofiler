@@ -1,6 +1,6 @@
 namespace CLRProfiler
 {
-    internal class SortingBehaviour
+    internal sealed class SortingBehaviour
     {
         internal int SortingOrder { get; set; }
         internal int CounterId { get; set; }

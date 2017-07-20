@@ -24,7 +24,7 @@ namespace CLRProfiler
 	/// <summary>
 	/// Summary description for DiffCallTreeForm.
 	/// </summary>
-	internal partial class DiffCallTreeForm : System.Windows.Forms.Form, IComparer, IDiffTreeOwner
+	internal sealed partial class DiffCallTreeForm : System.Windows.Forms.Form, IComparer, IDiffTreeOwner
 	{	
 		private readonly AllocationDiff	_allocDiff;
 		private ViewState viewState;

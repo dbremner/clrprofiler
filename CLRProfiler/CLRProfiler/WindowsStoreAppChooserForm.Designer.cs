@@ -1,6 +1,6 @@
 ﻿namespace CLRProfiler
 {
-    partial class WindowsStoreAppChooserForm
+    sealed partial class WindowsStoreAppChooserForm
     {
         /// <summary>
         /// Required designer variable.

@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 namespace CLRProfiler
 {
-	internal partial class SortAndHighlightSelector : System.Windows.Forms.Form
+	internal sealed partial class SortAndHighlightSelector : System.Windows.Forms.Form
 	{
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;

@@ -17,7 +17,7 @@ namespace CLRProfiler
     /// <summary>
     ///    Summary description for Graph.
     /// </summary>
-    internal class Graph
+    internal sealed class Graph
     {
         [NotNull]
         internal readonly object graphSource;

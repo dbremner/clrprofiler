@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CLRProfiler
 {
-    internal class ColumnInformation
+    internal sealed class ColumnInformation
     {
         internal enum ColumnTypes {Tree, String, OwnerDraw}
 

@@ -1,6 +1,6 @@
 ﻿namespace CLRProfiler
 {
-    partial class HelpForm
+    sealed partial class HelpForm
     {
         /// <summary>
         /// Required designer variable.

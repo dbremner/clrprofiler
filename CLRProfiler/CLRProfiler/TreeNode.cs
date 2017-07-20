@@ -5,7 +5,7 @@ using JetBrains.Annotations;
 
 namespace CLRProfiler
 {
-    internal class TreeNode : TreeNodeBase
+    internal sealed class TreeNode : TreeNodeBase
     {
         /* not to be stored externally */
         internal bool isunmanaged;

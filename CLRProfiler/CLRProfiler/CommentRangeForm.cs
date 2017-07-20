@@ -14,7 +14,7 @@ namespace CLRProfiler
     /// <summary>
     /// Summary description for CommentRangeForm.
     /// </summary>
-    public partial class CommentRangeForm : System.Windows.Forms.Form
+    public sealed partial class CommentRangeForm : System.Windows.Forms.Form
     {
 
         internal const string startCommentString = "Start of Application";

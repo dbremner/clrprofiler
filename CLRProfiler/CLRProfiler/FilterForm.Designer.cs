@@ -6,7 +6,7 @@ using System.Windows.Forms;
 using System.Globalization;
 namespace CLRProfiler
 {
-	public partial class FilterForm : System.Windows.Forms.Form
+	public sealed partial class FilterForm : System.Windows.Forms.Form
 	{
         private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.Button cancelButton;

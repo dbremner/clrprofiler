@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 namespace CLRProfiler
 {
-	public partial class SaveFileForm : System.Windows.Forms.Form
+	public sealed partial class SaveFileForm : System.Windows.Forms.Form
 	{
         private System.Windows.Forms.Label label1;
         internal System.Windows.Forms.Label processFileNameLabel;

@@ -14,7 +14,7 @@ namespace CLRProfiler
     /// <summary>
     /// Summary description for KillProcessForm.
     /// </summary>
-    public partial class KillProcessForm : System.Windows.Forms.Form
+    public sealed partial class KillProcessForm : System.Windows.Forms.Form
     {
 
         public KillProcessForm()

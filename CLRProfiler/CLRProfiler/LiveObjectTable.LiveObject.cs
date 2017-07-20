@@ -1,6 +1,6 @@
 ﻿namespace CLRProfiler
 {
-    internal partial class LiveObjectTable
+    internal sealed partial class LiveObjectTable
     {
         internal struct LiveObject
         {

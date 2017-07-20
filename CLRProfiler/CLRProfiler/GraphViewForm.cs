@@ -19,7 +19,7 @@ namespace CLRProfiler
     /// <summary>
     /// Summary description for GraphViewForm.
     /// </summary>
-    internal partial class GraphViewForm : System.Windows.Forms.Form
+    internal sealed partial class GraphViewForm : System.Windows.Forms.Form
     {
 
         private Graph graph;

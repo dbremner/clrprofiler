@@ -8,7 +8,7 @@ namespace CLRProfiler
 	/// <summary>
 	/// Summary description for DiffDataNode.
 	/// </summary>
-	internal class DiffDataNode : TreeNodeBase
+	internal sealed class DiffDataNode : TreeNodeBase
 	{
 		internal enum NodeType {Call = 0, Allocation, AssemblyLoad}
 

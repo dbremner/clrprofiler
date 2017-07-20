@@ -3,9 +3,9 @@ using JetBrains.Annotations;
 
 namespace CLRProfiler
 {
-    public partial class AllocationDiff 
+    public sealed partial class AllocationDiff 
 	{
-	    private class CompareIncl : IComparer
+	    private sealed class CompareIncl : IComparer
 		{
 		    [NotNull] private readonly Hashtable inclOfNode;
 

@@ -17,7 +17,7 @@ using System.Windows.Forms;
 
 namespace CLRProfiler
 {
-    public class PlacedToolTip : Control
+    public sealed class PlacedToolTip : Control
     {
         private Font font;
         private int height;
@@ -70,7 +70,7 @@ namespace CLRProfiler
             blackPen = new Pen(Color.Black);
         }
 
-        protected void timerEventHandler(object s, System.Timers.ElapsedEventArgs e)
+        private void timerEventHandler(object s, System.Timers.ElapsedEventArgs e)
         {
             TimeSpan sinceCreated = e.SignalTime.Subtract(created);
             if(!timer.Enabled || sinceCreated.Milliseconds < 500)

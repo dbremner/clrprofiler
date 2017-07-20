@@ -16,7 +16,7 @@ namespace CLRProfiler
     /// <summary>
     /// Summary description for AttachTargetPIDForm.
     /// </summary>
-    public partial class AttachTargetPIDForm : System.Windows.Forms.Form
+    public sealed partial class AttachTargetPIDForm : System.Windows.Forms.Form
     {
 
         public AttachTargetPIDForm()

@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 namespace CLRProfiler
 {
-	public partial class ViewFilter : System.Windows.Forms.Form
+	public sealed partial class ViewFilter : System.Windows.Forms.Form
 	{
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;

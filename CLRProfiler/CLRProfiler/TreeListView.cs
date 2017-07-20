@@ -21,7 +21,7 @@ using JetBrains.Annotations;
 
 namespace CLRProfiler
 {
-    internal class TreeListView : Control
+    internal sealed class TreeListView : Control
 	{
 		private int leftEdge;
 

@@ -14,7 +14,7 @@ namespace CLRProfiler
     /// <summary>
     /// Summary description for ObjectGraph.
     /// </summary>
-    public partial class ObjectGraph
+    public sealed partial class ObjectGraph
     {
         internal IdToObject idToObject;
         internal Dictionary<string, GcType> typeNameToGcType;

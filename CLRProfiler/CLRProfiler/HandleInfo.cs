@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CLRProfiler
 {
-    internal class HandleInfo
+    internal sealed class HandleInfo
     {
         internal HandleInfo(int allocThreadId, ulong handleId, ulong initialObjectId, int allocTickIndex, int allocStacktraceId)
         {

@@ -1,10 +1,10 @@
 ﻿namespace CLRProfiler
 {
-    internal partial class LiveObjectTable
+    internal sealed partial class LiveObjectTable
     {
-        private partial class IntervalTable
+        private sealed partial class IntervalTable
         {
-            private class Interval
+            private sealed class Interval
             {
                 internal ulong loAddr;
                 internal ulong hiAddr;

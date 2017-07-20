@@ -7,7 +7,7 @@ using JetBrains.Annotations;
 
 namespace CLRProfiler
 {
-    internal class DiffResizeBarCapture : Control
+    internal sealed class DiffResizeBarCapture : Control
     {
         private int track;
         private readonly List<DiffColumn> columns;

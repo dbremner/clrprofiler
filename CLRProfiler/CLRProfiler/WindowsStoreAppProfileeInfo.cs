@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CLRProfiler
 {
-    internal class WindowsStoreAppProfileeInfo
+    internal sealed class WindowsStoreAppProfileeInfo
     {
         public WindowsStoreAppProfileeInfo(string packageFullNameParam, string acSidString)
         {

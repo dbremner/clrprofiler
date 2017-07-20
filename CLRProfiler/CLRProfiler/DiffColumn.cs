@@ -7,7 +7,7 @@ using JetBrains.Annotations;
 
 namespace CLRProfiler
 {
-    internal class DiffColumn : Button
+    internal sealed class DiffColumn : Button
     {
         private bool pressed;
         [NotNull] private readonly List<DiffColumn> columnsRef;

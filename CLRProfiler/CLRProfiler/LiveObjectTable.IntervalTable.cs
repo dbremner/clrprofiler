@@ -3,9 +3,9 @@ using System.Diagnostics;
 
 namespace CLRProfiler
 {
-    internal partial class LiveObjectTable
+    internal sealed partial class LiveObjectTable
     {
-        private partial class IntervalTable
+        private sealed partial class IntervalTable
         {
             private const int allowableGap = 1024*1024;
 

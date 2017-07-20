@@ -6,9 +6,9 @@
 
 namespace CLRProfiler
 {
-    public partial class ObjectGraph
+    public sealed partial class ObjectGraph
     {
-        internal class GcType
+        internal sealed class GcType
         {
             internal GcType(string name, int typeID)
             {

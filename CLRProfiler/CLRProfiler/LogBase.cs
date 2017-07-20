@@ -6,7 +6,7 @@ namespace CLRProfiler
 	/// <summary>
 	/// Summary description for LogBase.
 	/// </summary>
-	public class LogBase
+	public sealed class LogBase
 	{
 		#region private data member
 		private readonly long logFileStartOffset;

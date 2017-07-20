@@ -11,7 +11,7 @@ namespace CLRProfiler
     /// <summary>
     /// Summary description for NamedManualResetEvent.
     /// </summary>
-    public class NamedManualResetEvent: IDisposable
+    public sealed class NamedManualResetEvent : IDisposable
     {
         // Track whether Dispose has been called.
         private bool disposed = false;

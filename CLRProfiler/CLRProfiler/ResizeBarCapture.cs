@@ -7,7 +7,7 @@ using JetBrains.Annotations;
 
 namespace CLRProfiler
 {
-    internal class ResizeBarCapture : Control
+    internal sealed class ResizeBarCapture : Control
     {
         private int track;
         [NotNull] private readonly List<Column> columns;

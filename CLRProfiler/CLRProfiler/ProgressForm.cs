@@ -14,7 +14,7 @@ namespace CLRProfiler
     /// <summary>
     /// Summary description for Form2.
     /// </summary>
-    public partial class ProgressForm : System.Windows.Forms.Form
+    public sealed partial class ProgressForm : System.Windows.Forms.Form
     {
 
         public ProgressForm()

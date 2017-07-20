@@ -8,9 +8,9 @@ using System.Collections.Generic;
 
 namespace CLRProfiler
 {
-    internal partial class GraphViewForm : System.Windows.Forms.Form
+    internal sealed partial class GraphViewForm : System.Windows.Forms.Form
     {
-        private class CompareVerticesByScore : IComparer
+        private sealed class CompareVerticesByScore : IComparer
         {
             private readonly Dictionary<Vertex, double> scoreOfVertex;
 

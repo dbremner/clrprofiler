@@ -8,11 +8,11 @@ using System.Diagnostics;
 
 namespace CLRProfiler
 {
-    public partial class ObjectGraph
+    public sealed partial class ObjectGraph
     {
-        private class GcObjectWith5References : GcObjectWith4References
+        private sealed class GcObjectWith5References : GcObjectWith4References
         {
-            protected GcObject reference4;
+            private GcObject reference4;
             internal override IEnumerable<GcObject> References
             {
                 get

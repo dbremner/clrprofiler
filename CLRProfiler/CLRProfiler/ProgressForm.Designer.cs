@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 namespace CLRProfiler
 {
-	public partial class ProgressForm : System.Windows.Forms.Form
+	public sealed partial class ProgressForm : System.Windows.Forms.Form
 	{
         private System.Windows.Forms.ProgressBar progressBar;
         private System.Windows.Forms.Button cancelButton;

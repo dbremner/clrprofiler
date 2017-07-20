@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using Microsoft.Win32;
 namespace CLRProfiler
 {
-	internal partial class CallTreeForm : System.Windows.Forms.Form, IComparer, ITreeOwner
+	internal sealed partial class CallTreeForm : System.Windows.Forms.Form, IComparer, ITreeOwner
 	{
 
         /* random stuff */

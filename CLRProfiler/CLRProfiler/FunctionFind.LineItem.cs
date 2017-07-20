@@ -6,9 +6,9 @@
 
 namespace CLRProfiler
 {
-    internal partial class FunctionFind : System.Windows.Forms.Form
+    internal sealed partial class FunctionFind : System.Windows.Forms.Form
 	{
-	    private class LineItem 
+	    private sealed class LineItem 
 		{
 		    internal TreeNode.NodeType NodeType { get; }
 		    internal int Id { get; }

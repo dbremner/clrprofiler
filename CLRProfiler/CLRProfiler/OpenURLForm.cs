@@ -15,7 +15,7 @@ namespace CLRProfiler
     /// Summary description for AttachTargetPIDForm.
     /// </summary>
 
-    public partial class OpenURLForm : System.Windows.Forms.Form
+    public sealed partial class OpenURLForm : System.Windows.Forms.Form
     {
 
         public OpenURLForm()

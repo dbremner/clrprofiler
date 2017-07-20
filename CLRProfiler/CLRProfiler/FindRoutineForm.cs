@@ -14,7 +14,7 @@ namespace CLRProfiler
     /// <summary>
     /// Summary description for Form5.
     /// </summary>
-    public partial class FindRoutineForm : System.Windows.Forms.Form
+    public sealed partial class FindRoutineForm : System.Windows.Forms.Form
     {
 
         public FindRoutineForm()

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace CLRProfiler
 {
-    internal partial class FunctionList
+    internal sealed partial class FunctionList
     {
         private readonly ReadNewLog readNewLog;
         private readonly List<FunctionDescriptor> functionList;

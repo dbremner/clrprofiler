@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace CLRProfiler
 {
-    public partial class HelpForm : Form
+    public sealed partial class HelpForm : Form
     {
         public HelpForm()
         {

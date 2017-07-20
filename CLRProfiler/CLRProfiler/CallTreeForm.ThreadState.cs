@@ -14,9 +14,9 @@ using JetBrains.Annotations;
 
 namespace CLRProfiler
 {
-    internal partial class CallTreeForm : System.Windows.Forms.Form, IComparer, ITreeOwner
+    internal sealed partial class CallTreeForm : System.Windows.Forms.Form, IComparer, ITreeOwner
     {
-        internal class ThreadState
+        internal sealed class ThreadState
         {
             internal int[] prevStackTrace;
             internal int prevStackLen;

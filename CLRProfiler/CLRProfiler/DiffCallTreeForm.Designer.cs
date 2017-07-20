@@ -10,7 +10,7 @@ using System.Diagnostics;
 using Microsoft.Win32;
 namespace CLRProfiler
 {
-	internal partial class DiffCallTreeForm : System.Windows.Forms.Form, IComparer, IDiffTreeOwner
+	internal sealed partial class DiffCallTreeForm : System.Windows.Forms.Form, IComparer, IDiffTreeOwner
 	{
 		
 

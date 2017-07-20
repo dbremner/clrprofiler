@@ -7,7 +7,7 @@ using JetBrains.Annotations;
 
 namespace CLRProfiler
 {
-    internal class Column : Button
+    internal sealed class Column : Button
     {
         private bool pressed;
         [NotNull] private readonly List<Column> columnsRef;

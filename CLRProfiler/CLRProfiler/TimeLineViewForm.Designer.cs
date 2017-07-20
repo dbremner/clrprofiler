@@ -6,7 +6,7 @@ using System.Windows.Forms;
 using System.Diagnostics;
 namespace CLRProfiler
 {
-	public partial class TimeLineViewForm : System.Windows.Forms.Form
+	public sealed partial class TimeLineViewForm : System.Windows.Forms.Form
 	{
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Splitter splitter1;

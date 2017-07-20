@@ -22,7 +22,7 @@ namespace CLRProfiler
     /// <summary>
     /// Summary description for ListViewer.
     /// </summary>
-    public partial class ListViewer : System.Windows.Forms.Form, IComparer
+    public sealed partial class ListViewer : System.Windows.Forms.Form, IComparer
     {
 
         private int sortColumn, sorting;

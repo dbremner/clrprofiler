@@ -26,7 +26,7 @@ namespace CLRProfiler
     /// <summary>
     /// Summary description for CallTreeForm.
     /// </summary>
-    internal partial class CallTreeForm : System.Windows.Forms.Form, IComparer, ITreeOwner
+    internal sealed partial class CallTreeForm : System.Windows.Forms.Form, IComparer, ITreeOwner
     {
         /* info given from the outside */
         private readonly string logFileName;

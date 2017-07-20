@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CLRProfiler
 {
-    internal class ConsoleCtrl
+    internal sealed class ConsoleCtrl
     {
         internal enum ConsoleEvent
         {

@@ -10,7 +10,7 @@ using System.Globalization;
 using System.Text;
 namespace CLRProfiler
 {
-	internal partial class GraphViewForm : System.Windows.Forms.Form
+	internal sealed partial class GraphViewForm : System.Windows.Forms.Form
 	{
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel graphPanel;

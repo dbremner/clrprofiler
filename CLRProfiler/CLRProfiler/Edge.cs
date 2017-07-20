@@ -11,7 +11,7 @@ namespace CLRProfiler
     /// <summary>
     ///    Summary description for Edge.
     /// </summary>
-    internal class Edge : IComparable
+    internal sealed class Edge : IComparable
     {
         internal bool selected;
         internal Brush brush;

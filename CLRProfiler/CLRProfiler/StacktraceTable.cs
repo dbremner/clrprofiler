@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CLRProfiler
 {
-    internal class StacktraceTable
+    internal sealed class StacktraceTable
     {
         private int[][] stacktraceTable;
         private int[] mappingTable;

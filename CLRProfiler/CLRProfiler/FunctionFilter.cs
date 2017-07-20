@@ -14,7 +14,7 @@ namespace CLRProfiler
 	/// <summary>
 	/// Summary description for FunctionFilter.
 	/// </summary>
-	internal partial class DlgFunctionFilter : System.Windows.Forms.Form
+	internal sealed partial class DlgFunctionFilter : System.Windows.Forms.Form
 	{
 
 		private readonly ITreeOwner m_treeOwner;

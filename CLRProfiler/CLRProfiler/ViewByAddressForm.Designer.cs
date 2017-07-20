@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.IO;
 namespace CLRProfiler
 {
-	public partial class ViewByAddressForm : System.Windows.Forms.Form
+	public sealed partial class ViewByAddressForm : System.Windows.Forms.Form
 	{
         private System.Windows.Forms.RadioButton fourRadioButton;
         private System.Windows.Forms.RadioButton eightRadioButton;

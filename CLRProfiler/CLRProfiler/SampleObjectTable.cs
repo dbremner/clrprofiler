@@ -5,9 +5,9 @@ using System.Text;
 
 namespace CLRProfiler
 {
-    internal class SampleObjectTable
+    internal sealed class SampleObjectTable
     {
-        internal class SampleObject
+        internal sealed class SampleObject
         {
             internal readonly int typeIndex;
             internal readonly int changeTickIndex;

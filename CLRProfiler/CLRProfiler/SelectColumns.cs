@@ -22,7 +22,7 @@ namespace CLRProfiler
     /// <summary>
     /// Summary description for SelectColumns.
     /// </summary>
-    public partial class SelectColumns : System.Windows.Forms.Form
+    public sealed partial class SelectColumns : System.Windows.Forms.Form
     {
 
         private readonly List<CheckBox> checkBoxes;

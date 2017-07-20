@@ -14,7 +14,7 @@ namespace CLRProfiler
     /// <summary>
     /// Summary description for ProfileServiceForm.
     /// </summary>
-    public partial class ProfileServiceForm : System.Windows.Forms.Form
+    public sealed partial class ProfileServiceForm : System.Windows.Forms.Form
     {
 
         public ProfileServiceForm()

@@ -10,7 +10,7 @@ namespace CLRProfiler
 	/// <summary>
 	/// Summary description for GraphBase.
 	/// </summary>
-	public class GraphBase
+	public sealed class GraphBase
 	{
 		#region private data member
 		private readonly bool placeVertices = true;

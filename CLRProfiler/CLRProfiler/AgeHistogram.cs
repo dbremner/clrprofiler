@@ -19,7 +19,7 @@ namespace CLRProfiler
     /// <summary>
     /// Summary description for AgeHistogram.
     /// </summary>
-    public partial class AgeHistogram : System.Windows.Forms.Form
+    public sealed partial class AgeHistogram : System.Windows.Forms.Form
     {
         private Font font;
         private bool useMarkers;

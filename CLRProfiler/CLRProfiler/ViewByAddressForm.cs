@@ -16,7 +16,7 @@ namespace CLRProfiler
     /// <summary>
     /// Summary description for ViewByAddressForm.
     /// </summary>
-    public partial class ViewByAddressForm : System.Windows.Forms.Form
+    public sealed partial class ViewByAddressForm : System.Windows.Forms.Form
     {
         private System.Timers.Timer versionTimer;
 
@@ -66,7 +66,7 @@ namespace CLRProfiler
 
         private const int generations = 4;
 
-        private class AddressRange
+        private sealed class AddressRange
         {
             internal readonly ulong loAddr;
             internal ulong hiAddr;

@@ -9,7 +9,7 @@ using System.IO;
 using System.Text;
 namespace CLRProfiler
 {
-	public partial class ReportForm : System.Windows.Forms.Form
+	public sealed partial class ReportForm : System.Windows.Forms.Form
 	{
 		private DataViewManager dvm;
 		private DataViewManager dvm_caller;

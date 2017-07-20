@@ -13,7 +13,7 @@ using System.Collections;
 
 namespace CLRProfiler
 {
-    internal partial class CallTreeForm : System.Windows.Forms.Form, IComparer, ITreeOwner
+    internal sealed partial class CallTreeForm : System.Windows.Forms.Form, IComparer, ITreeOwner
     {
         /* various collections */
         internal struct GlobalCallStats

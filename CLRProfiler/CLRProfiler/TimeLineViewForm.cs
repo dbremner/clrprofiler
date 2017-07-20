@@ -15,7 +15,7 @@ namespace CLRProfiler
     /// <summary>
     /// Summary description for TimeLineViewForm.
     /// </summary>
-    public partial class TimeLineViewForm : System.Windows.Forms.Form
+    public sealed partial class TimeLineViewForm : System.Windows.Forms.Form
     {
         private System.Timers.Timer versionTimer;
         private readonly int firstAllocTickIndex;
@@ -70,7 +70,7 @@ namespace CLRProfiler
             this.Text = Title();
         }
 
-        private class AddressRange
+        private sealed class AddressRange
         {
             internal readonly ulong loAddr;
             internal ulong hiAddr;

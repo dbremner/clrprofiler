@@ -50,7 +50,7 @@ namespace CLRProfiler
     ///		
     /// </summary>
 
-    public partial class AllocationDiff 
+    public sealed partial class AllocationDiff 
 	{
 		#region data member
 		// log file names

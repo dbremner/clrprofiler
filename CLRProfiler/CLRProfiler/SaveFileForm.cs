@@ -21,7 +21,7 @@ namespace CLRProfiler
     /// <summary>
     /// Summary description for SaveFileForm.
     /// </summary>
-    public partial class SaveFileForm : System.Windows.Forms.Form
+    public sealed partial class SaveFileForm : System.Windows.Forms.Form
     {
 
         public SaveFileForm()

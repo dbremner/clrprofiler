@@ -8,7 +8,7 @@ using System.Diagnostics;
 using System.IO;
 namespace CLRProfiler
 {
-	public partial class HistogramViewForm : System.Windows.Forms.Form
+	public sealed partial class HistogramViewForm : System.Windows.Forms.Form
 	{
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;

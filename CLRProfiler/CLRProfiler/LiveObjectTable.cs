@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CLRProfiler
 {
-    internal partial class LiveObjectTable
+    internal sealed partial class LiveObjectTable
     {
         private readonly IntervalTable intervalTable;
         internal readonly ReadNewLog readNewLog;

@@ -8,7 +8,7 @@ using System.Diagnostics;
 
 namespace CLRProfiler
 {
-    public partial class ObjectGraph
+    public sealed partial class ObjectGraph
     {
         private class GcObjectWith3References : GcObjectWith2References
         {

@@ -8,9 +8,9 @@ using System.Drawing;
 
 namespace CLRProfiler
 {
-    public partial class TimeLineViewForm : System.Windows.Forms.Form
+    public sealed partial class TimeLineViewForm : System.Windows.Forms.Form
     {
-        private class TypeDesc : IComparable
+        private sealed class TypeDesc : IComparable
         {
             internal readonly string typeName;
             internal long totalSize;

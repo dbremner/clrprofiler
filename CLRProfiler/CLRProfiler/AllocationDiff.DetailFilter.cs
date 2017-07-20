@@ -9,7 +9,7 @@ using DoubleUInt64 = System.UInt64;
 
 namespace CLRProfiler
 {
-    public partial class AllocationDiff 
+    public sealed partial class AllocationDiff 
 	{
         // detailds for reportform details RadioButton
         public struct DetailFilter

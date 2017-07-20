@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace CLRProfiler
 {
-    public partial class HistogramViewForm : System.Windows.Forms.Form
+    public sealed partial class HistogramViewForm : System.Windows.Forms.Form
     {
         private struct Bucket
         {
