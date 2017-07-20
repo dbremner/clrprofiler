@@ -2,7 +2,7 @@
 
 namespace CLRProfiler
 {
-    public partial class Reports
+    public static partial class Reports
 	{
 	    private class DiffTypeDescriptor : IComparable, IComparable<DiffTypeDescriptor>
         {

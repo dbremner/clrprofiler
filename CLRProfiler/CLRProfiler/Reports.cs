@@ -8,15 +8,8 @@ namespace CLRProfiler
     /// <summary>
     /// Summary description for Reports.
     /// </summary>
-    public partial class Reports
+    public static partial class Reports
 	{
-		public Reports()
-		{
-			//
-			// TODO: Add constructor logic here
-			//
-		}
-
 	    [NotNull]
 	    private static ReadLogResult GetLogResult([NotNull] ReadNewLog log)
         {
