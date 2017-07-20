@@ -1153,9 +1153,9 @@ namespace CLRProfiler
         private void RefreshGraph()
         {
             Graph orgGraph = graph;
-            if (orgGraph.graphSource is Graph)
+            if (orgGraph.graphSource is Graph source)
             {
-                orgGraph = (Graph)orgGraph.graphSource;
+                orgGraph = source;
             }
 
             switch (orgGraph.graphType)
@@ -1348,9 +1348,9 @@ namespace CLRProfiler
             toolTip.Active = false;
             var type = graph.graphType;
             Graph g;
-            if (graph.graphSource is Graph)
+            if (graph.graphSource is Graph source)
             {
-                var orgGraph = (Graph)graph.graphSource;
+                var orgGraph = source;
                 g = new Graph(orgGraph, type);
                 v = orgGraph.FindOrCreateVertex(v.name, v.signature, v.moduleName);
             }
@@ -1428,10 +1428,10 @@ namespace CLRProfiler
 
         private Graph GetOriginalGraph()
         {
-            if (graph.graphSource is Graph)
+            if (graph.graphSource is Graph source)
             {
                 // this is the case when we are in a zoom window
-                return (Graph)graph.graphSource;
+                return source;
             }
             else
             {
@@ -1586,9 +1586,9 @@ namespace CLRProfiler
         private void showInstancesMenuItem_Click(object sender, System.EventArgs e)
         {
             Graph orgGraph = graph;
-            if (orgGraph.graphSource is Graph)
+            if (orgGraph.graphSource is Graph source)
             {
-                orgGraph = (Graph)orgGraph.graphSource;
+                orgGraph = source;
             }
 
             var objectGraph = (ObjectGraph)orgGraph.graphSource;
