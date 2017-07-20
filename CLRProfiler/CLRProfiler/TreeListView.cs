@@ -114,7 +114,7 @@ namespace CLRProfiler
 			SendMessage(treeListBox.Handle, 0x0114, 4 + (leftEdge << 16), 0);
 		}
 
-		private int AddAfter(int index, [NotNull] TreeNodeBase root)
+		private void AddAfter(int index, [NotNull] TreeNodeBase root)
 		{
 			if(root.allkids == null)
 			{
@@ -156,7 +156,7 @@ namespace CLRProfiler
 				}
 				ReplaceContents(allNodes);
 			}
-			return index;
+		    return;
 		}
 
 		override protected void OnFontChanged(EventArgs e)
