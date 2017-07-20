@@ -147,13 +147,11 @@
     <Compile Include="AgeHistogram.TypeDesc.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AllocationDiff.callnode.cs" />
     <Compile Include="AllocationDiff.CompareIncl.cs" />
     <Compile Include="AllocationDiff.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="AllocationDiff.DetailFilter.cs" />
-    <Compile Include="AllocationDiff.typeAllocnode.cs" />
     <Compile Include="AppInfo.cs" />
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
