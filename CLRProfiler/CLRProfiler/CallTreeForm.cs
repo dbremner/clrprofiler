@@ -956,12 +956,6 @@ namespace CLRProfiler
 
             /* information about the current thread (to speed up lookup) */
             int prevDepth = 0;
-            ArrayList stack = null;
-            SortedList functions = null;
-            ArrayList queuedNodes = null;
-
-            Stream s = null;
-            ProgressForm progressForm = null;
 
             const int prevStackInitialSize = 100;
             int prevStackMaxSize = prevStackInitialSize;
@@ -988,13 +982,17 @@ namespace CLRProfiler
                 }
             }
  
-
             if (firstNewStack != -1)
             {
                 stacktraceTable.FreeEntries( firstNewStack );
             }
             firstNewStack = -1;
 
+            ArrayList stack = null;
+            SortedList functions = null;
+            ArrayList queuedNodes = null;
+            Stream s = null;
+            ProgressForm progressForm = null;
             try
             {
                 /* log parser code (straight from the ReadNewLog.cs) */

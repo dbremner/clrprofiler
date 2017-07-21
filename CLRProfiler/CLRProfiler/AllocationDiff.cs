@@ -675,20 +675,19 @@ namespace CLRProfiler
 		#region build Caller and callee Contribution table
 		private void BuildContributionCalleeTable()
 		{
-		    datanode pn1;
-			datanode cn1;
 			try
 			{
+		        datanode pn1;
+			    datanode cn1;
 				foreach(DictionaryEntry de in basedataId)
 				{
-					datanode pn;
-					var cn= new datanode();
+				    var cn= new datanode();
 					var nameAndSignature = (string)de.Key;
 					
 					var id = (int)basedataId[nameAndSignature];
 					if(this._prevbasedata.ContainsKey(nameAndSignature))
 					{
-						pn = (datanode)_prevbasedata[nameAndSignature];
+						var pn = (datanode)_prevbasedata[nameAndSignature];
 					    bool exist;
 					    if(_currbasedata.ContainsKey(nameAndSignature))
 						{
@@ -775,10 +774,10 @@ namespace CLRProfiler
 
 		private void BuildContributionCallerTable()
 		{
-		    datanode pn1;
-			datanode cn1;
 			try
 			{
+		        datanode pn1;
+			    datanode cn1;
 				foreach(DictionaryEntry de in basedataId)
 				{
 					datanode pn;
