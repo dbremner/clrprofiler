@@ -1089,159 +1089,160 @@ namespace CLRProfiler
 			var diffnodes = new ArrayList();
 			for(int i = 0; i < currKids.Count; i++)
 			{
-				if( !((DiffDataNode)currKids[i]).marked)
-				{
-					var node = new DiffDataNode( ((DiffDataNode)currKids[i]).name);
-					int idx = CurrExactMatchIndex(prevKids, (DiffDataNode) currKids[i]);
-					if(idx >=0)
-					{
-						node.currFunId = ((DiffDataNode)currKids[i]).currFunId;
-						node.prevFunId = ((DiffDataNode)prevKids[idx]).prevFunId;
-						node.mapname = ((DiffDataNode)currKids[i]).mapname;
-						node.currIncl = ((DiffDataNode)currKids[i]).currIncl;
-						node.prevIncl = ((DiffDataNode)prevKids[idx]).prevIncl;
-						node.diffIncl = node.currIncl - node.prevIncl;
-						node.currCalls = ((DiffDataNode)currKids[i]).currCalls;
-						node.prevCalls = ((DiffDataNode)prevKids[idx]).prevCalls;
-						node.diffCalls = node.currCalls - node.prevCalls;
+			    if (((DiffDataNode) currKids[i]).marked)
+			    {
+			        continue;
+			    }
+			    var node = new DiffDataNode( ((DiffDataNode)currKids[i]).name);
+			    int idx = CurrExactMatchIndex(prevKids, (DiffDataNode) currKids[i]);
+			    if(idx >=0)
+			    {
+			        node.currFunId = ((DiffDataNode)currKids[i]).currFunId;
+			        node.prevFunId = ((DiffDataNode)prevKids[idx]).prevFunId;
+			        node.mapname = ((DiffDataNode)currKids[i]).mapname;
+			        node.currIncl = ((DiffDataNode)currKids[i]).currIncl;
+			        node.prevIncl = ((DiffDataNode)prevKids[idx]).prevIncl;
+			        node.diffIncl = node.currIncl - node.prevIncl;
+			        node.currCalls = ((DiffDataNode)currKids[i]).currCalls;
+			        node.prevCalls = ((DiffDataNode)prevKids[idx]).prevCalls;
+			        node.diffCalls = node.currCalls - node.prevCalls;
 						
-						node.nodeId = nodeidx;
-						node.parentId = parent.nodeId;
-						node.parentname = parent.name;
-						node.currTreenode = ((DiffDataNode)currKids[i]).currTreenode;
-						node.prevTreenode = ((DiffDataNode)prevKids[idx]).prevTreenode;
-						node.nodetype = ((DiffDataNode)currKids[i]).nodetype;
+			        node.nodeId = nodeidx;
+			        node.parentId = parent.nodeId;
+			        node.parentname = parent.name;
+			        node.currTreenode = ((DiffDataNode)currKids[i]).currTreenode;
+			        node.prevTreenode = ((DiffDataNode)prevKids[idx]).prevTreenode;
+			        node.nodetype = ((DiffDataNode)currKids[i]).nodetype;
 
-						((DiffDataNode)currKids[i]).marked = true;
-						((DiffDataNode)prevKids[idx]).marked = true;
-						if(node.diffIncl != 0)
-						{
-							diffnodes.Add(node);
-							AddDiffTraceTableRow(diffTracetbl, node);
-							nodeidx++;
+			        ((DiffDataNode)currKids[i]).marked = true;
+			        ((DiffDataNode)prevKids[idx]).marked = true;
+			        if(node.diffIncl != 0)
+			        {
+			            diffnodes.Add(node);
+			            AddDiffTraceTableRow(diffTracetbl, node);
+			            nodeidx++;
 						
-						}
-					}
-					else
-					{
-						long incl = ((DiffDataNode)currKids[i]).currIncl;
-						curr_inclOfNode[currKids[i]] = incl; 
-						//string nm = ((DiffDataNode)currKids[i]).mapname;
-						//curr_inclOfNode[currKids[i]] = nm; 
-						curr.Add(currKids[i]);
-					}
-				}
+			        }
+			    }
+			    else
+			    {
+			        long incl = ((DiffDataNode)currKids[i]).currIncl;
+			        curr_inclOfNode[currKids[i]] = incl; 
+			        //string nm = ((DiffDataNode)currKids[i]).mapname;
+			        //curr_inclOfNode[currKids[i]] = nm; 
+			        curr.Add(currKids[i]);
+			    }
 			}
 
 			for(int i = 0; i < prevKids.Count; i++)
 			{
-				if( !((DiffDataNode)prevKids[i]).marked)
-				{
-					var node = new DiffDataNode( ((DiffDataNode)prevKids[i]).name);
-					int idx = PrevExactMatchIndex(currKids, (DiffDataNode) prevKids[i]);
-					if(idx >=0)
-					{
-						node.currFunId = ((DiffDataNode)currKids[idx]).currFunId;
-						node.prevFunId = ((DiffDataNode)prevKids[i]).prevFunId;
-						node.mapname = ((DiffDataNode)currKids[idx]).mapname;
-						node.currIncl = ((DiffDataNode)currKids[idx]).currIncl;
-						node.prevIncl = ((DiffDataNode)prevKids[i]).prevIncl;
-						node.diffIncl = node.currIncl - node.prevIncl;
-						node.currCalls = ((DiffDataNode)currKids[idx]).currCalls;
-						node.prevCalls = ((DiffDataNode)prevKids[i]).prevCalls;
-						node.diffCalls = node.currCalls - node.prevCalls;
+			    if (((DiffDataNode) prevKids[i]).marked)
+			    {
+			        continue;
+			    }
+			    var node = new DiffDataNode( ((DiffDataNode)prevKids[i]).name);
+			    int idx = PrevExactMatchIndex(currKids, (DiffDataNode) prevKids[i]);
+			    if(idx >=0)
+			    {
+			        node.currFunId = ((DiffDataNode)currKids[idx]).currFunId;
+			        node.prevFunId = ((DiffDataNode)prevKids[i]).prevFunId;
+			        node.mapname = ((DiffDataNode)currKids[idx]).mapname;
+			        node.currIncl = ((DiffDataNode)currKids[idx]).currIncl;
+			        node.prevIncl = ((DiffDataNode)prevKids[i]).prevIncl;
+			        node.diffIncl = node.currIncl - node.prevIncl;
+			        node.currCalls = ((DiffDataNode)currKids[idx]).currCalls;
+			        node.prevCalls = ((DiffDataNode)prevKids[i]).prevCalls;
+			        node.diffCalls = node.currCalls - node.prevCalls;
 						
-						node.nodeId = nodeidx;
-						node.parentId = parent.nodeId;
-						node.parentname = parent.name;
-						node.currTreenode = ((DiffDataNode)currKids[idx]).currTreenode;
-						node.prevTreenode = ((DiffDataNode)prevKids[i]).prevTreenode;
-						node.nodetype = ((DiffDataNode)prevKids[i]).nodetype;
+			        node.nodeId = nodeidx;
+			        node.parentId = parent.nodeId;
+			        node.parentname = parent.name;
+			        node.currTreenode = ((DiffDataNode)currKids[idx]).currTreenode;
+			        node.prevTreenode = ((DiffDataNode)prevKids[i]).prevTreenode;
+			        node.nodetype = ((DiffDataNode)prevKids[i]).nodetype;
 
-						((DiffDataNode)currKids[idx]).marked = true;
-						((DiffDataNode)prevKids[i]).marked = true;
-						if(node.diffIncl != 0)
-						{
-							diffnodes.Add(node);
-							AddDiffTraceTableRow(diffTracetbl, node);
-							nodeidx++;
+			        ((DiffDataNode)currKids[idx]).marked = true;
+			        ((DiffDataNode)prevKids[i]).marked = true;
+			        if(node.diffIncl != 0)
+			        {
+			            diffnodes.Add(node);
+			            AddDiffTraceTableRow(diffTracetbl, node);
+			            nodeidx++;
 						
-						}
-					}
-					else
-					{
-						long incl = ((DiffDataNode)prevKids[i]).prevIncl;
-						prev_inclOfNode[prevKids[i]] = incl; 
-						//string nm = ((DiffDataNode)prevKids[i]).mapname;
-						//prev_inclOfNode[prevKids[i]] = nm;
-						prev.Add(prevKids[i]);
-					}
-				}
+			        }
+			    }
+			    else
+			    {
+			        long incl = ((DiffDataNode)prevKids[i]).prevIncl;
+			        prev_inclOfNode[prevKids[i]] = incl; 
+			        //string nm = ((DiffDataNode)prevKids[i]).mapname;
+			        //prev_inclOfNode[prevKids[i]] = nm;
+			        prev.Add(prevKids[i]);
+			    }
 			}
 			curr.Sort(new CompareIncl(curr_inclOfNode));
 			prev.Sort(new CompareIncl(prev_inclOfNode));
 			for(int i = 0; i < curr.Count; i++)
 			{
-				
-				if( !((DiffDataNode)curr[i]).marked)
-				{
-					var node = new DiffDataNode( ((DiffDataNode)curr[i]).name);
-					int idx = FirstMatchIndex(prevKids, (DiffDataNode) curr[i]);
-					if(idx >=0)
-					{
-						node.currFunId = ((DiffDataNode)curr[i]).currFunId;
-						node.prevFunId = ((DiffDataNode)prevKids[idx]).prevFunId;
-						node.mapname = ((DiffDataNode)curr[i]).mapname;
-						node.currIncl = ((DiffDataNode)curr[i]).currIncl;
-						node.prevIncl = ((DiffDataNode)prevKids[idx]).prevIncl;
-						node.diffIncl = node.currIncl - node.prevIncl;
-						node.currCalls = ((DiffDataNode)curr[i]).currCalls;
-						node.prevCalls = ((DiffDataNode)prevKids[idx]).prevCalls;
-						node.diffCalls = node.currCalls - node.prevCalls;
+			    if (((DiffDataNode) curr[i]).marked)
+			    {
+			        continue;
+			    }
+			    var node = new DiffDataNode( ((DiffDataNode)curr[i]).name);
+			    int idx = FirstMatchIndex(prevKids, (DiffDataNode) curr[i]);
+			    if(idx >=0)
+			    {
+			        node.currFunId = ((DiffDataNode)curr[i]).currFunId;
+			        node.prevFunId = ((DiffDataNode)prevKids[idx]).prevFunId;
+			        node.mapname = ((DiffDataNode)curr[i]).mapname;
+			        node.currIncl = ((DiffDataNode)curr[i]).currIncl;
+			        node.prevIncl = ((DiffDataNode)prevKids[idx]).prevIncl;
+			        node.diffIncl = node.currIncl - node.prevIncl;
+			        node.currCalls = ((DiffDataNode)curr[i]).currCalls;
+			        node.prevCalls = ((DiffDataNode)prevKids[idx]).prevCalls;
+			        node.diffCalls = node.currCalls - node.prevCalls;
 						
-						node.nodeId = nodeidx;
-						node.parentId = parent.nodeId;
-						node.parentname = parent.name;
-						node.currTreenode = ((DiffDataNode)curr[i]).currTreenode;
-						node.prevTreenode = ((DiffDataNode)prevKids[idx]).prevTreenode;
-						node.nodetype = ((DiffDataNode)curr[i]).nodetype;
+			        node.nodeId = nodeidx;
+			        node.parentId = parent.nodeId;
+			        node.parentname = parent.name;
+			        node.currTreenode = ((DiffDataNode)curr[i]).currTreenode;
+			        node.prevTreenode = ((DiffDataNode)prevKids[idx]).prevTreenode;
+			        node.nodetype = ((DiffDataNode)curr[i]).nodetype;
 
-						((DiffDataNode)curr[i]).marked = true;
-						((DiffDataNode)prevKids[idx]).marked = true;
-						if(node.diffIncl != 0)
-						{
-							diffnodes.Add(node);
-							AddDiffTraceTableRow(diffTracetbl, node);
-							nodeidx++;
+			        ((DiffDataNode)curr[i]).marked = true;
+			        ((DiffDataNode)prevKids[idx]).marked = true;
+			        if(node.diffIncl != 0)
+			        {
+			            diffnodes.Add(node);
+			            AddDiffTraceTableRow(diffTracetbl, node);
+			            nodeidx++;
 						
-						}
-					}
-					else
-					{
-						node.currFunId = ((DiffDataNode)curr[i]).currFunId;
-						node.mapname = ((DiffDataNode)curr[i]).mapname;
-						node.currIncl = ((DiffDataNode)curr[i]).currIncl;
-						node.prevIncl = 0;
-						node.diffIncl = node.currIncl;
-						node.currCalls = ((DiffDataNode)curr[i]).currCalls;
-						node.prevCalls = 0;
-						node.diffCalls = node.currCalls;
+			        }
+			    }
+			    else
+			    {
+			        node.currFunId = ((DiffDataNode)curr[i]).currFunId;
+			        node.mapname = ((DiffDataNode)curr[i]).mapname;
+			        node.currIncl = ((DiffDataNode)curr[i]).currIncl;
+			        node.prevIncl = 0;
+			        node.diffIncl = node.currIncl;
+			        node.currCalls = ((DiffDataNode)curr[i]).currCalls;
+			        node.prevCalls = 0;
+			        node.diffCalls = node.currCalls;
 						
-						node.nodeId = nodeidx;
-						node.parentId = parent.nodeId;
-						node.parentname = parent.name;
-						node.currTreenode = ((DiffDataNode)curr[i]).currTreenode;
-						node.nodetype = ((DiffDataNode)curr[i]).nodetype;
-						((DiffDataNode)curr[i]).marked = true;
-						if(node.diffIncl != 0)
-						{
-							diffnodes.Add(node);
-							AddDiffTraceTableRow(diffTracetbl, node);
-							nodeidx++;
-						}
-					}
-				}
-				
+			        node.nodeId = nodeidx;
+			        node.parentId = parent.nodeId;
+			        node.parentname = parent.name;
+			        node.currTreenode = ((DiffDataNode)curr[i]).currTreenode;
+			        node.nodetype = ((DiffDataNode)curr[i]).nodetype;
+			        ((DiffDataNode)curr[i]).marked = true;
+			        if(node.diffIncl != 0)
+			        {
+			            diffnodes.Add(node);
+			            AddDiffTraceTableRow(diffTracetbl, node);
+			            nodeidx++;
+			        }
+			    }
 			}
 
 			for(int i = 0; i < prev.Count; i++)

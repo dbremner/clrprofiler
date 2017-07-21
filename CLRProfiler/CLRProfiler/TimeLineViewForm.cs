@@ -903,17 +903,18 @@ namespace CLRProfiler
         {
             if ((e.Button & MouseButtons.Left) != 0)
             {
-                if (sortedTypeTable != null)
+                if (sortedTypeTable == null)
                 {
-                    foreach (TypeDesc t in sortedTypeTable)
+                    return;
+                }
+                foreach (TypeDesc t in sortedTypeTable)
+                {
+                    if (t.rect.Contains(e.X, e.Y) != t.selected)
                     {
-                        if (t.rect.Contains(e.X, e.Y) != t.selected)
-                        {
-                            t.selected = !t.selected;
-                            AssignBrushesPensToTypes();
-                            graphPanel.Invalidate();
-                            typeLegendPanel.Invalidate();
-                        }
+                        t.selected = !t.selected;
+                        AssignBrushesPensToTypes();
+                        graphPanel.Invalidate();
+                        typeLegendPanel.Invalidate();
                     }
                 }
             }
@@ -1004,20 +1005,22 @@ namespace CLRProfiler
             for (uint i = 0; i < masterTable.Length; i++)
             {
                 SampleObjectTable.SampleObject[] soa = masterTable[i];
-                if (soa != null)
+                if (soa == null)
                 {
-                    for (uint j = 0; j < soa.Length; j++)
+                    continue;
+                }
+                for (uint j = 0; j < soa.Length; j++)
+                {
+                    SampleObjectTable.SampleObject so = soa[j];
+                    if (so == null)
                     {
-                        SampleObjectTable.SampleObject so = soa[j];
-                        if (so != null)
-                        {
-                            ulong addr = ((ulong)i<<SampleObjectTable.firstLevelShift)
-                                              + (j<<SampleObjectTable.secondLevelShift);
-                            if ((addr % (uint)verticalScale) == 0)
-                            {
-                                DrawChangeList(g, so, addr, tick);
-                            }
-                        }
+                        continue;
+                    }
+                    ulong addr = ((ulong)i<<SampleObjectTable.firstLevelShift)
+                                 + (j<<SampleObjectTable.secondLevelShift);
+                    if ((addr % (uint)verticalScale) == 0)
+                    {
+                        DrawChangeList(g, so, addr, tick);
                     }
                 }
             }

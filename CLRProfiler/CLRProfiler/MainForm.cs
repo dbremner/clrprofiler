@@ -1054,48 +1054,49 @@ namespace CLRProfiler
 
         private bool CheckFileSave()
         {
-            if (saveAsMenuItem?.Enabled == true)
+            if (saveAsMenuItem?.Enabled != true)
             {
-                if (saveNever)
+                return true;
+            }
+            if (saveNever)
+            {
+                try
                 {
-                    try
-                    {
-                        File.Delete(logFileName);
-                    }
-                    catch (IOException e)
-                    {
-                        MessageBox.Show(e.Message + "\n" + e.StackTrace, "Error");
-                    }
+                    File.Delete(logFileName);
                 }
-                else
+                catch (IOException e)
                 {
-                    var saveFileForm = new SaveFileForm();
-                    saveFileForm.processFileNameLabel.Text = processFileName;
-                    switch (saveFileForm.ShowDialog())
-                    {
-                        case DialogResult.Yes:
-                            SaveFile();
-                            break;
+                    MessageBox.Show(e.Message + "\n" + e.StackTrace, "Error");
+                }
+            }
+            else
+            {
+                var saveFileForm = new SaveFileForm();
+                saveFileForm.processFileNameLabel.Text = processFileName;
+                switch (saveFileForm.ShowDialog())
+                {
+                    case DialogResult.Yes:
+                        SaveFile();
+                        break;
 
-                        case DialogResult.No:
-                            try
-                            {
-                                File.Delete(logFileName);
-                            }
-                            catch (IOException e)
-                            {
-                                MessageBox.Show(e.Message + "\n" + e.StackTrace, "Error");
-                            }
-                            saveAsMenuItem.Enabled = false;
-                            break;
+                    case DialogResult.No:
+                        try
+                        {
+                            File.Delete(logFileName);
+                        }
+                        catch (IOException e)
+                        {
+                            MessageBox.Show(e.Message + "\n" + e.StackTrace, "Error");
+                        }
+                        saveAsMenuItem.Enabled = false;
+                        break;
 
-                        case DialogResult.Cancel:
-                            return false;
+                    case DialogResult.Cancel:
+                        return false;
 
-                        case DialogResult.Retry:
-                            saveNever = true;
-                            break;
-                    }
+                    case DialogResult.Retry:
+                        saveNever = true;
+                        break;
                 }
             }
             return true;
@@ -1397,24 +1398,26 @@ namespace CLRProfiler
         private void SetAccountEnvironment([NotNull] string serviceAccountSid, [NotNull] string[] profilerEnvironment)
         {
             RegistryKey key = GetAccountEnvironmentKey(serviceAccountSid);
-            if (key != null)
+            if (key == null)
             {
-                foreach (string envVariable in profilerEnvironment)
-                {
-                    key.SetValue(EnvKey(envVariable), EnvValue(envVariable));
-                }
+                return;
+            }
+            foreach (string envVariable in profilerEnvironment)
+            {
+                key.SetValue(EnvKey(envVariable), EnvValue(envVariable));
             }
         }
 
         private void ResetAccountEnvironment([NotNull] string serviceAccountSid, [NotNull] string[] profilerEnvironment)
         {
             RegistryKey key = GetAccountEnvironmentKey(serviceAccountSid);
-            if (key != null)
+            if (key == null)
             {
-                foreach (string envVariable in profilerEnvironment)
-                {
-                    key.DeleteValue(EnvKey(envVariable));
-                }
+                return;
+            }
+            foreach (string envVariable in profilerEnvironment)
+            {
+                key.DeleteValue(EnvKey(envVariable));
             }
         }
 
@@ -2469,19 +2472,16 @@ namespace CLRProfiler
 
         private void ToggleEvent(NamedManualResetEvent toggleEvent, NamedManualResetEvent toggleEventCompleted)
         {
-            if (profiledProcess != null && !ProfiledProcessHasExited() )
+            if (profiledProcess != null && !ProfiledProcessHasExited() && toggleEvent != null)
             {
-                if (toggleEvent != null)
+                toggleEvent.Set();
+                if (toggleEventCompleted.Wait(10 * 1000))
                 {
-                    toggleEvent.Set();
-                    if (toggleEventCompleted.Wait(10 * 1000))
-                    {
-                        toggleEventCompleted.Reset();
-                    }
-                    else
-                    {
-                        MessageBox.Show("There was no response from the application");
-                    }
+                    toggleEventCompleted.Reset();
+                }
+                else
+                {
+                    MessageBox.Show("There was no response from the application");
                 }
             }
         }
@@ -2623,24 +2623,25 @@ namespace CLRProfiler
         [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands", Justification = "CLRProfiler.exe is a stand-alone tool, not a library.")]
         private void killApplicationButton_Click(object sender, EventArgs e)
         {
-            if (profiledProcess != null)
+            if (profiledProcess == null)
             {
-                if (killApplicationButton.Text == "Kill ASP.NET")
-                {
-                    StopIIS();
-                    StartIIS();
-                }
-                else if (serviceName != null)
-                {
-                    StopService(serviceName, serviceStopCommand);
-                }
-                else
-                {
-                    profiledProcess.Kill();
-                }
-
-                ResetStateAfterProfilingStopped();
+                return;
             }
+            if (killApplicationButton.Text == "Kill ASP.NET")
+            {
+                StopIIS();
+                StartIIS();
+            }
+            else if (serviceName != null)
+            {
+                StopService(serviceName, serviceStopCommand);
+            }
+            else
+            {
+                profiledProcess.Kill();
+            }
+
+            ResetStateAfterProfilingStopped();
         }
 
         private void setCommandLineMenuItem_Click(object sender, EventArgs e)
@@ -2735,42 +2736,46 @@ namespace CLRProfiler
 
         private void viewHistogramRelocatedMenuItem_Click(object sender, EventArgs e)
         {
-            if (lastLogResult != null)
+            if (lastLogResult == null)
             {
-                string title = "Histogram by Size for Relocated Objects";
-                var histogramViewForm = new HistogramViewForm(lastLogResult.relocatedHistogram, title);
-                histogramViewForm.Show();
+                return;
             }
+            string title = "Histogram by Size for Relocated Objects";
+            var histogramViewForm = new HistogramViewForm(lastLogResult.relocatedHistogram, title);
+            histogramViewForm.Show();
         }
 
         private void viewHistogramFinalizerMenuItem_Click(object sender, EventArgs e)
         {
-            if (lastLogResult != null)
+            if (lastLogResult == null)
             {
-                string title = "Histogram by Size for Finalized Objects";
-                var histogramViewForm = new HistogramViewForm(lastLogResult.finalizerHistogram, title);
-                histogramViewForm.Show();
+                return;
             }
+            string title = "Histogram by Size for Finalized Objects";
+            var histogramViewForm = new HistogramViewForm(lastLogResult.finalizerHistogram, title);
+            histogramViewForm.Show();
         }
 
         private void viewHistogramCriticalFinalizerMenuItem_Click(object sender, EventArgs e)
         {
-            if (lastLogResult != null)
+            if (lastLogResult == null)
             {
-                string title = "Histogram by Size for Critical Finalized Objects";
-                var histogramViewForm = new HistogramViewForm(lastLogResult.criticalFinalizerHistogram, title);
-                histogramViewForm.Show();
+                return;
             }
+            string title = "Histogram by Size for Critical Finalized Objects";
+            var histogramViewForm = new HistogramViewForm(lastLogResult.criticalFinalizerHistogram, title);
+            histogramViewForm.Show();
         }
 
         private void viewAgeHistogram_Click(object sender, EventArgs e)
         {
-            if (lastLogResult != null)
+            if (lastLogResult == null)
             {
-                string title = "Histogram by Age for Live Objects";
-                var ageHistogram = new AgeHistogram(lastLogResult.liveObjectTable, title);
-                ageHistogram.Show();
+                return;
             }
+            string title = "Histogram by Age for Live Objects";
+            var ageHistogram = new AgeHistogram(lastLogResult.liveObjectTable, title);
+            ageHistogram.Show();
         }
 
         private void viewAllocationGraphmenuItem_Click(object sender, EventArgs e)
@@ -2893,17 +2898,18 @@ namespace CLRProfiler
 
         private void viewSummaryMenuItem_Click(object sender, EventArgs e)
         {
-            if (lastLogResult != null)
+            if (lastLogResult == null)
             {
-                string scenario = log.fileName;
-                if (processFileName != null)
-                {
-                    scenario = processFileName + " " + commandLine;
-                }
-
-                var summaryForm = new SummaryForm(log, lastLogResult, scenario);
-                summaryForm.Show();
+                return;
             }
+            string scenario = log.fileName;
+            if (processFileName != null)
+            {
+                scenario = processFileName + " " + commandLine;
+            }
+
+            var summaryForm = new SummaryForm(log, lastLogResult, scenario);
+            summaryForm.Show();
         }
 
         private void targetCLRVersioncomboBox_SelectedIndexChanged(object sender, EventArgs e)

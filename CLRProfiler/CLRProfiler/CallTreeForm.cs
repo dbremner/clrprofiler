@@ -885,17 +885,18 @@ namespace CLRProfiler
         private void LeaveFunction(SortedList functions, int functionId)
         {
             int index = functions.IndexOfKey(functionId);
-            if(index != -1)
+            if (index == -1)
             {
-                int newValue = (int)functions.GetByIndex(index) - 1;
-                if(newValue <= 0)
-                {
-                    functions.RemoveAt(index);
-                }
-                else
-                {
-                    functions.SetByIndex(index, newValue);
-                }
+                return;
+            }
+            int newValue = (int)functions.GetByIndex(index) - 1;
+            if(newValue <= 0)
+            {
+                functions.RemoveAt(index);
+            }
+            else
+            {
+                functions.SetByIndex(index, newValue);
             }
         }
 
@@ -1849,29 +1850,30 @@ namespace CLRProfiler
         private void threadIDList_SelectedValueChanged(object sender, System.EventArgs e)
         {
             int selectedThread = (int)threadIDList.SelectedItem;
-            if(selectedThread != currentThreadId)
+            if (selectedThread == currentThreadId)
             {
-                TreeListView oldTreeView = callTreeView;
-                if(oldTreeView != null)
-                {
-                    oldTreeView.Visible = false;
-                    oldTreeView.Dock = DockStyle.None;
-                }
-                currentThreadId = selectedThread;
-
-                callTreeView = threads[selectedThread].callTreeView;
-                callTreeView.Dock = DockStyle.Left;
-                if(oldTreeView != null)
-                {
-                    callTreeView.Size = oldTreeView.Size;
-                }
-                viewState = callTreeView.ViewState;
-
-                CallTreeForm_Resize(null, null);
-                Debug.Assert(callTreeView != null, "callTreeView != null");
-                callTreeView.Visible = true;
-                ShowCurrentStack(null, null);
+                return;
             }
+            TreeListView oldTreeView = callTreeView;
+            if(oldTreeView != null)
+            {
+                oldTreeView.Visible = false;
+                oldTreeView.Dock = DockStyle.None;
+            }
+            currentThreadId = selectedThread;
+
+            callTreeView = threads[selectedThread].callTreeView;
+            callTreeView.Dock = DockStyle.Left;
+            if(oldTreeView != null)
+            {
+                callTreeView.Size = oldTreeView.Size;
+            }
+            viewState = callTreeView.ViewState;
+
+            CallTreeForm_Resize(null, null);
+            Debug.Assert(callTreeView != null, "callTreeView != null");
+            callTreeView.Visible = true;
+            ShowCurrentStack(null, null);
         }
 
         private void TabsSelectedIndexChanged(object sender, System.EventArgs e)

@@ -1194,21 +1194,23 @@ namespace CLRProfiler
 
         private void pruneContextMenuItem_Click(object sender, System.EventArgs e)
         {
-            if (selectedVertex != null)
+            if (selectedVertex == null)
             {
-                selectedVertex.selected = true;
-                prune();
-                graphPanel.Invalidate();
+                return;
             }
+            selectedVertex.selected = true;
+            prune();
+            graphPanel.Invalidate();
         }
 
         private void selectRecursiveMenuItem_Click(object sender, System.EventArgs e)
         {
-            if (selectedVertex != null)
+            if (selectedVertex == null)
             {
-                selectRecursive(selectedVertex);
-                graphPanel.Invalidate();
+                return;
             }
+            selectRecursive(selectedVertex);
+            graphPanel.Invalidate();
         }
 
         private void FindVertex(string name, string signature, bool again)
@@ -1643,50 +1645,51 @@ namespace CLRProfiler
             var selectedVertices = new ArrayList();
             foreach (Vertex v in graph.vertices.Values)
             {
-                if (v.selected)
+                if (!v.selected)
                 {
-                    selectedVertices.Add(v);
-                    if (v.signature == null || graph.graphType == Graph.GraphType.HeapGraph)
+                    continue;
+                }
+                selectedVertices.Add(v);
+                if (v.signature == null || graph.graphType == Graph.GraphType.HeapGraph)
+                {
+                    if (types.Length != 0)
                     {
-                        if (types.Length != 0)
+                        types.Append(';');
+                    }
+
+                    types.Append(v.name);
+                }
+                else
+                {
+                    if (methods.Length != 0)
+                    {
+                        methods.Append(';');
+                    }
+
+                    methods.Append(Vertex.RemoveRecursionCount(v.name));
+                }
+                if (v.signature != null)
+                {
+                    if (graph.graphType == Graph.GraphType.HeapGraph &&
+                        graph.typeGraphOptions == ObjectGraph.BuildTypeGraphOptions.IndividualObjects)
+                    {
+                        if (addresses.Length != 0)
                         {
-                            types.Append(';');
+                            addresses.Append(';');
                         }
 
-                        types.Append(v.name);
+                        string[] pieces = v.signature.Split('=', ',');
+                        Debug.Assert(pieces.Length == 4 && pieces[0] == "Address ");
+                        addresses.Append(pieces[1].Trim());
                     }
                     else
                     {
-                        if (methods.Length != 0)
+                        if (signatures.Length != 0)
                         {
-                            methods.Append(';');
+                            signatures.Append(';');
                         }
 
-                        methods.Append(Vertex.RemoveRecursionCount(v.name));
-                    }
-                    if (v.signature != null)
-                    {
-                        if (graph.graphType == Graph.GraphType.HeapGraph &&
-                            graph.typeGraphOptions == ObjectGraph.BuildTypeGraphOptions.IndividualObjects)
-                        {
-                            if (addresses.Length != 0)
-                            {
-                                addresses.Append(';');
-                            }
-
-                            string[] pieces = v.signature.Split('=', ',');
-                            Debug.Assert(pieces.Length == 4 && pieces[0] == "Address ");
-                            addresses.Append(pieces[1].Trim());
-                        }
-                        else
-                        {
-                            if (signatures.Length != 0)
-                            {
-                                signatures.Append(';');
-                            }
-
-                            signatures.Append(v.signature);
-                        }
+                        signatures.Append(v.signature);
                     }
                 }
             }
