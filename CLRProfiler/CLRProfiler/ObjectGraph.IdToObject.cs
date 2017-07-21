@@ -27,6 +27,11 @@ namespace CLRProfiler
                 masterTable = new GcObject[1][];
             }
 
+            internal void Clear()
+            {
+                masterTable = new GcObject[1][];
+            }
+
             internal void GrowMasterTable()
             {
                 GcObject[][] newmasterTable = new GcObject[masterTable.Length * 2][];

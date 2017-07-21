@@ -17,7 +17,7 @@ namespace CLRProfiler
     /// </summary>
     public sealed partial class ObjectGraph
     {
-        internal IdToObject idToObject;
+        [NotNull] internal readonly IdToObject idToObject;
         [NotNull] internal readonly Dictionary<string, GcType> typeNameToGcType;
         [NotNull] internal readonly Dictionary<int, GcType> typeIdToGcType;
         internal int internalTypeCount;
@@ -36,7 +36,7 @@ namespace CLRProfiler
 
         internal void Neuter()
         {
-            idToObject = new IdToObject();
+            idToObject.Clear();
             typeNameToGcType.Clear();
             typeIdToGcType.Clear();
             addressToForwardReferences.Clear();
