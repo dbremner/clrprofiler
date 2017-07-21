@@ -291,7 +291,7 @@ namespace CLRProfiler
             return maxBucketSize;
         }
 
-        private uint GetScale(GroupBox groupBox, int pixelsAvailable, ulong rangeNeeded, bool firstTime)
+        private uint GetScale([NotNull] GroupBox groupBox, int pixelsAvailable, ulong rangeNeeded, bool firstTime)
         {
             if (!firstTime)
             {

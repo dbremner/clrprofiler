@@ -113,7 +113,7 @@ namespace CLRProfiler
             }
         }
 
-        internal void CommandLineError(string message, params object[] args)
+        internal void CommandLineError([NotNull] string message, [NotNull] params object[] args)
         {
             CommandLineError(string.Format(message, args));
         }
@@ -1395,7 +1395,7 @@ namespace CLRProfiler
             return users.OpenSubKey(serviceAccountSid + @"\Environment", true);
         }
 
-        private void SetAccountEnvironment([NotNull] string serviceAccountSid, [NotNull] string[] profilerEnvironment)
+        private void SetAccountEnvironment([NotNull] string serviceAccountSid, [ItemNotNull] [NotNull] string[] profilerEnvironment)
         {
             RegistryKey key = GetAccountEnvironmentKey(serviceAccountSid);
             if (key == null)
@@ -1408,7 +1408,7 @@ namespace CLRProfiler
             }
         }
 
-        private void ResetAccountEnvironment([NotNull] string serviceAccountSid, [NotNull] string[] profilerEnvironment)
+        private void ResetAccountEnvironment([NotNull] string serviceAccountSid, [ItemNotNull] [NotNull] string[] profilerEnvironment)
         {
             RegistryKey key = GetAccountEnvironmentKey(serviceAccountSid);
             if (key == null)
@@ -1890,6 +1890,7 @@ namespace CLRProfiler
             detachEvent = null;
         }
 
+        [NotNull]
         private string GetLogDir()
         {
             if (logDirectory != null)
@@ -3151,7 +3152,7 @@ namespace CLRProfiler
         }
 
         [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands", Justification = "CLRProfiler.exe is a stand-alone tool, not a library.")]
-        private int getPID(string[] arguments)
+        private int getPID([ItemNotNull] string[] arguments)
         {
             if (arguments.Length == 1)
             {

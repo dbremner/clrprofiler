@@ -15,6 +15,7 @@ using System.IO;
 using System.Diagnostics;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using JetBrains.Annotations;
 
 namespace CLRProfiler
 {
@@ -167,7 +168,7 @@ namespace CLRProfiler
                 ? InterestLevel.Interesting | filterForm.InterestLevelForParentsAndChildren() : InterestLevel.Ignore;
         }
 
-        private void AddTypeName(int typeId, string typeName)
+        private void AddTypeName(int typeId, [NotNull] string typeName)
         {
             EnsureStringCapacity(typeId, ref this.typeName);
             this.typeName[typeId] = typeName;

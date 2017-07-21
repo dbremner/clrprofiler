@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics;
 using System.Drawing;
+using JetBrains.Annotations;
 
 namespace CLRProfiler
 {
@@ -28,7 +29,7 @@ namespace CLRProfiler
 		
 		}
 		#region public methods
-		internal void GetAllocationGraph(ReadLogResult readLogResult)
+		internal void GetAllocationGraph([NotNull] ReadLogResult readLogResult)
 		{
 			basegraph = readLogResult.allocatedHistogram.BuildAllocationGraph(new FilterForm());
 			PlaceVertices();
@@ -49,7 +50,8 @@ namespace CLRProfiler
 	    public int SelectedVertexCount() => basegraph.SelectedVertexCount();
 	    #endregion
 		#region private methods
-		private List<ArrayList> BuildLevels(Graph g)
+	    [NotNull]
+	    private List<ArrayList> BuildLevels([NotNull] Graph g)
 		{
 			var al = new List<ArrayList>();
 			for (int level = 0; level <= g.BottomVertex.level; level++)
@@ -136,7 +138,7 @@ namespace CLRProfiler
 				PlaceEdges(v.outgoingEdges.Values, false, scale);
 			}
 		}
-		private void PlaceEdges(ICollection edgeCollection, bool isIncoming, float scale)
+		private void PlaceEdges([NotNull] ICollection edgeCollection, bool isIncoming, float scale)
 		{
 			var edgeList = new ArrayList(edgeCollection);
 			edgeList.Sort();

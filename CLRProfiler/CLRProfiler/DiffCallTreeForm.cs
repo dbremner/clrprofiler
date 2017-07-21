@@ -14,6 +14,7 @@ using System.Data;
 using System.IO;
 using System.Text;
 using System.Diagnostics;
+using JetBrains.Annotations;
 using Microsoft.Win32;
 // ReSharper disable ArgumentsStyleLiteral
 
@@ -25,15 +26,15 @@ namespace CLRProfiler
 	/// Summary description for DiffCallTreeForm.
 	/// </summary>
 	internal sealed partial class DiffCallTreeForm : System.Windows.Forms.Form, IComparer, IDiffTreeOwner
-	{	
-		private readonly AllocationDiff	_allocDiff;
+	{
+	    [NotNull] private readonly AllocationDiff	_allocDiff;
 		private ViewState viewState;
-		private readonly Font defaultFont;
+	    [NotNull] private readonly Font defaultFont;
 		private readonly TreeNodeBase Root;
 		internal CLRProfiler.DiffTreeListView diffCallTreeView;
 		private Rectangle formRect = new Rectangle( -1, -1, -1, -1 );
 		
-		public DiffCallTreeForm(TreeNodeBase root, AllocationDiff allocDiff)
+		public DiffCallTreeForm([NotNull] TreeNodeBase root, [NotNull] AllocationDiff allocDiff)
 		{
 			this.Root = root;
 			this._allocDiff = allocDiff;

@@ -11,6 +11,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.IO;
+using JetBrains.Annotations;
 
 namespace CLRProfiler
 {
@@ -118,7 +119,7 @@ namespace CLRProfiler
             }
         }
 
-        private void AddToBuckets(TypeDesc t, int size, int count)
+        private void AddToBuckets([NotNull] TypeDesc t, int size, int count)
         {
             for (int i = 0; i < buckets.Length; i++)
             {
@@ -328,7 +329,7 @@ namespace CLRProfiler
             }
         }
 
-        private int Scale(GroupBox groupBox, int pixelsAvailable, int rangeNeeded, bool firstTime)
+        private int Scale([NotNull] GroupBox groupBox, int pixelsAvailable, int rangeNeeded, bool firstTime)
         {
             if (!firstTime)
             {
@@ -422,7 +423,7 @@ namespace CLRProfiler
             return string.Format(format, w, byteString);
         }
 
-        private void DrawBuckets(Graphics g)
+        private void DrawBuckets([NotNull] Graphics g)
         {
             Debug.Assert(verticalScale != 0);
             bool noBucketSelected = true;

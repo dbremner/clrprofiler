@@ -4,6 +4,8 @@
 // 
 // ==--==
 
+using JetBrains.Annotations;
+
 namespace CLRProfiler
 {
     internal sealed partial class FunctionFind : System.Windows.Forms.Form
@@ -12,9 +14,11 @@ namespace CLRProfiler
 		{
 		    internal TreeNode.NodeType NodeType { get; }
 		    internal int Id { get; }
+
+		    [NotNull]
 		    internal string Name { get; }
 
-		    public LineItem(int id, string name, TreeNode.NodeType nodeType)
+		    public LineItem(int id, [NotNull] string name, TreeNode.NodeType nodeType)
 		    {
                 Id = id;
                 Name = name;

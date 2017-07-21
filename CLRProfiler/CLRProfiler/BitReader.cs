@@ -11,6 +11,7 @@
 
 using System;
 using System.IO;
+using JetBrains.Annotations;
 
 namespace CLRProfiler
 {
@@ -42,7 +43,7 @@ namespace CLRProfiler
 			return r;
 		}
 
-		internal BitReader(Stream s)
+		internal BitReader([NotNull] Stream s)
 		{
 			fp = new BinaryReader(s);
 			current = 0;

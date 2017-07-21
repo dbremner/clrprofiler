@@ -91,7 +91,7 @@ namespace CLRProfiler
             }
         }
 
-        internal Vertex(string name, string signature, string module, [NotNull] Graph containingGraph)
+        internal Vertex([NotNull] string name, string signature, string module, [NotNull] Graph containingGraph)
         {
             this.signature = signature;
             this.incomingEdges = new Dictionary<Vertex, Edge>();
@@ -124,7 +124,7 @@ namespace CLRProfiler
             return nameAndSignature;
         }
 
-        internal Edge FindOrCreateOutgoingEdge(Vertex toVertex)
+        internal Edge FindOrCreateOutgoingEdge([NotNull] Vertex toVertex)
         {
             Edge edge = cachedOutgoingEdge;
             if (edge != null && edge.ToVertex == toVertex)

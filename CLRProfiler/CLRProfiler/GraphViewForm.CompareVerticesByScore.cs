@@ -5,6 +5,7 @@
 // ==--==
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 
 namespace CLRProfiler
 {
@@ -12,9 +13,9 @@ namespace CLRProfiler
     {
         private sealed class CompareVerticesByScore : IComparer
         {
-            private readonly Dictionary<Vertex, double> scoreOfVertex;
+            [NotNull] private readonly Dictionary<Vertex, double> scoreOfVertex;
 
-            internal CompareVerticesByScore(Dictionary<Vertex, double> scoreOfVertex)
+            internal CompareVerticesByScore([NotNull] Dictionary<Vertex, double> scoreOfVertex)
             {
                 this.scoreOfVertex = scoreOfVertex;
             }

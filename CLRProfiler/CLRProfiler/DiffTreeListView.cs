@@ -440,7 +440,7 @@ namespace CLRProfiler
 			}
 		}
 
-		private void GetTreeContent(StringBuilder sb, [NotNull] DiffDataNode root)
+		private void GetTreeContent([NotNull] StringBuilder sb, [NotNull] DiffDataNode root)
 		{
 			string prefx = "-";
 			
@@ -569,7 +569,7 @@ namespace CLRProfiler
 			return columns;
 		}
 
-		internal DiffColumn AddColumn(ColumnInformation ci, int defaultWidth)
+		internal DiffColumn AddColumn([NotNull] ColumnInformation ci, int defaultWidth)
 		{
 			var c = new DiffColumn(ci, resizeBar, columns);
 

@@ -626,7 +626,7 @@ namespace CLRProfiler
 		#endregion
 
 		#region View -- ViewCallTrace
-		private void ViewCallTrace(string name, int prevIncl, int currIncl, int diffIncl)
+		private void ViewCallTrace([NotNull] string name, int prevIncl, int currIncl, int diffIncl)
 		{
 			if(name == "<root>")
 			{
@@ -805,7 +805,7 @@ namespace CLRProfiler
 			aligDataGrids(sender, e, styleCallee);
 		}
 
-		private void aligDataGrids(object sender, System.Windows.Forms.MouseEventArgs e, DataGridTableStyle sty)
+		private void aligDataGrids(object sender, System.Windows.Forms.MouseEventArgs e, [NotNull] DataGridTableStyle sty)
 		{
 		    DataGrid.HitTestInfo hi = ((DataGrid) sender).HitTest(e.X, e.Y);
 		    if(!iscoarse)

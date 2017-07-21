@@ -43,7 +43,7 @@ namespace CLRProfiler
 		// item in treeListBox for current context menu
 		private int ContextSelection;
 
-		private TreeNodeBase root;
+	    [NotNull] private TreeNodeBase root;
 		internal TreeNodeBase Root
 		{
 			set
@@ -631,7 +631,7 @@ namespace CLRProfiler
 			return columns;
 		}
 
-		internal Column AddColumn(ColumnInformation ci, int defaultWidth)
+		internal Column AddColumn([NotNull] ColumnInformation ci, int defaultWidth)
 		{
 			var c = new Column(ci, resizeBar, columns);
 

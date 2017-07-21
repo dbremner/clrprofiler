@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Collections;
 using System.ComponentModel;
 using System.Windows.Forms;
+using JetBrains.Annotations;
 
 namespace CLRProfiler
 {
@@ -16,12 +17,11 @@ namespace CLRProfiler
     /// </summary>
     internal sealed partial class FunctionFind : System.Windows.Forms.Form
 	{
-
-		private readonly ITreeOwner TreeOwner;
+	    [NotNull] private readonly ITreeOwner TreeOwner;
 		internal int SelectedFunctionId;
 		internal TreeNode.NodeType SelectedNodeType;
 
-		internal FunctionFind( ITreeOwner treeOwner, string SearchString )
+		internal FunctionFind([NotNull] ITreeOwner treeOwner, [NotNull] string SearchString )
 		{
 			//
 			// Required for Windows Form Designer support

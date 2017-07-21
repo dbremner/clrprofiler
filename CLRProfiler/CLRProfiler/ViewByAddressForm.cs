@@ -10,6 +10,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.IO;
+using JetBrains.Annotations;
 
 namespace CLRProfiler
 {
@@ -218,7 +219,7 @@ namespace CLRProfiler
             return 20 + (int)g.MeasureString("00.0123.4567", font).Width;
         }
 
-        private int Scale(GroupBox groupBox, int pixelsAvailable, int rangeNeeded, bool firstTime)
+        private int Scale([NotNull] GroupBox groupBox, int pixelsAvailable, int rangeNeeded, bool firstTime)
         {
             if (!firstTime)
             {
@@ -409,7 +410,7 @@ namespace CLRProfiler
             return AddressRangeOfObject(ref o);
         }
 
-        private void DrawHorizontalLine(Graphics g, Pen pen, int x1, int x2, int y)
+        private void DrawHorizontalLine([NotNull] Graphics g, [NotNull] Pen pen, int x1, int x2, int y)
         {
             RectangleF clipRect = g.VisibleClipBounds;
             if (clipRect.Top <= y && y <= clipRect.Bottom)
@@ -422,7 +423,7 @@ namespace CLRProfiler
             }
         }
 
-        private void FillSpace(Graphics g, AddressRange r, Pen pen, ulong start, ulong end)
+        private void FillSpace([NotNull] Graphics g, [NotNull] AddressRange r, [NotNull] Pen pen, ulong start, ulong end)
         {
             // and a relative address of the object in this range
             ulong relativeStartAddr = start - r.loAddr;
@@ -592,7 +593,8 @@ namespace CLRProfiler
         }
 
 
-        private void DrawHeapAddress(Graphics g, Brush brush, Pen pen, AddressRange r, ulong addr)
+        private void DrawHeapAddress([NotNull] Graphics g, [NotNull] Brush brush, [NotNull] Pen pen,
+            [NotNull] AddressRange r, ulong addr)
         {
             int baseX = leftMargin + r.index*(heapWidth + gap);
 
@@ -632,7 +634,7 @@ namespace CLRProfiler
             }
         }
 
-        private void DrawGenerationLimits(Graphics g)
+        private void DrawGenerationLimits([NotNull] Graphics g)
         {
             Brush[] brush = new Brush[generations];
             brush[0] = Brushes.Red;
@@ -684,7 +686,7 @@ namespace CLRProfiler
             }
         }
 
-        private void DrawTypeDescription(Graphics g, TypeDesc t)
+        private void DrawTypeDescription([NotNull] Graphics g, [NotNull] TypeDesc t)
         {
             int dotOffset = (font.Height - dotSize)/2;
             g.FillRectangle(t.brushes[t.selected], t.rect.Left, t.rect.Top+dotOffset, dotSize, dotSize);
@@ -725,7 +727,7 @@ namespace CLRProfiler
             sortedTypeTable.Sort();
         }
 
-        private void DrawTypeLegend(Graphics g)
+        private void DrawTypeLegend([NotNull] Graphics g)
         {
             int x = typeLegendLeftMargin;
             int y = topMargin;

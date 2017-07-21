@@ -82,7 +82,7 @@ namespace CLRProfiler
 		// hold base stacktrace info
 		internal CallTreeForm _prevcallTrace;
 		internal CallTreeForm _currcallTrace;
-		internal DiffDataNode Root;
+	    [NotNull] internal DiffDataNode Root;
 		internal DataTable diffTracetbl;
 		private static int nodeidx = 0;
 
@@ -227,7 +227,7 @@ namespace CLRProfiler
 				throw new Exception(e.Message + "\n");
 			}
 		}
-		public bool IsAllocType(string name)
+		public bool IsAllocType([NotNull] string name)
 		{
 			return (_prevLog.logResult.allocatedHistogram.readNewLog.typeSignatureIdHash.ContainsKey(name) ||
 				_currLog.logResult.allocatedHistogram.readNewLog.typeSignatureIdHash.ContainsKey(name));
@@ -437,7 +437,7 @@ namespace CLRProfiler
 			maxIncl = 0;
 			typemaxIncl = 0;
 		}
-		private void FillCallAlloc(ref datanode n, Vertex v)
+		private void FillCallAlloc(ref datanode n, [NotNull] Vertex v)
 		{
 			n.calleeAlloc = new Hashtable();
 			n.callerAlloc = new Hashtable();
@@ -551,7 +551,7 @@ namespace CLRProfiler
 			
 			tmptbl.Rows.Add(tmpRow);
 		}
-		public void MakeBaseDataTable(DataTable tbl)
+		public void MakeBaseDataTable([NotNull] DataTable tbl)
 		{
 		    AddIntColumn(tbl, "id");
 		    AddStringColumn(tbl, "name");
@@ -623,7 +623,7 @@ namespace CLRProfiler
 			}
 		}
 
-	    private void BuildCalleeTables(DataTable tbl, int id, Dictionary<Vertex, Edge> callhash)
+	    private void BuildCalleeTables([NotNull] DataTable tbl, int id, [NotNull] Dictionary<Vertex, Edge> callhash)
 	    {
 	        foreach (Vertex cv in callhash.Keys)
 	        {
@@ -637,7 +637,7 @@ namespace CLRProfiler
 	        }
 	    }
 
-        private void BuildCalleerTables(DataTable tbl, int id, Dictionary<Vertex, Edge> callhash)
+        private void BuildCalleerTables([NotNull] DataTable tbl, int id, [NotNull] Dictionary<Vertex, Edge> callhash)
 	    {
             foreach (Vertex cv in callhash.Keys)
 	        {
@@ -651,7 +651,7 @@ namespace CLRProfiler
 	        }
 	    }
 
-	    private void AddNamedRow(DataTable tmptbl, DoubleInt id, string name, DoubleInt value)
+	    private void AddNamedRow([NotNull] DataTable tmptbl, DoubleInt id, string name, DoubleInt value)
 	    {
 	        DataRow tmpRow = tmptbl.NewRow();
 	        tmpRow["id"] = id;
@@ -659,13 +659,13 @@ namespace CLRProfiler
 	        tmptbl.Rows.Add(tmpRow);
         }
 
-	    private void MakeCallerTables(DataTable tbl)
+	    private void MakeCallerTables([NotNull] DataTable tbl)
 	    {
 	        AddIntColumn(tbl, "id");
 	        AddIntColumn(tbl, "callerid");
         }
 
-	    private void MakeCalleeTables(DataTable tbl)
+	    private void MakeCalleeTables([NotNull] DataTable tbl)
 	    {
 	        AddIntColumn(tbl, "id");
 	        AddIntColumn(tbl, "calleeid");
@@ -1566,7 +1566,7 @@ namespace CLRProfiler
 			tbl.Columns["diffCalls"].Expression = "currCalls - prevCalls";
 			//tbl.Columns["mapname"].Expression = "name";
 		}
-		private void AddDiffTraceTableRow(DataTable tmptbl, DiffDataNode node)
+		private void AddDiffTraceTableRow([NotNull] DataTable tmptbl, [NotNull] DiffDataNode node)
 		{			
 			DataRow tmpRow = tmptbl.NewRow();
 

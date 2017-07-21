@@ -76,6 +76,7 @@ namespace CLRProfiler
             return nameSignatureModule;
         }
 
+        [NotNull]
         internal Vertex FindOrCreateVertex(string name, [CanBeNull] string signature, [CanBeNull] string module)
         {
             string nameSignatureModule = NameSignatureModule(name, signature, module);
@@ -88,21 +89,21 @@ namespace CLRProfiler
             return vertex;
         }
 
-        internal Vertex CreateVertex(string name, string signature, string key)
+        internal Vertex CreateVertex([NotNull] string name, string signature, string key)
         {
             var vertex = new Vertex(name, signature, null, this);
             vertices[key] = vertex;
             return vertex;
         }
 
-        internal Vertex FindVertex(string key)
+        internal Vertex FindVertex([NotNull] string key)
         {
             Vertex vertex;
             vertices.TryGetValue(key, out vertex);
             return vertex;
         }
 
-        internal Vertex FindVertex(string name, string signature, string module)
+        internal Vertex FindVertex([NotNull] string name, string signature, string module)
         {
             string nameSignatureModule = name;
             if (signature != null)

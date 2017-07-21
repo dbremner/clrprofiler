@@ -13,6 +13,7 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.Globalization;
 using System.Text;
+using JetBrains.Annotations;
 
 namespace CLRProfiler
 {
@@ -88,7 +89,7 @@ namespace CLRProfiler
 
         }
 
-        private void PaintVertex(Vertex v, Graphics g, Brush penBrush, Pen pen)
+        private void PaintVertex([NotNull] Vertex v, [NotNull] Graphics g, [NotNull] Brush penBrush, [NotNull] Pen pen)
         {
             Rectangle r = v.rectangle;
             v.selectionRectangle = r;
@@ -190,7 +191,7 @@ namespace CLRProfiler
             return al;
         }
 
-        private void PlaceEdges(ICollection edgeCollection, bool isIncoming, int x, int y, float scale)
+        private void PlaceEdges([NotNull] ICollection edgeCollection, bool isIncoming, int x, int y, float scale)
         {
             var edgeList = new ArrayList(edgeCollection);
             edgeList.Sort();
@@ -725,7 +726,7 @@ namespace CLRProfiler
             }
         }
 
-        private void selectRecursive(Vertex v)
+        private void selectRecursive([NotNull] Vertex v)
         {
             foreach (Vertex vv in graph.vertices.Values)
             {

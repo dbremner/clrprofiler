@@ -5,6 +5,8 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.IO;
+using JetBrains.Annotations;
+
 namespace CLRProfiler
 {
 	public sealed partial class ViewByAddressForm : System.Windows.Forms.Form
@@ -25,7 +27,7 @@ namespace CLRProfiler
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel typeLegendPanel;
         private System.Windows.Forms.GroupBox bytesPerPixelgroupBox;
-        private System.Windows.Forms.GroupBox heapWidthGroupBox;
+	    [NotNull] private System.Windows.Forms.GroupBox heapWidthGroupBox;
         private System.Windows.Forms.ContextMenu contextMenu;
         private System.Windows.Forms.MenuItem showAllocatorsMenuItem;
         private System.Windows.Forms.MenuItem showHistogramMenuItem;

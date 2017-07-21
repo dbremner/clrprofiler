@@ -9,6 +9,7 @@ using System.Collections;
 using System.ComponentModel;
 using System.Windows.Forms;
 using System.Diagnostics;
+using JetBrains.Annotations;
 
 namespace CLRProfiler
 {
@@ -270,7 +271,7 @@ namespace CLRProfiler
             }
         }
 
-        private int Scale(GroupBox groupBox, int pixelsAvailable, int rangeNeeded, bool firstTime)
+        private int Scale([NotNull] GroupBox groupBox, int pixelsAvailable, int rangeNeeded, bool firstTime)
         {
             if (!firstTime)
             {
@@ -438,7 +439,8 @@ namespace CLRProfiler
             }
         }
 
-        private void DrawAddressLabel(Graphics g, Brush brush, Pen pen, AddressRange r, int y, ulong addr)
+        private void DrawAddressLabel([NotNull] Graphics g, [NotNull] Brush brush, [NotNull] Pen pen,
+            [NotNull] AddressRange r, int y, ulong addr)
         {
             y += (int)((r.hiAddr - addr)/(uint)verticalScale);
             string s = FormatAddress(addr);
@@ -819,7 +821,7 @@ namespace CLRProfiler
             }
         }
 
-        private void DrawTypeLegend(Graphics g)
+        private void DrawTypeLegend([NotNull] Graphics g)
         {
             dotSize = (int)g.MeasureString("0", font).Width;
             int maxWidth = 0;

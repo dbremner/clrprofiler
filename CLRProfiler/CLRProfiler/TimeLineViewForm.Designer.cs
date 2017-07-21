@@ -4,6 +4,8 @@ using System.Collections;
 using System.ComponentModel;
 using System.Windows.Forms;
 using System.Diagnostics;
+using JetBrains.Annotations;
+
 namespace CLRProfiler
 {
 	public sealed partial class TimeLineViewForm : System.Windows.Forms.Form
@@ -30,7 +32,7 @@ namespace CLRProfiler
         private System.Windows.Forms.RadioButton fiveHundredKradioButton;
         private System.Windows.Forms.Panel graphOuterPanel;
         private System.Windows.Forms.Panel legendOuterPanel;
-        private System.Windows.Forms.Panel graphPanel;
+	    [NotNull] private System.Windows.Forms.Panel graphPanel;
         private System.Windows.Forms.RadioButton twentyKradioButton;
         private System.Windows.Forms.GroupBox horizontalScaleGroupBox;
         private System.Windows.Forms.GroupBox verticalScaleGroupBox;
