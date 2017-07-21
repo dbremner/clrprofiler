@@ -258,8 +258,7 @@ namespace CLRProfiler
                     {
                         entireLogResult.requestedObjectGraph.WriteVertexPaths(histogram[0].tickIndex, histogram[histogram.Length - 1].tickIndex, histogram[0].readNewLog.typeName[td.typeIndex]);
                     }
-                    else
-                        if (entireLogResult.objectGraph != null)
+                    else if (entireLogResult.objectGraph != null)
                     {
                         entireLogResult.objectGraph.WriteVertexPaths(histogram[0].tickIndex, histogram[histogram.Length - 1].tickIndex, histogram[0].readNewLog.typeName[td.typeIndex]);
                     }

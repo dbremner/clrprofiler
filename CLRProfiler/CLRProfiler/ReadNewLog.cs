@@ -905,11 +905,11 @@ namespace CLRProfiler
                             if (c != -1)
                             {
                                 if (readLogResult.liveObjectTable != null)
-                                    {
-                                        readLogResult.liveObjectTable.InsertObject(id, typeSizeStackTraceIndex, lastTickIndex, lastTickIndex, true, readLogResult.sampleObjectTable);
-                                    }
+                                {
+                                    readLogResult.liveObjectTable.InsertObject(id, typeSizeStackTraceIndex, lastTickIndex, lastTickIndex, true, readLogResult.sampleObjectTable);
+                                }
 
-                                    if (pos >= startFileOffset && pos < endFileOffset && readLogResult.allocatedHistogram != null)
+                                if (pos >= startFileOffset && pos < endFileOffset && readLogResult.allocatedHistogram != null)
                                 {
                                     // readLogResult.calls.Add(new CallOrAlloc(false, threadId, typeSizeStackTraceIndex));
                                     readLogResult.allocatedHistogram.AddObject(typeSizeStackTraceIndex, 1);
@@ -939,11 +939,11 @@ namespace CLRProfiler
                             if (c != -1)
                             {
                                 if (readLogResult.liveObjectTable != null)
-                                    {
-                                        readLogResult.liveObjectTable.InsertObject(id, typeSizeStackTraceIndex, lastTickIndex, lastTickIndex, true, readLogResult.sampleObjectTable);
-                                    }
+                                {
+                                    readLogResult.liveObjectTable.InsertObject(id, typeSizeStackTraceIndex, lastTickIndex, lastTickIndex, true, readLogResult.sampleObjectTable);
+                                }
 
-                                    if (pos >= startFileOffset && pos < endFileOffset && readLogResult.allocatedHistogram != null)
+                                if (pos >= startFileOffset && pos < endFileOffset && readLogResult.allocatedHistogram != null)
                                 {
                                     // readLogResult.calls.Add(new CallOrAlloc(false, typeSizeStackTraceIndex));
                                     readLogResult.allocatedHistogram.AddObject(typeSizeStackTraceIndex, 1);
@@ -1192,10 +1192,10 @@ namespace CLRProfiler
                                             allocTickIndex = liveObject.allocTickIndex;
                                             Histogram[] h = readLogResult.heapDumpHistograms;
                                             if (h != null)
-                                                {
-                                                    h[h.Length - 1].AddObject(liveObject.typeSizeStacktraceIndex, 1);
-                                                }
+                                            {
+                                                h[h.Length - 1].AddObject(liveObject.typeSizeStacktraceIndex, 1);
                                             }
+                                        }
                                     }
                                 }
                                 if (typeSizeStackTraceId == -1)
@@ -1255,16 +1255,16 @@ namespace CLRProfiler
                             uint length = ReadUInt();
                             Histogram reloHist = null;
                             if (pos >= startFileOffset && pos < endFileOffset)
-                                {
-                                    reloHist = readLogResult.relocatedHistogram;
-                                }
+                            {
+                                reloHist = readLogResult.relocatedHistogram;
+                            }
 
-                                if (readLogResult.liveObjectTable != null)
-                                {
-                                    readLogResult.liveObjectTable.UpdateObjects(reloHist, oldId, newId, length, lastTickIndex, readLogResult.sampleObjectTable);
-                                }
+                            if (readLogResult.liveObjectTable != null)
+                            {
+                                readLogResult.liveObjectTable.UpdateObjects(reloHist, oldId, newId, length, lastTickIndex, readLogResult.sampleObjectTable);
+                            }
 
-                                break;
+                            break;
                         }
 
                         case    'V':
@@ -1275,16 +1275,16 @@ namespace CLRProfiler
                             uint length = ReadUInt();
                             Histogram reloHist = null;
                             if (pos >= startFileOffset && pos < endFileOffset)
-                                {
-                                    reloHist = readLogResult.relocatedHistogram;
-                                }
+                            {
+                                reloHist = readLogResult.relocatedHistogram;
+                            }
 
-                                if (readLogResult.liveObjectTable != null)
-                                {
-                                    readLogResult.liveObjectTable.UpdateObjects(reloHist, startId, startId, length, lastTickIndex, readLogResult.sampleObjectTable);
-                                }
+                            if (readLogResult.liveObjectTable != null)
+                            {
+                                readLogResult.liveObjectTable.UpdateObjects(reloHist, startId, startId, length, lastTickIndex, readLogResult.sampleObjectTable);
+                            }
 
-                                break;
+                            break;
                         }
 
                         case    'B':
@@ -1379,15 +1379,15 @@ namespace CLRProfiler
                                 if (liveObject.id == objectId)
                                 {
                                     if (isCritical != 0 && readLogResult.criticalFinalizerHistogram != null)
-                                        {
-                                            readLogResult.criticalFinalizerHistogram.AddObject(liveObject.typeSizeStacktraceIndex, 1);
-                                        }
-
-                                        if (readLogResult.finalizerHistogram != null)
-                                        {
-                                            readLogResult.finalizerHistogram.AddObject(liveObject.typeSizeStacktraceIndex, 1);
-                                        }
+                                    {
+                                        readLogResult.criticalFinalizerHistogram.AddObject(liveObject.typeSizeStacktraceIndex, 1);
                                     }
+
+                                    if (readLogResult.finalizerHistogram != null)
+                                    {
+                                        readLogResult.finalizerHistogram.AddObject(liveObject.typeSizeStacktraceIndex, 1);
+                                    }
+                                }
                             }
                             break;
                         }
@@ -1578,15 +1578,15 @@ namespace CLRProfiler
                             if (c != -1)
                             {
                                 if (readLogResult.handleHash != null)
-                                    {
-                                        readLogResult.handleHash[handleId] = new HandleInfo(threadId, handleId, initialObjectId, lastTickIndex, stacktraceId);
-                                    }
-
-                                    if (readLogResult.createdHandlesHistogram != null)
-                                    {
-                                        readLogResult.createdHandlesHistogram.AddObject(stacktraceId, 1);
-                                    }
+                                {
+                                    readLogResult.handleHash[handleId] = new HandleInfo(threadId, handleId, initialObjectId, lastTickIndex, stacktraceId);
                                 }
+
+                                if (readLogResult.createdHandlesHistogram != null)
+                                {
+                                    readLogResult.createdHandlesHistogram.AddObject(stacktraceId, 1);
+                                }
+                            }
                             break;
                         }
 
@@ -1602,10 +1602,10 @@ namespace CLRProfiler
                                 if (readLogResult.handleHash != null)         
                                 {
                                     if (readLogResult.handleHash.ContainsKey(handleId))
-                                        {
-                                            readLogResult.handleHash.Remove(handleId);
-                                        }
-                                        else
+                                    {
+                                        readLogResult.handleHash.Remove(handleId);
+                                    }
+                                    else
                                     {
                                         //Console.WriteLine("Non-existent handle {0:x} destroyed in line {1}", handleId, line);
                                         //int[] stacktrace = stacktraceTable.IndexToStacktrace(stacktraceId);
@@ -1616,10 +1616,10 @@ namespace CLRProfiler
                                     }
                                 }
                                 if (readLogResult.destroyedHandlesHistogram != null)
-                                    {
-                                        readLogResult.destroyedHandlesHistogram.AddObject(stacktraceId, 1);
-                                    }
+                                {
+                                    readLogResult.destroyedHandlesHistogram.AddObject(stacktraceId, 1);
                                 }
+                            }
                             break;
                         }
                         
