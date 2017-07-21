@@ -8,6 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics;
+using JetBrains.Annotations;
 
 namespace CLRProfiler
 {
@@ -17,7 +18,7 @@ namespace CLRProfiler
     public sealed partial class ObjectGraph
     {
         internal IdToObject idToObject;
-        internal Dictionary<string, GcType> typeNameToGcType;
+        [NotNull] internal readonly Dictionary<string, GcType> typeNameToGcType;
         internal Dictionary<int, GcType> typeIdToGcType;
         internal int internalTypeCount;
 
@@ -36,9 +37,9 @@ namespace CLRProfiler
         internal void Neuter()
         {
             idToObject = new IdToObject();
-            typeNameToGcType = new Dictionary<string, GcType>();
+            typeNameToGcType.Clear();
             typeIdToGcType = new Dictionary<int, GcType>(intEqualityComparer);
-            addressToForwardReferences = new Dictionary<ulong, ForwardReference>();
+            addressToForwardReferences.Clear();
             roots = null;
             rootIDs = null;
         }
@@ -59,7 +60,7 @@ namespace CLRProfiler
             empty = true;
         }
 
-        private Dictionary<ulong, ForwardReference> addressToForwardReferences;
+        [NotNull] private readonly Dictionary<ulong, ForwardReference> addressToForwardReferences;
 
         private void CreateForwardReference(ulong targetAddress, GcObject source, int referenceNumber)
         {
