@@ -14,9 +14,7 @@ namespace CLRProfiler
 	public sealed class GraphBase
 	{
 		#region private data member
-		private readonly bool placeVertices = true;
-		private readonly bool placeEdges = true;
-        private ulong totalWeight;
+	    private ulong totalWeight;
 		private readonly int totalHeight = 100;
 		private float scale = 1.0f;
 	    //private Graph callGraph = null;
@@ -149,127 +147,117 @@ namespace CLRProfiler
 		}
 
 		private void PlaceVertices()
-		{
-			basegraph.AssignLevelsToVertices();
-			totalWeight = 0;
-			foreach (Vertex v in basegraph.vertices.Values)
-			{
-				v.weight = v.incomingWeight;
-				if (v.weight < v.outgoingWeight)
-                {
-                    v.weight = v.outgoingWeight;
-                }
+	    {
+	        basegraph.AssignLevelsToVertices();
+	        totalWeight = 0;
+	        foreach (Vertex v in basegraph.vertices.Values)
+	        {
+	            v.weight = v.incomingWeight;
+	            if (v.weight < v.outgoingWeight)
+	            {
+	                v.weight = v.outgoingWeight;
+	            }
 
-                if (basegraph.graphType == Graph.GraphType.CallGraph)
-				{
-					if (totalWeight < v.weight)
-                    {
-                        totalWeight = v.weight;
-                    }
-                }
-			}
-			if (basegraph.graphType != Graph.GraphType.CallGraph)
-            {
-                totalWeight = basegraph.TopVertex.weight;
-            }
+	            if (basegraph.graphType == Graph.GraphType.CallGraph)
+	            {
+	                if (totalWeight < v.weight)
+	                {
+	                    totalWeight = v.weight;
+	                }
+	            }
+	        }
+	        if (basegraph.graphType != Graph.GraphType.CallGraph)
+	        {
+	            totalWeight = basegraph.TopVertex.weight;
+	        }
 
-            if (totalWeight == 0)
-			{
-				totalWeight = 1;
-			}
+	        if (totalWeight == 0)
+	        {
+	            totalWeight = 1;
+	        }
 
-			var al = BuildLevels(basegraph);
-		    levelList = al;
-			scale = (float)totalHeight/totalWeight;
-			if (placeVertices)
-			{
-				for (int level = basegraph.TopVertex.level;
-					level <= basegraph.BottomVertex.level;
-					level++)
-				{
-					var all = al[level];
-					foreach (Vertex v in all)
-					{
-						if (basegraph.graphType == Graph.GraphType.CallGraph)
-						{
-							v.basicWeight = v.incomingWeight - v.outgoingWeight;
-							if (v.basicWeight < 0)
-                            {
-                                v.basicWeight = 0;
-                            }
+	        var al = BuildLevels(basegraph);
+	        levelList = al;
+	        scale = (float) totalHeight / totalWeight;
+	        for (int level = basegraph.TopVertex.level;
+	            level <= basegraph.BottomVertex.level;
+	            level++)
+	        {
+	            var all = al[level];
+	            foreach (Vertex v in all)
+	            {
+	                if (basegraph.graphType == Graph.GraphType.CallGraph)
+	                {
+	                    v.basicWeight = v.incomingWeight - v.outgoingWeight;
+	                    if (v.basicWeight < 0)
+	                    {
+	                        v.basicWeight = 0;
+	                    }
 
-                            v.weightString = string.Format("Gets {0}, causes {1}",
-								formatWeight(v.basicWeight),
-								formatWeight(v.outgoingWeight));
-						}
-						else
-						{
-							if (v.count == 0)
-                            {
-                                v.weightString = formatWeight(v.weight);
-                            }
-                            else if (v.count == 1)
-                            {
-                                v.weightString = string.Format("{0}  (1 object, {1})", formatWeight(v.weight), formatWeight(v.basicWeight));
-                            }
-                            else
-                            {
-                                v.weightString = string.Format("{0}  ({1} objects, {2})", formatWeight(v.weight), v.count, formatWeight(v.basicWeight));
-                            }
-                        }
-						
-					}
-					int y = 10;
-                    ulong levelWeight = 0;
-					foreach (Vertex v in all)
-                    {
-                        levelWeight += v.weight;
-                    }
+	                    v.weightString = string.Format("Gets {0}, causes {1}",
+	                        formatWeight(v.basicWeight),
+	                        formatWeight(v.outgoingWeight));
+	                }
+	                else
+	                {
+	                    if (v.count == 0)
+	                    {
+	                        v.weightString = formatWeight(v.weight);
+	                    }
+	                    else if (v.count == 1)
+	                    {
+	                        v.weightString = string.Format("{0}  (1 object, {1})", formatWeight(v.weight),
+	                            formatWeight(v.basicWeight));
+	                    }
+	                    else
+	                    {
+	                        v.weightString = string.Format("{0}  ({1} objects, {2})", formatWeight(v.weight), v.count,
+	                            formatWeight(v.basicWeight));
+	                    }
+	                }
+	            }
+	            int y = 10;
+	            ulong levelWeight = 0;
+	            foreach (Vertex v in all)
+	            {
+	                levelWeight += v.weight;
+	            }
 
-                    float levelHeight = levelWeight*scale;
-					if (levelHeight < totalHeight*0.5)
-                    {
-                        y += (int)((totalHeight - levelHeight)*2);
-                    }
+	            float levelHeight = levelWeight * scale;
+	            if (levelHeight < totalHeight * 0.5)
+	            {
+	                y += (int) ((totalHeight - levelHeight) * 2);
+	            }
 
-                    foreach (Vertex v in all)
-					{
-						// For the in-between vertices, sometimes it's good
-						// to shift them down a little to line them up with
-						// whatever is going into them. Unless of course
-						// we would need to shift too much...
-						if (v.level < basegraph.BottomVertex.level-1)
-						{
-                            ulong highestWeight = 0;
-							foreach (Edge e in v.incomingEdges.Values)
-							{
-								if (e.weight > highestWeight && e.FromVertex.level < level)
-								{
-									highestWeight = e.weight;
-								}
-							}
-							
-						}
-						float fHeight = v.weight*scale;
-						int iHeight = (int)fHeight;
-						if (iHeight < 1)
-                        {
-                            iHeight = 1;
-                        }
-
-                        if (placeEdges)
-                        {
-                            PlaceEdges(v.outgoingEdges.Values, false, scale);
-                        }
-                    }
-				}
-			}
-			if (placeEdges)
-            {
-                PlaceEdges(scale);
-            }
-        }
-		#endregion
+	            foreach (Vertex v in all)
+	            {
+	                // For the in-between vertices, sometimes it's good
+	                // to shift them down a little to line them up with
+	                // whatever is going into them. Unless of course
+	                // we would need to shift too much...
+	                if (v.level < basegraph.BottomVertex.level - 1)
+	                {
+	                    ulong highestWeight = 0;
+	                    foreach (Edge e in v.incomingEdges.Values)
+	                    {
+	                        if (e.weight > highestWeight && e.FromVertex.level < level)
+	                        {
+	                            highestWeight = e.weight;
+	                        }
+	                    }
+	                }
+	                float fHeight = v.weight * scale;
+	                int iHeight = (int) fHeight;
+	                if (iHeight < 1)
+	                {
+	                    iHeight = 1;
+	                }
+	                PlaceEdges(v.outgoingEdges.Values, false, scale);
+	            }
+	        }
+	        PlaceEdges(scale);
+	    }
+	    #endregion
 		internal Graph basegraph { get; private set; }
 	}
 }
