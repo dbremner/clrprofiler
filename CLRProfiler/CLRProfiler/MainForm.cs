@@ -3144,7 +3144,7 @@ namespace CLRProfiler
         }
 
         [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands", Justification = "CLRProfiler.exe is a stand-alone tool, not a library.")]
-        private int getPID([ItemNotNull] string[] arguments)
+        private int getPID([NotNull] [ItemNotNull] string[] arguments)
         {
             if (arguments.Length == 1)
             {
@@ -3174,7 +3174,7 @@ namespace CLRProfiler
             return result;
         }
 
-        private void ShowErrorMessage(string message)
+        private void ShowErrorMessage([NotNull] string message)
         {
             if (!noUI)
             {

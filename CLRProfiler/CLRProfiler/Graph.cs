@@ -60,7 +60,8 @@ namespace CLRProfiler
             graphType = type;
         }
 
-        private string NameSignatureModule(string name, [CanBeNull] string signature, [CanBeNull] string module)
+        [NotNull]
+        private string NameSignatureModule([NotNull] string name, [CanBeNull] string signature, [CanBeNull] string module)
         {
             string nameSignatureModule = name;
             if (signature != null)
@@ -77,7 +78,7 @@ namespace CLRProfiler
         }
 
         [NotNull]
-        internal Vertex FindOrCreateVertex(string name, [CanBeNull] string signature, [CanBeNull] string module)
+        internal Vertex FindOrCreateVertex([NotNull] string name, [CanBeNull] string signature, [CanBeNull] string module)
         {
             string nameSignatureModule = NameSignatureModule(name, signature, module);
             Vertex vertex;
@@ -103,7 +104,7 @@ namespace CLRProfiler
             return vertex;
         }
 
-        internal Vertex FindVertex([NotNull] string name, string signature, string module)
+        internal Vertex FindVertex([NotNull] string name, [CanBeNull] string signature, [CanBeNull] string module)
         {
             string nameSignatureModule = name;
             if (signature != null)

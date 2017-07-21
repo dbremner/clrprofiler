@@ -30,7 +30,7 @@ namespace CLRProfiler
             return readLogResult;
         }
 
-        private static int FindMarkerTickIndex(string marker, ReadNewLog log)
+        private static int FindMarkerTickIndex(string marker, [NotNull] ReadNewLog log)
         {
             int result = -1;
 
@@ -69,12 +69,12 @@ namespace CLRProfiler
             return result;
         }
 
-        private static void WriteReport(Histogram histogram, string timeMarker)
+        private static void WriteReport(Histogram histogram, [NotNull] string timeMarker)
         {
             WriteReport(new Histogram[1] { histogram }, new string[1] { timeMarker } );
         }
 
-        private static void WriteReport(Histogram[] histogram, string[] timeMarker)
+        private static void WriteReport(Histogram[] histogram, [NotNull] string[] timeMarker)
         {
             TypeDescriptor[] typeIndexToTypeDescriptor = new TypeDescriptor[histogram[0].readNewLog.typeName.Length];
 
