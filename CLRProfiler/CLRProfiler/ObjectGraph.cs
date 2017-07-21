@@ -19,7 +19,7 @@ namespace CLRProfiler
     {
         internal IdToObject idToObject;
         [NotNull] internal readonly Dictionary<string, GcType> typeNameToGcType;
-        internal Dictionary<int, GcType> typeIdToGcType;
+        [NotNull] internal readonly Dictionary<int, GcType> typeIdToGcType;
         internal int internalTypeCount;
 
         internal int unknownTypeId;
@@ -38,7 +38,7 @@ namespace CLRProfiler
         {
             idToObject = new IdToObject();
             typeNameToGcType.Clear();
-            typeIdToGcType = new Dictionary<int, GcType>(intEqualityComparer);
+            typeIdToGcType.Clear();
             addressToForwardReferences.Clear();
             roots = null;
             rootIDs = null;
