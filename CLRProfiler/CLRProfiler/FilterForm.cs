@@ -99,7 +99,7 @@ namespace CLRProfiler
 
         private bool IsInterestingSignature(string signature, string[] signatureFilters)
         {
-            if (signature == null || signature == "" || signatureFilters.Length == 0)
+            if (string.IsNullOrEmpty(signature) || signatureFilters.Length == 0)
             {
                 return true;
             }

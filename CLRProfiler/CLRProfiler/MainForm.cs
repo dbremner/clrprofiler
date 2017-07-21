@@ -1556,7 +1556,7 @@ namespace CLRProfiler
                 serviceAccountName = Environment.MachineName + serviceAccountName.Substring(1);
             }
 
-            if (serviceAccountName != null && serviceAccountName != "LocalSystem")
+            if (!string.IsNullOrEmpty(serviceAccountName) && serviceAccountName != "LocalSystem")
             {
                 serviceAccountSid = LookupAccountSid(serviceAccountName);
             }
@@ -3140,7 +3140,7 @@ namespace CLRProfiler
 
         private string getLogFileName(int pid)
         {
-            return (nameToUse == null || nameToUse == "" ? string.Format("pipe_{0}.log", pid) : nameToUse);
+            return (string.IsNullOrEmpty(nameToUse) ? string.Format("pipe_{0}.log", pid) : nameToUse);
         }
 
         [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands", Justification = "CLRProfiler.exe is a stand-alone tool, not a library.")]
