@@ -1477,12 +1477,7 @@ namespace CLRProfiler
         private string GetServiceAccountName([NotNull] string serviceName)
         {
             RegistryKey key = GetServiceKey(serviceName);
-            if (key != null)
-            {
-                return key.GetValue("ObjectName") as string;
-            }
-
-            return null;
+            return key?.GetValue("ObjectName") as string;
         }
 
         [CanBeNull]
@@ -2455,10 +2450,7 @@ namespace CLRProfiler
             readLogResult.criticalFinalizerHistogram = new Histogram(log);
             readLogResult.createdHandlesHistogram = new Histogram(log);
             readLogResult.destroyedHandlesHistogram = new Histogram(log);
-            if (readLogResult.objectGraph != null)
-            {
-                readLogResult.objectGraph.Neuter();
-            }
+            readLogResult.objectGraph?.Neuter();
 
             readLogResult.objectGraph = new ObjectGraph(log, 0);
             readLogResult.functionList = new FunctionList(log);

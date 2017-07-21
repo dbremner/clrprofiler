@@ -1660,10 +1660,7 @@ namespace CLRProfiler
             {
                 progressForm.Visible = false;
                 progressForm.Dispose();
-                if (r != null)
-                {
-                    r.Close();
-                }
+                r?.Close();
             }
         }
     }

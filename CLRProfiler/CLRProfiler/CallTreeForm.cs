@@ -1509,10 +1509,7 @@ namespace CLRProfiler
                     progressForm.Visible = false;
                     progressForm.Dispose();
                 }
-                if(s != null)
-                {
-                    s.Close();
-                }
+                s?.Close();
             }
 
             /* dump the root and the remains of the tree
@@ -1812,10 +1809,7 @@ namespace CLRProfiler
 
         private void CallTreeForm_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if(backingStore != null)
-            {
-                backingStore.Close();
-            }
+            backingStore?.Close();
             if(backingStoreFileName != null)
             {
                 File.Delete(backingStoreFileName);
