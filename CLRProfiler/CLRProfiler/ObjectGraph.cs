@@ -52,7 +52,7 @@ namespace CLRProfiler
             idToObject = new IdToObject();
             typeNameToGcType = new Dictionary<string, GcType>();
             intEqualityComparer = new IntEqualityComparer();
-            typeIdToGcType = new Dictionary<int, GcType>();
+            typeIdToGcType = new Dictionary<int, GcType>(intEqualityComparer);
             addressToForwardReferences = new Dictionary<ulong, ForwardReference>();
             unknownTypeId = GetOrCreateGcType("<unknown type>");   
             this.readNewLog = readNewLog;
