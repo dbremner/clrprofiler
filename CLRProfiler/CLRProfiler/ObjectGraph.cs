@@ -23,7 +23,7 @@ namespace CLRProfiler
         internal int internalTypeCount;
 
         internal int unknownTypeId;
-        internal readonly ReadNewLog readNewLog;
+        [NotNull] internal readonly ReadNewLog readNewLog;
         internal readonly int tickIndex;
 
         internal GcObject[] roots;
@@ -44,7 +44,7 @@ namespace CLRProfiler
             rootIDs = null;
         }
 
-        internal ObjectGraph(ReadNewLog readNewLog, int tickIndex)
+        internal ObjectGraph([NotNull] ReadNewLog readNewLog, int tickIndex)
         {
             //
             // TODO: Add constructor logic here
